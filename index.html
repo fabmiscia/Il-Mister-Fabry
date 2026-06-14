@@ -109,7 +109,7 @@ const MONTHLY_PWD = 'FABRYGIUGNO';
 /* <<PWD_END>> */
 const STORE_KEY = 'mf-access';
 function getStoredAccess(){try{return JSON.parse(localStorage.getItem(STORE_KEY)||'null');}catch(e){return null;}}
-function isAccessValid(s){if(!s)return false;const n=new Date();return s.pwd===MONTHLY_PWD&&s.month===n.getMonth()&&s.year===n.getFullYear();}
+function isAccessValid(s){if(!s)return false;return s.pwd===MONTHLY_PWD;}
 function doLogin(){const v=document.getElementById('pwd-input').value.trim().toUpperCase();if(v===MONTHLY_PWD){const n=new Date();localStorage.setItem(STORE_KEY,JSON.stringify({pwd:v,month:n.getMonth(),year:n.getFullYear()}));showMain();}else{document.getElementById('login-error').textContent='Password errata. Controlla il gruppo Telegram.';document.getElementById('pwd-input').value='';document.getElementById('pwd-input').focus();}}
 function doLogout(){localStorage.removeItem(STORE_KEY);document.getElementById('main-screen').style.display='none';document.getElementById('login-screen').style.display='flex';document.getElementById('pwd-input').value='';}
 function showMain(){document.getElementById('login-screen').style.display='none';const m=document.getElementById('main-screen');m.style.display='flex';m.style.flexDirection='column';}
