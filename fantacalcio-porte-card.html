@@ -55,6 +55,7 @@ body {
 .btn:active { transform: translateY(0); }
 .btn-nav    { background: rgba(255,255,255,.12); color: #fff; padding: 8px 14px; font-size: 16px; }
 .btn-export { background: #2DB84A; color: #000; }
+.btn-github { background: #24292e; color: #fff; border: 1.5px solid rgba(255,255,255,.2); }
 .btn-reset  { background: rgba(255,80,80,.15); color: #ff8080; border: 1.5px solid rgba(255,80,80,.3); }
 .save-status { font-size: 11px; color: #2DB84A; letter-spacing: 1px; min-width: 80px; text-align:right; opacity:0; transition: opacity .4s; }
 .save-status.visible { opacity:1; }
@@ -373,6 +374,7 @@ body {
   <span class="slide-counter" id="slide-counter">1 / 5</span>
   <button class="btn btn-nav" id="btn-next">▶</button>
   <button class="btn btn-reset" id="btn-reset" title="Cancella tutti i dati salvati">↺ Reset</button>
+  <button class="btn btn-github" id="btn-github">📤 Su GitHub</button>
   <button class="btn btn-export" id="btn-export">📥 Esporta PNG</button>
 </div>
 
@@ -735,6 +737,53 @@ document.getElementById('btn-export').addEventListener('click', async () => {
 
   btn.textContent = '📥 Esporta PNG';
   btn.disabled = false;
+});
+
+/* ══ PUBBLICA SU GITHUB ══ */
+document.getElementById('btn-github').addEventListener('click', async () => {
+  const GH_OWNER = 'fabmiscia';
+  const GH_REPO  = 'Il-Mister-Fabry';
+  const GH_FILE  = 'fantacalcio-porte-card.html';
+
+  let token = localStorage.getItem('gh-token');
+  if (!token) {
+    token = prompt('🔑 GitHub Personal Access Token:\n(salvato nel browser, non nel file)');
+    if (!token) return;
+    localStorage.setItem('gh-token', token.trim());
+    token = token.trim();
+  }
+
+  const btn = document.getElementById('btn-github');
+  btn.textContent = '⏳ Caricando...';
+  btn.disabled = true;
+
+  try {
+    const headers = { 'Authorization': `token ${token}`, 'Content-Type': 'application/json' };
+
+    const infoResp = await fetch(`https://api.github.com/repos/${GH_OWNER}/${GH_REPO}/contents/${GH_FILE}`, { headers });
+    if (!infoResp.ok) {
+      if (infoResp.status === 401) { localStorage.removeItem('gh-token'); throw new Error('Token non valido. Riprova.'); }
+      throw new Error(`Errore lettura file (${infoResp.status})`);
+    }
+    const info = await infoResp.json();
+    const sha  = info.sha;
+
+    const source = decodeURIComponent(escape(atob(info.content.replace(/\n/g,''))));
+    const encoded = btoa(unescape(encodeURIComponent(source)));
+
+    const upResp = await fetch(`https://api.github.com/repos/${GH_OWNER}/${GH_REPO}/contents/${GH_FILE}`, {
+      method: 'PUT', headers,
+      body: JSON.stringify({ message: `Aggiornamento Porte Serie A — ${new Date().toLocaleDateString('it-IT')}`, content: encoded, sha })
+    });
+    if (!upResp.ok) { const e = await upResp.json(); throw new Error(e.message); }
+
+    btn.textContent = '✅ Pubblicato!';
+    setTimeout(() => { btn.textContent = '📤 Su GitHub'; btn.disabled = false; }, 3000);
+  } catch(e) {
+    alert('❌ ' + e.message);
+    btn.textContent = '📤 Su GitHub';
+    btn.disabled = false;
+  }
 });
 </script>
 </body>
