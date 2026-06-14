@@ -124,6 +124,18 @@ td .badge-novita{display:inline-block;background:var(--oro);color:#000;font-fami
 .edit-active .nota-text{cursor:text}
 .edit-active .nota-text:hover{background:rgba(200,168,75,.05)}
 </style>
+
+<script>
+(function(){
+  if(window.location.hostname.includes('github.io')||window.location.hostname.includes('fabmiscia')){
+    document.addEventListener('DOMContentLoaded',function(){
+      ['edit-toggle','btn-github','edit-hint'].forEach(function(id){
+        var el=document.getElementById(id);if(el)el.style.display='none';
+      });
+    });
+  }
+})();
+</script>
 </head>
 <body class="">
 

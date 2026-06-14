@@ -66,6 +66,18 @@ tr.expanded .expand-btn{color:#2DB84A}
 .no-results{text-align:center;padding:60px 20px;color:#444;font-size:14px;letter-spacing:2px}
 .obj-count{background:#2DB84A;color:#000;border-radius:50%;width:18px;height:18px;display:inline-flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;margin-left:4px}
 </style>
+
+<script>
+(function(){
+  if(window.location.hostname.includes('github.io')||window.location.hostname.includes('fabmiscia')){
+    document.addEventListener('DOMContentLoaded',function(){
+      ['edit-toggle','btn-github','edit-hint'].forEach(function(id){
+        var el=document.getElementById(id);if(el)el.style.display='none';
+      });
+    });
+  }
+})();
+</script>
 </head>
 <body>
 <div class="toolbar">

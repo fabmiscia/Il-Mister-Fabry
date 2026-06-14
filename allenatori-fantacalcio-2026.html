@@ -237,6 +237,18 @@ body {
 
 [contenteditable]:focus { outline:1.5px solid rgba(0,195,255,.45); border-radius:4px; }
 </style>
+
+<script>
+(function(){
+  if(window.location.hostname.includes('github.io')||window.location.hostname.includes('fabmiscia')){
+    document.addEventListener('DOMContentLoaded',function(){
+      ['edit-toggle','btn-github','edit-hint'].forEach(function(id){
+        var el=document.getElementById(id);if(el)el.style.display='none';
+      });
+    });
+  }
+})();
+</script>
 </head>
 <body>
 
