@@ -55,8 +55,9 @@ body {
 .btn:active { transform: translateY(0); }
 .btn-nav    { background: rgba(255,255,255,.12); color: #fff; padding: 8px 14px; font-size: 16px; }
 .btn-export { background: #2DB84A; color: #000; }
-.btn-github { background: #24292e; color: #fff; border: 1.5px solid rgba(255,255,255,.2); }
-.btn-reset  { background: rgba(255,80,80,.15); color: #ff8080; border: 1.5px solid rgba(255,80,80,.3); }
+.btn-reset     { background: rgba(255,80,80,.15); color: #ff8080; border: 1.5px solid rgba(255,80,80,.3); }
+.btn-save-html { background: rgba(0,195,255,.15); color: #00c3ff; border: 1.5px solid rgba(0,195,255,.3); }
+.btn-github    { background: rgba(255,200,0,.12); color: #ffc800; border: 1.5px solid rgba(255,200,0,.35); }
 .save-status { font-size: 11px; color: #2DB84A; letter-spacing: 1px; min-width: 80px; text-align:right; opacity:0; transition: opacity .4s; }
 .save-status.visible { opacity:1; }
 .slide-counter {
@@ -374,6 +375,7 @@ body {
   <span class="slide-counter" id="slide-counter">1 / 5</span>
   <button class="btn btn-nav" id="btn-next">▶</button>
   <button class="btn btn-reset" id="btn-reset" title="Cancella tutti i dati salvati">↺ Reset</button>
+  <button class="btn btn-save-html" id="btn-save-html">💾 Scarica HTML</button>
   <button class="btn btn-github" id="btn-github">📤 Su GitHub</button>
   <button class="btn btn-export" id="btn-export">📥 Esporta PNG</button>
 </div>
@@ -704,11 +706,120 @@ document.getElementById('btn-next').addEventListener('click', () => {
   saveAll();
 });
 
+/* ── SCARICA HTML AGGIORNATO ── */
+document.getElementById('btn-save-html').addEventListener('click', () => {
+  // Raccoglie lo stato attuale (stesso di saveAll)
+  const state = { slide: currentSlide, texts: {}, stars: {}, logos: {} };
+
+  document.querySelectorAll('[data-key][contenteditable]').forEach(el => {
+    state.texts[el.dataset.key] = el.textContent;
+  });
+  document.querySelectorAll('.stars-cell').forEach(cell => {
+    const first = cell.querySelector('.star');
+    if (!first) return;
+    state.stars[first.dataset.group] = cell.querySelectorAll('.star.on').length;
+  });
+  document.querySelectorAll('.team-logo-area[data-key]').forEach(logo => {
+    const bg = logo.style.backgroundImage;
+    if (bg && bg !== 'none') state.logos[logo.dataset.key] = bg;
+  });
+
+  // Clona il documento e svuota il container generato da JS
+  const clone = document.documentElement.cloneNode(true);
+  clone.querySelector('#slides-container').innerHTML = '';
+
+  // Rimuove eventuali script di bootstrap precedenti
+  clone.querySelectorAll('script[data-bootstrap]').forEach(s => s.remove());
+
+  // Aggiunge uno script che pre-carica localStorage con i dati attuali
+  const script = document.createElement('script');
+  script.setAttribute('data-bootstrap', '1');
+  script.textContent = `localStorage.setItem('fantacalcio-porte-v1', ${JSON.stringify(JSON.stringify(state))});`;
+  clone.querySelector('body').appendChild(script);
+
+  // Scarica
+  const blob = new Blob(['<!DOCTYPE html>\n' + clone.outerHTML], { type: 'text/html;charset=utf-8' });
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'fantacalcio-porte-card.html';
+  a.click();
+  URL.revokeObjectURL(a.href);
+});
+
 /* ── RESET ── */
 document.getElementById('btn-reset').addEventListener('click', () => {
   if (!confirm('Cancellare tutti i dati salvati e ripristinare i valori originali?')) return;
   localStorage.removeItem(STORAGE_KEY);
   location.reload();
+});
+
+/* ── PUBBLICA SU GITHUB ── */
+document.getElementById('btn-github').addEventListener('click', async () => {
+  const GH_OWNER = 'fabmiscia';
+  const GH_REPO  = 'il-mister-fabry';
+  const GH_FILE  = 'fantacalcio-porte-card.html';
+
+  let token = sessionStorage.getItem('gh_token') || '';
+  token = prompt('Token GitHub (rimane in memoria finché non chiudi il browser):', token);
+  if (!token) return;
+  sessionStorage.setItem('gh_token', token.trim());
+
+  const btn = document.getElementById('btn-github');
+  btn.textContent = '⏳ Caricando...';
+  btn.disabled = true;
+
+  try {
+    // 1. SHA attuale del file su GitHub
+    const infoResp = await fetch(`https://api.github.com/repos/${GH_OWNER}/${GH_REPO}/contents/${GH_FILE}`,
+      { headers: { Authorization: `token ${token}` } });
+    const info = await infoResp.json();
+    if (!infoResp.ok) throw new Error(info.message || 'Token non valido o file non trovato');
+    const sha = info.sha;
+
+    // 2. Costruisce HTML con stato attuale baked-in
+    const state = { slide: currentSlide, texts: {}, stars: {}, logos: {} };
+    document.querySelectorAll('[data-key][contenteditable]').forEach(el => {
+      state.texts[el.dataset.key] = el.textContent;
+    });
+    document.querySelectorAll('.stars-cell').forEach(cell => {
+      const first = cell.querySelector('.star');
+      if (!first) return;
+      state.stars[first.dataset.group] = cell.querySelectorAll('.star.on').length;
+    });
+    document.querySelectorAll('.team-logo-area[data-key]').forEach(logo => {
+      const bg = logo.style.backgroundImage;
+      if (bg && bg !== 'none') state.logos[logo.dataset.key] = bg;
+    });
+
+    const clone = document.documentElement.cloneNode(true);
+    clone.querySelector('#slides-container').innerHTML = '';
+    clone.querySelectorAll('script[data-bootstrap]').forEach(s => s.remove());
+    const script = document.createElement('script');
+    script.setAttribute('data-bootstrap', '1');
+    script.textContent = `localStorage.setItem('fantacalcio-porte-v1', ${JSON.stringify(JSON.stringify(state))});`;
+    clone.querySelector('body').appendChild(script);
+    const html = '<!DOCTYPE html>\n' + clone.outerHTML;
+
+    // 3. Codifica UTF-8 → base64
+    const bytes = new TextEncoder().encode(html);
+    const binStr = Array.from(bytes).map(b => String.fromCharCode(b)).join('');
+    const content = btoa(binStr);
+
+    // 4. Carica su GitHub
+    const upResp = await fetch(`https://api.github.com/repos/${GH_OWNER}/${GH_REPO}/contents/${GH_FILE}`, {
+      method: 'PUT',
+      headers: { Authorization: `token ${token}`, 'Content-Type': 'application/json' },
+      body: JSON.stringify({ message: 'Aggiorna porte card', content, sha })
+    });
+    if (!upResp.ok) { const e = await upResp.json(); throw new Error(e.message); }
+
+    btn.textContent = '✅ Pubblicato!';
+    setTimeout(() => { btn.textContent = '📤 Su GitHub'; btn.disabled = false; }, 3000);
+  } catch(err) {
+    alert('Errore: ' + err.message);
+    btn.textContent = '📤 Su GitHub';
+    btn.disabled = false;
+  }
 });
 
 /* ── EXPORT PNG ── */
@@ -737,53 +848,6 @@ document.getElementById('btn-export').addEventListener('click', async () => {
 
   btn.textContent = '📥 Esporta PNG';
   btn.disabled = false;
-});
-
-/* ══ PUBBLICA SU GITHUB ══ */
-document.getElementById('btn-github').addEventListener('click', async () => {
-  const GH_OWNER = 'fabmiscia';
-  const GH_REPO  = 'Il-Mister-Fabry';
-  const GH_FILE  = 'fantacalcio-porte-card.html';
-
-  let token = localStorage.getItem('gh-token');
-  if (!token) {
-    token = prompt('🔑 GitHub Personal Access Token:\n(salvato nel browser, non nel file)');
-    if (!token) return;
-    localStorage.setItem('gh-token', token.trim());
-    token = token.trim();
-  }
-
-  const btn = document.getElementById('btn-github');
-  btn.textContent = '⏳ Caricando...';
-  btn.disabled = true;
-
-  try {
-    const headers = { 'Authorization': `token ${token}`, 'Content-Type': 'application/json' };
-
-    const infoResp = await fetch(`https://api.github.com/repos/${GH_OWNER}/${GH_REPO}/contents/${GH_FILE}`, { headers });
-    if (!infoResp.ok) {
-      if (infoResp.status === 401) { localStorage.removeItem('gh-token'); throw new Error('Token non valido. Riprova.'); }
-      throw new Error(`Errore lettura file (${infoResp.status})`);
-    }
-    const info = await infoResp.json();
-    const sha  = info.sha;
-
-    const source = decodeURIComponent(escape(atob(info.content.replace(/\n/g,''))));
-    const encoded = btoa(unescape(encodeURIComponent(source)));
-
-    const upResp = await fetch(`https://api.github.com/repos/${GH_OWNER}/${GH_REPO}/contents/${GH_FILE}`, {
-      method: 'PUT', headers,
-      body: JSON.stringify({ message: `Aggiornamento Porte Serie A — ${new Date().toLocaleDateString('it-IT')}`, content: encoded, sha })
-    });
-    if (!upResp.ok) { const e = await upResp.json(); throw new Error(e.message); }
-
-    btn.textContent = '✅ Pubblicato!';
-    setTimeout(() => { btn.textContent = '📤 Su GitHub'; btn.disabled = false; }, 3000);
-  } catch(e) {
-    alert('❌ ' + e.message);
-    btn.textContent = '📤 Su GitHub';
-    btn.disabled = false;
-  }
 });
 </script>
 </body>
