@@ -1,0 +1,814 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Classic Mazzone – Regolamento Ufficiale 2026/27</title>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --verde:#1a3a1a;
+  --verde-mid:#1e4020;
+  --verde-light:#2a5a2a;
+  --oro:#C8A84B;
+  --oro-light:#e0c06a;
+  --testo:#e8e8e0;
+  --testo-soft:#c8c8b8;
+  --bg:#0f1f0f;
+}
+body{background:var(--bg);color:var(--testo);font-family:'Open Sans',Arial,sans-serif;line-height:1.6}
+
+/* TOOLBAR */
+.toolbar{background:#0a140a;border-bottom:2px solid var(--oro);padding:12px 24px;display:flex;align-items:center;gap:12px;flex-wrap:wrap;position:sticky;top:0;z-index:200}
+.toolbar-title{color:var(--oro);font-family:'Oswald',sans-serif;font-size:14px;letter-spacing:2px;white-space:nowrap}
+.spacer{flex:1}
+.edit-toggle{padding:7px 16px;border-radius:6px;font-family:'Oswald',sans-serif;font-size:11px;font-weight:600;letter-spacing:1px;cursor:pointer;border:1.5px solid var(--oro);background:transparent;color:var(--oro);transition:all .15s}
+.edit-toggle.active{background:var(--oro);color:#000}
+.btn-github{padding:7px 16px;border-radius:6px;font-family:'Oswald',sans-serif;font-size:11px;font-weight:600;letter-spacing:1px;cursor:pointer;border:1.5px solid rgba(255,255,255,.2);background:#24292e;color:#fff;transition:opacity .15s}
+.btn-github:hover{opacity:.85}
+.edit-hint{font-size:10px;color:var(--oro);letter-spacing:1px;opacity:0;transition:opacity .3s}
+.edit-hint.show{opacity:1}
+
+/* HERO */
+.hero{background:var(--verde);text-align:center;padding:60px 24px 48px;border-bottom:3px solid var(--oro)}
+.hero .canale{font-family:'Oswald',sans-serif;font-size:11px;letter-spacing:4px;color:var(--testo-soft);border:1px solid rgba(200,168,75,.3);display:inline-block;padding:6px 20px;border-radius:2px;margin-bottom:32px}
+.hero h1{font-family:'Oswald',sans-serif;font-size:clamp(52px,10vw,96px);font-weight:700;color:var(--oro);line-height:.9;letter-spacing:2px}
+.hero h2{font-family:'Oswald',sans-serif;font-size:clamp(14px,2.5vw,22px);font-weight:400;letter-spacing:8px;color:var(--testo);margin-top:16px;margin-bottom:32px}
+.hero .stagione{color:var(--testo-soft);font-size:14px;letter-spacing:3px;margin-bottom:40px}
+.stats-hero{display:flex;justify-content:center;gap:0;flex-wrap:wrap;border:1px solid rgba(200,168,75,.3);display:inline-flex;border-radius:4px;overflow:hidden}
+.stat-hero{padding:16px 32px;text-align:center;border-right:1px solid rgba(200,168,75,.2)}
+.stat-hero:last-child{border-right:none}
+.stat-hero .val{font-family:'Oswald',sans-serif;font-size:36px;font-weight:700;color:var(--oro)}
+.stat-hero .lbl{font-size:9px;letter-spacing:3px;color:var(--testo-soft);margin-top:4px}
+.asta-info{margin-top:32px;display:inline-flex;align-items:center;gap:12px;border:1px solid rgba(200,168,75,.3);padding:12px 24px;border-radius:4px;font-size:13px;color:var(--testo-soft)}
+.asta-info strong{color:var(--oro)}
+
+/* NAV */
+.toc{background:var(--verde-mid);border-bottom:1px solid rgba(200,168,75,.2);padding:0 24px;overflow-x:auto;white-space:nowrap}
+.toc a{display:inline-block;padding:10px 14px;font-family:'Oswald',sans-serif;font-size:11px;letter-spacing:1px;color:rgba(200,168,75,.6);text-decoration:none;border-bottom:2px solid transparent;transition:all .15s}
+.toc a:hover{color:var(--oro);border-bottom-color:var(--oro)}
+
+/* MAIN */
+.main{max-width:900px;margin:0 auto;padding:48px 24px 80px}
+
+/* SEZIONE */
+.sezione{margin-bottom:56px;scroll-margin-top:80px}
+.sezione-header{background:var(--verde);border-left:4px solid var(--oro);display:flex;align-items:center;gap:16px;padding:16px 20px;border-radius:4px;margin-bottom:24px}
+.sezione-num{font-family:'Oswald',sans-serif;font-size:36px;font-weight:700;color:var(--oro);line-height:1;min-width:48px}
+.sezione-title{font-family:'Oswald',sans-serif;font-size:18px;font-weight:600;letter-spacing:2px;color:var(--testo)}
+.sezione-body{color:var(--testo-soft);font-size:14px}
+.sezione-body p{margin-bottom:12px}
+.sezione-body strong{color:var(--testo);font-weight:700}
+.sezione-body ul{margin:12px 0 12px 20px}
+.sezione-body ul li{margin-bottom:8px}
+.sezione-body ol{margin:12px 0 12px 20px}
+.sezione-body ol li{margin-bottom:6px}
+
+/* SOTTOTITOLI */
+.sub-title{font-family:'Oswald',sans-serif;font-size:12px;letter-spacing:2px;color:var(--oro);border-left:3px solid var(--oro);padding-left:12px;margin:20px 0 12px}
+
+/* BOX */
+.box{border-radius:4px;padding:16px 20px;margin:16px 0;font-size:13px}
+.box-novita{background:rgba(200,168,75,.08);border:1px solid rgba(200,168,75,.3);color:var(--testo-soft)}
+.box-novita .box-label{font-family:'Oswald',sans-serif;font-size:10px;letter-spacing:2px;color:var(--oro);margin-bottom:8px}
+.box-warning{background:rgba(200,50,50,.08);border-left:3px solid #cc4444;color:var(--testo-soft)}
+.box-warning .box-label{font-family:'Oswald',sans-serif;font-size:10px;letter-spacing:2px;color:#cc6666;margin-bottom:8px}
+.box-info{background:rgba(200,168,75,.05);border-left:3px solid rgba(200,168,75,.4);color:var(--testo-soft)}
+.box-info .box-label{font-family:'Oswald',sans-serif;font-size:10px;letter-spacing:2px;color:var(--oro-light);margin-bottom:8px}
+.box-danger{background:rgba(180,40,40,.1);border-left:3px solid #aa3333;color:var(--testo-soft)}
+.box-danger .box-label{font-family:'Oswald',sans-serif;font-size:10px;letter-spacing:2px;color:#cc5555;margin-bottom:8px}
+
+/* TABELLE */
+table{width:100%;border-collapse:collapse;margin:16px 0;font-size:13px}
+th{background:var(--verde-light);padding:10px 14px;text-align:left;font-family:'Oswald',sans-serif;font-size:10px;letter-spacing:1.5px;color:var(--testo-soft);border-bottom:2px solid var(--oro)}
+td{padding:10px 14px;border-bottom:1px solid rgba(255,255,255,.06);color:var(--testo-soft)}
+tr:last-child td{border-bottom:none}
+tr:hover td{background:rgba(255,255,255,.02)}
+td strong,td b{color:var(--testo)}
+td .badge-novita{display:inline-block;background:var(--oro);color:#000;font-family:'Oswald',sans-serif;font-size:9px;letter-spacing:1px;padding:2px 7px;border-radius:3px;margin-left:6px;vertical-align:middle}
+
+/* CHIPS/BADGE */
+.chips{display:flex;gap:8px;flex-wrap:wrap;margin:12px 0}
+.chip-verde{background:var(--verde-light);border:1px solid var(--oro);color:var(--oro);font-family:'Oswald',sans-serif;font-size:12px;font-weight:600;padding:8px 16px;border-radius:4px;letter-spacing:.5px}
+.chip-dark{background:rgba(200,168,75,.15);border:1px solid var(--oro);color:var(--oro);font-family:'Oswald',sans-serif;font-size:14px;font-weight:700;padding:10px 18px;border-radius:4px;letter-spacing:.5px}
+
+/* PREMI */
+.premi-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px;margin:20px 0}
+.premio{background:var(--verde);border:1px solid rgba(200,168,75,.3);border-radius:4px;padding:20px;text-align:center}
+.premio .pos{font-family:'Oswald',sans-serif;font-size:10px;letter-spacing:2px;color:var(--testo-soft);margin-bottom:8px}
+.premio .nome{font-family:'Oswald',sans-serif;font-size:14px;font-weight:600;color:var(--testo);margin-bottom:12px;line-height:1.2}
+.premio .cifra{font-family:'Oswald',sans-serif;font-size:36px;font-weight:700;color:var(--oro)}
+.premio:first-child{border-color:var(--oro);background:rgba(200,168,75,.08)}
+
+/* FOOTER */
+.footer{background:var(--verde);border-top:1px solid rgba(200,168,75,.3);padding:20px 24px;display:flex;justify-content:space-between;align-items:center;font-size:11px;letter-spacing:2px;color:var(--testo-soft)}
+.footer span:last-child{color:var(--oro)}
+
+/* EDITABLE */
+[contenteditable="true"]{outline:none;border-radius:3px;transition:background .15s}
+[contenteditable="true"]:hover{background:rgba(200,168,75,.05)}
+[contenteditable="true"]:focus{background:rgba(200,168,75,.08);outline:1px solid rgba(200,168,75,.3)}
+
+/* NOTE */
+.nota-area{margin-top:16px}
+.nota-box{background:rgba(200,168,75,.06);border:1px solid rgba(200,168,75,.25);border-radius:4px;padding:14px 16px;margin-bottom:8px;position:relative}
+.nota-box .nota-label{font-family:'Oswald',sans-serif;font-size:9px;letter-spacing:2px;color:var(--oro);margin-bottom:6px}
+.nota-text{font-size:13px;color:var(--testo-soft);white-space:pre-wrap;min-height:20px;outline:none;border-radius:3px;transition:background .15s}
+.nota-text:focus{background:rgba(200,168,75,.05)}
+.nota-del{position:absolute;top:10px;right:12px;background:none;border:none;color:#664;font-size:14px;cursor:pointer;opacity:0;transition:opacity .15s}
+.nota-box:hover .nota-del{opacity:1}
+.nota-del:hover{color:#cc4444}
+.btn-add-nota{display:none;margin-top:10px;padding:6px 14px;border-radius:4px;font-family:'Oswald',sans-serif;font-size:10px;font-weight:600;letter-spacing:1px;cursor:pointer;border:1px dashed rgba(200,168,75,.4);background:transparent;color:rgba(200,168,75,.6);transition:all .15s;width:100%}
+.btn-add-nota:hover{border-color:var(--oro);color:var(--oro);background:rgba(200,168,75,.05)}
+.edit-active .btn-add-nota{display:block}
+.edit-active .nota-text{cursor:text}
+.edit-active .nota-text:hover{background:rgba(200,168,75,.05)}
+</style>
+</head>
+<body>
+
+<div class="toolbar">
+  <span class="toolbar-title">&#x26BD; CLASSIC MAZZONE &mdash; REGOLAMENTO</span>
+  <span class="edit-hint" id="edit-hint">&#x270F; Clicca su qualsiasi testo per modificarlo</span>
+  <div class="spacer"></div>
+  <button class="edit-toggle" id="edit-toggle" onclick="toggleEdit()">&#x270F; Modifica</button>
+  <button class="btn-github" id="btn-github">&#x1F4E4; Su GitHub</button>
+</div>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="canale" contenteditable="false" id="e-canale">FANTACALCIO DEL CANALE &middot; IL MISTER FABRY</div>
+  <h1 contenteditable="false" id="e-h1">CLASSIC<br>MAZZONE</h1>
+  <h2 contenteditable="false" id="e-h2">REGOLAMENTO UFFICIALE</h2>
+  <div class="stagione" contenteditable="false" id="e-stagione">Stagione 2026 / 2027</div>
+  <div class="stats-hero">
+    <div class="stat-hero"><div class="val" contenteditable="false" id="e-sq">10</div><div class="lbl">SQUADRE</div></div>
+    <div class="stat-hero"><div class="val" contenteditable="false" id="e-gn">36</div><div class="lbl">GIORNATE</div></div>
+    <div class="stat-hero"><div class="val" contenteditable="false" id="e-cr">500</div><div class="lbl">CREDITI</div></div>
+    <div class="stat-hero"><div class="val" contenteditable="false" id="e-gi">4</div><div class="lbl">GIRONI</div></div>
+  </div>
+  <div class="asta-info">
+    &#x1F550; Asta: <strong contenteditable="false" id="e-asta-data">20 Agosto 2025</strong> &middot; ore <strong contenteditable="false" id="e-asta-ora">19:30</strong> &middot; YouTube Live
+  </div>
+</div>
+
+<!-- TOC -->
+<nav class="toc">
+  <a href="#s01">01 Condizioni</a>
+  <a href="#s02">02 Durata</a>
+  <a href="#s03">03 Asta</a>
+  <a href="#s04">04 Rosa</a>
+  <a href="#s05">05 Infortunati</a>
+  <a href="#s06">06 Riserve</a>
+  <a href="#s07">07 Voti</a>
+  <a href="#s08">08 Bonus/Malus</a>
+  <a href="#s09">09 Fasce Gol</a>
+  <a href="#s10">10 Mod. Difesa</a>
+  <a href="#s11">11 Classifica</a>
+  <a href="#s12">12 Switch Plus</a>
+  <a href="#s13">13 Sanzioni</a>
+  <a href="#s14">14 Rinvii</a>
+  <a href="#s15">15 Mercato</a>
+  <a href="#s16">16 Scambi</a>
+  <a href="#s17">17 Trasferiti</a>
+  <a href="#s18">18 Governance</a>
+  <a href="#s19">19 Coppa</a>
+  <a href="#s20">20 Premi</a>
+</nav>
+
+<div class="main">
+
+<!-- 01 -->
+<div class="sezione" id="s01">
+  <div class="sezione-header">
+    <div class="sezione-num">01</div>
+    <div class="sezione-title" contenteditable="false">CONDIZIONI DI PARTECIPAZIONE 2026/2027</div>
+  </div>
+  <div class="sezione-body">
+    <p contenteditable="false">Per entrare nel Fantacalcio del Canale <strong>IL MISTER FABRY</strong>, sono obbligatori <strong>2 requisiti fondamentali</strong>:</p>
+    <ul>
+      <li contenteditable="false"><strong>Abbonamento al canale YouTube di Fabry FantaMister</strong> (attivo per tutto l'anno). Oltre alla partecipazione al fanta, garantisce vantaggi ESCLUSIVI.</li>
+      <li contenteditable="false"><strong>Abbonamento annuale alla Community FABRY FM PREMIUM &ndash; 70 &euro;</strong> (una tantum). Include: community WhatsApp, regolamento, riconoscimento premi, supporto diretto.</li>
+    </ul>
+    <p contenteditable="false">Pagamento abbonamento annuale con <strong>SATISPAY</strong>. Dopo il pagamento si riceve il link per la <strong>COMMUNITY PREMIUM</strong> su WhatsApp.</p>
+  </div>
+  <div class="nota-area" id="note-s01"></div>
+  <button class="btn-add-nota" onclick="addNota('s01')">＋ Aggiungi nota all'articolo 01</button>
+</div>
+
+<!-- 02 -->
+<div class="sezione" id="s02">
+  <div class="sezione-header">
+    <div class="sezione-num">02</div>
+    <div class="sezione-title" contenteditable="false">DURATA DEL CAMPIONATO</div>
+  </div>
+  <div class="sezione-body">
+    <p contenteditable="false">Il <strong>CLASSIC MAZZONE</strong> &egrave; un campionato da <strong>10 squadre</strong>: 36 partite in calendario asimmetrico, divise in <strong>4 gironi da 9 partite</strong>, dalla 1&ordf; alla 36&ordf; giornata di Serie A.</p>
+  </div>
+  <div class="nota-area" id="note-s02"></div>
+  <button class="btn-add-nota" onclick="addNota('s02')">&#xFF0B; Aggiungi nota all'articolo 02</button>
+</div>
+
+<!-- 03 -->
+<div class="sezione" id="s03">
+  <div class="sezione-header">
+    <div class="sezione-num">03</div>
+    <div class="sezione-title" contenteditable="false">ASTA</div>
+  </div>
+  <div class="sezione-body">
+    <p contenteditable="false">Modalit&agrave;: <strong>A CHIAMATA LIBERA</strong> &ndash; non segue l&rsquo;ordine per ruolo. I rilanci sono solo computerizzati (non a voce). Preparare il nome del giocatore in anticipo per velocizzare.</p>
+    <ul>
+      <li contenteditable="false">In caso di perdita di connessione durante una chiamata, l&rsquo;asta su quel giocatore viene ripetuta.</li>
+      <li contenteditable="false">Non sono ammesse ripetizioni per distrazioni. In caso di ripetizione richiesta, il partecipante parte da base +1 rispetto al valore finale dell&rsquo;asta precedente.</li>
+      <li contenteditable="false">Max <strong>1 ripetizione d&rsquo;asta</strong> per partecipante.</li>
+    </ul>
+    <div class="chips">
+      <span class="chip-verde" contenteditable="false">Ordine asta iniziale: Sorteggio RANDOM</span>
+      <span class="chip-verde" contenteditable="false">Aste di riparazione: Dal 1&deg; all&rsquo;ultimo in classifica</span>
+    </div>
+    <div class="box box-novita">
+      <div class="box-label">&#x2605; NOVIT&Agrave; 2025/26</div>
+      <p contenteditable="false">Data asta: 20 o 21 Agosto 2025 (da confermare). In diretta sul canale YouTube <strong>IL MISTER FABRY</strong> dalle ore 19:30 (presenti gi&agrave; dalle 19:00). Piattaforma: FantaLab + Streamyard. Link inviato il giorno stesso.</p>
+    </div>
+  </div>
+  <div class="nota-area" id="note-s03"></div>
+  <button class="btn-add-nota" onclick="addNota('s03')">&#xFF0B; Aggiungi nota all'articolo 03</button>
+</div>
+
+<!-- 04 -->
+<div class="sezione" id="s04">
+  <div class="sezione-header">
+    <div class="sezione-num">04</div>
+    <div class="sezione-title" contenteditable="false">COSTRUZIONE ROSA &ndash; 500 CREDITI</div>
+  </div>
+  <div class="sezione-body">
+    <p contenteditable="false">Ogni partecipante dispone di <strong>500 CREDITI</strong> per acquistare obbligatoriamente:</p>
+    <table>
+      <tr><th>RUOLO</th><th>OBBLIGATORI</th><th>NOTE</th></tr>
+      <tr><td><strong>Portieri</strong></td><td contenteditable="false">3 (max 4)</td><td contenteditable="false">Il 4&deg; &egrave; opzionale <span class="badge-novita">NOVIT&Agrave;</span></td></tr>
+      <tr><td><strong>Difensori</strong></td><td contenteditable="false">8</td><td>&mdash;</td></tr>
+      <tr><td><strong>Centrocampisti</strong></td><td contenteditable="false">8</td><td>&mdash;</td></tr>
+      <tr><td><strong>Attaccanti</strong></td><td contenteditable="false">6</td><td>&mdash;</td></tr>
+      <tr><td><strong>TOTALE ROSA</strong></td><td contenteditable="false">25 &ndash; 26</td><td contenteditable="false">Deve sempre rimanere a min 25, max 26 giocatori (3-4 / 8 / 8 / 6)</td></tr>
+    </table>
+    <div class="sub-title">MODULI ACCETTATI</div>
+    <div class="chips">
+      <span class="chip-dark">3/5/2</span>
+      <span class="chip-dark">3/4/3</span>
+      <span class="chip-dark">4/5/1</span>
+      <span class="chip-dark">4/4/2</span>
+      <span class="chip-dark">4/3/3</span>
+      <span class="chip-dark">5/3/2</span>
+      <span class="chip-dark">5/4/1</span>
+    </div>
+    <p contenteditable="false"><em>1&ordf; cifra = difensori &middot; 2&ordf; = centrocampisti &middot; 3&ordf; = attaccanti. Moduli diversi <strong>NON accettati</strong>.</em></p>
+    <div class="box box-warning">
+      <div class="box-label">&#x26A0; ATTENZIONE &ndash; FORMAZIONE</div>
+      <p contenteditable="false">LA FORMAZIONE TRAMITE APP PU&Ograve; ESSERE INSERITA FINO A <strong>1 MINUTO PRIMA</strong> DELL&rsquo;INIZIO DELLE PARTITE. Le formazioni vanno consegnate entro l&rsquo;inizio del primo match della giornata.</p>
+    </div>
+  </div>
+  <div class="nota-area" id="note-s04"></div>
+  <button class="btn-add-nota" onclick="addNota('s04')">&#xFF0B; Aggiungi nota all'articolo 04</button>
+</div>
+
+<!-- 05 -->
+<div class="sezione" id="s05">
+  <div class="sezione-header">
+    <div class="sezione-num">05</div>
+    <div class="sezione-title" contenteditable="false">INFORTUNATI E SQUALIFICATI</div>
+  </div>
+  <div class="sezione-body">
+    <p contenteditable="false">Si possono schierare giocatori infortunati e squalificati: sono soggetti a <strong>voto 6 Politico</strong>.</p>
+  </div>
+  <div class="nota-area" id="note-s05"></div>
+  <button class="btn-add-nota" onclick="addNota('s05')">&#xFF0B; Aggiungi nota all'articolo 05</button>
+</div>
+
+<!-- 06 -->
+<div class="sezione" id="s06">
+  <div class="sezione-header">
+    <div class="sezione-num">06</div>
+    <div class="sezione-title" contenteditable="false">RISERVE E SOSTITUZIONI</div>
+  </div>
+  <div class="sezione-body">
+    <p contenteditable="false">Sono consentite fino a <strong>5 sostituzioni</strong>. I calciatori entrano nell&rsquo;ordine stabilito dal partecipante nella composizione della panchina.</p>
+    <div class="box box-danger">
+      <div class="box-label">&#x26D4; NESSUNA RISERVA D&rsquo;UFFICIO</div>
+      <p contenteditable="false">Se non si raggiungono 11 calciatori a voto, ogni slot mancante vale <strong>0 punti</strong> (sia portiere che giocatori di movimento). Controlla sempre la formazione!</p>
+    </div>
+    <div class="box box-novita">
+      <div class="box-label">&#x2605; NOVIT&Agrave; 2025/26 &ndash; CAMBIO MODULO IN SOSTITUZIONE</div>
+      <p contenteditable="false">Se un titolare non riceve voto (s.v.) e nessuna riserva dello stesso ruolo &egrave; disponibile, subentra il primo giocatore di ruolo diverso utile dall&rsquo;ordine di panchina (es: 3 attaccanti s.v. &rarr; subentra un centrocampista). Ordine e modalit&agrave; verranno comunicati prima dell&rsquo;inizio.</p>
+    </div>
+    <div class="box box-warning">
+      <div class="box-label">&#x26A0; IN CASO DI BUG SU APP</div>
+      <p contenteditable="false">Se la formazione viene consegnata con un numero <strong>SUPERIORE</strong> di titolari: viene tolto il giocatore col voto pi&ugrave; alto + sanzione di <strong>-1 in classifica</strong>.</p>
+    </div>
+  </div>
+  <div class="nota-area" id="note-s06"></div>
+  <button class="btn-add-nota" onclick="addNota('s06')">&#xFF0B; Aggiungi nota all'articolo 06</button>
+</div>
+
+<!-- 07 -->
+<div class="sezione" id="s07">
+  <div class="sezione-header">
+    <div class="sezione-num">07</div>
+    <div class="sezione-title" contenteditable="false">CALCOLO DEI VOTI</div>
+  </div>
+  <div class="sezione-body">
+    <div class="box box-novita">
+      <div class="box-label">&#x2605; NOVIT&Agrave; 2025/26 &ndash; VOTI ALVIN (ALGORITMO)</div>
+      <p contenteditable="false">I voti vengono calcolati con la modalit&agrave; <strong>ALVIN</strong> (algoritmo omonimo), non tramite i voti live delle leghe fantacalcio. Valido su piattaforma leghe fantacalcio.it. I dati ufficiali sono su <strong>FANTACALCIO.IT</strong>. In caso di decisioni postume si effettua il ricalcolo.</p>
+    </div>
+    <div class="sub-title">CALCIATORI SENZA VOTO (S.V.)</div>
+    <ul>
+      <li contenteditable="false"><strong>Giocatori di movimento s.v.:</strong> se ottiene un bonus &rarr; 6 d&rsquo;ufficio + bonus; se espulso &rarr; 4 d&rsquo;ufficio; se sbaglia rigore o autogol &rarr; 6 d&rsquo;ufficio &ndash; malus. Se s.v. senza bonus/malus (o solo ammonito) = <strong>non conteggiato</strong>.</li>
+      <li contenteditable="false"><strong>Portiere s.v.</strong> sceso in campo (anche se sostituito) &rarr; 6 d&rsquo;ufficio + eventuali bonus/malus.</li>
+    </ul>
+  </div>
+  <div class="nota-area" id="note-s07"></div>
+  <button class="btn-add-nota" onclick="addNota('s07')">&#xFF0B; Aggiungi nota all'articolo 07</button>
+</div>
+
+<!-- 08 -->
+<div class="sezione" id="s08">
+  <div class="sezione-header">
+    <div class="sezione-num">08</div>
+    <div class="sezione-title" contenteditable="false">BONUS E MALUS</div>
+  </div>
+  <div class="sezione-body">
+    <p contenteditable="false"><strong>NON ESISTE IL FATTORE CAMPO.</strong></p>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:16px">
+      <table>
+        <tr><th>BONUS</th><th>PUNTI</th></tr>
+        <tr><td contenteditable="false">Gol (tutti i ruoli)</td><td contenteditable="false"><strong>+3</strong></td></tr>
+        <tr><td contenteditable="false">Rigore parato</td><td contenteditable="false"><strong>+3</strong></td></tr>
+        <tr><td contenteditable="false">Assist</td><td contenteditable="false"><strong>+1</strong></td></tr>
+        <tr><td contenteditable="false">Imbattibilit&agrave; portiere</td><td contenteditable="false"><strong>+1</strong></td></tr>
+      </table>
+      <table>
+        <tr><th>MALUS</th><th>PUNTI</th></tr>
+        <tr><td contenteditable="false">Ammonizione</td><td contenteditable="false"><strong>-0.5</strong></td></tr>
+        <tr><td contenteditable="false">Espulsione</td><td contenteditable="false"><strong>-1</strong></td></tr>
+        <tr><td contenteditable="false">Gol subito (portiere)</td><td contenteditable="false"><strong>-1</strong> per gol</td></tr>
+        <tr><td contenteditable="false">Autogol (tutti i ruoli)</td><td contenteditable="false"><strong>-2</strong></td></tr>
+        <tr><td contenteditable="false">Rigore sbagliato (tutti)</td><td contenteditable="false"><strong>-3</strong></td></tr>
+      </table>
+    </div>
+  </div>
+  <div class="nota-area" id="note-s08"></div>
+  <button class="btn-add-nota" onclick="addNota('s08')">&#xFF0B; Aggiungi nota all'articolo 08</button>
+</div>
+
+<!-- 09 -->
+<div class="sezione" id="s09">
+  <div class="sezione-header">
+    <div class="sezione-num">09</div>
+    <div class="sezione-title" contenteditable="false">CALCOLO DEL RISULTATO &ndash; FASCE GOL</div>
+  </div>
+  <div class="sezione-body">
+    <table>
+      <tr><th>PUNTEGGIO SQUADRA</th><th>GOL FANTASIA</th></tr>
+      <tr><td contenteditable="false">0 &ndash; 65.5</td><td contenteditable="false">0 gol</td></tr>
+      <tr><td contenteditable="false">66 &ndash; 71.5</td><td contenteditable="false">1 gol</td></tr>
+      <tr><td contenteditable="false">72 &ndash; 77.5</td><td contenteditable="false">2 gol</td></tr>
+      <tr><td contenteditable="false">78 &ndash; 83.5</td><td contenteditable="false">3 gol</td></tr>
+      <tr><td contenteditable="false">84 &ndash; 89.5</td><td contenteditable="false">4 gol</td></tr>
+      <tr><td contenteditable="false">e cos&igrave; via&hellip;</td><td contenteditable="false">+1 gol ogni 6 punti ulteriori</td></tr>
+    </table>
+    <div class="box box-info">
+      <div class="box-label">&#x2696; REGOLA &ndash; ANNULLA PAREGGIO</div>
+      <p contenteditable="false">Se la differenza tra i totali delle due squadre &egrave; <strong>&ge; 4 punti</strong> e ricadono nella stessa fascia gol, viene assegnato un gol extra alla squadra con punteggio pi&ugrave; alto.<br>Esempi: 66-70 = 1-2 &middot; 67-71 = 1-2 &middot; 72-76 = 2-3 ecc.</p>
+    </div>
+  </div>
+  <div class="nota-area" id="note-s09"></div>
+  <button class="btn-add-nota" onclick="addNota('s09')">&#xFF0B; Aggiungi nota all'articolo 09</button>
+</div>
+
+<!-- 10 -->
+<div class="sezione" id="s10">
+  <div class="sezione-header">
+    <div class="sezione-num">10</div>
+    <div class="sezione-title" contenteditable="false">MODIFICATORE DIFESA</div>
+  </div>
+  <div class="sezione-body">
+    <p contenteditable="false">Si applica schierando almeno <strong>4 difensori</strong>. Calcolato sul voto (senza bonus/malus) dei <strong>migliori 3 difensori + portiere</strong>:</p>
+    <table>
+      <tr><th>MEDIA VOTO (MIGLIORI 3 DIF. + PORTIERE)</th><th>BONUS DIFESA</th></tr>
+      <tr><td contenteditable="false">Inferiore a 6</td><td contenteditable="false"><strong>+0</strong></td></tr>
+      <tr><td contenteditable="false">&ge; 6 e &lt; 6.25</td><td contenteditable="false"><strong>+1</strong></td></tr>
+      <tr><td contenteditable="false">&ge; 6.25 e &lt; 6.50</td><td contenteditable="false"><strong>+2</strong></td></tr>
+      <tr><td contenteditable="false">&ge; 6.50 e &lt; 6.75</td><td contenteditable="false"><strong>+3</strong></td></tr>
+      <tr><td contenteditable="false">&ge; 6.75 e &lt; 7</td><td contenteditable="false"><strong>+4</strong></td></tr>
+      <tr><td contenteditable="false">&ge; 7</td><td contenteditable="false"><strong>+5</strong></td></tr>
+    </table>
+  </div>
+  <div class="nota-area" id="note-s10"></div>
+  <button class="btn-add-nota" onclick="addNota('s10')">&#xFF0B; Aggiungi nota all'articolo 10</button>
+</div>
+
+<!-- 11 -->
+<div class="sezione" id="s11">
+  <div class="sezione-header">
+    <div class="sezione-num">11</div>
+    <div class="sezione-title" contenteditable="false">CRITERI DI ORDINAMENTO CLASSIFICA</div>
+  </div>
+  <div class="sezione-body">
+    <ol>
+      <li contenteditable="false"><strong>Somma punti totale</strong></li>
+      <li contenteditable="false">Differenza reti</li>
+      <li contenteditable="false">Gol fatti</li>
+      <li contenteditable="false">Gol subiti</li>
+      <li contenteditable="false">Classifica avulsa</li>
+    </ol>
+  </div>
+  <div class="nota-area" id="note-s11"></div>
+  <button class="btn-add-nota" onclick="addNota('s11')">&#xFF0B; Aggiungi nota all'articolo 11</button>
+</div>
+
+<!-- 12 -->
+<div class="sezione" id="s12">
+  <div class="sezione-header">
+    <div class="sezione-num">12</div>
+    <div class="sezione-title" contenteditable="false">SWITCH PLUS</div>
+  </div>
+  <div class="sezione-body">
+    <ul>
+      <li contenteditable="false"><strong>SWITCH BASIC:</strong> scambio tra 2 giocatori dello stesso ruolo.</li>
+      <li contenteditable="false"><strong>SWITCH PLUS:</strong> permette di selezionare un sostituto di ruolo diverso (cambio di modulo). Attivo fino a 1 min. prima del calcio d&rsquo;inizio. Valido solo su leghe fantacalcio.it.</li>
+    </ul>
+    <div class="box box-warning">
+      <div class="box-label">&#x26A0; PROBLEMI BUG SU LEGHE FC</div>
+      <p contenteditable="false">In caso di problemi su App si pu&ograve; inserire la formazione sul gruppo WhatsApp entro e non oltre l&rsquo;orario di inizio della prima partita del turno.</p>
+    </div>
+  </div>
+  <div class="nota-area" id="note-s12"></div>
+  <button class="btn-add-nota" onclick="addNota('s12')">&#xFF0B; Aggiungi nota all'articolo 12</button>
+</div>
+
+<!-- 13 -->
+<div class="sezione" id="s13">
+  <div class="sezione-header">
+    <div class="sezione-num">13</div>
+    <div class="sezione-title" contenteditable="false">MANCATA CONSEGNA FORMAZIONE / ABBONAMENTO</div>
+  </div>
+  <div class="sezione-body">
+    <div class="box box-danger">
+      <div class="box-label">&#x26D4; SANZIONI &ndash; MANCATA FORMAZIONE</div>
+      <ul>
+        <li contenteditable="false">1&deg; avviso: <strong>ammonizione</strong>.</li>
+        <li contenteditable="false">2&deg; avviso: penalizzazione di <strong>-1 punto</strong>.</li>
+        <li contenteditable="false">Successivi: <strong>-2 punti</strong> per ogni giornata in cui non si rispetta.</li>
+        <li contenteditable="false">Al 2&deg; avvertimento: esclusione dai successivi Fantacalcio del canale e valutazione di esclusione dal torneo in corso.</li>
+        <li contenteditable="false"><strong>Alla terza formazione non consegnata: esclusione dal torneo.</strong></li>
+      </ul>
+    </div>
+    <div class="box box-danger">
+      <div class="box-label">&#x26D4; MANCATO PAGAMENTO ABBONAMENTO YOUTUBE</div>
+      <p contenteditable="false">1&deg; richiamo; al 2&deg; avvenimento <strong>ESCLUSIONE DAL FANTA</strong>. La squadra e la rosa vengono affidate a un partecipante sostitutivo.</p>
+    </div>
+    <div class="box box-warning">
+      <div class="box-label">&#x26A0; QUOTA ANNUALE NON RIMBORSABILE</div>
+      <p contenteditable="false">LA QUOTA ABBONAMENTO ANNUALE in caso di esclusione <strong>NON VIENE RIMBORSATA</strong>.</p>
+    </div>
+    <div class="box box-info">
+      <div class="box-label">&#x2696; CASI STRAORDINARI</div>
+      <p contenteditable="false">Situazioni inedite, comportamenti scorretti o casi eccezionali vengono decisi dalla <strong>GOVERNANCE</strong> (consiglio di 4 persone nominato dal mister). La decisione passa sotto il verdetto finale del mister.</p>
+    </div>
+  </div>
+  <div class="nota-area" id="note-s13"></div>
+  <button class="btn-add-nota" onclick="addNota('s13')">&#xFF0B; Aggiungi nota all'articolo 13</button>
+</div>
+
+<!-- 14 -->
+<div class="sezione" id="s14">
+  <div class="sezione-header">
+    <div class="sezione-num">14</div>
+    <div class="sezione-title" contenteditable="false">GESTIONE PARTITE RINVIATE O SOSPESE</div>
+  </div>
+  <div class="sezione-body">
+    <div class="sub-title">CASO DI 1 O 2 PARTITE SOSPESE/RINVIATE PER GIORNATA</div>
+    <ul>
+      <li contenteditable="false"><strong>Recupero entro il turno successivo:</strong> si attende il risultato. Tutti i voti e bonus/malus vengono considerati.</li>
+      <li contenteditable="false"><strong>Recupero oltre il turno successivo:</strong> a tutti i calciatori coinvolti viene assegnato un <strong>6 d&rsquo;ufficio</strong> (6 politico).</li>
+    </ul>
+    <div class="sub-title">CASO DI 3 O PI&Ugrave; PARTITE SOSPESE/RINVIATE PER GIORNATA</div>
+    <ul>
+      <li contenteditable="false">L&rsquo;intera giornata di Fantacalcio &egrave; sospesa. Si attende il recupero di tutti gli incontri.</li>
+      <li contenteditable="false"><strong>Nessun 6 politico:</strong> la giornata &egrave; valida solo al termine di tutte le partite.</li>
+      <li contenteditable="false">Valgono i giocatori schierati al momento del rinvio (anche se cambiano squadra nel mercato).</li>
+      <li contenteditable="false">Se successivamente indisponibili o squalificati nel recupero: si applica il 6 politico.</li>
+    </ul>
+  </div>
+  <div class="nota-area" id="note-s14"></div>
+  <button class="btn-add-nota" onclick="addNota('s14')">&#xFF0B; Aggiungi nota all'articolo 14</button>
+</div>
+
+<!-- 15 -->
+<div class="sezione" id="s15">
+  <div class="sezione-header">
+    <div class="sezione-num">15</div>
+    <div class="sezione-title" contenteditable="false">MERCATO E SVINCOLI</div>
+  </div>
+  <div class="sezione-body">
+    <div class="sub-title">SESSIONI DI MERCATO DI RIPARAZIONE</div>
+    <table>
+      <tr><th>SESSIONE</th><th>DATA</th><th>PIATTAFORMA</th></tr>
+      <tr><td contenteditable="false"><strong>1&ordf; Riparazione</strong></td><td contenteditable="false">Marted&igrave; Ottobre &ndash; ore 20:30</td><td contenteditable="false">FantaLab (live)</td></tr>
+      <tr><td contenteditable="false"><strong>2&ordf; Riparazione</strong></td><td contenteditable="false">Febbraio 2026 &ndash; 1&ordf; settimana (data da concordare)</td><td contenteditable="false">FantaLab (live)</td></tr>
+    </table>
+    <div class="sub-title">CREDITI</div>
+    <ul>
+      <li contenteditable="false">I partecipanti <strong>NON ricevono crediti extra</strong> ad ogni sessione.</li>
+      <li contenteditable="false">I crediti risparmiati nell&rsquo;asta (iniziale o successive) sono validi per le aste future.</li>
+      <li contenteditable="false">In caso di scambi, i giocatori mantengono il loro credito d&rsquo;acquisto originale (immutato).</li>
+    </ul>
+    <div class="sub-title">SVINCOLI</div>
+    <p contenteditable="false">Svincolare un giocatore restituisce il <strong>100% del valore d&rsquo;acquisto</strong> (in qualsiasi caso: cessione estero, ecc.).</p>
+    <ul>
+      <li contenteditable="false">I giocatori svincolati non possono essere riacquistati (n&eacute; tramite asta n&eacute; tramite scambi) nella stessa sessione di mercato.</li>
+      <li contenteditable="false">In ogni mercato di riparazione, ad ogni svincolo deve corrispondere un acquisto.</li>
+      <li contenteditable="false"><strong>LA ROSA DEVE SEMPRE RIMANERE A 26 GIOCATORI (4/8/8/6).</strong></li>
+    </ul>
+    <div class="box box-info">
+      <div class="box-label">&#x2696; LIMITE SVINCOLI PER SESSIONE</div>
+      <p contenteditable="false">Max <strong>5 svincoli</strong> per squadra per sessione, indipendentemente dal ruolo. <strong>ECCEZIONE:</strong> i giocatori con asterisco (*) su Leghe FC (ceduti all&rsquo;estero) NON contano nel limite dei 5 (es: 5 normali + 1 con asterisco = 6 svincoli totali).</p>
+    </div>
+    <p contenteditable="false">Come fare gli svincoli: App Leghe Fantacalcio &rarr; sezione Mercato &rarr; <strong>SVINCOLI AL BUIO</strong>. Modifiche illimitate prima dell&rsquo;apertura.</p>
+  </div>
+  <div class="nota-area" id="note-s15"></div>
+  <button class="btn-add-nota" onclick="addNota('s15')">&#xFF0B; Aggiungi nota all'articolo 15</button>
+</div>
+
+<!-- 16 -->
+<div class="sezione" id="s16">
+  <div class="sezione-header">
+    <div class="sezione-num">16</div>
+    <div class="sezione-title" contenteditable="false">SESSIONI DI SCAMBI</div>
+  </div>
+  <div class="sezione-body">
+    <table>
+      <tr><th>FINESTRA</th><th>PERIODO</th></tr>
+      <tr><td contenteditable="false"><strong>1&ordf; Finestra</strong></td><td contenteditable="false">Settimana dopo l&rsquo;asta iniziale di agosto</td></tr>
+      <tr><td contenteditable="false"><strong>2&ordf; Finestra</strong></td><td contenteditable="false">Settimana dopo l&rsquo;asta riparazione di ottobre</td></tr>
+      <tr><td contenteditable="false"><strong>3&ordf; Finestra</strong></td><td contenteditable="false">Settimana durante sosta nazionali settembre/novembre</td></tr>
+      <tr><td contenteditable="false"><strong>4&ordf; Finestra</strong></td><td contenteditable="false">Settimana dopo l&rsquo;asta riparazione di febbraio</td></tr>
+      <tr><td contenteditable="false"><strong>* Extra facoltativa</strong></td><td contenteditable="false">Decisa dal mister</td></tr>
+    </table>
+    <div class="sub-title">REGOLE DEGLI SCAMBI</div>
+    <ul>
+      <li contenteditable="false">Gli scambi devono essere <strong>numericamente uguali</strong> per entrambe le squadre (es: 1 centrocampista + 1 attaccante in cambio di 1 centrocampista + 1 attaccante).</li>
+      <li contenteditable="false">Gli scambi vanno ufficializzati tramite <strong>doppio consenso</strong> sul gruppo WhatsApp. Possono essere proposti privatamente su WhatsApp o tramite App Leghe FC.</li>
+      <li contenteditable="false">Dopo aver ufficializzato uno scambio <strong>NON &egrave; possibile annullarlo</strong> senza doppio consenso.</li>
+      <li contenteditable="false">Vietati prestiti e altre clausole durante gli scambi.</li>
+      <li contenteditable="false">Dopo ogni sessione, la rosa deve tornare numericamente a quella iniziale.</li>
+    </ul>
+    <div class="box box-novita">
+      <div class="box-label">&#x2605; NOVIT&Agrave; 2025/26 &ndash; ASTERISCO: DIVIETO DI SCAMBIO</div>
+      <p contenteditable="false">I giocatori con asterisco (*) (ceduti all&rsquo;estero o fuori dalla Serie A) <strong>NON possono essere scambiati</strong>. Possono essere svincolati nelle sessioni di riparazione.</p>
+    </div>
+    <div class="box box-novita">
+      <div class="box-label">&#x2605; NOVIT&Agrave; 2025/26 &ndash; SCAMBI FRAUDOLENTI</div>
+      <p contenteditable="false">In caso di scambi palesemente sospetti (es: cedere giocatori forti in cambio di giocatori scarsi), la Governance pu&ograve; intervenire su segnalazione di un membro per esaminare la transazione.</p>
+    </div>
+  </div>
+  <div class="nota-area" id="note-s16"></div>
+  <button class="btn-add-nota" onclick="addNota('s16')">&#xFF0B; Aggiungi nota all'articolo 16</button>
+</div>
+
+<!-- 17 -->
+<div class="sezione" id="s17">
+  <div class="sezione-header">
+    <div class="sezione-num">17</div>
+    <div class="sezione-title" contenteditable="false">SOSTITUZIONE GIOCATORI TRASFERITI ALL&rsquo;ESTERO</div>
+  </div>
+  <div class="sezione-body">
+    <div class="box box-novita">
+      <div class="box-label">&#x2605; NOVIT&Agrave; 2025/26</div>
+      <p contenteditable="false">Dopo il mercato estivo (post-asta agosto) e dopo il mercato invernale (post-asta febbraio): se un giocatore viene ceduto all&rsquo;estero (Turchia, Grecia, Arabia, ecc.), puoi sostituirlo con uno svincolato di fantavalore medio pari o inferiore.</p>
+      <ul>
+        <li contenteditable="false"><strong>Priorit&agrave;:</strong> chi ha pagato di pi&ugrave; il giocatore ceduto all&rsquo;asta iniziale. A parit&agrave;, sorteggio.</li>
+        <li contenteditable="false"><strong>NON vale</strong> per la finestra di novembre (da novembre a gennaio).</li>
+      </ul>
+    </div>
+  </div>
+  <div class="nota-area" id="note-s17"></div>
+  <button class="btn-add-nota" onclick="addNota('s17')">&#xFF0B; Aggiungi nota all'articolo 17</button>
+</div>
+
+<!-- 18 -->
+<div class="sezione" id="s18">
+  <div class="sezione-header">
+    <div class="sezione-num">18</div>
+    <div class="sezione-title" contenteditable="false">GOVERNANCE E TUTELA DEL GIOCO CORRETTO</div>
+  </div>
+  <div class="sezione-body">
+    <div class="box box-danger">
+      <div class="box-label">&#x26D4; COMPORTAMENTO SCORRETTO ACCERTATO</div>
+      <p contenteditable="false">In caso di comportamento scorretto accertato, la Governance pu&ograve; <strong>escludere il partecipante anche a campionato in corso</strong>. LA QUOTA ABBONAMENTO ANNUALE in caso di esclusione <strong>NON VIENE RIMBORSATA</strong>.</p>
+    </div>
+  </div>
+  <div class="nota-area" id="note-s18"></div>
+  <button class="btn-add-nota" onclick="addNota('s18')">&#xFF0B; Aggiungi nota all'articolo 18</button>
+</div>
+
+<!-- 19 -->
+<div class="sezione" id="s19">
+  <div class="sezione-header">
+    <div class="sezione-num">19</div>
+    <div class="sezione-title" contenteditable="false">COPPA &ndash; TRAPATTONI</div>
+  </div>
+  <div class="sezione-body">
+    <div class="chips">
+      <span class="chip-verde" contenteditable="false">Inizio: 23&ordf; giornata Serie A</span>
+      <span class="chip-verde" contenteditable="false">Fine: 37&ordf; giornata</span>
+      <span class="chip-verde" contenteditable="false">15 giornate totali</span>
+    </div>
+    <div class="sub-title">FASE A GIRONI</div>
+    <ul>
+      <li contenteditable="false">2 gironi da 6 squadre, con inserimento di <strong>2 squadre GHOST</strong> (punteggio fisso di 67 a giornata).</li>
+      <li contenteditable="false">Partite andata e ritorno all&rsquo;italiana.</li>
+      <li contenteditable="false">Passano le <strong>prime 4 squadre di ogni girone</strong>.</li>
+    </ul>
+    <div class="sub-title">CRITERI ORDINAMENTO GIRONE</div>
+    <ol>
+      <li contenteditable="false"><strong>Somma punti totale</strong></li>
+      <li contenteditable="false">Differenza reti</li>
+      <li contenteditable="false">Gol fatti</li>
+      <li contenteditable="false">Gol subiti</li>
+      <li contenteditable="false">Classifica avulsa</li>
+    </ol>
+    <div class="sub-title">FASI FINALI</div>
+    <ul>
+      <li contenteditable="false"><strong>Quarti &amp; Semifinali:</strong> partite andata e ritorno.</li>
+      <li contenteditable="false"><strong>Finale:</strong> partita unica.</li>
+    </ul>
+    <div class="sub-title">CRITERI PASSAGGIO TURNO (FASI FINALI)</div>
+    <ol>
+      <li contenteditable="false">Somma punti</li>
+      <li contenteditable="false">Supplementari e rigori</li>
+      <li contenteditable="false">Ex criterio UEFA (gol in trasferta)</li>
+    </ol>
+  </div>
+  <div class="nota-area" id="note-s19"></div>
+  <button class="btn-add-nota" onclick="addNota('s19')">&#xFF0B; Aggiungi nota all'articolo 19</button>
+</div>
+
+<!-- 20 -->
+<div class="sezione" id="s20">
+  <div class="sezione-header">
+    <div class="sezione-num">20</div>
+    <div class="sezione-title" contenteditable="false">RICONOSCIMENTI FINALI &ndash; STAGIONE 2026/2027</div>
+  </div>
+  <div class="sezione-body">
+    <p contenteditable="false">Montepremi totale: <strong>&euro; 550 in Buoni Amazon</strong> (soggetto a conferma definitiva). Abbonamento YouTube obbligatorio per tutta la stagione.</p>
+    <div class="premi-grid">
+      <div class="premio">
+        <div class="pos">1&deg; CLASSIFICATO</div>
+        <div class="nome" contenteditable="false">Campione Classic Mazzone 2025/26</div>
+        <div class="cifra" contenteditable="false">&euro; 210</div>
+      </div>
+      <div class="premio">
+        <div class="pos">2&deg; CLASSIFICATO</div>
+        <div class="nome" contenteditable="false">Vice Campione</div>
+        <div class="cifra" contenteditable="false">&euro; 150</div>
+      </div>
+      <div class="premio">
+        <div class="pos">VINCITORE COPPA</div>
+        <div class="nome" contenteditable="false">Trofeo Coppa Trapattoni</div>
+        <div class="cifra" contenteditable="false">&euro; 120</div>
+      </div>
+      <div class="premio">
+        <div class="pos">3&deg; CLASSIFICATO</div>
+        <div class="nome" contenteditable="false">Terzo Posto</div>
+        <div class="cifra" contenteditable="false">&euro; 70</div>
+      </div>
+    </div>
+  </div>
+  <div class="nota-area" id="note-s20"></div>
+  <button class="btn-add-nota" onclick="addNota('s20')">&#xFF0B; Aggiungi nota all'articolo 20</button>
+</div>
+
+</div><!-- /main -->
+
+<div class="footer">
+  <span contenteditable="false">Classic Mazzone &ndash; Regolamento Ufficiale 2026/2027</span>
+  <span>IL MISTER FABRY &#x26BD;</span>
+</div>
+
+<script>
+let editMode = false;
+const NOTES_KEY = 'regolamento-classic-note';
+
+function getNotes() { return JSON.parse(localStorage.getItem(NOTES_KEY) || '{}'); }
+function saveNotes(notes) { localStorage.setItem(NOTES_KEY, JSON.stringify(notes)); }
+
+function loadNotes() {
+  const notes = getNotes();
+  Object.entries(notes).forEach(([sectionId, arr]) => {
+    arr.forEach((text, i) => renderNota(sectionId, text, i));
+  });
+}
+
+function renderNota(sectionId, text, idx) {
+  const area = document.getElementById('note-' + sectionId);
+  if (!area) return;
+  const box = document.createElement('div');
+  box.className = 'nota-box';
+  box.dataset.idx = idx;
+  box.innerHTML = `<div class="nota-label">&#x1F4DD; NOTA PERSONALE</div>
+    <div class="nota-text" contenteditable="${editMode}" data-section="${sectionId}" data-idx="${idx}">${text}</div>
+    <button class="nota-del" title="Elimina nota" onclick="deleteNota('${sectionId}',${idx})">&#x2715;</button>`;
+  area.appendChild(box);
+  const textEl = box.querySelector('.nota-text');
+  textEl.addEventListener('input', () => updateNota(sectionId, idx, textEl.innerText));
+}
+
+function addNota(sectionId) {
+  const notes = getNotes();
+  if (!notes[sectionId]) notes[sectionId] = [];
+  const idx = notes[sectionId].length;
+  notes[sectionId].push('');
+  saveNotes(notes);
+  renderNota(sectionId, '', idx);
+  const area = document.getElementById('note-' + sectionId);
+  const newBox = area.lastElementChild;
+  const textEl = newBox.querySelector('.nota-text');
+  textEl.focus();
+}
+
+function updateNota(sectionId, idx, text) {
+  const notes = getNotes();
+  if (!notes[sectionId]) return;
+  notes[sectionId][idx] = text;
+  saveNotes(notes);
+}
+
+function deleteNota(sectionId, idx) {
+  const notes = getNotes();
+  if (!notes[sectionId]) return;
+  notes[sectionId].splice(idx, 1);
+  saveNotes(notes);
+  const area = document.getElementById('note-' + sectionId);
+  area.innerHTML = '';
+  notes[sectionId].forEach((text, i) => renderNota(sectionId, text, i));
+}
+
+function toggleEdit() {
+  editMode = !editMode;
+  const btn = document.getElementById('edit-toggle');
+  const hint = document.getElementById('edit-hint');
+  btn.textContent = editMode ? '✓ Fine modifica' : '✏ Modifica';
+  btn.classList.toggle('active', editMode);
+  hint.classList.toggle('show', editMode);
+  document.body.classList.toggle('edit-active', editMode);
+  document.querySelectorAll('[contenteditable]').forEach(el => {
+    el.contentEditable = editMode ? 'true' : 'false';
+  });
+  document.querySelectorAll('.nota-text').forEach(el => {
+    el.contentEditable = editMode ? 'true' : 'false';
+  });
+  document.querySelectorAll('.nota-del').forEach(el => {
+    el.style.display = editMode ? 'block' : 'none';
+  });
+}
+
+loadNotes();
+
+document.getElementById('btn-github').addEventListener('click', async () => {
+  const GH_REPO = 'fabmiscia/Il-Mister-Fabry';
+  const GH_FILE = 'regolamento-classic-mazzone.html';
+  let token = localStorage.getItem('gh-token');
+  if (!token) {
+    token = prompt('🔑 GitHub Personal Access Token:');
+    if (!token) return;
+    localStorage.setItem('gh-token', token.trim());
+    token = token.trim();
+  }
+  const btn = document.getElementById('btn-github');
+  btn.textContent = '⏳ Caricando...';
+  btn.disabled = true;
+  try {
+    const headers = { 'Authorization': `token ${token}`, 'Content-Type': 'application/json' };
+    const getResp = await fetch(`https://api.github.com/repos/${GH_REPO}/contents/${GH_FILE}`, { headers });
+    let sha = null;
+    if (getResp.ok) { const d = await getResp.json(); sha = d.sha; }
+    else if (getResp.status === 401) { localStorage.removeItem('gh-token'); throw new Error('Token non valido.'); }
+    const source = '<!DOCTYPE html>\n' + document.documentElement.outerHTML;
+    const encoded = btoa(unescape(encodeURIComponent(source)));
+    const body = { message: 'Regolamento Classic Mazzone aggiornato', content: encoded };
+    if (sha) body.sha = sha;
+    const pushResp = await fetch(`https://api.github.com/repos/${GH_REPO}/contents/${GH_FILE}`, { method: 'PUT', headers, body: JSON.stringify(body) });
+    if (!pushResp.ok) { const e = await pushResp.json(); throw new Error(e.message); }
+    btn.textContent = '✅ Pubblicato!';
+    setTimeout(() => { btn.textContent = '📤 Su GitHub'; btn.disabled = false; }, 3000);
+  } catch (e) {
+    alert('❌ ' + e.message);
+    btn.textContent = '📤 Su GitHub';
+    btn.disabled = false;
+  }
+});
+</script>
+</body>
+</html>
