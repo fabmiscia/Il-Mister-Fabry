@@ -6,72 +6,135 @@
 <title>Fantacalcio 2026-27 — MisterFabry</title>
 <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@600;700&display=swap" rel="stylesheet">
 <style>
-  * { margin:0; padding:0; box-sizing:border-box; }
-  body { background:#0a0a0a; font-family:'Oswald',sans-serif; min-height:100vh; padding:60px 24px 80px; }
-  .page { max-width:1100px; margin:0 auto; display:flex; flex-direction:column; align-items:center; gap:56px; }
-  h1 { color:#2DB84A; font-size:28px; letter-spacing:3px; text-transform:uppercase; }
-  .sezione { width:100%; }
-  .sezione-title { font-size:11px; letter-spacing:4px; color:#555; text-transform:uppercase; border-bottom:1px solid #1a1a1a; padding-bottom:12px; margin-bottom:24px; }
-  .sezione-title span { color:#2DB84A; margin-right:8px; }
-  .cards { display:flex; gap:20px; flex-wrap:wrap; }
-  a.card { display:flex; flex-direction:column; align-items:center; justify-content:center; gap:12px; width:300px; height:170px; background:#111; border:2px solid rgba(45,184,74,.3); border-radius:12px; text-decoration:none; color:#fff; font-size:18px; font-weight:700; letter-spacing:1.5px; text-transform:uppercase; transition:border-color .2s, box-shadow .2s, transform .15s; }
-  a.card:hover { border-color:#2DB84A; box-shadow:0 0 28px rgba(45,184,74,.25); transform:translateY(-3px); }
-  a.card .icon { font-size:36px; }
-  a.card .sub { font-size:11px; font-weight:400; color:rgba(255,255,255,.4); letter-spacing:2px; }
+* { margin:0; padding:0; box-sizing:border-box; }
+body { background:#0a0a0a; font-family:'Oswald',sans-serif; min-height:100vh; }
+
+#login-screen { display:flex; flex-direction:column; align-items:center; justify-content:center; min-height:100vh; padding:40px 24px; gap:32px; }
+.login-logo { color:#2DB84A; font-size:32px; letter-spacing:4px; text-transform:uppercase; }
+.login-logo span { color:#fff; }
+.login-box { background:#111; border:2px solid rgba(45,184,74,.3); border-radius:16px; padding:40px; display:flex; flex-direction:column; align-items:center; gap:20px; width:100%; max-width:400px; }
+.login-icon { font-size:48px; }
+.login-title { color:#fff; font-size:18px; letter-spacing:2px; text-align:center; }
+.login-sub { color:#555; font-size:11px; letter-spacing:2px; text-align:center; }
+.login-input { width:100%; background:#0a0a0a; border:1.5px solid #222; border-radius:8px; padding:14px 16px; color:#fff; font-family:'Oswald',sans-serif; font-size:16px; letter-spacing:3px; text-align:center; outline:none; transition:border-color .2s; }
+.login-input:focus { border-color:#2DB84A; }
+.login-input::placeholder { color:#333; letter-spacing:2px; font-size:13px; }
+.login-btn { width:100%; background:#2DB84A; color:#000; border:none; border-radius:8px; padding:14px; font-family:'Oswald',sans-serif; font-size:14px; font-weight:700; letter-spacing:2px; cursor:pointer; transition:opacity .15s, transform .1s; }
+.login-btn:hover { opacity:.85; transform:translateY(-1px); }
+.login-error { color:#cc4444; font-size:11px; letter-spacing:1px; min-height:16px; }
+.login-hint { color:#333; font-size:10px; letter-spacing:1px; text-align:center; }
+
+#main-screen { display:none; flex-direction:column; }
+.toolbar { background:#0a0a0a; border-bottom:1px solid #1a1a1a; padding:10px 24px; display:flex; align-items:center; gap:10px; flex-wrap:wrap; position:sticky; top:0; z-index:100; }
+.toolbar-title { color:#2DB84A; font-size:13px; letter-spacing:2px; white-space:nowrap; }
+.spacer { flex:1; }
+.btn { padding:6px 14px; border-radius:6px; font-family:'Oswald',sans-serif; font-size:11px; font-weight:600; letter-spacing:1px; cursor:pointer; border:none; transition:opacity .15s; }
+.btn-edit { background:transparent; border:1.5px solid #2DB84A; color:#2DB84A; }
+.btn-edit.active { background:#2DB84A; color:#000; }
+.btn-github { background:#24292e; color:#fff; border:1.5px solid rgba(255,255,255,.2); }
+.btn-logout { background:transparent; border:1.5px solid #333; color:#555; font-size:10px; }
+.btn-logout:hover { border-color:#cc4444; color:#cc4444; }
+
+.edit-banner { display:none; background:#1a2a1a; border-bottom:1px solid #2DB84A; padding:10px 24px; font-size:11px; color:#2DB84A; letter-spacing:1px; align-items:center; gap:12px; flex-wrap:wrap; }
+.edit-banner.show { display:flex; }
+.pwd-field { background:#0a0a0a; border:1px solid #2DB84A; border-radius:4px; padding:5px 12px; color:#2DB84A; font-family:'Oswald',sans-serif; font-size:13px; letter-spacing:2px; width:200px; outline:none; }
+.edit-hint-txt { color:#555; font-size:10px; letter-spacing:1px; }
+
+.page { max-width:1100px; margin:0 auto; padding:60px 24px 80px; display:flex; flex-direction:column; gap:56px; }
+.sezione-title { font-size:11px; letter-spacing:4px; color:#555; text-transform:uppercase; border-bottom:1px solid #1a1a1a; padding-bottom:12px; margin-bottom:24px; }
+.sezione-title span { color:#2DB84A; margin-right:8px; }
+.cards { display:flex; gap:20px; flex-wrap:wrap; }
+a.card { display:flex; flex-direction:column; align-items:center; justify-content:center; gap:12px; width:300px; height:170px; background:#111; border:2px solid rgba(45,184,74,.3); border-radius:12px; text-decoration:none; color:#fff; font-size:18px; font-weight:700; letter-spacing:1.5px; text-transform:uppercase; transition:border-color .2s, box-shadow .2s, transform .15s; }
+a.card:hover { border-color:#2DB84A; box-shadow:0 0 28px rgba(45,184,74,.25); transform:translateY(-3px); }
+a.card .icon { font-size:36px; }
+a.card .sub { font-size:11px; font-weight:400; color:rgba(255,255,255,.4); letter-spacing:2px; }
 </style>
 </head>
 <body>
-<div class="page">
-  <h1>&#x26BD; Fantacalcio 2026-27</h1>
 
-  <div class="sezione">
-    <div class="sezione-title"><span>&#x2022;</span> Materiali per l&rsquo;Asta</div>
-    <div class="cards">
-      <a class="card" href="fantacalcio-porte-card.html">
-        <span class="icon">&#x1F9E4;</span>
-        <span>Porte Serie A</span>
-        <span class="sub">Analisi &middot; Spesa &middot; Appetibilit&agrave;</span>
-      </a>
-      <a class="card" href="allenatori-fantacalcio-2026.html">
-        <span class="icon">&#x1F4CB;</span>
-        <span>Allenatori</span>
-        <span class="sub">Coach Card &middot; Moduli &middot; Stile</span>
-      </a>
-      <a class="card" href="cammino-verso-lasta.html">
-        <span class="icon">&#x26F0;&#xFE0F;</span>
-        <span>Il Cammino verso l&rsquo;Asta</span>
-        <span class="sub">Calendario &middot; Tappe &middot; Mappa</span>
-      </a>
-    </div>
+<div id="login-screen">
+  <div class="login-logo">IL MISTER <span>FABRY</span></div>
+  <div class="login-box">
+    <div class="login-icon">&#x26BD;</div>
+    <div class="login-title">AREA ABBONATI</div>
+    <div class="login-sub">Inserisci la password del mese ricevuta su Telegram</div>
+    <input class="login-input" type="password" id="pwd-input" placeholder="Password mensile" autocomplete="off">
+    <div class="login-error" id="login-error"></div>
+    <button class="login-btn" onclick="doLogin()">ENTRA</button>
+    <div class="login-hint">Password valida per il mese corrente</div>
   </div>
-
-  <div class="sezione">
-    <div class="sezione-title"><span>&#x2022;</span> Fasce</div>
-    <div class="cards">
-      <a class="card" href="fasce-mantra-marzo.html">
-        <span class="icon">&#x1F4CA;</span>
-        <span>Fasce Mantra</span>
-        <span class="sub">Marzo &middot; Fantacalcio 2026-27</span>
-      </a>
-      <a class="card" href="fasce-classic-marzo.html">
-        <span class="icon">&#x1F4CB;</span>
-        <span>Fasce Classic</span>
-        <span class="sub">Marzo &middot; Fantacalcio 2026-27</span>
-      </a>
-    </div>
-  </div>
-
-  <div class="sezione">
-    <div class="sezione-title"><span>&#x2022;</span> Regolamenti</div>
-    <div class="cards">
-      <a class="card" href="regolamento-classic-mazzone.html">
-        <span class="icon">&#x1F4DC;</span>
-        <span>Regolamento</span>
-        <span class="sub">Classic Mazzone &middot; 2026/27</span>
-      </a>
-    </div>
-  </div>
-
 </div>
+
+<div id="main-screen">
+  <div class="toolbar">
+    <span class="toolbar-title">&#x26BD; FANTACALCIO 2026-27</span>
+    <div class="spacer"></div>
+    <button class="btn btn-edit" id="btn-edit" onclick="toggleEdit()">&#x270F; Modifica</button>
+    <button class="btn btn-github" id="btn-github">&#x1F4E4; Su GitHub</button>
+    <button class="btn btn-logout" onclick="doLogout()">Esci</button>
+  </div>
+  <div class="edit-banner" id="edit-banner">
+    &#x270F; Password del mese:
+    <input class="pwd-field" id="pwd-edit" type="text" placeholder="es. FABRY-LUGLIO">
+    <span class="edit-hint-txt">Cambiala e premi "Su GitHub" per aggiornare l'accesso di tutti gli abbonati</span>
+  </div>
+  <div class="page">
+    <div class="sezione">
+      <div class="sezione-title"><span>&#x2022;</span> Materiali per l'Asta</div>
+      <div class="cards">
+        <a class="card" href="fantacalcio-porte-card.html"><span class="icon">&#x1F9E4;</span><span>Porte Serie A</span><span class="sub">Analisi &middot; Spesa &middot; Appetibilit&agrave;</span></a>
+        <a class="card" href="allenatori-fantacalcio-2026.html"><span class="icon">&#x1F4CB;</span><span>Allenatori</span><span class="sub">Coach Card &middot; Moduli &middot; Stile</span></a>
+        <a class="card" href="cammino-verso-lasta.html"><span class="icon">&#x26F0;&#xFE0F;</span><span>Il Cammino verso l'Asta</span><span class="sub">Calendario &middot; Tappe &middot; Mappa</span></a>
+      </div>
+    </div>
+    <div class="sezione">
+      <div class="sezione-title"><span>&#x2022;</span> Fasce</div>
+      <div class="cards">
+        <a class="card" href="fasce-mantra-marzo.html"><span class="icon">&#x1F4CA;</span><span>Fasce Mantra</span><span class="sub">Marzo &middot; Fantacalcio 2026-27</span></a>
+        <a class="card" href="fasce-classic-marzo.html"><span class="icon">&#x1F4CB;</span><span>Fasce Classic</span><span class="sub">Marzo &middot; Fantacalcio 2026-27</span></a>
+      </div>
+    </div>
+    <div class="sezione">
+      <div class="sezione-title"><span>&#x2022;</span> Regolamenti</div>
+      <div class="cards">
+        <a class="card" href="regolamento-classic-mazzone.html"><span class="icon">&#x1F4DC;</span><span>Regolamento</span><span class="sub">Classic Mazzone &middot; 2026/27</span></a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+/* <<PWD_START>> */
+const MONTHLY_PWD = 'FABRY-GIUGNO';
+/* <<PWD_END>> */
+const STORE_KEY = 'mf-access';
+function getStoredAccess(){try{return JSON.parse(localStorage.getItem(STORE_KEY)||'null');}catch(e){return null;}}
+function isAccessValid(s){if(!s)return false;const n=new Date();return s.pwd===MONTHLY_PWD&&s.month===n.getMonth()&&s.year===n.getFullYear();}
+function doLogin(){const v=document.getElementById('pwd-input').value.trim().toUpperCase();if(v===MONTHLY_PWD){const n=new Date();localStorage.setItem(STORE_KEY,JSON.stringify({pwd:v,month:n.getMonth(),year:n.getFullYear()}));showMain();}else{document.getElementById('login-error').textContent='Password errata. Controlla il gruppo Telegram.';document.getElementById('pwd-input').value='';document.getElementById('pwd-input').focus();}}
+function doLogout(){localStorage.removeItem(STORE_KEY);document.getElementById('main-screen').style.display='none';document.getElementById('login-screen').style.display='flex';document.getElementById('pwd-input').value='';}
+function showMain(){document.getElementById('login-screen').style.display='none';const m=document.getElementById('main-screen');m.style.display='flex';m.style.flexDirection='column';}
+window.addEventListener('DOMContentLoaded',function(){if(isAccessValid(getStoredAccess()))showMain();document.getElementById('pwd-input').addEventListener('keydown',function(e){if(e.key==='Enter')doLogin();});document.getElementById('pwd-edit').value=MONTHLY_PWD;});
+let editMode=false;
+function toggleEdit(){editMode=!editMode;const btn=document.getElementById('btn-edit');const banner=document.getElementById('edit-banner');btn.textContent=editMode?'\u2713 Fine modifica':'\u270F Modifica';btn.classList.toggle('active',editMode);banner.classList.toggle('show',editMode);if(editMode)document.getElementById('pwd-edit').focus();}
+document.getElementById('btn-github').addEventListener('click',async function(){
+  const GH_REPO='fabmiscia/Il-Mister-Fabry',GH_FILE='index.html';
+  let token=localStorage.getItem('gh-token');
+  if(!token){token=prompt('GitHub Personal Access Token:');if(!token)return;localStorage.setItem('gh-token',token.trim());token=token.trim();}
+  const btn=document.getElementById('btn-github');btn.textContent='\u23F3 Caricando...';btn.disabled=true;
+  try{
+    const newPwd=document.getElementById('pwd-edit').value.trim().toUpperCase()||MONTHLY_PWD;
+    let source='<!DOCTYPE html>\n'+document.documentElement.outerHTML;
+    source=source.replace(/\/\* <<PWD_START>> \*\/[\s\S]*?\/\* <<PWD_END>> \*\//,'/* <<PWD_START>> */\nconst MONTHLY_PWD = \''+newPwd+'\';\n/* <<PWD_END>> */');
+    const headers={'Authorization':'token '+token,'Content-Type':'application/json'};
+    const getResp=await fetch('https://api.github.com/repos/'+GH_REPO+'/contents/'+GH_FILE,{headers});
+    if(!getResp.ok&&getResp.status!==404){if(getResp.status===401){localStorage.removeItem('gh-token');throw new Error('Token non valido.');}throw new Error('Errore '+getResp.status);}
+    const body={message:'Aggiorna homepage e password mensile',content:btoa(unescape(encodeURIComponent(source)))};
+    if(getResp.ok){const d=await getResp.json();body.sha=d.sha;}
+    const pushResp=await fetch('https://api.github.com/repos/'+GH_REPO+'/contents/'+GH_FILE,{method:'PUT',headers,body:JSON.stringify(body)});
+    if(!pushResp.ok){const e=await pushResp.json();throw new Error(e.message);}
+    btn.textContent='\u2705 Pubblicato!';setTimeout(()=>{btn.textContent='\u1F4E4 Su GitHub';btn.disabled=false;},3000);
+  }catch(e){alert('\u274C '+e.message);btn.textContent='\u1F4E4 Su GitHub';btn.disabled=false;}
+});
+</script>
 </body>
 </html>
