@@ -1,9 +1,8 @@
 <!DOCTYPE html>
-<html lang="it">
-<head>
+<html lang="it"><head>
 <meta charset="UTF-8">
 <title>Fantacalcio 2026-27 – Coach Card</title>
-<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 <style>
 
@@ -63,8 +62,13 @@ body {
 .btn:hover { opacity: .85; transform: translateY(-1px); }
 .btn:active { transform: translateY(0); }
 
-.btn-export { background: #00c3ff; color: #000; }
+.btn-export   { background: #00c3ff; color: #000; }
 .btn-add-note { background: rgba(0,195,255,0.15); color: #00c3ff; border: 1.5px solid rgba(0,195,255,0.4); }
+.btn-reset     { background: rgba(255,80,80,.15); color: #ff8080; border: 1.5px solid rgba(255,80,80,.3); }
+.btn-save-html { background: rgba(0,195,255,.12); color: #00c3ff; border: 1.5px solid rgba(0,195,255,.35); }
+.btn-github    { background: rgba(255,200,0,.12); color: #ffc800; border: 1.5px solid rgba(255,200,0,.35); }
+.save-status   { font-size: 11px; color: #00c3ff; letter-spacing: 1px; min-width: 80px; text-align:right; opacity:0; transition: opacity .4s; }
+.save-status.visible { opacity:1; }
 
 /* ──────────────────────────────────────────────────────────────
    CARD  1280 × 720
@@ -294,7 +298,7 @@ body {
 }
 
 /* Player dot groups — clickable */
-.player-dot { cursor: pointer; }
+.player-dot { cursor: pointer; pointer-events: all; }
 .player-dot:hover circle {
   filter: brightness(1.2);
   stroke-width: 3.5;
@@ -503,7 +507,11 @@ body {
 <div class="toolbar">
   <h2>⚽ Fantacalcio 2026-27 — Coach Card Editor</h2>
   <span>Clicca su qualsiasi elemento per modificarlo</span>
+  <span class="save-status" id="save-status">💾 Salvato</span>
   <button class="btn btn-add-note" id="btn-add-note">+ Aggiungi nota</button>
+  <button class="btn btn-reset" id="btn-reset">↺ Reset</button>
+  <button class="btn btn-save-html" id="btn-save-html">💾 Scarica HTML</button>
+  <button class="btn btn-github" id="btn-github" disabled="">⏳ Caricando...</button>
   <button class="btn btn-export" id="btn-export">📥 Esporta PNG</button>
 </div>
 
@@ -516,7 +524,7 @@ body {
     <!-- Clicca per caricare la foto dell'allenatore -->
     <div class="coach-photo" id="coach-photo-area" title="Clicca per caricare la foto dell'allenatore">
       <svg width="46" height="46" viewBox="0 0 24 24" fill="rgba(0,195,255,.28)">
-        <path d="M12 12c2.7 0 4.8-2.1 4.8-4.8S14.7 2.4 12 2.4 7.2 4.5 7.2 7.2 9.3 12 12 12zm0 2.4c-3.2 0-9.6 1.6-9.6 4.8v2.4h19.2v-2.4c0-3.2-6.4-4.8-9.6-4.8z"/>
+        <path d="M12 12c2.7 0 4.8-2.1 4.8-4.8S14.7 2.4 12 2.4 7.2 4.5 7.2 7.2 9.3 12 12 12zm0 2.4c-3.2 0-9.6 1.6-9.6 4.8v2.4h19.2v-2.4c0-3.2-6.4-4.8-9.6-4.8z"></path>
       </svg>
       FOTO
       <div class="upload-hint">clicca per caricare</div>
@@ -525,7 +533,7 @@ body {
     <!-- Clicca per caricare il logo della squadra -->
     <div class="team-logo" id="team-logo-area" title="Clicca per caricare il logo della squadra">
       <svg width="36" height="36" viewBox="0 0 24 24" fill="rgba(255,200,0,.32)">
-        <path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4z"/>
+        <path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4z"></path>
       </svg>
       LOGO
       <div class="upload-hint">clicca per caricare</div>
@@ -541,12 +549,12 @@ body {
 
       <div class="info-block">
         <span class="info-label">Squadra</span>
-        <span class="info-value no-enter" contenteditable="true">Roma</span>
+        <span class="info-value no-enter" contenteditable="true" data-key="squadra">Roma</span>
       </div>
 
       <div class="info-block">
         <span class="info-label">Allenatore</span>
-        <span class="info-value no-enter" contenteditable="true">Gasperini</span>
+        <span class="info-value no-enter" contenteditable="true" data-key="allenatore">Gasperini</span>
       </div>
 
       <div class="info-block">
@@ -557,7 +565,7 @@ body {
 
       <div class="info-block">
         <span class="info-label">Modulo</span>
-        <span class="info-value no-enter" contenteditable="true">3-4-2-1</span>
+        <span class="info-value no-enter" contenteditable="true" data-key="modulo">3-4-2-1</span>
       </div>
 
       <div class="info-block">
@@ -568,7 +576,7 @@ body {
           <span class="st on">★</span>
           <span class="st on">★</span>
           <span class="st on">★</span>
-          <span class="st on">★</span>
+          <span class="st off">★</span>
         </div>
       </div>
 
@@ -591,35 +599,35 @@ body {
           <svg id="field-svg" width="455" height="300" viewBox="0 0 500 330" xmlns="http://www.w3.org/2000/svg">
 
             <!-- Campo -->
-            <rect width="500" height="330" rx="9" fill="#1b5e2e"/>
+            <rect width="500" height="330" rx="9" fill="#1b5e2e"></rect>
             <!-- Strisce erba -->
-            <rect x="0"   y="0" width="50" height="330" fill="#1e6632"/>
-            <rect x="100" y="0" width="50" height="330" fill="#1e6632"/>
-            <rect x="200" y="0" width="50" height="330" fill="#1e6632"/>
-            <rect x="300" y="0" width="50" height="330" fill="#1e6632"/>
-            <rect x="400" y="0" width="50" height="330" fill="#1e6632"/>
+            <rect x="0" y="0" width="50" height="330" fill="#1e6632"></rect>
+            <rect x="100" y="0" width="50" height="330" fill="#1e6632"></rect>
+            <rect x="200" y="0" width="50" height="330" fill="#1e6632"></rect>
+            <rect x="300" y="0" width="50" height="330" fill="#1e6632"></rect>
+            <rect x="400" y="0" width="50" height="330" fill="#1e6632"></rect>
             <!-- Bordo -->
-            <rect x="7" y="7" width="486" height="316" rx="5" fill="none" stroke="rgba(255,255,255,.78)" stroke-width="2.2"/>
+            <rect x="7" y="7" width="486" height="316" rx="5" fill="none" stroke="rgba(255,255,255,.78)" stroke-width="2.2"></rect>
             <!-- Metà campo -->
-            <line x1="250" y1="7" x2="250" y2="323" stroke="rgba(255,255,255,.7)" stroke-width="1.8"/>
+            <line x1="250" y1="7" x2="250" y2="323" stroke="rgba(255,255,255,.7)" stroke-width="1.8"></line>
             <!-- Cerchio centrale -->
-            <circle cx="250" cy="165" r="46" fill="none" stroke="rgba(255,255,255,.7)" stroke-width="1.8"/>
-            <circle cx="250" cy="165" r="3" fill="rgba(255,255,255,.85)"/>
+            <circle cx="250" cy="165" r="46" fill="none" stroke="rgba(255,255,255,.7)" stroke-width="1.8"></circle>
+            <circle cx="250" cy="165" r="3" fill="rgba(255,255,255,.85)"></circle>
             <!-- Area sinistra (attacco) -->
-            <rect x="7" y="95" width="100" height="140" fill="none" stroke="rgba(255,255,255,.6)" stroke-width="1.8"/>
-            <rect x="7" y="124" width="44" height="82" fill="none" stroke="rgba(255,255,255,.45)" stroke-width="1.4"/>
-            <rect x="0" y="138" width="9" height="54" fill="rgba(255,255,255,.1)" stroke="rgba(255,255,255,.6)" stroke-width="1.8"/>
-            <path d="M107 133 A40 40 0 0 1 107 197" fill="none" stroke="rgba(255,255,255,.45)" stroke-width="1.4"/>
+            <rect x="7" y="95" width="100" height="140" fill="none" stroke="rgba(255,255,255,.6)" stroke-width="1.8"></rect>
+            <rect x="7" y="124" width="44" height="82" fill="none" stroke="rgba(255,255,255,.45)" stroke-width="1.4"></rect>
+            <rect x="0" y="138" width="9" height="54" fill="rgba(255,255,255,.1)" stroke="rgba(255,255,255,.6)" stroke-width="1.8"></rect>
+            <path d="M107 133 A40 40 0 0 1 107 197" fill="none" stroke="rgba(255,255,255,.45)" stroke-width="1.4"></path>
             <!-- Area destra (difesa) -->
-            <rect x="393" y="95" width="100" height="140" fill="none" stroke="rgba(255,255,255,.6)" stroke-width="1.8"/>
-            <rect x="449" y="124" width="44" height="82" fill="none" stroke="rgba(255,255,255,.45)" stroke-width="1.4"/>
-            <rect x="491" y="138" width="9" height="54" fill="rgba(255,255,255,.1)" stroke="rgba(255,255,255,.6)" stroke-width="1.8"/>
-            <path d="M393 133 A40 40 0 0 0 393 197" fill="none" stroke="rgba(255,255,255,.45)" stroke-width="1.4"/>
+            <rect x="393" y="95" width="100" height="140" fill="none" stroke="rgba(255,255,255,.6)" stroke-width="1.8"></rect>
+            <rect x="449" y="124" width="44" height="82" fill="none" stroke="rgba(255,255,255,.45)" stroke-width="1.4"></rect>
+            <rect x="491" y="138" width="9" height="54" fill="rgba(255,255,255,.1)" stroke="rgba(255,255,255,.6)" stroke-width="1.8"></rect>
+            <path d="M393 133 A40 40 0 0 0 393 197" fill="none" stroke="rgba(255,255,255,.45)" stroke-width="1.4"></path>
             <!-- Corner arcs -->
-            <path d="M 7 20 A12 12 0 0 1 20 7"   fill="none" stroke="rgba(255,255,255,.45)" stroke-width="1.4"/>
-            <path d="M 480 7 A12 12 0 0 1 493 20" fill="none" stroke="rgba(255,255,255,.45)" stroke-width="1.4"/>
-            <path d="M 7 310 A12 12 0 0 0 20 323" fill="none" stroke="rgba(255,255,255,.45)" stroke-width="1.4"/>
-            <path d="M 480 323 A12 12 0 0 0 493 310" fill="none" stroke="rgba(255,255,255,.45)" stroke-width="1.4"/>
+            <path d="M 7 20 A12 12 0 0 1 20 7" fill="none" stroke="rgba(255,255,255,.45)" stroke-width="1.4"></path>
+            <path d="M 480 7 A12 12 0 0 1 493 20" fill="none" stroke="rgba(255,255,255,.45)" stroke-width="1.4"></path>
+            <path d="M 7 310 A12 12 0 0 0 20 323" fill="none" stroke="rgba(255,255,255,.45)" stroke-width="1.4"></path>
+            <path d="M 480 323 A12 12 0 0 0 493 310" fill="none" stroke="rgba(255,255,255,.45)" stroke-width="1.4"></path>
 
             <!-- ══ GIOCATORI — click per cambiare colore ══
                  Aggiungi class="player-dot" a ogni <g>
@@ -628,72 +636,72 @@ body {
 
             <!-- PORTIERE — Stabile 🟡 -->
             <g class="player-dot">
-              <circle cx="462" cy="165" r="17" fill="#ffd700" stroke="#0c3a18" stroke-width="2"/>
-              <text x="462" y="171" text-anchor="middle" font-family="Oswald,Arial" font-size="12" font-weight="700" fill="#000">P</text>
+              <circle cx="462" cy="165" r="17" fill="#ffd700" stroke="#0c3a18" stroke-width="2"></circle>
+              <text style="pointer-events:none" x="462" y="171" text-anchor="middle" font-family="Oswald,Arial" font-size="12" font-weight="700" fill="#000">P</text>
             </g>
 
             <!-- DC alto — Stabile 🟡 -->
-            <g class="player-dot">
-              <circle cx="376" cy="88"  r="17" fill="#ffd700" stroke="#0c3a18" stroke-width="2"/>
-              <text x="376" y="94"  text-anchor="middle" font-family="Oswald,Arial" font-size="11" font-weight="700" fill="#000">DC</text>
+            <g class="player-dot" transform="translate(4.399993896484375,13.199996948242188)">
+              <circle cx="376" cy="88" r="17" fill="#00e676" stroke="#0c3a18" stroke-width="2"></circle>
+              <text style="pointer-events:none" x="376" y="94" text-anchor="middle" font-family="Oswald,Arial" font-size="11" font-weight="700" fill="#000">DC</text>
             </g>
             <!-- DC centro — Stabile 🟡 -->
-            <g class="player-dot">
-              <circle cx="368" cy="165" r="17" fill="#ffd700" stroke="#0c3a18" stroke-width="2"/>
-              <text x="368" y="171" text-anchor="middle" font-family="Oswald,Arial" font-size="11" font-weight="700" fill="#000">DC</text>
+            <g class="player-dot" transform="translate(16.5,4.399993896484375)">
+              <circle cx="368" cy="165" r="17" fill="#00e676" stroke="#0c3a18" stroke-width="2"></circle>
+              <text style="pointer-events:none" x="368" y="171" text-anchor="middle" font-family="Oswald,Arial" font-size="11" font-weight="700" fill="#000">DC</text>
             </g>
             <!-- DC basso — Stabile 🟡 -->
             <g class="player-dot">
-              <circle cx="376" cy="242" r="17" fill="#ffd700" stroke="#0c3a18" stroke-width="2"/>
-              <text x="376" y="248" text-anchor="middle" font-family="Oswald,Arial" font-size="11" font-weight="700" fill="#000">DC</text>
+              <circle cx="376" cy="242" r="17" fill="#ffd700" stroke="#0c3a18" stroke-width="2"></circle>
+              <text style="pointer-events:none" x="376" y="248" text-anchor="middle" font-family="Oswald,Arial" font-size="11" font-weight="700" fill="#000">DC</text>
             </g>
 
             <!-- Esterno alto — Valorizzato 🟢 -->
             <g class="player-dot">
-              <circle cx="270" cy="36"  r="17" fill="#00e676" stroke="#0c3a18" stroke-width="2"/>
-              <text x="270" y="42"  text-anchor="middle" font-family="Oswald,Arial" font-size="12" font-weight="700" fill="#000">E</text>
+              <circle cx="270" cy="36" r="17" fill="#00e676" stroke="#0c3a18" stroke-width="2"></circle>
+              <text style="pointer-events:none" x="270" y="42" text-anchor="middle" font-family="Oswald,Arial" font-size="12" font-weight="700" fill="#000">E</text>
             </g>
             <!-- Mezzala sx — Valorizzata 🟢 -->
             <g class="player-dot">
-              <circle cx="284" cy="122" r="17" fill="#00e676" stroke="#0c3a18" stroke-width="2"/>
-              <text x="284" y="128" text-anchor="middle" font-family="Oswald,Arial" font-size="12" font-weight="700" fill="#000">M</text>
+              <circle cx="284" cy="122" r="17" fill="#00e676" stroke="#0c3a18" stroke-width="2"></circle>
+              <text style="pointer-events:none" x="284" y="128" text-anchor="middle" font-family="Oswald,Arial" font-size="12" font-weight="700" fill="#000">M</text>
             </g>
             <!-- Mezzala dx — Valorizzata 🟢 -->
             <g class="player-dot">
-              <circle cx="284" cy="208" r="17" fill="#00e676" stroke="#0c3a18" stroke-width="2"/>
-              <text x="284" y="214" text-anchor="middle" font-family="Oswald,Arial" font-size="12" font-weight="700" fill="#000">M</text>
+              <circle cx="284" cy="208" r="17" fill="#00e676" stroke="#0c3a18" stroke-width="2"></circle>
+              <text style="pointer-events:none" x="284" y="214" text-anchor="middle" font-family="Oswald,Arial" font-size="12" font-weight="700" fill="#000">M</text>
             </g>
             <!-- Esterno basso — Valorizzato 🟢 -->
             <g class="player-dot">
-              <circle cx="270" cy="294" r="17" fill="#00e676" stroke="#0c3a18" stroke-width="2"/>
-              <text x="270" y="300" text-anchor="middle" font-family="Oswald,Arial" font-size="12" font-weight="700" fill="#000">E</text>
+              <circle cx="270" cy="294" r="17" fill="#00e676" stroke="#0c3a18" stroke-width="2"></circle>
+              <text style="pointer-events:none" x="270" y="300" text-anchor="middle" font-family="Oswald,Arial" font-size="12" font-weight="700" fill="#000">E</text>
             </g>
 
             <!-- Trequartista sx — Valorizzato 🟢 -->
             <g class="player-dot">
-              <circle cx="165" cy="117" r="17" fill="#00e676" stroke="#0c3a18" stroke-width="2"/>
-              <text x="165" y="123" text-anchor="middle" font-family="Oswald,Arial" font-size="11" font-weight="700" fill="#000">T</text>
+              <circle cx="165" cy="117" r="17" fill="#00e676" stroke="#0c3a18" stroke-width="2"></circle>
+              <text style="pointer-events:none" x="165" y="123" text-anchor="middle" font-family="Oswald,Arial" font-size="11" font-weight="700" fill="#000">T</text>
             </g>
             <!-- Trequartista dx — Valorizzato 🟢 -->
             <g class="player-dot">
-              <circle cx="165" cy="213" r="17" fill="#00e676" stroke="#0c3a18" stroke-width="2"/>
-              <text x="165" y="219" text-anchor="middle" font-family="Oswald,Arial" font-size="11" font-weight="700" fill="#000">T</text>
+              <circle cx="165" cy="213" r="17" fill="#00e676" stroke="#0c3a18" stroke-width="2"></circle>
+              <text style="pointer-events:none" x="165" y="219" text-anchor="middle" font-family="Oswald,Arial" font-size="11" font-weight="700" fill="#000">T</text>
             </g>
 
             <!-- Attaccante — Valorizzato 🟢 -->
-            <g class="player-dot">
-              <circle cx="62"  cy="165" r="17" fill="#00e676" stroke="#0c3a18" stroke-width="2"/>
-              <text x="62"  y="171" text-anchor="middle" font-family="Oswald,Arial" font-size="13" font-weight="700" fill="#000">A</text>
+            <g class="player-dot" transform="translate(2.1999969482421875,1.100006103515625)">
+              <circle cx="62" cy="165" r="17" fill="#00e676" stroke="#0c3a18" stroke-width="2"></circle>
+              <text style="pointer-events:none" x="62" y="171" text-anchor="middle" font-family="Oswald,Arial" font-size="13" font-weight="700" fill="#000">A</text>
             </g>
 
             <!-- Legenda -->
-            <rect x="136" y="302" width="228" height="24" rx="5" fill="rgba(0,0,0,.5)"/>
-            <circle cx="154" cy="314" r="7" fill="#00e676"/>
-            <text x="165" y="318" font-family="Oswald,Arial" font-size="10" fill="rgba(255,255,255,.7)">Valorizzato</text>
-            <circle cx="227" cy="314" r="7" fill="#ffd700"/>
-            <text x="238" y="318" font-family="Oswald,Arial" font-size="10" fill="rgba(255,255,255,.7)">Stabile</text>
-            <circle cx="291" cy="314" r="7" fill="#ff4444"/>
-            <text x="302" y="318" font-family="Oswald,Arial" font-size="10" fill="rgba(255,255,255,.7)">Penalizzato</text>
+            <rect x="136" y="302" width="228" height="24" rx="5" fill="rgba(0,0,0,.5)"></rect>
+            <circle cx="154" cy="314" r="7" fill="#00e676"></circle>
+            <text style="pointer-events:none" x="165" y="318" font-family="Oswald,Arial" font-size="10" fill="rgba(255,255,255,.7)">Valorizzato</text>
+            <circle cx="227" cy="314" r="7" fill="#ffd700"></circle>
+            <text style="pointer-events:none" x="238" y="318" font-family="Oswald,Arial" font-size="10" fill="rgba(255,255,255,.7)">Stabile</text>
+            <circle cx="291" cy="314" r="7" fill="#ff4444"></circle>
+            <text style="pointer-events:none" x="302" y="318" font-family="Oswald,Arial" font-size="10" fill="rgba(255,255,255,.7)">Penalizzato</text>
 
           </svg>
         </div>
@@ -705,33 +713,7 @@ body {
           <span class="notes-title">Stile di Gioco</span>
           <span class="notes-subtitle">clicca per modificare</span>
         </div>
-        <ul class="notes-list" id="notes-list">
-          <li>
-            <span class="note-bullet">▸</span>
-            <span class="note-text" contenteditable="true">Pressing alto ad uomo in tutto il campo</span>
-            <span class="note-delete" title="Elimina nota">✕</span>
-          </li>
-          <li>
-            <span class="note-bullet">▸</span>
-            <span class="note-text" contenteditable="true">Ampiezza garantita dagli esterni a tutta fascia</span>
-            <span class="note-delete" title="Elimina nota">✕</span>
-          </li>
-          <li>
-            <span class="note-bullet">▸</span>
-            <span class="note-text" contenteditable="true">Mezzali con inserimenti senza palla in area</span>
-            <span class="note-delete" title="Elimina nota">✕</span>
-          </li>
-          <li>
-            <span class="note-bullet">▸</span>
-            <span class="note-text" contenteditable="true">Costruzione dal basso con i tre difensori centrali</span>
-            <span class="note-delete" title="Elimina nota">✕</span>
-          </li>
-          <li>
-            <span class="note-bullet">▸</span>
-            <span class="note-text" contenteditable="true">Transizioni offensive rapide verso l'area avversaria</span>
-            <span class="note-delete" title="Elimina nota">✕</span>
-          </li>
-        </ul>
+        <ul class="notes-list" id="notes-list"><li><span class="note-bullet">▸</span><span class="note-text" contenteditable="true">Pressing alto ad uomo in tutto il campo</span><span class="note-delete" title="Elimina nota">✕</span></li><li><span class="note-bullet">▸</span><span class="note-text" contenteditable="true">Ampiezza garantita dagli esterni a tutta fascia</span><span class="note-delete" title="Elimina nota">✕</span></li><li><span class="note-bullet">▸</span><span class="note-text" contenteditable="true">Mezzali con inserimenti senza palla in area</span><span class="note-delete" title="Elimina nota">✕</span></li><li><span class="note-bullet">▸</span><span class="note-text" contenteditable="true">Costruzione dal basso con i tre difensori centrali</span><span class="note-delete" title="Elimina nota">✕</span></li><li><span class="note-bullet">▸</span><span class="note-text" contenteditable="true">Transizioni offensive rapide verso l'area avversaria</span><span class="note-delete" title="Elimina nota">✕</span></li></ul>
       </div>
 
     </div>
@@ -793,12 +775,219 @@ body {
 <!-- ══════════════════ JAVASCRIPT ══════════════════ -->
 <script>
 
-/* ── 1. BOLLINI — click per ciclare colore ── */
+/* ══ LOCALSTORAGE ══ */
+const STORAGE_KEY = 'fantacalcio-coach-v1';
+let saveTimer = null;
+
+function showSaved() {
+  const el = document.getElementById('save-status');
+  el.textContent = '💾 Salvato';
+  el.classList.add('visible');
+  clearTimeout(saveTimer);
+  saveTimer = setTimeout(() => el.classList.remove('visible'), 2000);
+}
+
+function saveAll() {
+  const state = { texts: {}, filosofia: '', stabStars: 0, appStars: 0, dots: [], indicators: {} };
+
+  // Testi
+  document.querySelectorAll('[data-key][contenteditable]').forEach(el => {
+    state.texts[el.dataset.key] = el.textContent;
+  });
+
+  // Note
+  state.notes = Array.from(document.querySelectorAll('#notes-list .note-text')).map(n => n.textContent);
+
+  // Filosofia
+  const badge = document.getElementById('filosofia-badge');
+  state.filosofia = badge.classList.contains('giochista') ? 'giochista' : 'risultatista';
+
+  // Stelle stabilità
+  state.stabStars = document.querySelectorAll('#stab-stars .st.on').length;
+
+  // Stelle appetibilità
+  state.appStars = document.querySelectorAll('#app-stars .app-st.on').length;
+
+  // Bollini campo
+  state.dots           = Array.from(document.querySelectorAll('.player-dot circle')).map(c => c.getAttribute('fill'));
+  state.dotLabels      = Array.from(document.querySelectorAll('.player-dot text')).map(t => t.textContent.trim());
+  state.dotTransforms  = Array.from(document.querySelectorAll('.player-dot')).map(g => g.getAttribute('transform') || '');
+
+  // Indicatori
+  ['ind-possesso','ind-basso','ind-turnover','ind-alternanza'].forEach(id => {
+    state.indicators[id] = document.getElementById(id).classList.contains('si') ? 'si' : 'no';
+  });
+
+  // Foto e logo
+  const cBg = document.getElementById('coach-photo-area').style.backgroundImage;
+  if (cBg && cBg !== 'none') state.coachPhoto = cBg;
+  const lBg = document.getElementById('team-logo-area').style.backgroundImage;
+  if (lBg && lBg !== 'none') state.teamLogo = lBg;
+
+  try { localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); } catch(e) {}
+  showSaved();
+}
+
+function restoreAll() {
+  let state;
+  try { state = JSON.parse(localStorage.getItem(STORAGE_KEY)); } catch(e) {}
+  if (!state) return;
+
+  // Testi
+  document.querySelectorAll('[data-key][contenteditable]').forEach(el => {
+    if (state.texts?.[el.dataset.key] !== undefined) el.textContent = state.texts[el.dataset.key];
+  });
+
+  // Note
+  if (state.notes?.length) {
+    const list = document.getElementById('notes-list');
+    list.innerHTML = '';
+    state.notes.forEach(text => {
+      const li = document.createElement('li');
+      li.innerHTML = `<span class="note-bullet">▸</span><span class="note-text" contenteditable="true">${text}</span><span class="note-delete" title="Elimina nota">✕</span>`;
+      list.appendChild(li);
+    });
+  }
+
+  // Filosofia
+  if (state.filosofia) {
+    const b = document.getElementById('filosofia-badge');
+    const isG = state.filosofia === 'giochista';
+    b.classList.toggle('giochista', isG);
+    b.classList.toggle('risultatista', !isG);
+    b.textContent = isG ? 'Giochista' : 'Risultatista';
+  }
+
+  // Stelle stabilità
+  if (state.stabStars !== undefined) {
+    document.querySelectorAll('#stab-stars .st').forEach((s, i) => {
+      s.className = 'st ' + (i < state.stabStars ? 'on' : 'off');
+    });
+  }
+
+  // Stelle appetibilità
+  if (state.appStars !== undefined) {
+    document.querySelectorAll('#app-stars .app-st').forEach((s, i) => {
+      s.className = 'app-st ' + (i < state.appStars ? 'on' : 'off');
+    });
+  }
+
+  // Bollini campo
+  if (state.dots?.length) {
+    const DOT_C = ['#00e676','#ffd700','#ff4444'];
+    const TXT_C = ['#000','#000','#fff'];
+    document.querySelectorAll('.player-dot').forEach((g, i) => {
+      if (!state.dots[i]) return;
+      const circle = g.querySelector('circle');
+      const label  = g.querySelector('text');
+      circle.setAttribute('fill', state.dots[i]);
+      const ci = DOT_C.indexOf(state.dots[i]);
+      if (label && ci >= 0) label.setAttribute('fill', TXT_C[ci]);
+    });
+  }
+  if (state.dotLabels?.length) {
+    document.querySelectorAll('.player-dot text').forEach((t, i) => {
+      if (state.dotLabels[i]) t.textContent = state.dotLabels[i];
+    });
+  }
+  if (state.dotTransforms?.length) {
+    document.querySelectorAll('.player-dot').forEach((g, i) => {
+      if (state.dotTransforms[i]) g.setAttribute('transform', state.dotTransforms[i]);
+    });
+  }
+
+  // Indicatori
+  ['ind-possesso','ind-basso','ind-turnover','ind-alternanza'].forEach(id => {
+    const val = state.indicators?.[id];
+    if (!val) return;
+    const ind = document.getElementById(id);
+    const isSi = val === 'si';
+    ind.className = 'indicator ' + val;
+    ind.querySelector('.ind-badge').className = 'ind-badge ' + val;
+    ind.querySelector('.ind-badge').textContent = isSi ? '✓' : '✗';
+    ind.querySelector('.ind-val').className = 'ind-val ' + val;
+    ind.querySelector('.ind-val').textContent = isSi ? 'Sì' : 'No';
+  });
+
+  // Foto e logo
+  function restoreImg(areaId, bg, circular) {
+    if (!bg) return;
+    const area = document.getElementById(areaId);
+    area.innerHTML = '';
+    area.style.backgroundImage = bg;
+    area.style.backgroundSize = circular ? 'contain' : 'cover';
+    area.style.backgroundPosition = 'center';
+    area.style.backgroundRepeat = 'no-repeat';
+    const hint = document.createElement('div');
+    hint.className = 'upload-hint';
+    hint.textContent = 'clicca per cambiare';
+    area.appendChild(hint);
+  }
+  restoreImg('coach-photo-area', state.coachPhoto, false);
+  restoreImg('team-logo-area',   state.teamLogo,   true);
+}
+
+/* ── 1. BOLLINI — trascina per spostare, click per colore, doppio-click per ruolo ── */
 const DOT_COLORS  = ['#00e676', '#ffd700', '#ff4444'];
 const TEXT_COLORS = ['#000',    '#000',    '#fff'   ];
 
-document.querySelectorAll('.player-dot').forEach(group => {
-  group.addEventListener('click', () => {
+(function() {
+  const svg = document.getElementById('field-svg');
+  let dragGroup  = null;
+  let dragStartX = 0, dragStartY = 0;
+  let originTX   = 0, originTY = 0;
+  let moved      = false;
+  let clickTimer = null;
+
+  function svgPt(e) {
+    const pt = svg.createSVGPoint();
+    pt.x = e.clientX; pt.y = e.clientY;
+    return pt.matrixTransform(svg.getScreenCTM().inverse());
+  }
+
+  function getTranslate(g) {
+    const tr = g.transform && g.transform.baseVal;
+    if (tr && tr.numberOfItems > 0) {
+      const t = tr.getItem(0);
+      if (t.type === SVGTransform.SVG_TRANSFORM_TRANSLATE)
+        return { x: t.matrix.e, y: t.matrix.f };
+    }
+    return { x: 0, y: 0 };
+  }
+
+  svg.addEventListener('mousedown', e => {
+    const group = e.target.closest('g.player-dot');
+    if (!group) return;
+    e.preventDefault();
+    dragGroup = group;
+    moved = false;
+    const pt = svgPt(e);
+    dragStartX = pt.x; dragStartY = pt.y;
+    const cur = getTranslate(group);
+    originTX = cur.x; originTY = cur.y;
+  });
+
+  window.addEventListener('mousemove', e => {
+    if (!dragGroup) return;
+    const pt = svgPt(e);
+    const dx = pt.x - dragStartX;
+    const dy = pt.y - dragStartY;
+    if (!moved && (Math.abs(dx) > 4 || Math.abs(dy) > 4)) moved = true;
+    if (moved) {
+      dragGroup.setAttribute('transform', `translate(${originTX + dx},${originTY + dy})`);
+    }
+  });
+
+  window.addEventListener('mouseup', e => {
+    if (!dragGroup) return;
+    const group = dragGroup;
+    dragGroup = null;
+    if (moved) {
+      saveAll();
+      return;
+    }
+    // Click corto: cicla colore (con protezione doppio-click)
+    if (e.detail > 1) return;
     const circle = group.querySelector('circle');
     const label  = group.querySelector('text');
     const cur    = circle.getAttribute('fill');
@@ -806,8 +995,34 @@ document.querySelectorAll('.player-dot').forEach(group => {
     const next   = (idx + 1) % DOT_COLORS.length;
     circle.setAttribute('fill', DOT_COLORS[next]);
     if (label) label.setAttribute('fill', TEXT_COLORS[next]);
+    saveAll();
   });
-});
+
+  // Doppio-click → modifica ruolo
+  svg.addEventListener('dblclick', e => {
+    const group = e.target.closest('g.player-dot');
+    if (!group) return;
+    const textEl = group.querySelector('text');
+    if (!textEl) return;
+    const rect = textEl.getBoundingClientRect();
+    const inp = document.createElement('input');
+    inp.value = textEl.textContent.trim();
+    inp.maxLength = 3;
+    inp.style.cssText = `position:fixed;left:${rect.left-8}px;top:${rect.top-8}px;width:46px;height:26px;text-align:center;font-family:Oswald,Arial,sans-serif;font-size:13px;font-weight:700;text-transform:uppercase;background:rgba(0,0,0,.92);color:#fff;border:2px solid #00c3ff;border-radius:5px;padding:0;z-index:9999;outline:none;`;
+    document.body.appendChild(inp);
+    inp.select(); inp.focus();
+    const finish = () => {
+      const val = inp.value.trim().substring(0, 3);
+      if (val) textEl.textContent = val.toUpperCase();
+      inp.remove(); saveAll();
+    };
+    inp.addEventListener('blur', finish);
+    inp.addEventListener('keydown', ev => {
+      if (ev.key === 'Enter') { ev.preventDefault(); inp.blur(); }
+      if (ev.key === 'Escape') { inp.remove(); }
+    });
+  });
+})();
 
 /* ── 2. STELLE STABILITÀ — click per rating ── */
 const stabStars = document.querySelectorAll('#stab-stars .st');
@@ -816,6 +1031,7 @@ stabStars.forEach((star, idx) => {
     stabStars.forEach((s, i) => {
       s.className = 'st ' + (i <= idx ? 'on' : 'off');
     });
+    saveAll();
   });
 });
 
@@ -826,6 +1042,7 @@ appStars.forEach((star, idx) => {
     appStars.forEach((s, i) => {
       s.className = 'app-st ' + (i <= idx ? 'on' : 'off');
     });
+    saveAll();
   });
 });
 
@@ -836,6 +1053,7 @@ document.getElementById('filosofia-badge').addEventListener('click', () => {
   b.classList.toggle('giochista',    !isG);
   b.classList.toggle('risultatista',  isG);
   b.textContent = isG ? 'Risultatista' : 'Giochista';
+  saveAll();
 });
 
 /* ── 5. INDICATORI SÌ/NO — click per alternare ── */
@@ -854,6 +1072,7 @@ document.getElementById('filosofia-badge').addEventListener('click', () => {
     const val = ind.querySelector('.ind-val');
     val.className = 'ind-val ' + next;
     val.textContent = label;
+    saveAll();
   });
 });
 
@@ -879,6 +1098,7 @@ function setupImageUpload(areaId, circular) {
         hint.className = 'upload-hint';
         hint.textContent = 'clicca per cambiare';
         area.appendChild(hint);
+        saveAll();
       };
       reader.readAsDataURL(file);
     };
@@ -908,6 +1128,136 @@ function addNote(text = '') {
   li.querySelector('.note-text').focus();
 }
 document.getElementById('btn-add-note').addEventListener('click', () => addNote());
+
+/* ── RESTORE & AUTOSAVE ── */
+restoreAll();
+document.addEventListener('input', e => {
+  if (e.target.hasAttribute('contenteditable')) saveAll();
+});
+document.getElementById('notes-list').addEventListener('click', e => {
+  if (e.target.classList.contains('note-delete')) saveAll();
+}, true);
+
+/* ── RESET ── */
+document.getElementById('btn-reset').addEventListener('click', () => {
+  if (!confirm('Cancellare tutti i dati salvati e ripristinare i valori originali?')) return;
+  localStorage.removeItem(STORAGE_KEY);
+  location.reload();
+});
+
+/* ── SCARICA HTML AGGIORNATO ── */
+document.getElementById('btn-save-html').addEventListener('click', () => {
+  const state = {};
+  state.texts = {};
+  document.querySelectorAll('[data-key][contenteditable]').forEach(el => {
+    state.texts[el.dataset.key] = el.textContent;
+  });
+  state.notes = Array.from(document.querySelectorAll('#notes-list .note-text')).map(n => n.textContent);
+  const badge = document.getElementById('filosofia-badge');
+  state.filosofia = badge.classList.contains('giochista') ? 'giochista' : 'risultatista';
+  state.stabStars = document.querySelectorAll('#stab-stars .st.on').length;
+  state.appStars  = document.querySelectorAll('#app-stars .app-st.on').length;
+  state.dots          = Array.from(document.querySelectorAll('.player-dot circle')).map(c => c.getAttribute('fill'));
+  state.dotLabels      = Array.from(document.querySelectorAll('.player-dot text')).map(t => t.textContent.trim());
+  state.dotTransforms  = Array.from(document.querySelectorAll('.player-dot')).map(g => g.getAttribute('transform') || '');
+  state.indicators = {};
+  ['ind-possesso','ind-basso','ind-turnover','ind-alternanza'].forEach(id => {
+    state.indicators[id] = document.getElementById(id).classList.contains('si') ? 'si' : 'no';
+  });
+  const cBg = document.getElementById('coach-photo-area').style.backgroundImage;
+  if (cBg && cBg !== 'none') state.coachPhoto = cBg;
+  const lBg = document.getElementById('team-logo-area').style.backgroundImage;
+  if (lBg && lBg !== 'none') state.teamLogo = lBg;
+
+  const clone = document.documentElement.cloneNode(true);
+  clone.querySelectorAll('script[data-bootstrap]').forEach(s => s.remove());
+  const script = document.createElement('script');
+  script.setAttribute('data-bootstrap', '1');
+  script.textContent = `localStorage.setItem('fantacalcio-coach-v1', ${JSON.stringify(JSON.stringify(state))});`;
+  clone.querySelector('body').appendChild(script);
+
+  const blob = new Blob(['<!DOCTYPE html>\n' + clone.outerHTML], { type: 'text/html;charset=utf-8' });
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'fantacalcio-coach-card.html';
+  a.click();
+  URL.revokeObjectURL(a.href);
+});
+
+/* ── PUBBLICA SU GITHUB ── */
+document.getElementById('btn-github').addEventListener('click', async () => {
+  const GH_OWNER = 'fabmiscia';
+  const GH_REPO  = 'il-mister-fabry';
+  const GH_FILE  = 'fantacalcio-coach-card.html';
+  const GH_KEY   = 'fantacalcio-coach-v1';
+
+  let token = sessionStorage.getItem('gh_token') || '';
+  token = prompt('Token GitHub (rimane in memoria finché non chiudi il browser):', token);
+  if (!token) return;
+  sessionStorage.setItem('gh_token', token.trim());
+
+  const btn = document.getElementById('btn-github');
+  btn.textContent = '⏳ Caricando...';
+  btn.disabled = true;
+
+  try {
+    // 1. Ottieni SHA attuale del file
+    const infoResp = await fetch(`https://api.github.com/repos/${GH_OWNER}/${GH_REPO}/contents/${GH_FILE}`,
+      { headers: { Authorization: `token ${token}` } });
+    const info = await infoResp.json();
+    if (!infoResp.ok) throw new Error(info.message || 'Token non valido o file non trovato');
+    const sha = info.sha;
+
+    // 2. Costruisci HTML aggiornato con stato corrente
+    const state = {};
+    state.texts = {};
+    document.querySelectorAll('[data-key][contenteditable]').forEach(el => { state.texts[el.dataset.key] = el.textContent; });
+    state.notes = Array.from(document.querySelectorAll('#notes-list .note-text')).map(n => n.textContent);
+    const badge = document.getElementById('filosofia-badge');
+    state.filosofia = badge.classList.contains('giochista') ? 'giochista' : 'risultatista';
+    state.stabStars = document.querySelectorAll('#stab-stars .st.on').length;
+    state.appStars  = document.querySelectorAll('#app-stars .app-st.on').length;
+    state.dots          = Array.from(document.querySelectorAll('.player-dot circle')).map(c => c.getAttribute('fill'));
+  state.dotLabels      = Array.from(document.querySelectorAll('.player-dot text')).map(t => t.textContent.trim());
+  state.dotTransforms  = Array.from(document.querySelectorAll('.player-dot')).map(g => g.getAttribute('transform') || '');
+    state.indicators = {};
+    ['ind-possesso','ind-basso','ind-turnover','ind-alternanza'].forEach(id => {
+      state.indicators[id] = document.getElementById(id).classList.contains('si') ? 'si' : 'no';
+    });
+    const cBg = document.getElementById('coach-photo-area').style.backgroundImage;
+    if (cBg && cBg !== 'none') state.coachPhoto = cBg;
+    const lBg = document.getElementById('team-logo-area').style.backgroundImage;
+    if (lBg && lBg !== 'none') state.teamLogo = lBg;
+
+    const clone = document.documentElement.cloneNode(true);
+    clone.querySelectorAll('script[data-bootstrap]').forEach(s => s.remove());
+    const script = document.createElement('script');
+    script.setAttribute('data-bootstrap', '1');
+    script.textContent = `localStorage.setItem('${GH_KEY}', ${JSON.stringify(JSON.stringify(state))});`;
+    clone.querySelector('body').appendChild(script);
+    const html = '<!DOCTYPE html>\n' + clone.outerHTML;
+
+    // 3. Codifica in base64 (UTF-8 safe)
+    const bytes = new TextEncoder().encode(html);
+    const binStr = Array.from(bytes).map(b => String.fromCharCode(b)).join('');
+    const content = btoa(binStr);
+
+    // 4. Carica su GitHub
+    const upResp = await fetch(`https://api.github.com/repos/${GH_OWNER}/${GH_REPO}/contents/${GH_FILE}`, {
+      method: 'PUT',
+      headers: { Authorization: `token ${token}`, 'Content-Type': 'application/json' },
+      body: JSON.stringify({ message: 'Aggiorna coach card', content, sha })
+    });
+    if (!upResp.ok) { const e = await upResp.json(); throw new Error(e.message); }
+
+    btn.textContent = '✅ Pubblicato!';
+    setTimeout(() => { btn.textContent = '📤 Su GitHub'; btn.disabled = false; }, 3000);
+  } catch(err) {
+    alert('Errore: ' + err.message);
+    btn.textContent = '📤 Su GitHub';
+    btn.disabled = false;
+  }
+});
 
 /* ── 9. ENTER → non va a capo nei campi single-line ── */
 document.querySelectorAll('.no-enter').forEach(el => {
@@ -945,5 +1295,6 @@ document.getElementById('btn-export').addEventListener('click', async () => {
 });
 
 </script>
-</body>
-</html>
+
+
+<script data-bootstrap="1">localStorage.setItem('fantacalcio-coach-v1', "{\"texts\":{\"squadra\":\"Roma\",\"allenatore\":\"Gasperini\",\"modulo\":\"3-4-2-1\"},\"notes\":[\"Pressing alto ad uomo in tutto il campo\",\"Ampiezza garantita dagli esterni a tutta fascia\",\"Mezzali con inserimenti senza palla in area\",\"Costruzione dal basso con i tre difensori centrali\",\"Transizioni offensive rapide verso l'area avversaria\"],\"filosofia\":\"giochista\",\"stabStars\":4,\"appStars\":5,\"dots\":[\"#ffd700\",\"#00e676\",\"#00e676\",\"#ffd700\",\"#00e676\",\"#00e676\",\"#00e676\",\"#00e676\",\"#00e676\",\"#00e676\",\"#00e676\"],\"dotLabels\":[\"P\",\"DC\",\"DC\",\"DC\",\"E\",\"M\",\"M\",\"E\",\"T\",\"T\",\"A\"],\"dotTransforms\":[\"\",\"translate(4.399993896484375,13.199996948242188)\",\"translate(16.5,4.399993896484375)\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"translate(2.1999969482421875,1.100006103515625)\"],\"indicators\":{\"ind-possesso\":\"si\",\"ind-basso\":\"si\",\"ind-turnover\":\"si\",\"ind-alternanza\":\"no\"}}");</script></body></html>
