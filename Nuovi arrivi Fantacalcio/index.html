@@ -40,8 +40,13 @@ const schede = [];
 fetch('https://api.github.com/repos/fabmiscia/Il-Mister-Fabry/contents/Nuovi%20arrivi%20Fantacalcio')
   .then(r=>r.json()).then(files=>{
     const html = files.filter(f=>f.name!=='index.html'&&f.name.endsWith('.html')).map(f=>{
-      const nome = f.name.replace('nuovo_arrivo_','').replace('.html','').replace(/_/g,' ');
-      return `<a class="card" href="${f.name}"><span class="icon">⚽</span><span>${nome}</span><span class="sub">Scheda giocatore</span></a>`;
+      const base = f.name.replace('nuovo_arrivo_','').replace('.html','');
+      const parts = base.split('__');
+      const nome   = parts[0].replace(/_/g,' ').trim();
+      const squadra = parts[1] ? parts[1].replace(/_/g,' ').trim() : '';
+      const label = squadra ? `${nome} — ${squadra}` : nome;
+      const sub   = squadra ? squadra.toUpperCase() : 'Scheda giocatore';
+      return `<a class="card" href="${f.name}"><span class="icon">⚽</span><span>${label}</span><span class="sub">${sub}</span></a>`;
     }).join('');
     document.getElementById('grid').innerHTML = html || '<div class="empty">Nessuna scheda ancora pubblicata</div>';
   }).catch(()=>{
