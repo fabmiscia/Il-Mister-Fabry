@@ -993,6 +993,18 @@ table.inj-tbl thead th {
 </div>
 
 <script>
+// ── Modalità lettura su GitHub Pages ────────
+(function() {
+  const isOnline = location.hostname !== 'localhost' && location.protocol !== 'file:';
+  if (isOnline) {
+    // Nascondi toolbar e disabilita editing
+    const style = document.createElement('style');
+    style.textContent = '.toolbar{display:none!important} [contenteditable]{pointer-events:none;cursor:default} .add-row-btn{display:none!important}';
+    document.head.appendChild(style);
+    document.querySelectorAll('[contenteditable]').forEach(el => el.removeAttribute('contenteditable'));
+  }
+})();
+
 // ── Nav ─────────────────────────────────────
 function go(n) {
   document.querySelectorAll('.card').forEach(c => c.classList.remove('active'));
