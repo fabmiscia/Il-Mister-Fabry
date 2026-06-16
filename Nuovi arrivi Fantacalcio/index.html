@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nuovi Arrivi Fantacalcio — MisterFabry</title>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@600;700&display=swap" rel="stylesheet">
+<style>
+* { margin:0; padding:0; box-sizing:border-box; }
+body { background:#0a0a0a; font-family:'Oswald',sans-serif; min-height:100vh; color:#fff; }
+.header { background:linear-gradient(180deg,#111 0%,#0a0a0a 100%); border-bottom:1px solid #1a1a1a; padding:32px 24px 24px; text-align:center; }
+.header a { color:#2DB84A; font-size:11px; letter-spacing:3px; text-decoration:none; text-transform:uppercase; }
+.header a:hover { color:#fff; }
+.title { font-size:26px; letter-spacing:5px; text-transform:uppercase; margin-top:12px; }
+.title span { color:#2DB84A; }
+.subtitle { color:#444; font-size:11px; letter-spacing:3px; text-transform:uppercase; margin-top:6px; }
+.page { max-width:1100px; margin:0 auto; padding:48px 24px 80px; }
+.grid { display:flex; gap:20px; flex-wrap:wrap; }
+a.card { display:flex; flex-direction:column; align-items:center; justify-content:center; gap:10px; width:220px; height:140px; background:#111; border:2px solid rgba(45,184,74,.3); border-radius:12px; text-decoration:none; color:#fff; font-size:16px; font-weight:700; letter-spacing:1.5px; text-transform:uppercase; transition:border-color .2s,box-shadow .2s,transform .15s; text-align:center; padding:12px; }
+a.card:hover { border-color:#2DB84A; box-shadow:0 0 24px rgba(45,184,74,.25); transform:translateY(-3px); }
+a.card .icon { font-size:28px; }
+a.card .sub { font-size:10px; font-weight:400; color:rgba(255,255,255,.4); letter-spacing:2px; }
+.empty { color:#333; font-size:14px; letter-spacing:2px; padding:40px 0; }
+</style>
+</head>
+<body>
+<div class="header">
+  <a href="../index.html">← Home</a>
+  <div class="title">NUOVI ARRIVI <span>FANTACALCIO</span></div>
+  <div class="subtitle">Schede giocatori &bull; 2026-27</div>
+</div>
+<div class="page">
+  <div class="grid" id="grid">
+    <div class="empty">Caricamento schede...</div>
+  </div>
+</div>
+<script>
+// Lista schede (aggiornata automaticamente all'upload)
+const schede = [];
+fetch('https://api.github.com/repos/fabmiscia/Il-Mister-Fabry/contents/Nuovi%20arrivi%20Fantacalcio')
+  .then(r=>r.json()).then(files=>{
+    const html = files.filter(f=>f.name!=='index.html'&&f.name.endsWith('.html')).map(f=>{
+      const nome = f.name.replace('nuovo_arrivo_','').replace('.html','').replace(/_/g,' ');
+      return `<a class="card" href="${f.name}"><span class="icon">⚽</span><span>${nome}</span><span class="sub">Scheda giocatore</span></a>`;
+    }).join('');
+    document.getElementById('grid').innerHTML = html || '<div class="empty">Nessuna scheda ancora pubblicata</div>';
+  }).catch(()=>{
+    document.getElementById('grid').innerHTML='<div class="empty">Nessuna scheda ancora pubblicata</div>';
+  });
+</script>
+</body>
+</html>
