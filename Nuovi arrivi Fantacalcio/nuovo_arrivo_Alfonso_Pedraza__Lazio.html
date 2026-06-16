@@ -960,7 +960,7 @@ table.inj-tbl thead th {
 
 <!-- Overlay GitHub -->
 <!-- Overlay GitHub -->
-<div id="gh-overlay" style="display: flex; position: fixed; inset: 0px; background: rgba(0, 0, 0, 0.88); z-index: 999; align-items: center; justify-content: center;">
+<div id="gh-overlay" style="display: none; position: fixed; inset: 0px; background: rgba(0, 0, 0, 0.88); z-index: 999; align-items: center; justify-content: center;">
   <div style="background:#1a1a1a;border:1px solid #333;border-radius:12px;padding:28px 32px;max-width:480px;width:90%;text-align:center;font-family:Arial,sans-serif;">
     <div id="gh-view-token" style="display:none">
       <div style="font-size:26px;margin-bottom:10px">🔑</div>
@@ -1128,7 +1128,11 @@ async function eseguiPubblicazione(token) {
   try {
     // Serializza l'HTML corrente (include le modifiche fatte dal browser)
     document.getElementById('gh-detail').textContent = 'Preparo il contenuto…';
+    // Nascondi l'overlay prima di serializzare per non salvarlo nell'HTML
+    const overlay = document.getElementById('gh-overlay');
+    overlay.style.display = 'none';
     const htmlContent = '<!DOCTYPE html>\n' + document.documentElement.outerHTML;
+    overlay.style.display = 'flex';
     const b64 = btoa(unescape(encodeURIComponent(htmlContent)));
 
     // Controlla se il file esiste già (serve lo SHA per aggiornarlo)
