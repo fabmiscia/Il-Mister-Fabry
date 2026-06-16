@@ -422,7 +422,31 @@ table.career-tbl thead th.c { text-align:center; }
 .add-row-btn:hover { border-color:#b0ff00; color:#b0ff00; }
 
 /* ══════════════════════════════════════════════
-   SLIDE 3 – Infortuni + Bio
+   SLIDE 2 – tabella infortuni (in colonna destra)
+══════════════════════════════════════════════ */
+table.inj-tbl {
+  width:100%;
+  border-collapse:collapse;
+  font-size:11px;
+}
+table.inj-tbl thead th {
+  color:#888;
+  font-size:9px;
+  letter-spacing:.7px;
+  text-transform:uppercase;
+  padding:0 6px 5px;
+  text-align:left;
+  border-bottom:1px solid #1c1c1c;
+  font-weight:700;
+}
+.inj-row { border-bottom:1px solid #111; }
+.inj-row:nth-child(even) { background:#0d0d0d; }
+.inj-row td { padding:5px 6px; color:#fff; outline:none; cursor:text; font-size:11px; }
+.inj-row td:first-child { color:#b0ff00; font-weight:700; font-size:11px; width:52px; }
+.inj-row td:nth-child(2) { color:#f87171; }
+
+/* ══════════════════════════════════════════════
+   SLIDE 3 – Consigli Fantacalcio
 ══════════════════════════════════════════════ */
 #s3 { background:#0a0a0a; }
 
@@ -450,60 +474,96 @@ table.career-tbl thead th.c { text-align:center; }
 
 .s3-body {
   flex:1;
-  padding:24px 28px 20px 22px;
+  padding:28px 36px 28px 28px;
   display:flex;
   flex-direction:column;
-  gap:18px;
+  gap:22px;
   overflow:hidden;
 }
 
-/* Tabella infortuni */
-table.inj-tbl {
-  width:100%;
-  border-collapse:collapse;
-  font-size:12px;
+.s3-header {
+  border-bottom:2px solid #b0ff00;
+  padding-bottom:12px;
 }
-table.inj-tbl thead th {
-  color:#888;
-  font-size:9.5px;
-  letter-spacing:.7px;
+.s3-badge {
+  font-size:10px;
+  font-weight:800;
+  letter-spacing:3px;
+  color:#b0ff00;
   text-transform:uppercase;
-  padding:0 10px 5px;
-  text-align:left;
-  border-bottom:1px solid #1c1c1c;
-  font-weight:700;
+  margin-bottom:4px;
 }
-.inj-row { border-bottom:1px solid #111; }
-.inj-row:nth-child(even) { background:#0d0d0d; }
-.inj-row td { padding:7px 10px; color:#fff; outline:none; cursor:text; font-size:12px; }
-.inj-row td:first-child { color:#b0ff00; font-weight:700; font-size:13px; width:60px; }
-.inj-row td:nth-child(2) { color:#f87171; }
+.s3-player {
+  font-size:26px;
+  font-weight:800;
+  letter-spacing:2px;
+  color:#fff;
+  text-transform:uppercase;
+  outline:none;
+  cursor:text;
+}
 
-/* Bio */
-.bio-box {
+.s3-section {
+  display:flex;
+  flex-direction:column;
+  gap:8px;
+}
+.s3-grow {
+  flex:1;
+  min-height:0;
+}
+.s3-label {
+  font-size:9.5px;
+  font-weight:800;
+  letter-spacing:2.5px;
+  color:#666;
+  text-transform:uppercase;
+}
+
+/* Stelle */
+.stars-widget {
+  display:flex;
+  gap:6px;
+}
+.star {
+  font-size:32px;
+  color:#333;
+  cursor:pointer;
+  transition:color .1s, transform .1s;
+  user-select:none;
+  line-height:1;
+}
+.star.filled { color:#FFD700; }
+.star:hover { transform:scale(1.15); }
+
+/* Consiglio spesa */
+.s3-spesa {
+  background:#0f0f0f;
+  border:1px solid #1e1e1e;
+  border-left:3px solid #b0ff00;
+  border-radius:4px;
+  padding:12px 14px;
+  font-size:14px;
+  color:#fff;
+  line-height:1.6;
+  outline:none;
+  cursor:text;
+  min-height:44px;
+}
+
+/* Appunti */
+.s3-notes {
   background:#0f0f0f;
   border:1px solid #1a1a1a;
   border-radius:6px;
   padding:14px 16px;
-  flex:1;
-  min-height:0;
-  overflow:hidden;
-}
-.bio-box .bio-title {
-  font-size:10px;
-  font-weight:800;
-  letter-spacing:2px;
-  color:#b0ff00;
-  text-transform:uppercase;
-  margin-bottom:8px;
-}
-.bio-text {
   font-size:13px;
-  color:#ffffff;
-  line-height:1.7;
+  color:#ccc;
+  line-height:1.75;
   outline:none;
   cursor:text;
-  height:calc(100% - 26px);
+  flex:1;
+  min-height:0;
   overflow:auto;
 }
 
@@ -517,9 +577,9 @@ table.inj-tbl thead th {
 <body>
 
 <div class="nav">
-  <button class="active" onclick="go(1)">📋 Info</button>
-  <button onclick="go(2)">📊 Statistiche</button>
-  <button onclick="go(3)">🏥 Infortuni + Bio</button>
+  <button class="" onclick="go(1)">📋 Info</button>
+  <button onclick="go(2)" class="">📊 Statistiche</button>
+  <button onclick="go(3)" class="active">⭐ Consigli Fantacalcio</button>
 </div>
 
 <!-- Toolbar -->
@@ -538,7 +598,7 @@ table.inj-tbl thead th {
 <!-- ══════════════════════════════════════════════
      SLIDE 1
 ══════════════════════════════════════════════ -->
-<div id="s1" class="card active">
+<div id="s1" class="card">
 
   <!-- Foto cliccabile -->
   <div class="photo-col" onclick="triggerPhotoUpload('all')">
@@ -760,11 +820,11 @@ table.inj-tbl thead th {
 
     </div><!-- /s2-col -->
 
-    <!-- Colonna destra: carriera nazionale -->
+    <!-- Colonna destra: carriera nazionale + infortuni -->
     <div class="s2-col s2-col-narrow">
       <div class="tbl-block">
         <div class="tbl-title">Carriera in Nazionale</div>
-        <div style="overflow-y:auto;max-height:420px">
+        <div style="overflow-y:auto;max-height:180px">
           <table class="career-tbl">
             <thead><tr>
               <th>Competizione</th>
@@ -817,37 +877,22 @@ table.inj-tbl thead th {
         </div>
         <button class="add-row-btn" onclick="addNazRow()">+ Aggiungi riga</button>
       </div>
-    </div><!-- /s2-col-narrow -->
-
-  </div>
-</div><!-- /s2 -->
-
-<!-- ══════════════════════════════════════════════
-     SLIDE 3 – Infortuni + Bio
-══════════════════════════════════════════════ -->
-<div id="s3" class="card">
-
-  <div class="s3-photo" onclick="triggerPhotoUpload('all')">
-    <img class="photo-all" src="https://img.a.transfermarkt.technology/portrait/big/356197-1620304916.jpg?lm=1" alt="Alfonso Pedraza" onerror="this.src='https://img.a.transfermarkt.technology/portrait/big/default.jpg'">
-  </div>
-
-  <div class="s3-body">
-
-    <div class="tbl-block">
-      <div class="tbl-title">Storico infortuni</div>
-      <table class="inj-tbl">
-        <thead>
-          <tr>
-            <th>Stagione</th>
-            <th>Infortunio</th>
-            <th>Dal</th>
-            <th>Al</th>
-            <th>Giorni</th>
-            <th>Partite perse</th>
-          </tr>
-        </thead>
-        <tbody id="inj-body">
-          
+      <div class="tbl-block">
+        <div class="tbl-title">Storico infortuni</div>
+        <div style="overflow-y:auto;max-height:190px">
+          <table class="inj-tbl">
+            <thead>
+              <tr>
+                <th>Stagione</th>
+                <th>Infortunio</th>
+                <th>Dal</th>
+                <th>Al</th>
+                <th>Gg</th>
+                <th>Perse</th>
+              </tr>
+            </thead>
+            <tbody id="inj-body">
+              
               <tr class="inj-row">
                 <td contenteditable="true">24/25</td>
                 <td contenteditable="true">Operazione alla caviglia</td>
@@ -944,15 +989,55 @@ table.inj-tbl thead th {
                 <td contenteditable="true">6 giorni</td>
                 <td contenteditable="true">1</td>
               </tr>
-        </tbody>
-      </table>
-      <button class="add-row-btn" onclick="addInjRow()">+ Aggiungi infortunio</button>
+            </tbody>
+          </table>
+        </div>
+        <button class="add-row-btn" onclick="addInjRow()">+ Aggiungi infortunio</button>
+      </div>
+    </div><!-- /s2-col-narrow -->
+
+  </div>
+</div><!-- /s2 -->
+
+<!-- ══════════════════════════════════════════════
+     SLIDE 3 – Consigli Fantacalcio
+══════════════════════════════════════════════ -->
+<div id="s3" class="card active">
+
+  <div class="s3-photo" onclick="triggerPhotoUpload('all')">
+    <img class="photo-all" src="https://img.a.transfermarkt.technology/portrait/big/356197-1620304916.jpg?lm=1" alt="Alfonso Pedraza" onerror="this.src='https://img.a.transfermarkt.technology/portrait/big/default.jpg'">
+  </div>
+
+  <div class="s3-body">
+
+    <!-- Header -->
+    <div class="s3-header">
+      <div class="s3-badge">⭐ CONSIGLI FANTACALCIO</div>
+      <div class="s3-player" contenteditable="true">Alfonso Pedraza</div>
     </div>
 
-    <!-- Bio -->
-    <div class="bio-box">
-      <div class="bio-title">Appunti del Mister</div>
-      <div class="bio-text" contenteditable="true">Clicca qui per scrivere i tuoi appunti sul giocatore…</div>
+    <!-- Appetibilità -->
+    <div class="s3-section">
+      <div class="s3-label">APPETIBILITÀ AL FANTACALCIO</div>
+      <div class="stars-widget" id="stars-widget">
+        <span class="star filled" data-v="1">★</span>
+        <span class="star filled" data-v="2">★</span>
+        <span class="star filled" data-v="3">★</span>
+        <span class="star filled" data-v="4">★</span>
+        <span class="star" data-v="5">★</span>
+      </div>
+    </div>
+
+    <!-- Consiglio di spesa -->
+    <div class="s3-section">
+      <div class="s3-label">CONSIGLIO DI SPESA DEL MISTER</div>
+      <div class="s3-spesa" contenteditable="true">Scrivi qui il consiglio di spesa…</div>
+    </div>
+
+    <!-- Appunti -->
+    <div class="s3-section s3-grow">
+      <div class="s3-label">APPUNTI DEL MISTER</div>
+      <div class="s3-notes" contenteditable="true">Clicca qui per scrivere i tuoi appunti sul giocatore…</div>
     </div>
 
   </div>
@@ -978,10 +1063,10 @@ table.inj-tbl thead th {
         Crea il token su GitHub → Settings → Developer settings → Personal access tokens → Contents: Read &amp; Write
       </div>
     </div>
-    <div id="gh-view-progress" style="display: block;">
-      <div style="font-size:32px;margin-bottom:12px" id="gh-icon">⏳</div>
-      <div id="gh-status" style="font-size:14px;color:#ccc;margin-bottom:6px">Pubblicazione in corso…</div>
-      <div id="gh-detail" style="font-size:11px;color:#555;margin-bottom:18px">Preparo il contenuto…</div>
+    <div id="gh-view-progress" style="display: none;">
+      <div style="font-size:32px;margin-bottom:12px" id="gh-icon">🚀</div>
+      <div id="gh-status" style="font-size: 14px; margin-bottom: 6px;">Pubblica su GitHub Pages</div>
+      <div id="gh-detail" style="font-size:11px;color:#555;margin-bottom:18px"></div>
       <div id="gh-link-wrap" style="display:none;margin-bottom:14px">
         <a id="gh-link" href="#" target="_blank" style="color:#b0ff00;font-size:12px;text-decoration:none;border:1px solid #b0ff00;padding:6px 16px;border-radius:16px">
           🌐 Apri su GitHub Pages
@@ -1126,13 +1211,51 @@ async function eseguiPubblicazione(token) {
   };
 
   try {
-    // Serializza l'HTML corrente (include le modifiche fatte dal browser)
-    document.getElementById('gh-detail').textContent = 'Preparo il contenuto…';
-    // Nascondi l'overlay prima di serializzare per non salvarlo nell'HTML
-    const overlay = document.getElementById('gh-overlay');
-    overlay.style.display = 'none';
+    // Reset completo overlay prima di serializzare (fix: evita che lo stato visibile venga salvato)
+    const overlay      = document.getElementById('gh-overlay');
+    const viewProgress = document.getElementById('gh-view-progress');
+    const viewToken    = document.getElementById('gh-view-token');
+    const linkWrap     = document.getElementById('gh-link-wrap');
+    const closeBtn     = document.getElementById('gh-close-btn');
+    const ghIcon       = document.getElementById('gh-icon');
+    const ghStatus     = document.getElementById('gh-status');
+    const ghDetail     = document.getElementById('gh-detail');
+
+    // Salva stato corrente
+    const _od = overlay.style.display;
+    const _pd = viewProgress.style.display;
+    const _td = viewToken.style.display;
+    const _ld = linkWrap.style.display;
+    const _cd = closeBtn.style.display;
+    const _it = ghIcon.textContent;
+    const _st = ghStatus.textContent;
+    const _sc = ghStatus.style.color;
+    const _dt = ghDetail.textContent;
+
+    // Reset allo stato iniziale (tutto nascosto, testo neutro)
+    overlay.style.display      = 'none';
+    viewProgress.style.display = 'none';
+    viewToken.style.display    = 'none';
+    linkWrap.style.display     = 'none';
+    closeBtn.style.display     = 'none';
+    ghIcon.textContent         = '🚀';
+    ghStatus.textContent       = 'Pubblica su GitHub Pages';
+    ghStatus.style.color       = '';
+    ghDetail.textContent       = '';
+
     const htmlContent = '<!DOCTYPE html>\n' + document.documentElement.outerHTML;
-    overlay.style.display = 'flex';
+
+    // Ripristina stato
+    overlay.style.display      = _od;
+    viewProgress.style.display = _pd;
+    viewToken.style.display    = _td;
+    linkWrap.style.display     = _ld;
+    closeBtn.style.display     = _cd;
+    ghIcon.textContent         = _it;
+    ghStatus.textContent       = _st;
+    ghStatus.style.color       = _sc;
+    ghDetail.textContent       = 'Preparo il contenuto…';
+
     const b64 = btoa(unescape(encodeURIComponent(htmlContent)));
 
     // Controlla se il file esiste già (serve lo SHA per aggiornarlo)
@@ -1236,6 +1359,23 @@ function addInjRow() {
   `;
   tbody.appendChild(tr);
 }
+
+// ── Stelle Appetibilità ──────────────────────
+(function() {
+  let starsValue = 0;
+  const widget = document.getElementById('stars-widget');
+  if (!widget) return;
+  const stars = widget.querySelectorAll('.star');
+  function render(v) {
+    stars.forEach(s => s.classList.toggle('filled', parseInt(s.dataset.v) <= v));
+  }
+  stars.forEach(s => {
+    s.addEventListener('mouseover', () => render(parseInt(s.dataset.v)));
+    s.addEventListener('mouseout',  () => render(starsValue));
+    s.addEventListener('click', () => { starsValue = parseInt(s.dataset.v); render(starsValue); });
+  });
+  render(starsValue);
+})();
 </script>
 
 </body></html>
