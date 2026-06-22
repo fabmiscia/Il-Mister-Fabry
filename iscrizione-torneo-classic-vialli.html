@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="it"><head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Torneo Classic Vialli — MisterFabry</title>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;600;700&amp;display=swap" rel="stylesheet">
+<style>
+* { margin:0; padding:0; box-sizing:border-box; }
+body { background:#0a0a0a; font-family:'Oswald',sans-serif; min-height:100vh; color:#a8a8a8; }
+
+.toolbar { background:#0a0a0a; border-bottom:1px solid #1a1a1a; padding:10px 24px; display:flex; align-items:center; gap:10px; flex-wrap:wrap; position:sticky; top:0; z-index:100; }
+.toolbar-title { color:#2DB84A; font-size:13px; letter-spacing:2px; white-space:nowrap; }
+.spacer { flex:1; }
+.btn { padding:6px 14px; border-radius:6px; font-family:'Oswald',sans-serif; font-size:11px; font-weight:600; letter-spacing:1px; cursor:pointer; border:none; transition:opacity .15s; }
+.btn-back { background:transparent; border:1.5px solid #333; color:#555; }
+.btn-back:hover { border-color:#2DB84A; color:#2DB84A; }
+.btn-edit { background:transparent; border:1.5px solid #2DB84A; color:#2DB84A; }
+.btn-edit.active { background:#2DB84A; color:#000; }
+.btn-github { background:#24292e; color:#fff; border:1.5px solid rgba(255,255,255,.2); }
+
+.page { max-width:900px; margin:0 auto; padding:48px 24px 80px; display:flex; flex-direction:column; gap:48px; }
+
+/* ── HERO TORNEO ── */
+.torneo-header { display:flex; flex-direction:column; gap:6px; }
+.torneo-badge { display:inline-block; background:rgba(45,184,74,.15); border:1px solid rgba(45,184,74,.4); border-radius:4px; padding:4px 12px; font-size:10px; letter-spacing:3px; color:#2DB84A; text-transform:uppercase; width:fit-content; }
+.torneo-title { font-size:38px; font-weight:700; letter-spacing:3px; color:#fff; text-transform:uppercase; }
+.torneo-title span { color:#2DB84A; }
+.torneo-sub { font-size:12px; letter-spacing:2px; color:#555; }
+
+/* ── INFO CARD ── */
+.info-grid { display:grid; grid-template-columns:1fr 1fr 1fr; gap:16px; }
+@media(max-width:600px){ .info-grid { grid-template-columns:1fr 1fr; } }
+.info-card { background:#111; border:1.5px solid #1a1a1a; border-radius:10px; padding:20px; display:flex; flex-direction:column; gap:6px; }
+.info-label { font-size:9px; letter-spacing:3px; color:#444; text-transform:uppercase; }
+.info-value { font-size:22px; font-weight:700; color:#fff; letter-spacing:1px; }
+.info-value.green { color:#2DB84A; }
+
+/* ── PAGAMENTO ── */
+.pagamento-section { display:flex; gap:32px; flex-wrap:wrap; }
+.pagamento-box { flex:1; min-width:240px; background:#111; border:1.5px solid #1a1a1a; border-radius:12px; padding:28px; display:flex; flex-direction:column; align-items:center; gap:16px; }
+.pagamento-box.satispay { border-color:rgba(255,60,0,.3); }
+.pagamento-box.whatsapp { border-color:rgba(37,211,102,.3); }
+.pag-title { font-size:14px; letter-spacing:3px; color:#fff; text-transform:uppercase; font-weight:700; }
+.pag-icon { font-size:36px; }
+.pag-desc { font-size:14px; color:#bbb; letter-spacing:.5px; text-align:center; line-height:1.8; }
+.pag-desc strong { color:#fff; }
+.iban-box { background:#0a0a0a; border:1.5px solid #2a2a2a; border-radius:8px; padding:14px 20px; display:flex; flex-direction:column; align-items:center; gap:8px; width:100%; }
+.iban-label { font-size:9px; letter-spacing:3px; color:#444; text-transform:uppercase; }
+.iban-value { font-size:17px; font-weight:700; color:#fff; letter-spacing:2px; font-variant-numeric:tabular-nums; }
+.btn-copia-iban { background:transparent; border:1.5px solid #2DB84A; color:#2DB84A; border-radius:6px; padding:8px 18px; font-family:'Oswald',sans-serif; font-size:12px; font-weight:700; letter-spacing:1px; cursor:pointer; transition:background .15s,color .15s; }
+.btn-copia-iban:hover { background:#2DB84A; color:#000; }
+.causale-hint { font-size:10px; color:#444; letter-spacing:1px; text-align:center; line-height:1.7; }
+.btn-whatsapp { display:inline-flex; align-items:center; gap:8px; background:#25D366; color:#000; border:none; border-radius:8px; padding:12px 20px; font-family:'Oswald',sans-serif; font-size:13px; font-weight:700; letter-spacing:1px; cursor:pointer; text-decoration:none; transition:opacity .15s; }
+.btn-whatsapp:hover { opacity:.85; }
+.wa-group-name { font-size:16px; font-weight:700; color:#25D366; letter-spacing:1px; }
+
+/* ── ISCRITTI ── */
+.section-title { font-size:11px; letter-spacing:4px; color:#bbb; text-transform:uppercase; border-bottom:1px solid #1a1a1a; padding-bottom:12px; margin-bottom:20px; display:flex; align-items:center; justify-content:space-between; }
+.section-title span.cnt { color:#2DB84A; font-size:18px; font-weight:700; letter-spacing:0; }
+.iscritti-table { width:100%; border-collapse:collapse; }
+.iscritti-table th { font-size:9px; letter-spacing:3px; color:#444; text-transform:uppercase; padding:10px 14px; text-align:left; border-bottom:1px solid #1a1a1a; }
+.iscritti-table td { padding:12px 14px; border-bottom:1px solid #111; font-size:14px; color:#c8c8c8; letter-spacing:.5px; }
+.iscritti-table tr:hover td { background:#0f0f0f; }
+.badge-pagato { background:rgba(45,184,74,.15); color:#2DB84A; border:1px solid rgba(45,184,74,.4); border-radius:4px; padding:2px 10px; font-size:10px; letter-spacing:1px; }
+.badge-attesa { background:rgba(255,153,0,.1); color:#ff9900; border:1px solid rgba(255,153,0,.3); border-radius:4px; padding:2px 10px; font-size:10px; letter-spacing:1px; }
+.num-circle { display:inline-flex; align-items:center; justify-content:center; width:24px; height:24px; border-radius:50%; background:#1a1a1a; color:#555; font-size:11px; font-weight:700; }
+
+/* ── ADMIN ADD ROW ── */
+.add-row { display:none; gap:10px; flex-wrap:wrap; align-items:center; margin-top:16px; padding:16px; background:#111; border:1px dashed #222; border-radius:8px; }
+.add-row.show { display:flex; }
+.add-input { background:#0a0a0a; border:1.5px solid #222; border-radius:6px; padding:8px 12px; color:#fff; font-family:'Oswald',sans-serif; font-size:13px; letter-spacing:1px; outline:none; flex:1; min-width:140px; }
+.add-input:focus { border-color:#2DB84A; }
+.add-select { background:#0a0a0a; border:1.5px solid #222; border-radius:6px; padding:8px 12px; color:#fff; font-family:'Oswald',sans-serif; font-size:13px; letter-spacing:1px; outline:none; cursor:pointer; }
+.add-select:focus { border-color:#2DB84A; }
+.btn-add { background:#2DB84A; color:#000; border:none; border-radius:6px; padding:8px 16px; font-family:'Oswald',sans-serif; font-size:12px; font-weight:700; letter-spacing:1px; cursor:pointer; }
+.btn-del { background:transparent; border:1px solid #333; color:#555; border-radius:4px; padding:2px 8px; font-size:10px; cursor:pointer; font-family:'Oswald',sans-serif; }
+.btn-del:hover { border-color:#cc4444; color:#cc4444; }
+.edit-only { display:none; }
+body.edit-mode .edit-only { display:inline-flex; }
+body.edit-mode .add-row { display:flex; }
+
+[contenteditable="true"] { outline:1px dashed rgba(45,184,74,.4); border-radius:3px; padding:1px 3px; }
+</style>
+</head>
+<body class="">
+
+<script>
+(function(){
+  if(window.location.hostname.includes('github.io')||window.location.hostname.includes('fabmiscia')){
+    document.addEventListener('DOMContentLoaded',function(){
+      ['btn-edit','btn-github'].forEach(function(id){
+        var el=document.getElementById(id);if(el)el.style.display='none';
+      });
+    });
+  }
+})();
+</script>
+
+<div class="toolbar">
+  <a class="btn btn-back" href="index.html">← Home</a>
+  <span class="toolbar-title">🏆 TORNEO CLASSIC VIALLI</span>
+  <div class="spacer"></div>
+  <button class="btn btn-edit" id="btn-edit" onclick="toggleEdit()">✏ Modifica</button>
+  <button class="btn btn-github" id="btn-github" disabled="">⏳ Caricando...</button>
+</div>
+
+<div class="page">
+
+  <div class="torneo-section" id="torneo-vialli">
+
+    <div class="torneo-header">
+      <div class="torneo-badge" contenteditable="false">Torneo Classic</div>
+      <div class="torneo-title" contenteditable="false">TORNEO CLASSIC <span contenteditable="false">VIALLI</span></div>
+      <div class="torneo-sub" contenteditable="false">Fantacalcio 2026-27 • MisterFabry Community</div>
+    </div>
+
+    <br>
+    <div class="info-grid">
+      <div class="info-card">
+        <div class="info-label">Quota iscrizione</div>
+        <div class="info-value green" contenteditable="false">€70</div>
+      </div>
+      <div class="info-card">
+        <div class="info-label">Posti disponibili</div>
+        <div class="info-value" contenteditable="false">0</div>
+      </div>
+      <div class="info-card">
+        <div class="info-label">Scadenza iscrizioni</div>
+        <div class="info-value" contenteditable="false">31 LUGLIO 2026</div>
+      </div>
+    </div>
+
+    <br>
+    <div class="pagamento-section">
+      <div class="pagamento-box satispay">
+        <div class="pag-title">1️⃣ Paga tramite bonifico</div>
+        <div class="pag-icon">💳</div>
+        <div class="pag-desc">
+          Usa Satispay o la tua banca.<br>
+          Copia l’IBAN qui sotto e invia <strong>€70</strong>
+        </div>
+        <div class="iban-box">
+          <div class="iban-label">IBAN Satispay</div>
+          <div class="iban-value" id="iban-value">LU49 8100 SATI 6673 6084</div>
+          <button class="btn-copia-iban" onclick="copiaIban()">📋 Copia IBAN</button>
+        </div>
+        <div class="causale-hint">
+          Causale: <strong style="color:#a8a8a8" contenteditable="false">Nome Cognome — Iscrizione Torneo Classic Vialli</strong>
+        </div>
+      </div>
+
+      <div class="pagamento-box whatsapp">
+        <div class="pag-title">2️⃣ Conferma pagamento</div>
+        <div class="pag-icon">💬</div>
+        <div class="wa-group-name" contenteditable="false" id="wa-group-name">CLASSIC VIALLI</div>
+        <div class="pag-desc">
+          Dopo aver pagato, manda uno<br>
+          screenshot della ricevuta nel gruppo
+        </div>
+        <a class="btn-whatsapp" id="wa-link-vialli" href="https://chat.whatsapp.com/IGU0OR8LYCk0Clhq2ppkBW?mode=gi_t" target="_blank">
+          💬 Apri gruppo WhatsApp
+        </a>
+        <div class="edit-only" style="flex-direction:column;gap:4px;width:100%">
+          <div style="font-size:9px;letter-spacing:2px;color:#444">LINK GRUPPO:</div>
+          <input class="add-input" id="wa-link-input-vialli" type="text" placeholder="https://chat.whatsapp.com/..." style="font-size:11px" oninput="document.getElementById('wa-link-vialli').href=this.value">
+        </div>
+      </div>
+    </div>
+
+    <br>
+    <div>
+      <div class="section-title">
+        Iscritti confermati
+        <span class="cnt" id="cnt-vialli">0</span>
+      </div>
+      <table class="iscritti-table">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Nome</th>
+            <th>Cognome</th>
+            <th>Data pagamento</th>
+            <th>Stato</th>
+            <th class="edit-only"></th>
+          </tr>
+        </thead>
+        <tbody id="tbody-vialli">
+          <tr id="empty-vialli">
+            <td colspan="6" style="text-align:center;color:#333;font-size:12px;letter-spacing:2px;padding:32px">
+              Nessun iscritto ancora
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="add-row" id="add-row-vialli">
+        <input class="add-input" id="add-nome-vialli" placeholder="Nome" style="max-width:130px">
+        <input class="add-input" id="add-cogn-vialli" placeholder="Cognome" style="max-width:160px">
+        <input class="add-input" id="add-data-vialli" placeholder="Data (es. 14/06)" style="max-width:120px">
+        <select class="add-select" id="add-stato-vialli">
+          <option value="pagato">✅ Pagato</option>
+          <option value="attesa">⏳ In attesa</option>
+        </select>
+        <button class="btn-add" onclick="addIscritto('vialli')">+ Aggiungi</button>
+      </div>
+    </div>
+
+  </div>
+
+</div>
+
+<script>
+const GH_REPO = 'fabmiscia/Il-Mister-Fabry';
+const GH_FILE = 'iscrizione-torneo-classic-vialli.html';
+const STORE_KEY = 'iscritti-vialli';
+
+let data = {vialli:[]};
+function saveData(){localStorage.setItem(STORE_KEY, JSON.stringify(data));}
+function loadData(){
+  try{ const d=JSON.parse(localStorage.getItem(STORE_KEY)||'null'); if(d)data=d; }catch(e){}
+  renderAll();
+}
+
+function renderAll(){ renderTorneo('vialli'); }
+function renderTorneo(t){
+  const tbody = document.getElementById('tbody-'+t);
+  const empty = document.getElementById('empty-'+t);
+  const cnt   = document.getElementById('cnt-'+t);
+  const rows  = data[t]||[];
+  cnt.textContent = rows.filter(r=>r.stato==='pagato').length;
+  if(!rows.length){ empty.style.display=''; return; }
+  empty.style.display='none';
+  Array.from(tbody.querySelectorAll('tr.data-row')).forEach(r=>r.remove());
+  rows.forEach(function(r,i){
+    const tr = document.createElement('tr');
+    tr.className='data-row';
+    const badge = r.stato==='pagato'
+      ? '<span class="badge-pagato">&#x2705; Pagato</span>'
+      : '<span class="badge-attesa">&#x23F3; In attesa</span>';
+    tr.innerHTML = '<td><span class="num-circle">'+(i+1)+'</span></td>'
+      +'<td>'+esc(r.nome)+'</td><td>'+esc(r.cogn)+'</td>'
+      +'<td>'+esc(r.data)+'</td><td>'+badge+'</td>'
+      +'<td class="edit-only"><button class="btn-del" onclick="delIscritto(\''+t+'\','+i+')">&#x2715;</button></td>';
+    tbody.insertBefore(tr, empty);
+  });
+}
+function esc(s){ return String(s||'').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+
+function addIscritto(t){
+  const nome = document.getElementById('add-nome-'+t).value.trim();
+  const cogn = document.getElementById('add-cogn-'+t).value.trim();
+  const dat  = document.getElementById('add-data-'+t).value.trim() || today();
+  const stato= document.getElementById('add-stato-'+t).value;
+  if(!nome && !cogn){ document.getElementById('add-nome-'+t).focus(); return; }
+  if(!data[t]) data[t]=[];
+  data[t].push({nome,cogn,data:dat,stato});
+  saveData(); renderTorneo(t);
+  document.getElementById('add-nome-'+t).value='';
+  document.getElementById('add-cogn-'+t).value='';
+  document.getElementById('add-data-'+t).value='';
+}
+function delIscritto(t,i){ data[t].splice(i,1); saveData(); renderTorneo(t); }
+function today(){ const d=new Date(); return d.getDate()+'/'+(d.getMonth()+1)+'/'+d.getFullYear(); }
+
+function copiaIban(){
+  const iban = document.getElementById('iban-value').textContent.replace(/\s/g,'');
+  navigator.clipboard.writeText(iban).then(function(){
+    const btn = document.querySelector('.btn-copia-iban');
+    btn.textContent = '✅ Copiato!';
+    setTimeout(()=>{ btn.innerHTML='&#x1F4CB; Copia IBAN'; }, 2000);
+  });
+}
+
+let editMode = false;
+function toggleEdit(){
+  editMode = !editMode;
+  document.body.classList.toggle('edit-mode', editMode);
+  const btn = document.getElementById('btn-edit');
+  btn.textContent = editMode ? '✓ Fine modifica' : '✏ Modifica';
+  btn.classList.toggle('active', editMode);
+  document.querySelectorAll('[contenteditable]').forEach(function(el){
+    el.contentEditable = editMode ? 'true' : 'false';
+  });
+}
+
+document.getElementById('btn-github').addEventListener('click', async function(){
+  let token = localStorage.getItem('gh-token');
+  if(!token){ token=prompt('GitHub Personal Access Token:'); if(!token)return; localStorage.setItem('gh-token',token.trim()); token=token.trim(); }
+  const btn = document.getElementById('btn-github');
+  btn.textContent = '⏳ Caricando...'; btn.disabled = true;
+  try{
+    let source = '<!DOCTYPE html>\n' + document.documentElement.outerHTML;
+    const headers = {'Authorization':'token '+token,'Content-Type':'application/json'};
+    const getResp = await fetch('https://api.github.com/repos/'+GH_REPO+'/contents/'+GH_FILE,{headers});
+    if(!getResp.ok && getResp.status!==404){ if(getResp.status===401){localStorage.removeItem('gh-token');throw new Error('Token non valido.');} throw new Error('Errore '+getResp.status); }
+    const body = {message:'Aggiorna iscrizioni Torneo Classic Vialli', content:btoa(unescape(encodeURIComponent(source)))};
+    if(getResp.ok){ const d=await getResp.json(); body.sha=d.sha; }
+    const pushResp = await fetch('https://api.github.com/repos/'+GH_REPO+'/contents/'+GH_FILE,{method:'PUT',headers,body:JSON.stringify(body)});
+    if(!pushResp.ok){ const e=await pushResp.json(); throw new Error(e.message); }
+    btn.textContent = '✅ Pubblicato!';
+    setTimeout(()=>{ btn.textContent='📤 Su GitHub'; btn.disabled=false; }, 3000);
+  }catch(e){ alert('❌ '+e.message); btn.textContent='📤 Su GitHub'; btn.disabled=false; }
+});
+
+window.addEventListener('DOMContentLoaded', loadData);
+</script>
+
+
+</body></html>
