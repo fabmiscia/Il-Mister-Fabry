@@ -28,6 +28,17 @@ body{background:var(--bg);color:var(--testo);font-family:'Open Sans',Arial,sans-
 .btn-github:hover{opacity:.85}
 .edit-hint{font-size:10px;color:var(--oro);letter-spacing:1px;opacity:0;transition:opacity .3s}
 .edit-hint.show{opacity:1}
+.btn-pdf{padding:7px 16px;border-radius:6px;font-family:'Oswald',sans-serif;font-size:11px;font-weight:600;letter-spacing:1px;cursor:pointer;border:1.5px solid rgba(255,255,255,.2);background:#8B0000;color:#fff;transition:opacity .15s}
+.btn-pdf:hover{opacity:.85}
+@media print{
+  .toolbar,.toc,.btn-add-nota,.nota-area,.footer{display:none!important}
+  body{background:#fff!important;color:#000!important}
+  .hero{background:#1a3a1a!important;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .sezione-header{background:#1a3a1a!important;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .main{max-width:100%;padding:20px}
+  .sezione{page-break-inside:avoid;margin-bottom:32px}
+  a{color:inherit!important;text-decoration:none!important}
+}
 
 /* HERO */
 .hero{background:var(--verde);text-align:center;padding:60px 24px 48px;border-bottom:3px solid var(--oro)}
@@ -137,7 +148,7 @@ td .badge-novita{display:inline-block;background:var(--oro);color:#000;font-fami
 })();
 </script>
 </head>
-<body class="">
+<body>
 
 <div class="toolbar">
   <span class="toolbar-title" contenteditable="false">⚽ CLASSIC MAZZONE — REGOLAMENTO</span>
@@ -145,6 +156,7 @@ td .badge-novita{display:inline-block;background:var(--oro);color:#000;font-fami
   <div class="spacer"></div>
   <button class="edit-toggle" id="edit-toggle" onclick="toggleEdit()">✏ Modifica</button>
   <button class="btn-github" id="btn-github" disabled="">⏳ Caricando...</button>
+  <button class="btn-pdf" onclick="window.print()">📄 Esporta PDF</button>
 </div>
 
 <!-- HERO -->
@@ -199,7 +211,7 @@ td .badge-novita{display:inline-block;background:var(--oro);color:#000;font-fami
   <div class="sezione-body">
     <p contenteditable="false">Per entrare nel Fantacalcio del Canale <strong>IL MISTER FABRY</strong>, sono obbligatori <strong>2 requisiti fondamentali</strong>:</p>
     <ul>
-      <li contenteditable="false"><strong>Abbonamento al canale YouTube di Fabry FantaMister</strong> (attivo per tutto l'anno). Oltre alla partecipazione al fanta, garantisce vantaggi ESCLUSIVI.</li>
+      <li contenteditable="false"><strong>Abbonamento al canale YouTube di Il Mister Fabry</strong> (attivo per tutto l'anno). Oltre alla partecipazione al fanta, garantisce vantaggi ESCLUSIVI.</li>
       <li contenteditable="false"><strong>Abbonamento annuale alla Community FABRY FM PREMIUM – 70 €</strong> (una tantum). Include: community WhatsApp, regolamento, riconoscimento premi, supporto diretto.</li>
     </ul>
     <p contenteditable="false">Pagamento abbonamento annuale con <strong>SATISPAY</strong>. Dopo il pagamento si riceve il link per la <strong>COMMUNITY PREMIUM</strong> su WhatsApp.</p>
@@ -310,11 +322,11 @@ td .badge-novita{display:inline-block;background:var(--oro);color:#000;font-fami
     </div>
     <div class="box box-novita">
       <div class="box-label" contenteditable="false">★ NOVITÀ 2026/27 – CAMBIO MODULO IN SOSTITUZIONE</div>
-      <p contenteditable="false">MODELLO DI SOSTITUZIONI: DYNAMIC. L'ordine panchina comanda sempre le sostituzioni. Entra sempre il primo a voto in panchina che configura un modulo valido.</p>
+      <p contenteditable="false">Se un titolare non riceve voto (s.v.) e nessuna riserva dello stesso ruolo è disponibile, subentra il primo giocatore di ruolo diverso utile dall’ordine di panchina (es: 3 attaccanti s.v. → subentra un centrocampista). Ordine e modalità verranno comunicati prima dell’inizio.</p>
     </div>
     <div class="box box-warning">
       <div class="box-label" contenteditable="false">⚠ IN CASO DI BUG SU APP</div>
-      <p contenteditable="false">Se la formazione viene consegnata con un numero <strong>SUPERIORE</strong> di titolari: viene tolto il giocatore col voto più alto + sanzione di <strong>-1 in classifica</strong>.&nbsp;</p>
+      <p contenteditable="false">Se la formazione viene consegnata con un numero <strong>SUPERIORE</strong> di titolari: viene tolto il giocatore col voto più alto + sanzione di <strong>-1 in classifica</strong>.</p>
     </div>
   </div>
   <div class="nota-area" id="note-s06"></div>
@@ -526,7 +538,7 @@ td .badge-novita{display:inline-block;background:var(--oro);color:#000;font-fami
     <div class="sub-title" contenteditable="false">SESSIONI DI MERCATO DI RIPARAZIONE</div>
     <table>
       <tbody><tr><th contenteditable="false">SESSIONE</th><th contenteditable="false">DATA</th><th contenteditable="false">PIATTAFORMA</th></tr>
-      <tr><td contenteditable="false"><strong>1ª Riparazione</strong></td><td contenteditable="false">Martedì 20 Ottobre – ore 20:30</td><td contenteditable="false">FantaLab (live)</td></tr>
+      <tr><td contenteditable="false"><strong>1ª Riparazione</strong></td><td contenteditable="false">Martedì Ottobre – ore 20:30</td><td contenteditable="false">FantaLab (live)</td></tr>
       <tr><td contenteditable="false"><strong>2ª Riparazione</strong></td><td contenteditable="false">Febbraio 2026 – 1ª settimana (data da concordare)</td><td contenteditable="false">FantaLab (live)</td></tr>
     </tbody></table>
     <div class="sub-title" contenteditable="false">CREDITI</div>
