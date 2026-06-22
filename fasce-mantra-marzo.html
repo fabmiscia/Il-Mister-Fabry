@@ -65,19 +65,27 @@ tr.expanded .expand-btn{color:#2DB84A}
 .ruolo-full{font-size:11px;color:#888;margin-bottom:8px}
 .no-results{text-align:center;padding:60px 20px;color:#444;font-size:14px;letter-spacing:2px}
 .obj-count{background:#2DB84A;color:#000;border-radius:50%;width:18px;height:18px;display:inline-flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;margin-left:4px}
+
+.btn-edit{background:#1a1a1a;color:#2DB84A;border:1.5px solid #2DB84A}
+.btn-edit.active{background:#2DB84A;color:#000}
+.btn-csv{background:#1a1a1a;color:#4a9eff;border:1.5px solid #4a9eff}
+.btn-pdf{background:#1a1a1a;color:#ff7043;border:1.5px solid #ff7043}
+td[contenteditable="true"]{outline:1px dashed rgba(45,184,74,.4);cursor:text}
+td[contenteditable="true"]:focus{outline:2px solid #2DB84A;background:#141414}
+@media print{
+  .toolbar,.role-tabs,.filters,.no-results,.obj-btn,.expand-btn,.detail-row{display:none!important}
+  body{background:#fff!important;color:#000!important;font-size:11px}
+  table{width:100%;border-collapse:collapse}
+  th,td{border:1px solid #ccc!important;color:#000!important;background:#fff!important;padding:5px 7px}
+  .fascia-badge{border:1px solid #999!important;color:#000!important;background:#eee!important}
+  .nome{color:#000!important}
+  .team-badge{color:#555!important}
+  .st-on{color:#000!important}
+  .st-off{color:#ccc!important}
+}
 </style>
 
-<script>
-(function(){
-  if(window.location.hostname.includes('github.io')||window.location.hostname.includes('fabmiscia')){
-    document.addEventListener('DOMContentLoaded',function(){
-      ['edit-toggle','btn-github','edit-hint'].forEach(function(id){
-        var el=document.getElementById(id);if(el)el.style.display='none';
-      });
-    });
-  }
-})();
-</script>
+
 </head>
 <body>
 <div class="toolbar">
@@ -86,6 +94,9 @@ tr.expanded .expand-btn{color:#2DB84A}
   <input class="search" type="text" id="search" placeholder="Cerca giocatore..." oninput="render()">
   <button class="btn btn-counter" onclick="toggleObjOnly()">⭐ OBIETTIVI <span id="obj-count-badge" class="obj-count">0</span></button>
   <button class="btn btn-github" id="btn-github">📤 Su GitHub</button>
+  <button class="btn btn-edit" id="edit-toggle" onclick="toggleEdit()">&#x270F;&#xFE0F; MODIFICA</button>
+  <button class="btn btn-csv" onclick="exportCSV()">&#x1F4CA; ESPORTA CSV</button>
+  <button class="btn btn-pdf" onclick="exportPDF()">&#x1F4C4; ESPORTA PDF</button>
 </div>
 <div class="role-tabs" id="role-tabs"></div>
 <div class="filters" id="filters"></div>
@@ -152,7 +163,7 @@ function render(){
     const commento=p.Commento?`<span class="commento">${p.Commento}</span>`:'';
     const stats=[{l:'MV',v:p.MV||'-'},{l:'FMV Exp.',v:p['FMV Exp.']||'-'},{l:'Presenze',v:p.Presenze||0},{l:'Minuti',v:p.Minuti||0},{l:'Pt.Tit.',v:p['Pt. Tit.']||0},{l:'Pt.Inf.',v:p['Pt. Inf.']||0},{l:'Gol',v:p.Gol||0},{l:'Assist',v:p.Assist||0},{l:'Ammon.',v:p.Ammonizioni||0},{l:'Espuls.',v:p.Espulsioni||0},{l:'Rig.Seg.',v:p['Rig. Segnati']||0},{l:'Rig.Sbag.',v:p['Rig. Sbagliati']||0},...(currentRole==='Por'?[{l:'Gol Sub.',v:p['Gol Subiti']||0},{l:'Rig.Par.',v:p['Rig. Parati']||0}]:[])];
     const statsHtml=stats.map(s=>`<div class="stat-item"><div class="stat-v">${s.v}</div><div class="stat-l">${s.l}</div></div>`).join('');
-    return `<tr class="${isExp?'expanded':''}" id="row-${i}"><td><button class="obj-btn${obj?' set':''}" onclick='toggleObj(${JSON.stringify(p)},this)'>${obj?'⭐':'☆'}</button></td><td><span class="nome">${p.Nome}</span><span class="team-badge">${p.Team}</span></td><td>${fasciaChip(p.Fascia)}</td><td><span class="prezzo">${p.Prezzo}</span></td><td style="color:#888;font-size:12px">${p.Quo}</td><td class="pma">${p.PMA||'-'}</td><td class="star-cell">${stars(p.Titolarità)}</td><td class="star-cell">${stars(p.Affidabilità)}</td><td class="star-cell">${stars(p.Integrità)}</td><td class="fmv">${p.FMV}</td><td>${tagsHtml(p.tags)} ${commento}</td><td><button class="expand-btn" onclick="toggleExpand('${k}','row-${i}','det-${i}')">${isExp?'▲':'▼'}</button></td></tr><tr class="detail-row${isExp?' open':''}" id="det-${i}"><td colspan="12"><div class="ruolo-full">Ruolo: ${p.Ruolo} — Budget: ${p.Budget} — Minuti: ${p.Minuti}</div><div class="stats-grid">${statsHtml}</div></td></tr>`;
+    return `<tr class="${isExp?'expanded':''}" id="row-${i}" data-pk="${k}"><td><button class="obj-btn${obj?' set':''}" onclick='toggleObj(${JSON.stringify(p)},this)'>${obj?'⭐':'☆'}</button></td><td><span class="nome">${p.Nome}</span><span class="team-badge">${p.Team}</span></td><td>${fasciaChip(p.Fascia)}</td><td><span class="prezzo">${p.Prezzo}</span></td><td style="color:#888;font-size:12px">${p.Quo}</td><td class="pma">${p.PMA||'-'}</td><td class="star-cell">${stars(p.Titolarità)}</td><td class="star-cell">${stars(p.Affidabilità)}</td><td class="star-cell">${stars(p.Integrità)}</td><td class="fmv">${p.FMV}</td><td>${tagsHtml(p.tags)} ${commento}</td><td><button class="expand-btn" onclick="toggleExpand('${k}','row-${i}','det-${i}')">${isExp?'▲':'▼'}</button></td></tr><tr class="detail-row${isExp?' open':''}" id="det-${i}"><td colspan="12"><div class="ruolo-full">Ruolo: ${p.Ruolo} — Budget: ${p.Budget} — Minuti: ${p.Minuti}</div><div class="stats-grid">${statsHtml}</div></td></tr>`;
   }).join('');
   document.getElementById('obj-count-badge').textContent=Object.keys(objectives).length;
 }
@@ -175,6 +186,57 @@ document.getElementById('btn-github').addEventListener('click',async()=>{
   }catch(e){alert('❌ '+e.message);btn.textContent='📤 Su GitHub';btn.disabled=false;}
 });
 buildTabs();render();
+
+let editMode=false;
+function toggleEdit(){
+  editMode=!editMode;
+  const btn=document.getElementById('edit-toggle');
+  btn.classList.toggle('active',editMode);
+  btn.innerHTML=editMode?'&#x2705; CHIUDI':'&#x270F;&#xFE0F; MODIFICA';
+  document.querySelectorAll('#table-body tr').forEach(row=>{
+    if(!row.dataset.pk)return;
+    Array.from(row.cells).forEach((td,ci)=>{
+      if(ci===0||ci===row.cells.length-1)return;
+      if(editMode){
+        td.contentEditable='true';
+        td.addEventListener('blur',saveEdit);
+      }else{
+        td.contentEditable='false';
+        td.removeEventListener('blur',saveEdit);
+      }
+    });
+  });
+}
+const COL_FIELDS={1:'Nome',2:'Fascia',3:'Prezzo',4:'Quo',5:'PMA',6:'Titolarità',7:'Affidabilità',8:'Integrità',9:'FMV',10:'Commento'};
+function saveEdit(e){
+  const td=e.target,ci=td.cellIndex,field=COL_FIELDS[ci];
+  if(!field)return;
+  const pk=td.closest('tr').dataset.pk;
+  for(const role of Object.keys(DATA)){
+    const p=DATA[role].find(x=>playerKey(x)===pk);
+    if(p){
+      let v=td.innerText.trim();
+      if(field==='Prezzo'||field==='FMV'||field==='Titolarità'||field==='Affidabilità'||field==='Integrità')v=parseFloat(v)||0;
+      p[field]=v;
+      break;
+    }
+  }
+}
+function exportCSV(){
+  const sep=';',bom='\uFEFF';
+  const fields=['Nome','Team','Ruolo','Fascia','Prezzo','Quo','PMA','Titolarità','Affidabilità','Integrità','FMV','Commento'];
+  const header=fields.join(sep);
+  const rows=Object.values(DATA).flat().map(p=>fields.map(f=>{
+    let v=p[f];if(Array.isArray(v))v=v.join(', ');if(v==null)v='';v=String(v);
+    return v.includes(sep)||v.includes('"')||v.includes('\n')?'"'+v.replace(/"/g,'""')+'"':v;
+  }).join(sep));
+  const blob=new Blob([bom+[header,...rows].join('\n')],{type:'text/csv;charset=utf-8'});
+  const url=URL.createObjectURL(blob),a=document.createElement('a');
+  a.href=url;a.download='fasce-mantra-marzo.csv';document.body.appendChild(a);a.click();
+  setTimeout(()=>{document.body.removeChild(a);URL.revokeObjectURL(url);},2000);
+}
+function exportPDF(){window.print();}
+
 </script>
 </body>
 </html>
