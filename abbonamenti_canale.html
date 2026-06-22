@@ -471,8 +471,8 @@ body {
   <button onclick="show('t2',this)">🔵 De Rossi</button>
   <button onclick="show('t3',this)">🟢 Fabregas</button>
   <button onclick="show('t4',this)">🟡 Gasperini</button>
-  <button class="png-btn" onclick="exportPNG()">🖼 Esporta PNG</button>
-  <button class="github-btn" onclick="openGithub()">⬆ Esporta su GitHub</button>
+  <button class="png-btn" data-local-only onclick="exportPNG()">🖼 Esporta PNG</button>
+  <button class="github-btn" data-local-only onclick="openGithub()">⬆ Esporta su GitHub</button>
 </div>
 
 <!-- ══════════════════════════════════════
@@ -858,7 +858,9 @@ async function doExport() {
   localStorage.setItem('gh-token', token);
   status.textContent = 'Caricamento in corso...';
   status.className = 'modal-status';
-  const content = '<!DOCTYPE html>\n' + document.documentElement.outerHTML;
+  const clone = document.documentElement.cloneNode(true);
+  clone.querySelectorAll('[data-local-only]').forEach(el => el.remove());
+  const content = '<!DOCTYPE html>\n' + clone.outerHTML;
   const encoded = btoa(unescape(encodeURIComponent(content)));
   const apiUrl  = 'https://api.github.com/repos/fabmiscia/Il-Mister-Fabry/contents/' + filename;
   try {
@@ -889,7 +891,7 @@ async function doExport() {
 
 </script>
 
-<div class="modal-overlay" id="github-modal">
+<div class="modal-overlay" id="github-modal" data-local-only>
   <div class="modal">
     <div class="modal-title">⬆ Esporta su GitHub</div>
     <div class="modal-sub">Il file verrà caricato nel repository <strong>fabmiscia/Il-Mister-Fabry</strong>.<br>Inserisci il tuo Personal Access Token GitHub per procedere.</div>
