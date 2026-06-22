@@ -18,20 +18,20 @@ body{background:#0d0d0d;color:#a8a8a8;font-family:'Oswald',Arial,sans-serif;min-
 .btn-github{background:#24292e;color:#fff;border:1.5px solid rgba(255,255,255,.2)}
 .btn-counter{background:#1a1a1a;color:#2DB84A;border:1.5px solid #2DB84A;font-size:11px}
 .role-tabs{background:#111;border-bottom:1px solid #1a1a1a;padding:0 20px;display:flex;gap:0;overflow-x:auto}
-.role-tab{padding:10px 16px;cursor:pointer;font-size:12px;letter-spacing:1px;color:#666;border-bottom:3px solid transparent;white-space:nowrap;transition:color .15s,border-color .15s;user-select:none}
+.role-tab{padding:10px 16px;cursor:pointer;font-size:12px;letter-spacing:1px;color:#bbb;border-bottom:3px solid transparent;white-space:nowrap;transition:color .15s,border-color .15s;user-select:none}
 .role-tab:hover{color:#aaa}
 .role-tab.active{color:#2DB84A;border-bottom-color:#2DB84A}
-.role-tab .cnt{font-size:10px;color:#444;margin-left:4px}
+.role-tab .cnt{font-size:10px;color:#aaa;margin-left:4px}
 .role-tab.active .cnt{color:#2DB84A}
 .filters{padding:10px 20px;display:flex;gap:8px;flex-wrap:wrap;align-items:center;background:#0d0d0d;border-bottom:1px solid #1a1a1a}
-.filter-label{font-size:11px;color:#555;letter-spacing:1px;margin-right:4px}
+.filter-label{font-size:11px;color:#ccc;letter-spacing:1px;margin-right:4px}
 .chip{padding:4px 12px;border-radius:20px;font-size:11px;font-weight:600;cursor:pointer;border:1.5px solid;transition:all .15s;user-select:none;letter-spacing:.5px}
 .chip.active{color:#000!important}
 .sort-select{background:#1a1a1a;border:1px solid #333;color:#aaa;padding:4px 8px;border-radius:6px;font-family:'Oswald',Arial,sans-serif;font-size:11px;cursor:pointer;margin-left:auto}
 .sort-select:focus{outline:none;border-color:#2DB84A}
 .table-wrap{padding:0 20px 40px;overflow-x:auto}
 table{width:100%;border-collapse:collapse;min-width:900px;margin-top:12px}
-th{background:#111;padding:9px 10px;text-align:left;font-size:10px;letter-spacing:1.5px;color:#555;border-bottom:2px solid #1a1a1a;white-space:nowrap;cursor:pointer;user-select:none}
+th{background:#111;padding:9px 10px;text-align:left;font-size:10px;letter-spacing:1.5px;color:#ccc;border-bottom:2px solid #1a1a1a;white-space:nowrap;cursor:pointer;user-select:none}
 th:hover{color:#aaa}
 th.sort-asc::after{content:' ▲'}
 th.sort-desc::after{content:' ▼'}
@@ -45,25 +45,25 @@ tr.detail-row.open{display:table-row}
 .st-on{color:#FFD700}
 .st-off{color:#333}
 .nome{font-weight:600;font-size:14px;letter-spacing:.5px;color:#c8c8c8}
-.team-badge{display:inline-block;background:#1a1a1a;border:1px solid #2a2a2a;border-radius:4px;padding:1px 7px;font-size:10px;color:#888;letter-spacing:1px;margin-left:6px}
+.team-badge{display:inline-block;background:#1a1a1a;border:1px solid #2a2a2a;border-radius:4px;padding:1px 7px;font-size:10px;color:#ddd;letter-spacing:1px;margin-left:6px}
 .fascia-badge{display:inline-block;border-radius:4px;padding:2px 8px;font-size:10px;font-weight:700;letter-spacing:.5px;color:#000}
 .tag{display:inline-block;border-radius:3px;padding:1px 7px;font-size:9px;font-weight:600;letter-spacing:.5px;margin:1px;color:#000}
 .prezzo{font-size:15px;font-weight:700;color:#b8b8b8}
 .fmv{font-size:13px;color:#aaa}
-.pma{font-size:12px;color:#888}
-.commento{font-size:11px;color:#888;font-style:italic}
+.pma{font-size:12px;color:#ddd}
+.commento{font-size:11px;color:#ddd;font-style:italic}
 .obj-btn{background:none;border:none;cursor:pointer;font-size:18px;line-height:1;padding:0;transition:transform .1s;color:#333}
 .obj-btn.set{color:#FFD700}
 .obj-btn:hover{transform:scale(1.3)}
-.expand-btn{background:none;border:none;cursor:pointer;color:#444;font-size:12px;padding:0 4px;transition:color .15s}
+.expand-btn{background:none;border:none;cursor:pointer;color:#aaa;font-size:12px;padding:0 4px;transition:color .15s}
 .expand-btn:hover{color:#aaa}
 tr.expanded .expand-btn{color:#2DB84A}
 .stats-grid{display:flex;gap:24px;flex-wrap:wrap}
 .stat-item{text-align:center}
 .stat-v{font-size:18px;font-weight:700;color:#2DB84A}
-.stat-l{font-size:10px;color:#555;letter-spacing:1px;margin-top:2px}
-.ruolo-full{font-size:11px;color:#888;margin-bottom:8px}
-.no-results{text-align:center;padding:60px 20px;color:#444;font-size:14px;letter-spacing:2px}
+.stat-l{font-size:10px;color:#ccc;letter-spacing:1px;margin-top:2px}
+.ruolo-full{font-size:11px;color:#ddd;margin-bottom:8px}
+.no-results{text-align:center;padding:60px 20px;color:#aaa;font-size:14px;letter-spacing:2px}
 .obj-count{background:#2DB84A;color:#000;border-radius:50%;width:18px;height:18px;display:inline-flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;margin-left:4px}
 
 .btn-edit{background:#1a1a1a;color:#2DB84A;border:1.5px solid #2DB84A}
@@ -83,6 +83,10 @@ td[contenteditable="true"]:focus{outline:2px solid #2DB84A;background:#141414}
   .st-on{color:#000!important}
   .st-off{color:#ccc!important}
 }
+
+.edit-inp{background:#1a1a1a;color:#fff;border:1px solid #2DB84A;border-radius:3px;padding:2px 4px;font-family:'Oswald',Arial,sans-serif;font-size:12px;width:98%;box-sizing:border-box;}
+.edit-inp[type="number"]{width:60px;}
+.btn-edit.active{background:#2DB84A;color:#000}
 </style>
 
 
@@ -163,9 +167,10 @@ function render(){
     const commento=p.Commento?`<span class="commento">${p.Commento}</span>`:'';
     const stats=[{l:'MV',v:p.MV||'-'},{l:'FMV Exp.',v:p['FMV Exp.']||'-'},{l:'Presenze',v:p.Presenze||0},{l:'Minuti',v:p.Minuti||0},{l:'Pt.Tit.',v:p['Pt. Tit.']||0},{l:'Pt.Inf.',v:p['Pt. Inf.']||0},{l:'Gol',v:p.Gol||0},{l:'Assist',v:p.Assist||0},{l:'Ammon.',v:p.Ammonizioni||0},{l:'Espuls.',v:p.Espulsioni||0},{l:'Rig.Seg.',v:p['Rig. Segnati']||0},{l:'Rig.Sbag.',v:p['Rig. Sbagliati']||0},...(currentRole==='Por'?[{l:'Gol Sub.',v:p['Gol Subiti']||0},{l:'Rig.Par.',v:p['Rig. Parati']||0}]:[])];
     const statsHtml=stats.map(s=>`<div class="stat-item"><div class="stat-v">${s.v}</div><div class="stat-l">${s.l}</div></div>`).join('');
-    return `<tr class="${isExp?'expanded':''}" id="row-${i}" data-pk="${k}"><td><button class="obj-btn${obj?' set':''}" onclick='toggleObj(${JSON.stringify(p)},this)'>${obj?'⭐':'☆'}</button></td><td><span class="nome">${p.Nome}</span><span class="team-badge">${p.Team}</span></td><td>${fasciaChip(p.Fascia)}</td><td><span class="prezzo">${p.Prezzo}</span></td><td style="color:#888;font-size:12px">${p.Quo}</td><td class="pma">${p.PMA||'-'}</td><td class="star-cell">${stars(p.Titolarità)}</td><td class="star-cell">${stars(p.Affidabilità)}</td><td class="star-cell">${stars(p.Integrità)}</td><td class="fmv">${p.FMV}</td><td>${tagsHtml(p.tags)} ${commento}</td><td><button class="expand-btn" onclick="toggleExpand('${k}','row-${i}','det-${i}')">${isExp?'▲':'▼'}</button></td></tr><tr class="detail-row${isExp?' open':''}" id="det-${i}"><td colspan="12"><div class="ruolo-full">Ruolo: ${p.Ruolo} — Budget: ${p.Budget} — Minuti: ${p.Minuti}</div><div class="stats-grid">${statsHtml}</div></td></tr>`;
+    return `<tr class="${isExp?'expanded':''}" id="row-${i}" data-pk="${k}"><td><button class="obj-btn${obj?' set':''}" onclick='toggleObj(${JSON.stringify(p)},this)'>${obj?'⭐':'☆'}</button></td><td><span class="nome">${p.Nome}</span><span class="team-badge">${p.Team}</span></td><td>${fasciaChip(p.Fascia)}</td><td><span class="prezzo">${p.Prezzo}</span></td><td style="color:#ddd;font-size:12px">${p.Quo}</td><td class="pma">${p.PMA||'-'}</td><td class="star-cell">${stars(p.Titolarità)}</td><td class="star-cell">${stars(p.Affidabilità)}</td><td class="star-cell">${stars(p.Integrità)}</td><td class="fmv">${p.FMV}</td><td>${tagsHtml(p.tags)} ${commento}</td><td><button class="expand-btn" onclick="toggleExpand('${k}','row-${i}','det-${i}')">${isExp?'▲':'▼'}</button></td></tr><tr class="detail-row${isExp?' open':''}" id="det-${i}"><td colspan="12"><div class="ruolo-full">Ruolo: ${p.Ruolo} — Budget: ${p.Budget} — Minuti: ${p.Minuti}</div><div class="stats-grid">${statsHtml}</div></td></tr>`;
   }).join('');
   document.getElementById('obj-count-badge').textContent=Object.keys(objectives).length;
+  if(editMode)applyEditCells(players);
 }
 function toggleExpand(k,rowId,detId){const row=document.getElementById(rowId),det=document.getElementById(detId);if(expanded.has(k)){expanded.delete(k);row.classList.remove('expanded');det.classList.remove('open');row.querySelector('.expand-btn').textContent='▼';}else{expanded.add(k);row.classList.add('expanded');det.classList.add('open');row.querySelector('.expand-btn').textContent='▲';}}
 document.getElementById('btn-github').addEventListener('click',async()=>{
@@ -187,44 +192,50 @@ document.getElementById('btn-github').addEventListener('click',async()=>{
 });
 buildTabs();render();
 
+
 let editMode=false;
 function toggleEdit(){
   editMode=!editMode;
   const btn=document.getElementById('edit-toggle');
   btn.classList.toggle('active',editMode);
-  btn.innerHTML=editMode?'&#x2705; CHIUDI':'&#x270F;&#xFE0F; MODIFICA';
-  document.querySelectorAll('#table-body tr').forEach(row=>{
-    if(!row.dataset.pk)return;
+  btn.innerHTML=editMode?'&#x2705; CHIUDI MODIFICA':'&#x270F;&#xFE0F; MODIFICA';
+  render();
+}
+const EDIT_COLS=[
+  null,
+  {f:'Nome',t:'text'},
+  {f:'Fascia',t:'text'},
+  {f:'Prezzo',t:'number'},
+  {f:'Quo',t:'number'},
+  {f:'PMA',t:'text'},
+  {f:'Titolarit\u00e0',t:'number'},
+  {f:'Affidabilit\u00e0',t:'number'},
+  {f:'Integrit\u00e0',t:'number'},
+  {f:'FMV',t:'number'},
+  {f:'Commento',t:'text'},
+  null
+];
+function applyEditCells(players){
+  const rows=document.querySelectorAll('#table-body tr[data-pk]');
+  rows.forEach((row,ri)=>{
+    const p=players[ri];if(!p)return;
     Array.from(row.cells).forEach((td,ci)=>{
-      if(ci===0||ci===row.cells.length-1)return;
-      if(editMode){
-        td.contentEditable='true';
-        td.addEventListener('blur',saveEdit);
-      }else{
-        td.contentEditable='false';
-        td.removeEventListener('blur',saveEdit);
-      }
+      const col=EDIT_COLS[ci];if(!col)return;
+      const val=p[col.f]??'';
+      const inp=document.createElement('input');
+      inp.type=col.t;inp.value=val;inp.className='edit-inp';
+      inp.addEventListener('input',function(){
+        let v=this.value;
+        if(col.t==='number')v=parseFloat(v)||0;
+        p[col.f]=v;
+      });
+      td.innerHTML='';td.appendChild(inp);
     });
   });
 }
-const COL_FIELDS={1:'Nome',2:'Fascia',3:'Prezzo',4:'Quo',5:'PMA',6:'Titolarità',7:'Affidabilità',8:'Integrità',9:'FMV',10:'Commento'};
-function saveEdit(e){
-  const td=e.target,ci=td.cellIndex,field=COL_FIELDS[ci];
-  if(!field)return;
-  const pk=td.closest('tr').dataset.pk;
-  for(const role of Object.keys(DATA)){
-    const p=DATA[role].find(x=>playerKey(x)===pk);
-    if(p){
-      let v=td.innerText.trim();
-      if(field==='Prezzo'||field==='FMV'||field==='Titolarità'||field==='Affidabilità'||field==='Integrità')v=parseFloat(v)||0;
-      p[field]=v;
-      break;
-    }
-  }
-}
 function exportCSV(){
   const sep=';',bom='\uFEFF';
-  const fields=['Nome','Team','Ruolo','Fascia','Prezzo','Quo','PMA','Titolarità','Affidabilità','Integrità','FMV','Commento'];
+  const fields=['Nome','Team','Ruolo','Fascia','Prezzo','Quo','PMA','Titolarit\u00e0','Affidabilit\u00e0','Integrit\u00e0','FMV','Commento'];
   const header=fields.join(sep);
   const rows=Object.values(DATA).flat().map(p=>fields.map(f=>{
     let v=p[f];if(Array.isArray(v))v=v.join(', ');if(v==null)v='';v=String(v);
