@@ -66,8 +66,6 @@ tr.expanded .expand-btn{color:#2DB84A}
 .no-results{text-align:center;padding:60px 20px;color:#aaa;font-size:14px;letter-spacing:2px}
 .obj-count{background:#2DB84A;color:#000;border-radius:50%;width:18px;height:18px;display:inline-flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;margin-left:4px}
 
-.btn-edit{background:#1a1a1a;color:#2DB84A;border:1.5px solid #2DB84A}
-.btn-edit.active{background:#2DB84A;color:#000}
 .btn-csv{background:#1a1a1a;color:#4a9eff;border:1.5px solid #4a9eff}
 .btn-pdf{background:#1a1a1a;color:#ff7043;border:1.5px solid #ff7043}
 td[contenteditable="true"]{outline:1px dashed rgba(45,184,74,.4);cursor:text}
@@ -84,9 +82,6 @@ td[contenteditable="true"]:focus{outline:2px solid #2DB84A;background:#141414}
   .st-off{color:#ccc!important}
 }
 
-.edit-inp{background:#1a1a1a;color:#fff;border:1px solid #2DB84A;border-radius:3px;padding:2px 4px;font-family:'Oswald',Arial,sans-serif;font-size:12px;width:98%;box-sizing:border-box;}
-.edit-inp[type="number"]{width:60px;}
-.btn-edit.active{background:#2DB84A;color:#000}
 </style>
 
 
@@ -98,7 +93,6 @@ td[contenteditable="true"]:focus{outline:2px solid #2DB84A;background:#141414}
   <input class="search" type="text" id="search" placeholder="Cerca giocatore..." oninput="render()">
   <button class="btn btn-counter" onclick="toggleObjOnly()">⭐ OBIETTIVI <span id="obj-count-badge" class="obj-count">0</span></button>
   <button class="btn btn-github" id="btn-github">📤 Su GitHub</button>
-  <button class="btn btn-edit" id="edit-toggle" onclick="toggleEdit()">&#x270F;&#xFE0F; MODIFICA</button>
   <button class="btn btn-csv" onclick="exportCSV()">&#x1F4CA; ESPORTA CSV</button>
   <button class="btn btn-pdf" onclick="exportPDF()">&#x1F4C4; ESPORTA PDF</button>
 </div>
@@ -170,7 +164,6 @@ function render(){
     return `<tr class="${isExp?'expanded':''}" id="row-${i}" data-pk="${k}"><td><button class="obj-btn${obj?' set':''}" onclick='toggleObj(${JSON.stringify(p)},this)'>${obj?'⭐':'☆'}</button></td><td><span class="nome">${p.Nome}</span><span class="team-badge">${p.Team}</span></td><td>${fasciaChip(p.Fascia)}</td><td><span class="prezzo">${p.Prezzo}</span></td><td style="color:#ddd;font-size:12px">${p.Quo}</td><td class="pma">${p.PMA||'-'}</td><td class="star-cell">${stars(p.Titolarità)}</td><td class="star-cell">${stars(p.Affidabilità)}</td><td class="star-cell">${stars(p.Integrità)}</td><td class="fmv">${p.FMV}</td><td>${tagsHtml(p.tags)} ${commento}</td><td><button class="expand-btn" onclick="toggleExpand('${k}','row-${i}','det-${i}')">${isExp?'▲':'▼'}</button></td></tr><tr class="detail-row${isExp?' open':''}" id="det-${i}"><td colspan="12"><div class="ruolo-full">Ruolo: ${p.Ruolo} — Budget: ${p.Budget} — Minuti: ${p.Minuti}</div><div class="stats-grid">${statsHtml}</div></td></tr>`;
   }).join('');
   document.getElementById('obj-count-badge').textContent=Object.keys(objectives).length;
-  if(editMode)applyEditCells(players);
 }
 function toggleExpand(k,rowId,detId){const row=document.getElementById(rowId),det=document.getElementById(detId);if(expanded.has(k)){expanded.delete(k);row.classList.remove('expanded');det.classList.remove('open');row.querySelector('.expand-btn').textContent='▼';}else{expanded.add(k);row.classList.add('expanded');det.classList.add('open');row.querySelector('.expand-btn').textContent='▲';}}
 document.getElementById('btn-github').addEventListener('click',async()=>{
@@ -193,60 +186,8 @@ document.getElementById('btn-github').addEventListener('click',async()=>{
 buildTabs();render();
 
 
-let editMode=false;
-function toggleEdit(){
-  editMode=!editMode;
-  const btn=document.getElementById('edit-toggle');
-  btn.classList.toggle('active',editMode);
-  btn.innerHTML=editMode?'&#x2705; CHIUDI MODIFICA':'&#x270F;&#xFE0F; MODIFICA';
-  render();
-}
-const EDIT_COLS=[
-  null,
-  {f:'Nome',t:'text'},
-  {f:'Fascia',t:'text'},
-  {f:'Prezzo',t:'number'},
-  {f:'Quo',t:'number'},
-  {f:'PMA',t:'text'},
-  {f:'Titolarit\u00e0',t:'number'},
-  {f:'Affidabilit\u00e0',t:'number'},
-  {f:'Integrit\u00e0',t:'number'},
-  {f:'FMV',t:'number'},
-  {f:'Commento',t:'text'},
-  null
-];
-function applyEditCells(players){
-  const rows=document.querySelectorAll('#table-body tr[data-pk]');
-  rows.forEach((row,ri)=>{
-    const p=players[ri];if(!p)return;
-    Array.from(row.cells).forEach((td,ci)=>{
-      const col=EDIT_COLS[ci];if(!col)return;
-      const val=p[col.f]??'';
-      const inp=document.createElement('input');
-      inp.type=col.t;inp.value=val;inp.className='edit-inp';
-      inp.addEventListener('input',function(){
-        let v=this.value;
-        if(col.t==='number')v=parseFloat(v)||0;
-        p[col.f]=v;
-      });
-      td.innerHTML='';td.appendChild(inp);
-    });
-  });
-}
-function exportCSV(){
-  const sep=';',bom='\uFEFF';
-  const fields=['Nome','Team','Ruolo','Fascia','Prezzo','Quo','PMA','Titolarit\u00e0','Affidabilit\u00e0','Integrit\u00e0','FMV','Commento'];
-  const header=fields.join(sep);
-  const rows=Object.values(DATA).flat().map(p=>fields.map(f=>{
-    let v=p[f];if(Array.isArray(v))v=v.join(', ');if(v==null)v='';v=String(v);
-    return v.includes(sep)||v.includes('"')||v.includes('\n')?'"'+v.replace(/"/g,'""')+'"':v;
-  }).join(sep));
-  const blob=new Blob([bom+[header,...rows].join('\n')],{type:'text/csv;charset=utf-8'});
-  const url=URL.createObjectURL(blob),a=document.createElement('a');
-  a.href=url;a.download='fasce-mantra-marzo.csv';document.body.appendChild(a);a.click();
-  setTimeout(()=>{document.body.removeChild(a);URL.revokeObjectURL(url);},2000);
-}
-function exportPDF(){window.print();}
+
+
 
 </script>
 </body>
