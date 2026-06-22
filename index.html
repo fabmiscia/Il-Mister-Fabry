@@ -28,6 +28,7 @@ a.card { display:flex; flex-direction:column; align-items:center; justify-conten
 a.card:hover { border-color:#2DB84A; box-shadow:0 0 28px rgba(45,184,74,.25); transform:translateY(-3px); }
 a.card .icon { font-size:36px; }
 a.card .sub { font-size:11px; font-weight:400; color:rgba(255,255,255,.4); letter-spacing:2px; }
+a.card .card-date { font-size:9px; color:#2DB84A; opacity:0.75; letter-spacing:1px; text-transform:lowercase; margin-top:4px; }
 </style>
 </head>
 <body>
@@ -81,5 +82,31 @@ a.card .sub { font-size:11px; font-weight:400; color:rgba(255,255,255,.4); lette
   </div>
 </div>
 
+<script>
+(async function(){
+  const REPO='fabmiscia/Il-Mister-Fabry';
+  const giorni=['domenica','lunedì','martedì','mercoledì','giovedì','venerdì','sabato'];
+  const mesi=['gennaio','febbraio','marzo','aprile','maggio','giugno','luglio','agosto','settembre','ottobre','novembre','dicembre'];
+  function formatData(iso){
+    const d=new Date(iso);
+    return giorni[d.getDay()]+' '+d.getDate()+' '+mesi[d.getMonth()];
+  }
+  const cards=document.querySelectorAll('a.card');
+  for(const card of cards){
+    const path=card.getAttribute('href');
+    try{
+      const r=await fetch('https://api.github.com/repos/'+REPO+'/commits?path='+encodeURIComponent(path)+'&per_page=1');
+      const commits=await r.json();
+      if(Array.isArray(commits)&&commits.length>0){
+        const data=commits[0].commit.committer.date;
+        const el=document.createElement('span');
+        el.className='card-date';
+        el.textContent='agg. '+formatData(data);
+        card.appendChild(el);
+      }
+    }catch(e){}
+  }
+})();
+</script>
 </body>
 </html>
