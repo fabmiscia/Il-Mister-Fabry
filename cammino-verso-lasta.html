@@ -290,6 +290,10 @@
 
     .v-title { font-size: .87em; color: #a0c0dc; line-height: 1.45; }
     .v-title.top-format { color: #f08040; font-weight: 600; }
+    a.v-link { text-decoration: none; display: inline-flex; align-items: center; gap: 6px; }
+    a.v-link:hover { opacity: .8; }
+    .yt-play { color: #ff4444; font-size: .78em; flex-shrink: 0; }
+    .v-no-link { color: #3a5870; font-size: .78em; font-style: italic; }
 
     .badge-top {
       display: inline-block;
@@ -480,7 +484,8 @@
     .edit-select option { background: #071020; }
 
     .edit-video-row {
-      display: flex;
+      display: grid;
+      grid-template-columns: 68px 1fr auto auto;
       gap: 8px;
       align-items: center;
       padding: 8px 0;
@@ -542,6 +547,23 @@
     }
     .ev-del:hover { border-color: #c04030; color: #c04030; }
 
+    .ev-url {
+      grid-column: 1 / -1;
+      width: 100%;
+      background: #091626;
+      border: 1px solid #1a3050;
+      border-radius: 6px;
+      color: #ff4444;
+      font-family: 'Oswald', sans-serif;
+      font-size: .78em;
+      letter-spacing: .5px;
+      padding: 5px 10px;
+      outline: none;
+      margin-top: 4px;
+    }
+    .ev-url:focus { border-color: #ff4444; }
+    .ev-url::placeholder { color: #2a4060; }
+
     .add-video-btn {
       width: 100%;
       margin-top: 12px;
@@ -601,6 +623,31 @@
       font-size: .78em;
       color: #4a6880;
       font-style: italic;
+    }
+
+    /* ── TABLET (≤768px) ── */
+    @media (max-width: 768px) {
+      .hero { padding: 32px 16px 22px !important; }
+      .stats { gap: 28px !important; padding: 16px 16px 8px !important; }
+      .map-wrapper { padding: 8px 12px 32px !important; }
+      .side-panel { width: min(92vw, 440px) !important; }
+    }
+
+    /* ── MOBILE (≤480px) ── */
+    @media (max-width: 480px) {
+      body { font-size: 14px; }
+      .hero { padding: 24px 12px 16px !important; }
+      .hero-icon { font-size: 2.4em !important; }
+      .hero h1 { font-size: clamp(1.4em, 6vw, 2.2em) !important; letter-spacing: 2px !important; }
+      .hero-sub1 { font-size: clamp(.85em, 3vw, 1.1em) !important; letter-spacing: 2px !important; }
+      .stats { gap: 18px !important; flex-wrap: wrap !important; padding: 12px 12px 6px !important; }
+      .stat-n { font-size: 1.8em !important; }
+      .map-wrapper { padding: 6px 0 24px !important; }
+      .map-frame { border-radius: 10px !important; }
+      .legend { gap: 12px !important; padding: 8px 12px 16px !important; }
+      .side-panel { width: 100vw !important; right: -100vw !important; }
+      .side-panel.open { right: 0 !important; }
+      .panel-header { padding: 18px 16px 14px !important; }
     }
   </style>
 
@@ -995,7 +1042,7 @@ const DEFAULT_TAPPE = [
     "video": [
       {
         "data": "1 lug",
-        "titolo": "RUMORS MERCATO 10 COLPI CHE POSSONO FAR SOGNARE",
+        "titolo": "I nuovi arrivi del mercato: chi prendere all'asta e a quanto [MIX]",
         "top": false
       },
       {
@@ -1005,7 +1052,7 @@ const DEFAULT_TAPPE = [
       },
       {
         "data": "3 lug",
-        "titolo": "",
+        "titolo": "Come prepararti all'asta in 5 passi",
         "top": false
       },
       {
@@ -1424,11 +1471,15 @@ function openPanel(index) {
   t.video.forEach(v => {
     const li = document.createElement('li');
     li.className = 'video-item';
+    const titleHtml = v.url
+      ? `<a class="v-title${v.top ? ' top-format' : ''} v-link" href="${v.url}" target="_blank" rel="noopener">${v.titolo}<span class="yt-play">▶</span></a>`
+      : `<div class="v-title${v.top ? ' top-format' : ''}">${v.titolo}</div>`;
     li.innerHTML = `
       <div class="v-date">${v.data}</div>
       <div class="v-info">
-        <div class="v-title${v.top ? ' top-format' : ''}">${v.titolo}</div>
+        ${titleHtml}
         ${v.top ? '<span class="badge-top">⭐ FORMAT TOP</span>' : ''}
+        ${!v.url ? '<div class="v-no-link">In arrivo…</div>' : ''}
       </div>`;
     list.appendChild(li);
   });
@@ -1496,6 +1547,7 @@ function renderEditTab() {
         <input class="ev-title" value="${esc(v.titolo)}" placeholder="titolo" onchange="updateVideo(${editTappaIndex},${vi},'titolo',this.value)">
         <button class="ev-top ${v.top ? 'is-top' : ''}" onclick="toggleTop(${editTappaIndex},${vi},this)">⭐</button>
         <button class="ev-del" onclick="deleteVideo(${editTappaIndex},${vi})">🗑</button>
+        <input class="ev-url" value="${esc(v.url||'')}" placeholder="🔗 Link YouTube (opzionale)" onchange="updateVideo(${editTappaIndex},${vi},'url',this.value)">
       </div>`).join('');
 
     body.innerHTML = `
@@ -1551,7 +1603,7 @@ function deleteVideo(ti, vi) {
 }
 
 function addVideo(ti) {
-  tappe[ti].video.push({ data: '', titolo: 'Nuovo video', top: false });
+  tappe[ti].video.push({ data: '', titolo: 'Nuovo video', top: false, url: '' });
   renderEditTab();
   // scroll to bottom of video list
   setTimeout(() => {
