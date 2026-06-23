@@ -698,8 +698,7 @@ table.inj-tbl thead th {
   .card { display: none !important; }
   .mobile-view { display: flex; flex-direction: column; }
   body { padding: 0 0 30px; overflow-x: hidden; }
-  .nav { flex-wrap: wrap; gap: 4px; padding: 8px 10px; }
-  .nav button { padding: 6px 10px; font-size: 11px; }
+  .nav { display: none !important; }
   .toolbar { flex-wrap: wrap; gap: 6px; padding: 6px 10px; border-radius: 14px; margin: 8px 8px 0; }
   .toolbar button { padding: 6px 12px; font-size: 11px; }
   .toolbar .tip { display: none; }
@@ -1543,18 +1542,36 @@ function mvGo(n) {
 }
 
 function mvBuildS1() {
-  const rows = document.querySelectorAll('#s1 .srow');
-  let html = '';
-  rows.forEach(row => {
+  const container = document.getElementById('mv-s1');
+  container.innerHTML = '';
+  // Stats list
+  const statsDiv = document.createElement('div');
+  document.querySelectorAll('#s1 .srow').forEach(row => {
     const iconEl = row.querySelector('.sic');
     const icon   = iconEl ? iconEl.innerHTML : '';
     const lbl    = row.querySelector('.slbl')?.textContent.trim() || '';
     const val    = row.querySelector('.sval');
     const valTxt = val?.textContent.trim() || '';
     const cls    = val?.classList.contains('bold-xl') ? ' hl' : '';
-    html += `<div class="mv-stat-row"><span class="mv-stat-icon">${icon}</span><span class="mv-stat-label">${lbl}</span><span class="mv-stat-val${cls}">${valTxt}</span></div>`;
+    const d = document.createElement('div');
+    d.className = 'mv-stat-row';
+    d.innerHTML = `<span class="mv-stat-icon">${icon}</span><span class="mv-stat-label">${lbl}</span><span class="mv-stat-val${cls}">${valTxt}</span>`;
+    statsDiv.appendChild(d);
   });
-  document.getElementById('mv-s1').innerHTML = html;
+  container.appendChild(statsDiv);
+  // Campetto ruoli – clona il role-col dalla card desktop
+  const roleCol = document.querySelector('#s1 .role-col');
+  if (roleCol) {
+    const wrapper = document.createElement('div');
+    wrapper.style.cssText = 'margin-top:10px;border-radius:8px;overflow:hidden;background:#f2f2f2;max-width:220px;align-self:center;width:100%';
+    const clone = roleCol.cloneNode(true);
+    clone.style.cssText = 'width:100%;margin:0;border-radius:0;display:flex;flex-direction:column;color:#222';
+    // Rendi la role-field più alta su mobile
+    const rf = clone.querySelector('.role-field');
+    if (rf) rf.style.minHeight = '160px';
+    wrapper.appendChild(clone);
+    container.appendChild(wrapper);
+  }
 }
 
 function mvBuildS2() {
