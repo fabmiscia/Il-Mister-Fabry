@@ -2,6 +2,7 @@
 <html lang="it">
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Fantacalcio 2026-27 – Porte Serie A</title>
 <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&display=swap" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
@@ -362,6 +363,12 @@ body {
 [contenteditable]:focus { outline: 1.5px solid rgba(255,255,255,.45); border-radius: 4px; }
 
 .no-enter { white-space: nowrap; overflow: hidden; }
+
+/* ── RESPONSIVE SCALE ── */
+.card { transform-origin: top left; }
+@media (max-width: 768px) {
+  body { overflow-x: hidden; padding: 8px 0 20px; }
+}
 </style>
 
 <script>
@@ -861,6 +868,24 @@ document.getElementById('btn-export').addEventListener('click', async () => {
   btn.textContent = '📥 Esporta PNG';
   btn.disabled = false;
 });
+
+// ── Scala le card su mobile ──
+function scaleCards() {
+  const vw = window.innerWidth;
+  const cards = document.querySelectorAll('.card');
+  if (vw >= 1300) {
+    cards.forEach(c => { c.style.transform = ''; c.style.marginBottom = ''; });
+    return;
+  }
+  const scale = (vw - 24) / 1280;
+  cards.forEach(c => {
+    c.style.transform = `scale(${scale})`;
+    c.style.transformOrigin = 'top left';
+    c.style.marginBottom = Math.round(720 * (scale - 1)) + 'px';
+  });
+}
+window.addEventListener('resize', scaleCards);
+scaleCards();
 </script>
 </body>
 </html>
