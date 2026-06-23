@@ -365,9 +365,13 @@ body {
 .no-enter { white-space: nowrap; overflow: hidden; }
 
 /* ── RESPONSIVE SCALE ── */
-.card { transform-origin: top left; }
+.card { transform-origin: top center; }
 @media (max-width: 768px) {
   body { overflow-x: hidden; padding: 8px 0 20px; }
+  .toolbar { width: 100% !important; padding: 0 12px; flex-wrap: wrap; gap: 6px; }
+  .toolbar h2 { font-size: 12px; }
+  .toolbar-hint { display: none; }
+  .btn { padding: 6px 10px; font-size: 11px; }
 }
 </style>
 
@@ -874,13 +878,15 @@ function scaleCards() {
   const vw = window.innerWidth;
   const cards = document.querySelectorAll('.card');
   if (vw >= 1300) {
-    cards.forEach(c => { c.style.transform = ''; c.style.marginBottom = ''; });
+    cards.forEach(c => { c.style.transform = ''; c.style.marginBottom = ''; c.style.marginTop = ''; });
+    document.body.style.overflowX = '';
     return;
   }
-  const scale = (vw - 24) / 1280;
+  document.body.style.overflowX = 'hidden';
+  const scale = vw / 1280;
   cards.forEach(c => {
     c.style.transform = `scale(${scale})`;
-    c.style.transformOrigin = 'top left';
+    c.style.transformOrigin = 'top center';
     c.style.marginBottom = Math.round(720 * (scale - 1)) + 'px';
   });
 }
