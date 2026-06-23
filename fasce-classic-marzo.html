@@ -79,6 +79,31 @@ td[contenteditable="true"]:focus{outline:2px solid #2DB84A;background:#141414}
   .st-off{color:#ccc!important}
 }
 
+/* ── TABLET (≤768px) ── */
+@media (max-width: 768px) {
+  .toolbar { padding: 8px 12px; gap: 8px; }
+  .toolbar h1 { font-size: 13px !important; }
+  .role-tabs { padding: 0 12px; }
+  .filters { padding: 8px 12px; }
+  .table-wrap { padding: 0 12px 30px; overflow-x: auto; }
+  table { min-width: 700px; }
+}
+
+/* ── MOBILE (≤480px) ── */
+@media (max-width: 480px) {
+  body { font-size: 14px; }
+  .toolbar { padding: 6px 10px; gap: 6px; flex-wrap: wrap; }
+  .toolbar h1 { font-size: 12px !important; }
+  .search { min-width: 120px !important; font-size: 12px; }
+  .role-tabs { padding: 0 8px; }
+  .role-tab { padding: 8px 10px !important; font-size: 11px !important; }
+  .filters { padding: 6px 10px; gap: 6px; }
+  .table-wrap { padding: 0 0 24px; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+  table { min-width: 600px; }
+  td, th { padding: 7px 8px !important; font-size: 12px !important; }
+  .nome { font-size: 13px !important; }
+}
+
 </style>
 
 
