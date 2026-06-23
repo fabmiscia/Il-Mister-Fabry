@@ -1,6 +1,8 @@
 <!DOCTYPE html>
-<html lang="it"><head>
+<html lang="it">
+<head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Alfonso Pedraza – Card Fantacalcio</title>
 <style>
 *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
@@ -26,7 +28,7 @@ body {
 }
 .nav button {
   background:#252525;
-  color:#ccc;
+  color:#fff;
   border:1px solid #333;
   padding:7px 20px;
   border-radius:20px;
@@ -37,7 +39,7 @@ body {
   text-transform:uppercase;
   transition:.15s;
 }
-.nav button:hover  { background:#2e2e2e; color:#ddd; }
+.nav button:hover  { background:#2e2e2e; color:#fff; }
 .nav button.active { background:#b0ff00; color:#000; border-color:#b0ff00; }
 
 /* ── Card ── */
@@ -86,7 +88,7 @@ body {
 }
 .toolbar .gh-btn:hover { background:#333; }
 .toolbar .tip {
-  color:#999;
+  color:#fff;
   font-size:11px;
 }
 
@@ -200,12 +202,12 @@ body {
   font-weight:700;
   letter-spacing:.9px;
   text-transform:uppercase;
-  color:#bbb;
+  color:#fff;
   flex:1;
   white-space:nowrap;
   min-width:0;
 }
-.slbl em { color:#aaa; font-style:normal; font-size:10px; }
+.slbl em { color:#fff; font-style:normal; font-size:10px; }
 .sval {
   font-size:13px;
   font-weight:700;
@@ -262,10 +264,10 @@ body {
 .role-meta {
   padding:7px 12px 9px;
   font-size:10.5px;
-  color:#444;
+  color:#fff;
   line-height:1.65;
 }
-.role-meta .rl  { color:#999; font-size:10px; }
+.role-meta .rl  { color:#fff; font-size:10px; }
 .role-meta .rv  { font-weight:700; color:#111; outline:none; cursor:text; }
 .role-legend {
   display:flex;
@@ -279,7 +281,7 @@ body {
   display:flex;
   align-items:center;
   gap:3px;
-  color:#aaa;
+  color:#fff;
 }
 .legend-dot span.dot {
   width:9px;
@@ -358,7 +360,7 @@ table.stats-tbl {
   font-size:12px;
 }
 table.stats-tbl thead th {
-  color:#888;
+  color:#fff;
   font-size:10px;
   letter-spacing:.7px;
   text-transform:uppercase;
@@ -386,7 +388,7 @@ table.career-tbl {
   font-size:12px;
 }
 table.career-tbl thead th {
-  color:#888;
+  color:#fff;
   font-size:9.5px;
   letter-spacing:.7px;
   text-transform:uppercase;
@@ -404,12 +406,12 @@ table.career-tbl thead th.c { text-align:center; }
 .career-club span { outline:none; cursor:text; }
 .career-comp { padding:8px 10px; color:#4db6ff; font-size:11.5px; outline:none; cursor:text; }
 .career-num  { padding:8px 10px; text-align:center; color:#fff; font-weight:700; outline:none; cursor:text; }
-.career-min  { padding:8px 10px; text-align:center; color:#ddd; font-size:11px; outline:none; cursor:text; }
+.career-min  { padding:8px 10px; text-align:center; color:#fff; font-size:11px; outline:none; cursor:text; }
 .add-row-btn {
   margin-top:6px;
   background:transparent;
   border:1px dashed #333;
-  color:#444;
+  color:#fff;
   padding:5px 14px;
   border-radius:4px;
   cursor:pointer;
@@ -430,7 +432,7 @@ table.inj-tbl {
   font-size:11px;
 }
 table.inj-tbl thead th {
-  color:#888;
+  color:#fff;
   font-size:9px;
   letter-spacing:.7px;
   text-transform:uppercase;
@@ -516,7 +518,7 @@ table.inj-tbl thead th {
   font-size:9.5px;
   font-weight:800;
   letter-spacing:2.5px;
-  color:#666;
+  color:#fff;
   text-transform:uppercase;
 }
 
@@ -558,7 +560,7 @@ table.inj-tbl thead th {
   border-radius:6px;
   padding:14px 16px;
   font-size:13px;
-  color:#ccc;
+  color:#fff;
   line-height:1.75;
   outline:none;
   cursor:text;
@@ -571,15 +573,149 @@ table.inj-tbl thead th {
 ::-webkit-scrollbar { width:4px; height:4px; }
 ::-webkit-scrollbar-track { background:#111; }
 ::-webkit-scrollbar-thumb { background:#333; border-radius:2px; }
+
+/* ══════════════════════════════════════════════
+   MOBILE VIEW – layout alternativo ≤900px
+══════════════════════════════════════════════ */
+.mobile-view {
+  display: none;
+  width: 100%;
+  max-width: 500px;
+  margin: 0 auto;
+  background: #0a0a0a;
+  border-radius: 16px;
+  overflow: hidden;
+  font-family: Arial, sans-serif;
+}
+.mv-hero {
+  position: relative;
+  width: 100%;
+  height: 260px;
+  overflow: hidden;
+  background: #0f0f0f;
+}
+.mv-hero img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top center;
+}
+.mv-hero-overlay {
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  background: linear-gradient(transparent, rgba(0,0,0,.92));
+  padding: 24px 16px 14px;
+}
+.mv-name {
+  font-size: 26px;
+  font-weight: 900;
+  color: #fff;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  line-height: 1.1;
+}
+.mv-meta-line {
+  font-size: 12px;
+  color: #b0ff00;
+  font-weight: 700;
+  margin-top: 4px;
+  letter-spacing: 1px;
+}
+.mv-badge {
+  position: absolute;
+  top: 12px; right: 12px;
+  background: #b0ff00;
+  color: #000;
+  font-size: 9px;
+  font-weight: 900;
+  letter-spacing: 2px;
+  padding: 4px 10px;
+  border-radius: 4px;
+  text-transform: uppercase;
+}
+.mv-tabs {
+  display: flex;
+  background: #111;
+  border-bottom: 1px solid #1e1e1e;
+}
+.mv-tab {
+  flex: 1;
+  background: none;
+  border: none;
+  color: #fff;
+  font-size: 12px;
+  font-weight: 700;
+  padding: 11px 4px;
+  cursor: pointer;
+  border-bottom: 3px solid transparent;
+  transition: .15s;
+  letter-spacing: .4px;
+}
+.mv-tab.active { color: #b0ff00; border-bottom-color: #b0ff00; }
+.mv-slide { display: none; padding: 14px 14px 20px; flex-direction: column; gap: 10px; }
+.mv-slide.active { display: flex; }
+.mv-section-title {
+  font-size: 9.5px;
+  font-weight: 800;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: #b0ff00;
+  padding-bottom: 5px;
+  border-bottom: 1px solid #1e1e1e;
+  margin-bottom: 2px;
+  margin-top: 6px;
+}
+.mv-section-title:first-child { margin-top: 0; }
+/* Stats rows – slide 1 */
+.mv-stat-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 0;
+  border-bottom: 1px solid #141414;
+}
+.mv-stat-row:last-child { border-bottom: none; }
+.mv-stat-icon { font-size: 16px; width: 26px; text-align: center; flex-shrink: 0; }
+.mv-stat-label { flex: 1; font-size: 12px; color: #fff; opacity: .7; }
+.mv-stat-val { font-size: 13px; font-weight: 700; color: #fff; text-align: right; }
+.mv-stat-val.hl { color: #b0ff00; }
+/* Tables – slide 2 */
+.mv-tbl-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; border-radius: 6px; background: #0f0f0f; }
+.mv-tbl { width: 100%; border-collapse: collapse; font-size: 12px; min-width: 280px; }
+.mv-tbl th { color: #fff; font-size: 9.5px; letter-spacing: .7px; text-transform: uppercase; padding: 7px 8px 5px; text-align: left; border-bottom: 1px solid #1c1c1c; font-weight: 700; white-space: nowrap; }
+.mv-tbl td { padding: 6px 8px; color: #fff; border-bottom: 1px solid #111; vertical-align: middle; }
+.mv-tbl tr:last-child td { border-bottom: none; }
+.mv-tbl .hl { color: #b0ff00; font-weight: 800; }
+.mv-tbl .hl2 { color: #f87171; }
+.mv-tbl .c { text-align: center; }
+/* Slide 3 */
+.mv-stars { display: flex; gap: 6px; font-size: 28px; }
+.mv-star-e { color: #333; }
+.mv-star-f { color: #FFD700; }
+.mv-card-text { background: #0f0f0f; border: 1px solid #1e1e1e; border-left: 3px solid #b0ff00; border-radius: 4px; padding: 11px 13px; font-size: 13px; color: #fff; line-height: 1.6; }
+.mv-notes { background: #0f0f0f; border: 1px solid #1a1a1a; border-radius: 6px; padding: 12px 14px; font-size: 13px; color: #fff; line-height: 1.7; }
+
+/* ── RESPONSIVE SCALE ── */
+.card { transform-origin: top left; }
+@media (max-width: 900px) {
+  .card { display: none !important; }
+  .mobile-view { display: flex; flex-direction: column; }
+  body { padding: 0 0 30px; overflow-x: hidden; }
+  .nav { flex-wrap: wrap; gap: 4px; padding: 8px 10px; }
+  .nav button { padding: 6px 10px; font-size: 11px; }
+  .toolbar { flex-wrap: wrap; gap: 6px; padding: 6px 10px; border-radius: 14px; margin: 8px 8px 0; }
+  .toolbar button { padding: 6px 12px; font-size: 11px; }
+  .toolbar .tip { display: none; }
+}
 </style>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 </head>
 <body>
 
 <div class="nav">
-  <button class="" onclick="go(1)">📋 Info</button>
-  <button onclick="go(2)" class="">📊 Statistiche</button>
-  <button onclick="go(3)" class="active">⭐ Consigli Fantacalcio</button>
+  <button class="active" onclick="go(1)">📋 Info</button>
+  <button onclick="go(2)">📊 Statistiche</button>
+  <button onclick="go(3)">⭐ Consigli Fantacalcio</button>
 </div>
 
 <!-- Toolbar -->
@@ -593,16 +729,37 @@ table.inj-tbl thead th {
 
 <!-- Input nascosti per upload -->
 <input type="file" id="photo-input" accept="image/*" style="display:none">
-<input type="file" id="logo-input" accept="image/*" style="display:none">
+<input type="file" id="logo-input"  accept="image/*" style="display:none">
+
+<!-- ══ MOBILE VIEW (visibile solo su ≤900px) ══════════════════════════════ -->
+<div class="mobile-view" id="mobile-view">
+  <div class="mv-hero">
+    <img id="mv-photo" src="https://img.a.transfermarkt.technology/portrait/big/356197-1620304916.jpg?lm=1" alt="">
+    <div class="mv-badge">NUOVO ARRIVO</div>
+    <div class="mv-hero-overlay">
+      <div class="mv-name" id="mv-name">Alfonso Pedraza</div>
+      <div class="mv-meta-line" id="mv-meta">30 anni · TS · Lazio</div>
+    </div>
+  </div>
+  <div class="mv-tabs">
+    <button class="mv-tab active" onclick="mvGo(1)">📋 Info</button>
+    <button class="mv-tab" onclick="mvGo(2)">📊 Stats</button>
+    <button class="mv-tab" onclick="mvGo(3)">⭐ Consigli</button>
+  </div>
+  <div class="mv-slide active" id="mv-s1"></div>
+  <div class="mv-slide" id="mv-s2"></div>
+  <div class="mv-slide" id="mv-s3"></div>
+</div>
 
 <!-- ══════════════════════════════════════════════
      SLIDE 1
 ══════════════════════════════════════════════ -->
-<div id="s1" class="card">
+<div id="s1" class="card active">
 
   <!-- Foto cliccabile -->
   <div class="photo-col" onclick="triggerPhotoUpload('all')">
-    <img class="player-img photo-all" src="https://img.a.transfermarkt.technology/portrait/big/356197-1620304916.jpg?lm=1" alt="Alfonso Pedraza" onerror="this.src='https://img.a.transfermarkt.technology/portrait/big/default.jpg'">
+    <img class="player-img photo-all" src="https://img.a.transfermarkt.technology/portrait/big/356197-1620304916.jpg?lm=1" alt="Alfonso Pedraza"
+         onerror="this.src='https://img.a.transfermarkt.technology/portrait/big/default.jpg'">
     <div class="photo-upload-hint">📷 Click per cambiare foto</div>
   </div>
 
@@ -643,7 +800,7 @@ table.inj-tbl thead th {
       <div class="srow">
         <span class="sic">📏</span>
         <span class="slbl">Altezza</span>
-        <span class="sval bold-xl" contenteditable="true">1,84&nbsp;m</span>
+        <span class="sval bold-xl" contenteditable="true">1,84 m</span>
       </div>
       <div class="srow">
         <span class="sic"><img src="https://tmssl.akamaized.net//images/wappen/profil/1108_1721688046.png?lm=1721688046" style="height:20px;vertical-align:middle;margin-right:5px"></span>
@@ -683,17 +840,17 @@ table.inj-tbl thead th {
     <div class="role-hdr">Ruolo</div>
     <div class="role-field">
       <svg viewBox="0 0 100 150" preserveAspectRatio="xMidYMid meet">
-        <rect x="0" y="0" width="100" height="150" fill="#1e4d8c"></rect>
-        <rect x="6" y="5" width="88" height="140" rx="2" fill="none" stroke="rgba(255,255,255,.6)" stroke-width="1"></rect>
-        <line x1="6" y1="75" x2="94" y2="75" stroke="rgba(255,255,255,.4)" stroke-width=".8"></line>
-        <circle cx="50" cy="75" r="13" fill="none" stroke="rgba(255,255,255,.4)" stroke-width=".8"></circle>
-        <circle cx="50" cy="75" r="1.5" fill="rgba(255,255,255,.4)"></circle>
-        <rect x="22" y="117" width="56" height="23" rx="1" fill="none" stroke="rgba(255,255,255,.6)" stroke-width=".9"></rect>
-        <rect x="36" y="130" width="28" height="10" rx="1" fill="none" stroke="rgba(255,255,255,.5)" stroke-width=".7"></rect>
-        <rect x="22" y="10" width="56" height="23" rx="1" fill="none" stroke="rgba(255,255,255,.6)" stroke-width=".9"></rect>
-        <rect x="36" y="10" width="28" height="10" rx="1" fill="none" stroke="rgba(255,255,255,.5)" stroke-width=".7"></rect>
-        <circle cx="22%" cy="73%" r="7" fill="white" stroke="#3b82f6" stroke-width="2.5"></circle><circle cx="22%" cy="73%" r="3.5" fill="#3b82f6"></circle>
-        <circle cx="18%" cy="23%" r="5.5" fill="#b0ff00" stroke="white" stroke-width="1.5" opacity=".85"></circle><circle cx="18%" cy="23%" r="2" fill="white" opacity=".9"></circle>
+        <rect x="0" y="0" width="100" height="150" fill="#1e4d8c"/>
+        <rect x="6" y="5" width="88" height="140" rx="2" fill="none" stroke="rgba(255,255,255,.6)" stroke-width="1"/>
+        <line x1="6" y1="75" x2="94" y2="75" stroke="rgba(255,255,255,.4)" stroke-width=".8"/>
+        <circle cx="50" cy="75" r="13" fill="none" stroke="rgba(255,255,255,.4)" stroke-width=".8"/>
+        <circle cx="50" cy="75" r="1.5" fill="rgba(255,255,255,.4)"/>
+        <rect x="22" y="117" width="56" height="23" rx="1" fill="none" stroke="rgba(255,255,255,.6)" stroke-width=".9"/>
+        <rect x="36" y="130" width="28" height="10" rx="1" fill="none" stroke="rgba(255,255,255,.5)" stroke-width=".7"/>
+        <rect x="22" y="10" width="56" height="23" rx="1" fill="none" stroke="rgba(255,255,255,.6)" stroke-width=".9"/>
+        <rect x="36" y="10" width="28" height="10" rx="1" fill="none" stroke="rgba(255,255,255,.5)" stroke-width=".7"/>
+        <circle cx="22%" cy="73%" r="7" fill="white" stroke="#3b82f6" stroke-width="2.5"/><circle cx="22%" cy="73%" r="3.5" fill="#3b82f6"/>
+        <circle cx="18%" cy="23%" r="5.5" fill="#b0ff00" stroke="white" stroke-width="1.5" opacity=".85"/><circle cx="18%" cy="23%" r="2" fill="white" opacity=".9"/>
       </svg>
     </div>
     <div class="role-meta">
@@ -703,7 +860,7 @@ table.inj-tbl thead th {
       <div class="rv" contenteditable="true">Ala sinistra</div>
     </div>
     <div class="role-legend">
-      <div class="legend-dot"><span class="dot" style="background:white;border-color:#888"></span> Primario</div>
+      <div class="legend-dot"><span class="dot" style="background:white;border-color:#fff"></span> Primario</div>
       <div class="legend-dot"><span class="dot" style="background:#b0ff00"></span> Offensivo</div>
       <div class="legend-dot"><span class="dot" style="background:#22c55e"></span> Centrocampo</div>
       <div class="legend-dot"><span class="dot" style="background:#3b82f6"></span> Difensivo</div>
@@ -718,7 +875,8 @@ table.inj-tbl thead th {
 <div id="s2" class="card">
 
   <div class="s2-photo" onclick="triggerPhotoUpload('all')">
-    <img class="photo-all" src="https://img.a.transfermarkt.technology/portrait/big/356197-1620304916.jpg?lm=1" alt="Alfonso Pedraza" onerror="this.src='https://img.a.transfermarkt.technology/portrait/big/default.jpg'">
+    <img class="photo-all" src="https://img.a.transfermarkt.technology/portrait/big/356197-1620304916.jpg?lm=1" alt="Alfonso Pedraza"
+         onerror="this.src='https://img.a.transfermarkt.technology/portrait/big/default.jpg'">
   </div>
 
   <div class="s2-body">
@@ -1002,10 +1160,11 @@ table.inj-tbl thead th {
 <!-- ══════════════════════════════════════════════
      SLIDE 3 – Consigli Fantacalcio
 ══════════════════════════════════════════════ -->
-<div id="s3" class="card active">
+<div id="s3" class="card">
 
   <div class="s3-photo" onclick="triggerPhotoUpload('all')">
-    <img class="photo-all" src="https://img.a.transfermarkt.technology/portrait/big/356197-1620304916.jpg?lm=1" alt="Alfonso Pedraza" onerror="this.src='https://img.a.transfermarkt.technology/portrait/big/default.jpg'">
+    <img class="photo-all" src="https://img.a.transfermarkt.technology/portrait/big/356197-1620304916.jpg?lm=1" alt="Alfonso Pedraza"
+         onerror="this.src='https://img.a.transfermarkt.technology/portrait/big/default.jpg'">
   </div>
 
   <div class="s3-body">
@@ -1020,10 +1179,10 @@ table.inj-tbl thead th {
     <div class="s3-section">
       <div class="s3-label">APPETIBILITÀ AL FANTACALCIO</div>
       <div class="stars-widget" id="stars-widget">
-        <span class="star filled" data-v="1">★</span>
-        <span class="star filled" data-v="2">★</span>
-        <span class="star filled" data-v="3">★</span>
-        <span class="star filled" data-v="4">★</span>
+        <span class="star" data-v="1">★</span>
+        <span class="star" data-v="2">★</span>
+        <span class="star" data-v="3">★</span>
+        <span class="star" data-v="4">★</span>
         <span class="star" data-v="5">★</span>
       </div>
     </div>
@@ -1045,34 +1204,36 @@ table.inj-tbl thead th {
 
 <!-- Overlay GitHub -->
 <!-- Overlay GitHub -->
-<div id="gh-overlay" style="display: none; position: fixed; inset: 0px; background: rgba(0, 0, 0, 0.88); z-index: 999; align-items: center; justify-content: center;">
+<div id="gh-overlay" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.88);z-index:999;align-items:center;justify-content:center;">
   <div style="background:#1a1a1a;border:1px solid #333;border-radius:12px;padding:28px 32px;max-width:480px;width:90%;text-align:center;font-family:Arial,sans-serif;">
     <div id="gh-view-token" style="display:none">
       <div style="font-size:26px;margin-bottom:10px">🔑</div>
       <div style="font-size:15px;font-weight:700;color:#b0ff00;margin-bottom:8px">Token GitHub richiesto</div>
-      <div style="font-size:12px;color:#888;margin-bottom:14px;line-height:1.6">
-        Inserisci il tuo <strong style="color:#ccc">Personal Access Token</strong> GitHub.<br>
+      <div style="font-size:12px;color:#fff;margin-bottom:14px;line-height:1.6">
+        Inserisci il tuo <strong style="color:#fff">Personal Access Token</strong> GitHub.<br>
         Sarà salvato solo su questo browser.
       </div>
-      <input id="gh-token-input" type="password" placeholder="ghp_xxxxxxxxxxxxxxxx" style="width:100%;background:#0d0d0d;border:1px solid #333;border-radius:6px;padding:10px 12px;color:#fff;font-size:13px;font-family:monospace;margin-bottom:14px;outline:none">
+      <input id="gh-token-input" type="password" placeholder="ghp_xxxxxxxxxxxxxxxx"
+        style="width:100%;background:#0d0d0d;border:1px solid #333;border-radius:6px;padding:10px 12px;color:#fff;font-size:13px;font-family:monospace;margin-bottom:14px;outline:none">
       <div style="display:flex;gap:10px;justify-content:center;">
         <button onclick="salvaSalvaPubblica()" style="background:#b0ff00;color:#000;border:none;padding:9px 24px;border-radius:20px;cursor:pointer;font-weight:800;font-size:12px">Salva e pubblica</button>
-        <button onclick="chiudiOverlay()" style="background:#222;color:#aaa;border:1px solid #333;padding:9px 20px;border-radius:20px;cursor:pointer;font-size:12px">Annulla</button>
+        <button onclick="chiudiOverlay()" style="background:#222;color:#fff;border:1px solid #333;padding:9px 20px;border-radius:20px;cursor:pointer;font-size:12px">Annulla</button>
       </div>
-      <div style="font-size:10px;color:#444;margin-top:12px">
+      <div style="font-size:10px;color:#fff;margin-top:12px">
         Crea il token su GitHub → Settings → Developer settings → Personal access tokens → Contents: Read &amp; Write
       </div>
     </div>
-    <div id="gh-view-progress" style="display: none;">
-      <div style="font-size:32px;margin-bottom:12px" id="gh-icon">🚀</div>
-      <div id="gh-status" style="font-size: 14px; margin-bottom: 6px;">Pubblica su GitHub Pages</div>
-      <div id="gh-detail" style="font-size:11px;color:#555;margin-bottom:18px"></div>
+    <div id="gh-view-progress" style="display:none">
+      <div style="font-size:32px;margin-bottom:12px" id="gh-icon">⏳</div>
+      <div id="gh-status" style="font-size:14px;color:#fff;margin-bottom:6px">Pubblicazione in corso…</div>
+      <div id="gh-detail" style="font-size:11px;color:#fff;margin-bottom:18px"></div>
       <div id="gh-link-wrap" style="display:none;margin-bottom:14px">
-        <a id="gh-link" href="#" target="_blank" style="color:#b0ff00;font-size:12px;text-decoration:none;border:1px solid #b0ff00;padding:6px 16px;border-radius:16px">
+        <a id="gh-link" href="#" target="_blank"
+           style="color:#b0ff00;font-size:12px;text-decoration:none;border:1px solid #b0ff00;padding:6px 16px;border-radius:16px">
           🌐 Apri su GitHub Pages
         </a>
       </div>
-      <button onclick="chiudiOverlay()" id="gh-close-btn" style="display:none;background:#222;color:#aaa;border:1px solid #333;padding:8px 22px;border-radius:20px;cursor:pointer;font-size:12px">Chiudi</button>
+      <button onclick="chiudiOverlay()" id="gh-close-btn" style="display:none;background:#222;color:#fff;border:1px solid #333;padding:8px 22px;border-radius:20px;cursor:pointer;font-size:12px">Chiudi</button>
     </div>
   </div>
 </div>
@@ -1376,6 +1537,114 @@ function addInjRow() {
   });
   render(starsValue);
 })();
-</script>
 
-</body></html>
+// ── Mobile View ──────────────────────────────
+function mvGo(n) {
+  document.querySelectorAll('.mv-tab').forEach((t,i) => t.classList.toggle('active', i===n-1));
+  document.querySelectorAll('.mv-slide').forEach((s,i) => s.classList.toggle('active', i===n-1));
+}
+
+function mvBuildS1() {
+  const rows = document.querySelectorAll('#s1 .srow');
+  let html = '';
+  rows.forEach(row => {
+    const iconEl = row.querySelector('.sic');
+    const icon   = iconEl ? iconEl.innerHTML : '';
+    const lbl    = row.querySelector('.slbl')?.textContent.trim() || '';
+    const val    = row.querySelector('.sval');
+    const valTxt = val?.textContent.trim() || '';
+    const cls    = val?.classList.contains('bold-xl') ? ' hl' : '';
+    html += `<div class="mv-stat-row"><span class="mv-stat-icon">${icon}</span><span class="mv-stat-label">${lbl}</span><span class="mv-stat-val${cls}">${valTxt}</span></div>`;
+  });
+  document.getElementById('mv-s1').innerHTML = html;
+}
+
+function mvBuildS2() {
+  let html = `<div class="mv-section-title">Rendimento per stagione</div>
+<div class="mv-tbl-wrap"><table class="mv-tbl">
+<thead><tr><th>Anno</th><th>Squadra</th><th class="c">G</th><th class="c">⚽</th><th class="c">🎯</th></tr></thead><tbody>`;
+  document.querySelectorAll('#last2-body .career-row').forEach(tr => {
+    const cells = tr.querySelectorAll('td');
+    const anno  = cells[0]?.textContent.trim() || '—';
+    const club  = tr.querySelector('.career-club span')?.textContent.trim() || cells[1]?.textContent.trim() || '—';
+    const g     = cells[3]?.textContent.trim() || '—';
+    const gol   = cells[4]?.textContent.trim() || '—';
+    const ast   = cells[5]?.textContent.trim() || '—';
+    html += `<tr><td class="hl">${anno}</td><td>${club}</td><td class="c">${g}</td><td class="c hl">${gol}</td><td class="c hl">${ast}</td></tr>`;
+  });
+  html += `</tbody></table></div>`;
+  html += `<div class="mv-section-title">Storico infortuni</div>
+<div class="mv-tbl-wrap"><table class="mv-tbl">
+<thead><tr><th>Stagione</th><th>Infortunio</th><th class="c">Gg</th></tr></thead><tbody>`;
+  document.querySelectorAll('#inj-body .inj-row').forEach(tr => {
+    const cells = tr.querySelectorAll('td');
+    const stz = cells[0]?.textContent.trim() || '—';
+    const inj = cells[1]?.textContent.trim() || '—';
+    const gg  = cells[4]?.textContent.trim() || '—';
+    html += `<tr><td class="hl">${stz}</td><td class="hl2">${inj}</td><td class="c">${gg}</td></tr>`;
+  });
+  html += `</tbody></table></div>`;
+  document.getElementById('mv-s2').innerHTML = html;
+}
+
+function mvBuildS3() {
+  const filled = document.querySelectorAll('#stars-widget .star.filled').length;
+  let stars = '<div class="mv-stars">';
+  for (let i = 1; i <= 5; i++) stars += `<span class="${i<=filled?'mv-star-f':'mv-star-e'}">★</span>`;
+  stars += '</div>';
+  const spesa = document.querySelector('.s3-spesa')?.textContent.trim() || '—';
+  const notes = document.querySelector('.s3-notes')?.textContent.trim() || '—';
+  document.getElementById('mv-s3').innerHTML = `
+<div class="mv-section-title">Appetibilità al Fantacalcio</div>${stars}
+<div class="mv-section-title">Consiglio di spesa del Mister</div>
+<div class="mv-card-text">${spesa}</div>
+<div class="mv-section-title">Appunti del Mister</div>
+<div class="mv-notes">${notes}</div>`;
+}
+
+function mvSync() {
+  const name = document.querySelector('#s1 .player-name')?.textContent.trim() || '';
+  document.getElementById('mv-name').textContent = name;
+  const subRow = document.querySelector('#s1 .sub-row');
+  if (subRow) {
+    const meta = subRow.textContent.replace(/\s+/g,' ').trim();
+    document.getElementById('mv-meta').textContent = meta;
+  }
+  const imgSrc = document.querySelector('.player-img')?.src;
+  if (imgSrc) document.getElementById('mv-photo').src = imgSrc;
+  mvBuildS1();
+  mvBuildS2();
+  mvBuildS3();
+}
+
+window.addEventListener('load', mvSync);
+setTimeout(mvSync, 400);
+document.querySelectorAll('#s1, #s2, #s3').forEach(slide => slide.addEventListener('input', mvSync));
+document.getElementById('photo-input').addEventListener('change', () => setTimeout(() => {
+  const src = document.querySelector('.player-img')?.src;
+  if (src) document.getElementById('mv-photo').src = src;
+}, 100));
+document.getElementById('stars-widget').addEventListener('click', () => setTimeout(mvBuildS3, 50));
+
+// ── Scala le card su mobile ──
+function scaleCards() {
+  const vw = window.innerWidth;
+  const cards = document.querySelectorAll('.card');
+  if (vw >= 1300) {
+    cards.forEach(c => { c.style.transform = ''; c.style.marginBottom = ''; c.style.marginTop = ''; });
+    document.body.style.overflowX = '';
+    return;
+  }
+  document.body.style.overflowX = 'hidden';
+  const scale = vw / 1280;
+  cards.forEach(c => {
+    c.style.transform = `scale(${scale})`;
+    c.style.transformOrigin = 'top center';
+    c.style.marginBottom = Math.round(720 * (scale - 1)) + 'px';
+  });
+}
+window.addEventListener('resize', scaleCards);
+scaleCards();
+</script>
+</body>
+</html>
