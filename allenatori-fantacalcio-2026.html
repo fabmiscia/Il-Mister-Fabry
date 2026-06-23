@@ -2,6 +2,7 @@
 <html lang="it">
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Fantacalcio 2026-27 – Tutti gli Allenatori</title>
 <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&display=swap" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
@@ -236,6 +237,43 @@ body {
 .app-st.off { color:rgba(255,200,0,.18); }
 
 [contenteditable]:focus { outline:1.5px solid rgba(0,195,255,.45); border-radius:4px; }
+
+/* ── TABLET (≤768px) ── */
+@media (max-width: 768px) {
+  body { padding: 10px 0 20px; }
+  .nav-bar { width: 100% !important; }
+  .toolbar { width: 100% !important; flex-wrap: wrap; padding: 8px 12px; }
+  .card { width: 100% !important; height: auto !important; grid-template-columns: 140px 1fr !important; }
+  .left-panel { padding: 14px 10px !important; gap: 12px !important; }
+  .coach-photo { width: 120px !important; height: 148px !important; }
+  .team-logo { width: 80px !important; height: 80px !important; }
+  .info-strip { grid-template-columns: 1fr 1fr 1fr !important; gap: 6px !important; }
+  .bottom-strip { grid-template-columns: 1fr 1fr 1fr !important; gap: 6px !important; }
+  .info-value { font-size: 20px !important; }
+  .middle-section { grid-template-columns: 1fr !important; }
+  .field-svg-wrap svg { width: 100% !important; height: auto !important; }
+}
+
+/* ── MOBILE (≤480px) ── */
+@media (max-width: 480px) {
+  body { font-size: 14px; padding: 6px 0 16px; }
+  .nav-bar { width: 100% !important; padding: 6px 8px; }
+  .toolbar { width: 100% !important; padding: 6px 8px; }
+  .toolbar h2 { font-size: 12px !important; }
+  .card { width: 100% !important; height: auto !important; grid-template-columns: 1fr !important; }
+  .left-panel { flex-direction: row !important; border-right: none !important; border-bottom: 1.5px solid rgba(0,195,255,.2) !important; padding: 12px !important; justify-content: flex-start !important; }
+  .coach-photo { width: 90px !important; height: 110px !important; flex-shrink: 0; }
+  .team-logo { width: 70px !important; height: 70px !important; flex-shrink: 0; }
+  .right-section { padding: 10px 10px 12px !important; gap: 6px !important; }
+  .info-strip { grid-template-columns: 1fr 1fr !important; gap: 5px !important; }
+  .info-value { font-size: 16px !important; }
+  .middle-section { grid-template-columns: 1fr !important; gap: 8px !important; }
+  .bottom-strip { grid-template-columns: 1fr 1fr !important; gap: 5px !important; }
+  .field-svg-wrap svg { width: 100% !important; height: auto !important; }
+  .notes-section { overflow: visible !important; }
+  .ind-val { font-size: 16px !important; }
+  .app-st { font-size: 22px !important; }
+}
 </style>
 
 <script>
@@ -394,1474 +432,105 @@ body {
 ════════════════════════════════════════════════ */
 /* <<COACHES_START>> */
 const COACHES_DEFAULT = [
-  {
-    "team": "Atalanta",
-    "coach": "Sarri",
-    "filosofia": "giochista",
-    "modulo": "4-3-3",
-    "stabStars": 3,
-    "appStars": 4,
-    "possesso": true,
-    "basso": true,
-    "turnover": true,
-    "alternanza": false,
-    "dots": [
-      "Y",
-      "G",
-      "Y",
-      "Y",
-      "G",
-      "G",
-      "G",
-      "G",
-      "G",
-      "Y",
-      "G"
-    ],
-    "notes": [
-      "Pressing alto e aggressivo su tutto il campo",
-      "Possesso palla con circolazione rapida e verticale",
-      "Terzini molto offensivi, spingono fino al fondo",
-      "Mezzali con inserimenti senza palla in area",
-      "Gioco collettivo fluido, pochi individualismi"
-    ],
-    "dotPositions": [
-      {
-        "cx": 462,
-        "cy": 165
-      },
-      {
-        "cx": 385,
-        "cy": 72
-      },
-      {
-        "cx": 395,
-        "cy": 130
-      },
-      {
-        "cx": 395,
-        "cy": 200
-      },
-      {
-        "cx": 385,
-        "cy": 258
-      },
-      {
-        "cx": 280,
-        "cy": 105
-      },
-      {
-        "cx": 265,
-        "cy": 165
-      },
-      {
-        "cx": 280,
-        "cy": 225
-      },
-      {
-        "cx": 140,
-        "cy": 72
-      },
-      {
-        "cx": 72,
-        "cy": 165
-      },
-      {
-        "cx": 140,
-        "cy": 258
-      }
-    ]
-  },
-  {
-    "team": "Bologna",
-    "coach": "Tedesco",
-    "filosofia": "giochista",
-    "modulo": "4-2-3-1",
-    "stabStars": 3,
-    "appStars": 3,
-    "possesso": true,
-    "basso": true,
-    "turnover": true,
-    "alternanza": false,
-    "dots": [
-      "Y",
-      "G",
-      "Y",
-      "Y",
-      "G",
-      "Y",
-      "Y",
-      "G",
-      "G",
-      "G",
-      "G"
-    ],
-    "notes": [
-      "Possesso strutturato con costruzione dal basso",
-      "Trequartisti liberi di svariare dietro la punta",
-      "Pressing organizzato con uscita alta",
-      "Terzini che supportano l'azione offensiva",
-      "Grande intensità fisica e atletica in entrambe le fasi"
-    ],
-    "dotPositions": [
-      {
-        "cx": 462,
-        "cy": 165
-      },
-      {
-        "cx": 385,
-        "cy": 72
-      },
-      {
-        "cx": 395,
-        "cy": 130
-      },
-      {
-        "cx": 395,
-        "cy": 200
-      },
-      {
-        "cx": 385,
-        "cy": 258
-      },
-      {
-        "cx": 300,
-        "cy": 125
-      },
-      {
-        "cx": 300,
-        "cy": 205
-      },
-      {
-        "cx": 185,
-        "cy": 72
-      },
-      {
-        "cx": 185,
-        "cy": 165
-      },
-      {
-        "cx": 185,
-        "cy": 258
-      },
-      {
-        "cx": 72,
-        "cy": 165
-      }
-    ]
-  },
-  {
-    "team": "Cagliari",
-    "coach": "Pisacane",
-    "filosofia": "risultatista",
-    "modulo": "4-4-2",
-    "stabStars": 2,
-    "appStars": 2,
-    "possesso": false,
-    "basso": false,
-    "turnover": false,
-    "alternanza": false,
-    "dots": [
-      "Y",
-      "Y",
-      "G",
-      "G",
-      "Y",
-      "Y",
-      "Y",
-      "Y",
-      "Y",
-      "R",
-      "R"
-    ],
-    "notes": [
-      "Difesa solida e compatta, basso baricentro",
-      "Centrocampo a protezione con sacrificio e copertura",
-      "Gioco diretto sulle punte, palla lunga",
-      "Ripartenze veloci sulle fasce esterne",
-      "Nuovo allenatore — valutare evoluzione tattica"
-    ],
-    "dotPositions": [
-      {
-        "cx": 462,
-        "cy": 165
-      },
-      {
-        "cx": 385,
-        "cy": 72
-      },
-      {
-        "cx": 395,
-        "cy": 130
-      },
-      {
-        "cx": 395,
-        "cy": 200
-      },
-      {
-        "cx": 385,
-        "cy": 258
-      },
-      {
-        "cx": 280,
-        "cy": 72
-      },
-      {
-        "cx": 285,
-        "cy": 135
-      },
-      {
-        "cx": 285,
-        "cy": 195
-      },
-      {
-        "cx": 280,
-        "cy": 258
-      },
-      {
-        "cx": 100,
-        "cy": 120
-      },
-      {
-        "cx": 100,
-        "cy": 210
-      }
-    ]
-  },
-  {
-    "team": "Como",
-    "coach": "Fabregas",
-    "filosofia": "giochista",
-    "modulo": "4-2-3-1",
-    "stabStars": 3,
-    "appStars": 4,
-    "possesso": true,
-    "basso": true,
-    "turnover": true,
-    "alternanza": false,
-    "dots": [
-      "Y",
-      "G",
-      "Y",
-      "Y",
-      "G",
-      "Y",
-      "Y",
-      "G",
-      "G",
-      "G",
-      "G"
-    ],
-    "notes": [
-      "Possesso palla con circolazione tecnica e veloce",
-      "Gioco di posizione con triangolazioni strette",
-      "Terzini che si inseriscono in fascia",
-      "Trequartisti tecnici e creativi nella zona di rifinitura",
-      "Pressing alto ad uomo in tutto il campo"
-    ],
-    "dotPositions": [
-      {
-        "cx": 462,
-        "cy": 165
-      },
-      {
-        "cx": 385,
-        "cy": 72
-      },
-      {
-        "cx": 395,
-        "cy": 130
-      },
-      {
-        "cx": 395,
-        "cy": 200
-      },
-      {
-        "cx": 385,
-        "cy": 258
-      },
-      {
-        "cx": 300,
-        "cy": 125
-      },
-      {
-        "cx": 300,
-        "cy": 205
-      },
-      {
-        "cx": 185,
-        "cy": 72
-      },
-      {
-        "cx": 185,
-        "cy": 165
-      },
-      {
-        "cx": 185,
-        "cy": 258
-      },
-      {
-        "cx": 72,
-        "cy": 165
-      }
-    ]
-  },
-  {
-    "team": "Fiorentina",
-    "coach": "Grosso",
-    "filosofia": "risultatista",
-    "modulo": "4-3-3",
-    "stabStars": 3,
-    "appStars": 3,
-    "possesso": false,
-    "basso": false,
-    "turnover": false,
-    "alternanza": false,
-    "dots": [
-      "G",
-      "Y",
-      "G",
-      "G",
-      "Y",
-      "Y",
-      "Y",
-      "Y",
-      "Y",
-      "Y",
-      "Y"
-    ],
-    "notes": [
-      "Equilibrio tattico tra fase difensiva e offensiva",
-      "Punta centrale come riferimento principale",
-      "Esterni con compiti difensivi importanti",
-      "Transizioni organizzate e controllate",
-      "Gioco prudente, poca propensione al rischio"
-    ],
-    "dotPositions": [
-      {
-        "cx": 462,
-        "cy": 165
-      },
-      {
-        "cx": 385,
-        "cy": 72
-      },
-      {
-        "cx": 395,
-        "cy": 130
-      },
-      {
-        "cx": 395,
-        "cy": 200
-      },
-      {
-        "cx": 385,
-        "cy": 258
-      },
-      {
-        "cx": 280,
-        "cy": 105
-      },
-      {
-        "cx": 265,
-        "cy": 165
-      },
-      {
-        "cx": 280,
-        "cy": 225
-      },
-      {
-        "cx": 140,
-        "cy": 72
-      },
-      {
-        "cx": 72,
-        "cy": 165
-      },
-      {
-        "cx": 140,
-        "cy": 258
-      }
-    ]
-  },
-  {
-    "team": "Frosinone",
-    "coach": "Alvini",
-    "filosofia": "giochista",
-    "modulo": "3-5-2",
-    "stabStars": 2,
-    "appStars": 2,
-    "possesso": false,
-    "basso": false,
-    "turnover": false,
-    "alternanza": false,
-    "dots": [
-      "G",
-      "G",
-      "G",
-      "G",
-      "G",
-      "Y",
-      "Y",
-      "Y",
-      "G",
-      "R",
-      "R"
-    ],
-    "notes": [
-      "Difesa a 3 con marcatura aggressiva ad uomo",
-      "Esterni a tutta fascia, molto offensivi",
-      "Pressing alto con uscita decisa",
-      "Fase offensiva affidata agli esterni di fascia",
-      "Attaccanti spesso isolati e poco riforniti"
-    ],
-    "dotPositions": [
-      {
-        "cx": 462,
-        "cy": 165
-      },
-      {
-        "cx": 385,
-        "cy": 88
-      },
-      {
-        "cx": 375,
-        "cy": 165
-      },
-      {
-        "cx": 385,
-        "cy": 242
-      },
-      {
-        "cx": 285,
-        "cy": 38
-      },
-      {
-        "cx": 285,
-        "cy": 110
-      },
-      {
-        "cx": 270,
-        "cy": 165
-      },
-      {
-        "cx": 285,
-        "cy": 220
-      },
-      {
-        "cx": 285,
-        "cy": 285
-      },
-      {
-        "cx": 100,
-        "cy": 115
-      },
-      {
-        "cx": 100,
-        "cy": 215
-      }
-    ]
-  },
-  {
-    "team": "Genoa",
-    "coach": "De Rossi",
-    "filosofia": "giochista",
-    "modulo": "4-3-3",
-    "stabStars": 3,
-    "appStars": 3,
-    "possesso": true,
-    "basso": true,
-    "turnover": false,
-    "alternanza": false,
-    "dots": [
-      "Y",
-      "Y",
-      "Y",
-      "Y",
-      "Y",
-      "G",
-      "G",
-      "G",
-      "G",
-      "G",
-      "G"
-    ],
-    "notes": [
-      "Possesso palla con costruzione dal basso paziente",
-      "Centrocampo creativo e propositivo",
-      "Esterni liberi di attaccare la profondità",
-      "Triangolazioni strette sulla trequarti avversaria",
-      "Stile di gioco offensivo e coraggioso"
-    ],
-    "dotPositions": [
-      {
-        "cx": 462,
-        "cy": 165
-      },
-      {
-        "cx": 385,
-        "cy": 72
-      },
-      {
-        "cx": 395,
-        "cy": 130
-      },
-      {
-        "cx": 395,
-        "cy": 200
-      },
-      {
-        "cx": 385,
-        "cy": 258
-      },
-      {
-        "cx": 280,
-        "cy": 105
-      },
-      {
-        "cx": 265,
-        "cy": 165
-      },
-      {
-        "cx": 280,
-        "cy": 225
-      },
-      {
-        "cx": 140,
-        "cy": 72
-      },
-      {
-        "cx": 72,
-        "cy": 165
-      },
-      {
-        "cx": 140,
-        "cy": 258
-      }
-    ]
-  },
-  {
-    "team": "Inter",
-    "coach": "Chivu",
-    "filosofia": "giochista",
-    "modulo": "3-5-2",
-    "stabStars": 3,
-    "appStars": 4,
-    "possesso": true,
-    "basso": true,
-    "turnover": true,
-    "alternanza": false,
-    "dots": [
-      "Y",
-      "Y",
-      "Y",
-      "Y",
-      "G",
-      "Y",
-      "G",
-      "Y",
-      "G",
-      "G",
-      "G"
-    ],
-    "notes": [
-      "Eredità tattica del sistema di Simone Inzaghi",
-      "Wing-back fondamentali nell'azione offensiva",
-      "Possesso palla con circolazione strutturata",
-      "Centrocampo tecnico e propositivo",
-      "Turnover gestito tra rosa ampia e di qualità"
-    ],
-    "dotPositions": [
-      {
-        "cx": 462,
-        "cy": 165
-      },
-      {
-        "cx": 385,
-        "cy": 88
-      },
-      {
-        "cx": 375,
-        "cy": 165
-      },
-      {
-        "cx": 385,
-        "cy": 242
-      },
-      {
-        "cx": 285,
-        "cy": 38
-      },
-      {
-        "cx": 285,
-        "cy": 110
-      },
-      {
-        "cx": 270,
-        "cy": 165
-      },
-      {
-        "cx": 285,
-        "cy": 220
-      },
-      {
-        "cx": 285,
-        "cy": 285
-      },
-      {
-        "cx": 100,
-        "cy": 115
-      },
-      {
-        "cx": 100,
-        "cy": 215
-      }
-    ]
-  },
-  {
-    "team": "Juventus",
-    "coach": "Spalletti",
-    "filosofia": "giochista",
-    "modulo": "4-3-3",
-    "stabStars": 3,
-    "appStars": 4,
-    "possesso": true,
-    "basso": true,
-    "turnover": true,
-    "alternanza": false,
-    "dots": [
-      "Y",
-      "Y",
-      "Y",
-      "Y",
-      "Y",
-      "G",
-      "G",
-      "G",
-      "G",
-      "G",
-      "G"
-    ],
-    "notes": [
-      "Pressing alto e organizzato come identità di gioco",
-      "Possesso palla di qualità con fluidità posizionale",
-      "Centrocampo dinamico e tecnico, fulcro del sistema",
-      "Esterni valorizzati dalla manovra offensiva corale",
-      "Grande intensità fisica in entrambe le fasi di gioco"
-    ],
-    "dotPositions": [
-      {
-        "cx": 462,
-        "cy": 165
-      },
-      {
-        "cx": 385,
-        "cy": 72
-      },
-      {
-        "cx": 395,
-        "cy": 130
-      },
-      {
-        "cx": 395,
-        "cy": 200
-      },
-      {
-        "cx": 385,
-        "cy": 258
-      },
-      {
-        "cx": 280,
-        "cy": 105
-      },
-      {
-        "cx": 265,
-        "cy": 165
-      },
-      {
-        "cx": 280,
-        "cy": 225
-      },
-      {
-        "cx": 140,
-        "cy": 72
-      },
-      {
-        "cx": 72,
-        "cy": 165
-      },
-      {
-        "cx": 140,
-        "cy": 258
-      }
-    ]
-  },
-  {
-    "team": "Lazio",
-    "coach": "Gattuso",
-    "filosofia": "risultatista",
-    "modulo": "4-3-3",
-    "stabStars": 2,
-    "appStars": 3,
-    "possesso": false,
-    "basso": false,
-    "turnover": false,
-    "alternanza": false,
-    "dots": [
-      "G",
-      "Y",
-      "G",
-      "G",
-      "Y",
-      "G",
-      "Y",
-      "Y",
-      "Y",
-      "R",
-      "Y"
-    ],
-    "notes": [
-      "Gioco fisico e aggressivo, difesa molto compatta",
-      "Pressing a zolle, baricentro medio-basso",
-      "Centrocampo con grande copertura e intensità",
-      "Ripartenze dirette e veloci sugli esterni",
-      "Poca propensione al possesso prolungato"
-    ],
-    "dotPositions": [
-      {
-        "cx": 462,
-        "cy": 165
-      },
-      {
-        "cx": 385,
-        "cy": 72
-      },
-      {
-        "cx": 395,
-        "cy": 130
-      },
-      {
-        "cx": 395,
-        "cy": 200
-      },
-      {
-        "cx": 385,
-        "cy": 258
-      },
-      {
-        "cx": 280,
-        "cy": 105
-      },
-      {
-        "cx": 265,
-        "cy": 165
-      },
-      {
-        "cx": 280,
-        "cy": 225
-      },
-      {
-        "cx": 140,
-        "cy": 72
-      },
-      {
-        "cx": 72,
-        "cy": 165
-      },
-      {
-        "cx": 140,
-        "cy": 258
-      }
-    ]
-  },
-  {
-    "team": "Lecce",
-    "coach": "Francesco",
-    "filosofia": "risultatista",
-    "modulo": "4-3-3",
-    "stabStars": 2,
-    "appStars": 2,
-    "possesso": false,
-    "basso": false,
-    "turnover": false,
-    "alternanza": false,
-    "dots": [
-      "Y",
-      "Y",
-      "G",
-      "G",
-      "Y",
-      "Y",
-      "Y",
-      "Y",
-      "Y",
-      "Y",
-      "Y"
-    ],
-    "notes": [
-      "Organizzazione difensiva solida e compatta",
-      "Centrali valorizzati dalla struttura difensiva",
-      "Gioco diretto e verticale sulle punte",
-      "Ripartenze veloci sulle fasce",
-      "Squadra di lotta, poca propensione al rischio"
-    ],
-    "dotPositions": [
-      {
-        "cx": 462,
-        "cy": 165
-      },
-      {
-        "cx": 385,
-        "cy": 72
-      },
-      {
-        "cx": 395,
-        "cy": 130
-      },
-      {
-        "cx": 395,
-        "cy": 200
-      },
-      {
-        "cx": 385,
-        "cy": 258
-      },
-      {
-        "cx": 280,
-        "cy": 105
-      },
-      {
-        "cx": 265,
-        "cy": 165
-      },
-      {
-        "cx": 280,
-        "cy": 225
-      },
-      {
-        "cx": 140,
-        "cy": 72
-      },
-      {
-        "cx": 72,
-        "cy": 165
-      },
-      {
-        "cx": 140,
-        "cy": 258
-      }
-    ]
-  },
-  {
-    "team": "Milan",
-    "coach": "Amorim",
-    "filosofia": "giochista",
-    "modulo": "3-4-2-1",
-    "stabStars": 3,
-    "appStars": 5,
-    "possesso": true,
-    "basso": true,
-    "turnover": true,
-    "alternanza": false,
-    "dots": [
-      "Y",
-      "Y",
-      "Y",
-      "Y",
-      "G",
-      "G",
-      "G",
-      "G",
-      "G",
-      "G",
-      "G"
-    ],
-    "notes": [
-      "Sistema 3-4-2-1 identitario e inamovibile",
-      "Pressing alto aggressivo e coordinato",
-      "Wing forward fondamentali: attaccano la profondità",
-      "Mezzali con inserimenti e gol da fuori area",
-      "Costruzione dal basso con i tre difensori centrali"
-    ],
-    "dotPositions": [
-      {
-        "cx": 462,
-        "cy": 165
-      },
-      {
-        "cx": 376,
-        "cy": 88
-      },
-      {
-        "cx": 368,
-        "cy": 165
-      },
-      {
-        "cx": 376,
-        "cy": 242
-      },
-      {
-        "cx": 270,
-        "cy": 36
-      },
-      {
-        "cx": 284,
-        "cy": 122
-      },
-      {
-        "cx": 284,
-        "cy": 208
-      },
-      {
-        "cx": 270,
-        "cy": 285
-      },
-      {
-        "cx": 165,
-        "cy": 117
-      },
-      {
-        "cx": 165,
-        "cy": 213
-      },
-      {
-        "cx": 62,
-        "cy": 165
-      }
-    ]
-  },
-  {
-    "team": "Monza",
-    "coach": "Juric",
-    "filosofia": "risultatista",
-    "modulo": "3-5-2",
-    "stabStars": 3,
-    "appStars": 3,
-    "possesso": false,
-    "basso": true,
-    "turnover": false,
-    "alternanza": false,
-    "dots": [
-      "Y",
-      "G",
-      "G",
-      "G",
-      "G",
-      "Y",
-      "Y",
-      "Y",
-      "G",
-      "Y",
-      "Y"
-    ],
-    "notes": [
-      "Difesa a 3 aggressiva con marcatura ad uomo",
-      "Centrali e wing-back molto valorizzati",
-      "Pressing alto e fisico, grande intensità atletica",
-      "Costruzione dal basso con i difensori centrali",
-      "Gioco diretto sugli attaccanti, poco possesso sterile"
-    ]
-  },
-  {
-    "team": "Napoli",
-    "coach": "Allegri",
-    "filosofia": "risultatista",
-    "modulo": "4-3-3",
-    "stabStars": 3,
-    "appStars": 3,
-    "possesso": false,
-    "basso": false,
-    "turnover": false,
-    "alternanza": false,
-    "dots": [
-      "G",
-      "Y",
-      "G",
-      "G",
-      "Y",
-      "Y",
-      "Y",
-      "Y",
-      "Y",
-      "G",
-      "Y"
-    ],
-    "notes": [
-      "Gioco pragmatico e difensivo, basso baricentro",
-      "Blocco corto e compatto in fase difensiva",
-      "Centravanti unico come riferimento offensivo centrale",
-      "Ripartenze rapide in verticale sugli esterni",
-      "Centrocampo a protezione della difesa, poco propositivo"
-    ],
-    "dotPositions": [
-      {
-        "cx": 462,
-        "cy": 165
-      },
-      {
-        "cx": 385,
-        "cy": 72
-      },
-      {
-        "cx": 395,
-        "cy": 130
-      },
-      {
-        "cx": 395,
-        "cy": 200
-      },
-      {
-        "cx": 385,
-        "cy": 258
-      },
-      {
-        "cx": 280,
-        "cy": 105
-      },
-      {
-        "cx": 265,
-        "cy": 165
-      },
-      {
-        "cx": 280,
-        "cy": 225
-      },
-      {
-        "cx": 140,
-        "cy": 72
-      },
-      {
-        "cx": 72,
-        "cy": 165
-      },
-      {
-        "cx": 140,
-        "cy": 258
-      }
-    ]
-  },
-  {
-    "team": "Parma",
-    "coach": "Cuesta",
-    "filosofia": "risultatista",
-    "modulo": "4-3-3",
-    "stabStars": 2,
-    "appStars": 2,
-    "possesso": false,
-    "basso": false,
-    "turnover": false,
-    "alternanza": false,
-    "dots": [
-      "Y",
-      "Y",
-      "Y",
-      "Y",
-      "Y",
-      "Y",
-      "Y",
-      "Y",
-      "Y",
-      "Y",
-      "Y"
-    ],
-    "notes": [
-      "Nuovo allenatore alla prima esperienza in Serie A",
-      "Sistema difensivo organizzato e compatto",
-      "Gioco diretto e pratico",
-      "Squadra in fase di costruzione identità",
-      "Valutare evoluzione nel corso della stagione"
-    ],
-    "dotPositions": [
-      {
-        "cx": 462,
-        "cy": 165
-      },
-      {
-        "cx": 385,
-        "cy": 72
-      },
-      {
-        "cx": 395,
-        "cy": 130
-      },
-      {
-        "cx": 395,
-        "cy": 200
-      },
-      {
-        "cx": 385,
-        "cy": 258
-      },
-      {
-        "cx": 280,
-        "cy": 105
-      },
-      {
-        "cx": 265,
-        "cy": 165
-      },
-      {
-        "cx": 280,
-        "cy": 225
-      },
-      {
-        "cx": 140,
-        "cy": 72
-      },
-      {
-        "cx": 72,
-        "cy": 165
-      },
-      {
-        "cx": 140,
-        "cy": 258
-      }
-    ]
-  },
-  {
-    "team": "Roma",
-    "coach": "Gasperini",
-    "filosofia": "giochista",
-    "modulo": "3-4-2-1",
-    "stabStars": 4,
-    "appStars": 5,
-    "possesso": true,
-    "basso": true,
-    "turnover": true,
-    "alternanza": false,
-    "dots": [
-      "Y",
-      "Y",
-      "Y",
-      "Y",
-      "G",
-      "G",
-      "G",
-      "G",
-      "G",
-      "G",
-      "G"
-    ],
-    "notes": [
-      "Pressing alto ad uomo in tutto il campo",
-      "Ampiezza garantita dagli esterni a tutta fascia",
-      "Mezzali con inserimenti senza palla in area",
-      "Costruzione dal basso con i tre difensori centrali",
-      "Transizioni offensive rapide verso l'area avversaria"
-    ]
-  },
-  {
-    "team": "Sassuolo",
-    "coach": "Aquilani",
-    "filosofia": "giochista",
-    "modulo": "4-3-3",
-    "stabStars": 3,
-    "appStars": 3,
-    "possesso": true,
-    "basso": true,
-    "turnover": false,
-    "alternanza": false,
-    "dots": [
-      "Y",
-      "Y",
-      "Y",
-      "Y",
-      "Y",
-      "G",
-      "G",
-      "G",
-      "G",
-      "G",
-      "G"
-    ],
-    "notes": [
-      "Gioco propositivo e tecnico come identità",
-      "Possesso palla con costruzione dal basso strutturata",
-      "Centrocampo dinamico e creativo",
-      "Esterni offensivi valorizzati dal sistema",
-      "Pressing organizzato nella metà campo avversaria"
-    ],
-    "dotPositions": [
-      {
-        "cx": 462,
-        "cy": 165
-      },
-      {
-        "cx": 385,
-        "cy": 72
-      },
-      {
-        "cx": 395,
-        "cy": 130
-      },
-      {
-        "cx": 395,
-        "cy": 200
-      },
-      {
-        "cx": 385,
-        "cy": 258
-      },
-      {
-        "cx": 280,
-        "cy": 105
-      },
-      {
-        "cx": 265,
-        "cy": 165
-      },
-      {
-        "cx": 280,
-        "cy": 225
-      },
-      {
-        "cx": 140,
-        "cy": 72
-      },
-      {
-        "cx": 72,
-        "cy": 165
-      },
-      {
-        "cx": 140,
-        "cy": 258
-      }
-    ]
-  },
-  {
-    "team": "Torino",
-    "coach": "Abate",
-    "filosofia": "risultatista",
-    "modulo": "3-5-2",
-    "stabStars": 2,
-    "appStars": 2,
-    "possesso": false,
-    "basso": false,
-    "turnover": false,
-    "alternanza": false,
-    "dots": [
-      "Y",
-      "Y",
-      "Y",
-      "Y",
-      "Y",
-      "Y",
-      "Y",
-      "Y",
-      "Y",
-      "Y",
-      "Y"
-    ],
-    "notes": [
-      "Difesa a 3 organizzata e compatta",
-      "Wing-back con grande corsa e sacrificio",
-      "Gioco diretto e verticale",
-      "Equilibrio tattico con baricentro medio",
-      "Nuovo allenatore — valutare evoluzione tattica"
-    ],
-    "dotPositions": [
-      {
-        "cx": 462,
-        "cy": 165
-      },
-      {
-        "cx": 385,
-        "cy": 88
-      },
-      {
-        "cx": 375,
-        "cy": 165
-      },
-      {
-        "cx": 385,
-        "cy": 242
-      },
-      {
-        "cx": 285,
-        "cy": 38
-      },
-      {
-        "cx": 285,
-        "cy": 110
-      },
-      {
-        "cx": 270,
-        "cy": 165
-      },
-      {
-        "cx": 285,
-        "cy": 220
-      },
-      {
-        "cx": 285,
-        "cy": 285
-      },
-      {
-        "cx": 100,
-        "cy": 115
-      },
-      {
-        "cx": 100,
-        "cy": 215
-      }
-    ]
-  },
-  {
-    "team": "Udinese",
-    "coach": "Runjaic",
-    "filosofia": "risultatista",
-    "modulo": "3-5-2",
-    "stabStars": 3,
-    "appStars": 2,
-    "possesso": false,
-    "basso": false,
-    "turnover": false,
-    "alternanza": false,
-    "dots": [
-      "Y",
-      "G",
-      "G",
-      "G",
-      "Y",
-      "Y",
-      "Y",
-      "Y",
-      "Y",
-      "Y",
-      "Y"
-    ],
-    "notes": [
-      "Difesa a 3 solida e difficile da penetrare",
-      "Centrali valorizzati da sistema strutturato",
-      "Gioco diretto, palla lunga sulle punte",
-      "Wing-back con compiti prevalentemente difensivi",
-      "Ripartenze veloci sugli attaccanti isolati"
-    ],
-    "dotPositions": [
-      {
-        "cx": 462,
-        "cy": 165
-      },
-      {
-        "cx": 385,
-        "cy": 88
-      },
-      {
-        "cx": 375,
-        "cy": 165
-      },
-      {
-        "cx": 385,
-        "cy": 242
-      },
-      {
-        "cx": 285,
-        "cy": 38
-      },
-      {
-        "cx": 285,
-        "cy": 110
-      },
-      {
-        "cx": 270,
-        "cy": 165
-      },
-      {
-        "cx": 285,
-        "cy": 220
-      },
-      {
-        "cx": 285,
-        "cy": 285
-      },
-      {
-        "cx": 100,
-        "cy": 115
-      },
-      {
-        "cx": 100,
-        "cy": 215
-      }
-    ]
-  },
-  {
-    "team": "Venezia",
-    "coach": "Stroppa",
-    "filosofia": "risultatista",
-    "modulo": "4-3-3",
-    "stabStars": 2,
-    "appStars": 2,
-    "possesso": false,
-    "basso": false,
-    "turnover": false,
-    "alternanza": false,
-    "dots": [
-      "Y",
-      "Y",
-      "Y",
-      "Y",
-      "Y",
-      "Y",
-      "Y",
-      "Y",
-      "Y",
-      "Y",
-      "Y"
-    ],
-    "notes": [
-      "Difesa solida e organizzata, bassa propensione al rischio",
-      "Squadra di lotta e di risultato",
-      "Gioco diretto e poco elaborato",
-      "Centrocampo fisico con buona copertura difensiva",
-      "Transizioni rapide senza troppa elaborazione"
-    ],
-    "dotPositions": [
-      {
-        "cx": 462,
-        "cy": 165
-      },
-      {
-        "cx": 385,
-        "cy": 72
-      },
-      {
-        "cx": 395,
-        "cy": 130
-      },
-      {
-        "cx": 395,
-        "cy": 200
-      },
-      {
-        "cx": 385,
-        "cy": 258
-      },
-      {
-        "cx": 280,
-        "cy": 105
-      },
-      {
-        "cx": 265,
-        "cy": 165
-      },
-      {
-        "cx": 280,
-        "cy": 225
-      },
-      {
-        "cx": 140,
-        "cy": 72
-      },
-      {
-        "cx": 72,
-        "cy": 165
-      },
-      {
-        "cx": 140,
-        "cy": 258
-      }
-    ]
-  }
+  { team:'Atalanta', coach:'Sarri', filosofia:'giochista', modulo:'4-3-3',
+    stabStars:3, appStars:4, possesso:true, basso:true, turnover:true, alternanza:false,
+    dots:['Y','G','Y','Y','G','G','G','G','G','Y','G'],
+    notes:['Pressing alto e aggressivo su tutto il campo','Possesso palla con circolazione rapida e verticale','Terzini molto offensivi, spingono fino al fondo','Mezzali con inserimenti senza palla in area','Gioco collettivo fluido, pochi individualismi'] },
+
+  { team:'Bologna', coach:'Tedesco', filosofia:'giochista', modulo:'4-2-3-1',
+    stabStars:3, appStars:3, possesso:true, basso:true, turnover:true, alternanza:false,
+    dots:['Y','G','Y','Y','G','Y','Y','G','G','G','G'],
+    notes:['Possesso strutturato con costruzione dal basso','Trequartisti liberi di svariare dietro la punta','Pressing organizzato con uscita alta','Terzini che supportano l\'azione offensiva','Grande intensità fisica e atletica in entrambe le fasi'] },
+
+  { team:'Cagliari', coach:'Pisacane', filosofia:'risultatista', modulo:'4-4-2',
+    stabStars:2, appStars:2, possesso:false, basso:false, turnover:false, alternanza:false,
+    dots:['Y','Y','G','G','Y','Y','Y','Y','Y','R','R'],
+    notes:['Difesa solida e compatta, basso baricentro','Centrocampo a protezione con sacrificio e copertura','Gioco diretto sulle punte, palla lunga','Ripartenze veloci sulle fasce esterne','Nuovo allenatore — valutare evoluzione tattica'] },
+
+  { team:'Como', coach:'Fabregas', filosofia:'giochista', modulo:'4-2-3-1',
+    stabStars:3, appStars:4, possesso:true, basso:true, turnover:true, alternanza:false,
+    dots:['Y','G','Y','Y','G','Y','Y','G','G','G','G'],
+    notes:['Possesso palla con circolazione tecnica e veloce','Gioco di posizione con triangolazioni strette','Terzini che si inseriscono in fascia','Trequartisti tecnici e creativi nella zona di rifinitura','Pressing alto ad uomo in tutto il campo'] },
+
+  { team:'Fiorentina', coach:'Grosso', filosofia:'risultatista', modulo:'4-3-3',
+    stabStars:3, appStars:3, possesso:false, basso:false, turnover:false, alternanza:false,
+    dots:['G','Y','G','G','Y','Y','Y','Y','Y','Y','Y'],
+    notes:['Equilibrio tattico tra fase difensiva e offensiva','Punta centrale come riferimento principale','Esterni con compiti difensivi importanti','Transizioni organizzate e controllate','Gioco prudente, poca propensione al rischio'] },
+
+  { team:'Frosinone', coach:'Alvini', filosofia:'giochista', modulo:'3-5-2',
+    stabStars:2, appStars:2, possesso:false, basso:false, turnover:false, alternanza:false,
+    dots:['G','G','G','G','G','Y','Y','Y','G','R','R'],
+    notes:['Difesa a 3 con marcatura aggressiva ad uomo','Esterni a tutta fascia, molto offensivi','Pressing alto con uscita decisa','Fase offensiva affidata agli esterni di fascia','Attaccanti spesso isolati e poco riforniti'] },
+
+  { team:'Genoa', coach:'De Rossi', filosofia:'giochista', modulo:'4-3-3',
+    stabStars:3, appStars:3, possesso:true, basso:true, turnover:false, alternanza:false,
+    dots:['Y','Y','Y','Y','Y','G','G','G','G','G','G'],
+    notes:['Possesso palla con costruzione dal basso paziente','Centrocampo creativo e propositivo','Esterni liberi di attaccare la profondità','Triangolazioni strette sulla trequarti avversaria','Stile di gioco offensivo e coraggioso'] },
+
+  { team:'Inter', coach:'Chivu', filosofia:'giochista', modulo:'3-5-2',
+    stabStars:3, appStars:4, possesso:true, basso:true, turnover:true, alternanza:false,
+    dots:['Y','Y','Y','Y','G','Y','G','Y','G','G','G'],
+    notes:['Eredità tattica del sistema di Simone Inzaghi','Wing-back fondamentali nell\'azione offensiva','Possesso palla con circolazione strutturata','Centrocampo tecnico e propositivo','Turnover gestito tra rosa ampia e di qualità'] },
+
+  { team:'Juventus', coach:'Spalletti', filosofia:'giochista', modulo:'4-3-3',
+    stabStars:3, appStars:4, possesso:true, basso:true, turnover:true, alternanza:false,
+    dots:['Y','Y','Y','Y','Y','G','G','G','G','G','G'],
+    notes:['Pressing alto e organizzato come identità di gioco','Possesso palla di qualità con fluidità posizionale','Centrocampo dinamico e tecnico, fulcro del sistema','Esterni valorizzati dalla manovra offensiva corale','Grande intensità fisica in entrambe le fasi di gioco'] },
+
+  { team:'Lazio', coach:'Gattuso', filosofia:'risultatista', modulo:'4-3-3',
+    stabStars:2, appStars:3, possesso:false, basso:false, turnover:false, alternanza:false,
+    dots:['G','Y','G','G','Y','G','Y','Y','Y','R','Y'],
+    notes:['Gioco fisico e aggressivo, difesa molto compatta','Pressing a zolle, baricentro medio-basso','Centrocampo con grande copertura e intensità','Ripartenze dirette e veloci sugli esterni','Poca propensione al possesso prolungato'] },
+
+  { team:'Lecce', coach:'Francesco', filosofia:'risultatista', modulo:'4-3-3',
+    stabStars:2, appStars:2, possesso:false, basso:false, turnover:false, alternanza:false,
+    dots:['Y','Y','G','G','Y','Y','Y','Y','Y','Y','Y'],
+    notes:['Organizzazione difensiva solida e compatta','Centrali valorizzati dalla struttura difensiva','Gioco diretto e verticale sulle punte','Ripartenze veloci sulle fasce','Squadra di lotta, poca propensione al rischio'] },
+
+  { team:'Milan', coach:'Amorim', filosofia:'giochista', modulo:'3-4-2-1',
+    stabStars:3, appStars:5, possesso:true, basso:true, turnover:true, alternanza:false,
+    dots:['Y','Y','Y','Y','G','G','G','G','G','G','G'],
+    notes:['Sistema 3-4-2-1 identitario e inamovibile','Pressing alto aggressivo e coordinato','Wing forward fondamentali: attaccano la profondità','Mezzali con inserimenti e gol da fuori area','Costruzione dal basso con i tre difensori centrali'] },
+
+  { team:'Monza', coach:'Juric', filosofia:'risultatista', modulo:'3-5-2',
+    stabStars:3, appStars:3, possesso:false, basso:true, turnover:false, alternanza:false,
+    dots:['Y','G','G','G','G','Y','Y','Y','G','Y','Y'],
+    notes:['Difesa a 3 aggressiva con marcatura ad uomo','Centrali e wing-back molto valorizzati','Pressing alto e fisico, grande intensità atletica','Costruzione dal basso con i difensori centrali','Gioco diretto sugli attaccanti, poco possesso sterile'] },
+
+  { team:'Napoli', coach:'Allegri', filosofia:'risultatista', modulo:'4-3-3',
+    stabStars:3, appStars:3, possesso:false, basso:false, turnover:false, alternanza:false,
+    dots:['G','Y','G','G','Y','Y','Y','Y','Y','G','Y'],
+    notes:['Gioco pragmatico e difensivo, basso baricentro','Blocco corto e compatto in fase difensiva','Centravanti unico come riferimento offensivo centrale','Ripartenze rapide in verticale sugli esterni','Centrocampo a protezione della difesa, poco propositivo'] },
+
+  { team:'Parma', coach:'Cuesta', filosofia:'risultatista', modulo:'4-3-3',
+    stabStars:2, appStars:2, possesso:false, basso:false, turnover:false, alternanza:false,
+    dots:['Y','Y','Y','Y','Y','Y','Y','Y','Y','Y','Y'],
+    notes:['Nuovo allenatore alla prima esperienza in Serie A','Sistema difensivo organizzato e compatto','Gioco diretto e pratico','Squadra in fase di costruzione identità','Valutare evoluzione nel corso della stagione'] },
+
+  { team:'Roma', coach:'Gasperini', filosofia:'giochista', modulo:'3-4-2-1',
+    stabStars:4, appStars:5, possesso:true, basso:true, turnover:true, alternanza:false,
+    dots:['Y','Y','Y','Y','G','G','G','G','G','G','G'],
+    notes:['Pressing alto ad uomo in tutto il campo','Ampiezza garantita dagli esterni a tutta fascia','Mezzali con inserimenti senza palla in area','Costruzione dal basso con i tre difensori centrali','Transizioni offensive rapide verso l\'area avversaria'] },
+
+  { team:'Sassuolo', coach:'Aquilani', filosofia:'giochista', modulo:'4-3-3',
+    stabStars:3, appStars:3, possesso:true, basso:true, turnover:false, alternanza:false,
+    dots:['Y','Y','Y','Y','Y','G','G','G','G','G','G'],
+    notes:['Gioco propositivo e tecnico come identità','Possesso palla con costruzione dal basso strutturata','Centrocampo dinamico e creativo','Esterni offensivi valorizzati dal sistema','Pressing organizzato nella metà campo avversaria'] },
+
+  { team:'Torino', coach:'Abate', filosofia:'risultatista', modulo:'3-5-2',
+    stabStars:2, appStars:2, possesso:false, basso:false, turnover:false, alternanza:false,
+    dots:['Y','Y','Y','Y','Y','Y','Y','Y','Y','Y','Y'],
+    notes:['Difesa a 3 organizzata e compatta','Wing-back con grande corsa e sacrificio','Gioco diretto e verticale','Equilibrio tattico con baricentro medio','Nuovo allenatore — valutare evoluzione tattica'] },
+
+  { team:'Udinese', coach:'Runjaic', filosofia:'risultatista', modulo:'3-5-2',
+    stabStars:3, appStars:2, possesso:false, basso:false, turnover:false, alternanza:false,
+    dots:['Y','G','G','G','Y','Y','Y','Y','Y','Y','Y'],
+    notes:['Difesa a 3 solida e difficile da penetrare','Centrali valorizzati da sistema strutturato','Gioco diretto, palla lunga sulle punte','Wing-back con compiti prevalentemente difensivi','Ripartenze veloci sugli attaccanti isolati'] },
+
+  { team:'Venezia', coach:'Stroppa', filosofia:'risultatista', modulo:'4-3-3',
+    stabStars:2, appStars:2, possesso:false, basso:false, turnover:false, alternanza:false,
+    dots:['Y','Y','Y','Y','Y','Y','Y','Y','Y','Y','Y'],
+    notes:['Difesa solida e organizzata, bassa propensione al rischio','Squadra di lotta e di risultato','Gioco diretto e poco elaborato','Centrocampo fisico con buona copertura difensiva','Transizioni rapide senza troppa elaborazione'] },
 ];
 /* <<COACHES_END>> */
 
@@ -2272,8 +941,11 @@ function loadFromStorage() {
     const saved = localStorage.getItem(STORAGE_KEY);
     if (saved) {
       const data = JSON.parse(saved);
-      data.forEach((c, i) => {
-        if (coaches[i]) Object.assign(coaches[i], c);
+      data.forEach((savedCoach, i) => {
+        if (!coaches[i]) return;
+        // Se nel localStorage l'allenatore era "—" ma ora abbiamo dati reali, usa i nuovi dati
+        if (savedCoach.coach === '—' && coaches[i].coach !== '—') return;
+        Object.assign(coaches[i], savedCoach);
       });
     }
     for (let i = 0; i < 20; i++) {
