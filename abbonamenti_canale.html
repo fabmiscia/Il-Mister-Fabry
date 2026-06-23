@@ -506,6 +506,7 @@ body {
   <button onclick="show('t4',this)">🟡 Gasperini</button>
   <button class="png-btn" data-local-only onclick="exportPNG()">🖼 Esporta PNG</button>
   <button class="github-btn" data-local-only onclick="openGithub()">⬆ Esporta su GitHub</button>
+  <button id="btn-salva-locale" onclick="salvaInLocale()" style="background:#1a1a1a;color:#fff;border:1px solid #333;padding:7px 14px;border-radius:6px;cursor:pointer;font-size:12px;font-weight:700;letter-spacing:.5px;transition:.15s" onmouseover="this.style.borderColor='#b0ff00';this.style.color='#b0ff00'" onmouseout="this.style.borderColor='#333';this.style.color='#fff'">&#x1F4BE; Salva in locale</button>
 </div>
 
 <!-- ══════════════════════════════════════
@@ -919,6 +920,32 @@ async function doExport() {
   } catch(e) {
     status.textContent = '✕ Errore di rete: ' + e.message;
     status.className = 'modal-status err';
+  }
+}
+
+
+// ── Salva in locale ──────────────────────────
+async function salvaInLocale() {
+  const html = '<!DOCTYPE html>\n' + document.documentElement.outerHTML;
+  const blob = new Blob([html], {type: 'text/html'});
+  const fname = location.pathname.split('/').pop() || 'file.html';
+  try {
+    if (window.showSaveFilePicker) {
+      const handle = await window.showSaveFilePicker({
+        suggestedName: fname,
+        types: [{description:'HTML', accept:{'text/html':['.html']}}]
+      });
+      const w = await handle.createWritable();
+      await w.write(blob);
+      await w.close();
+      const btn = document.getElementById('btn-salva-locale');
+      if (btn) { const orig = btn.textContent; btn.textContent = '\u2705 Salvato!'; setTimeout(()=>btn.textContent=orig,2000); }
+    } else { throw new Error('no picker'); }
+  } catch(e) {
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = fname;
+    a.click();
   }
 }
 
