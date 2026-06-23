@@ -1,9 +1,10 @@
 <!DOCTYPE html>
-<html lang="it"><head>
+<html lang="it">
+<head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Torneo Classic Mazzone — MisterFabry</title>
-<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;600;700&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;600;700&display=swap" rel="stylesheet">
 <style>
 * { margin:0; padding:0; box-sizing:border-box; }
 body { background:#0a0a0a; font-family:'Oswald',sans-serif; min-height:100vh; color:#a8a8a8; }
@@ -80,9 +81,33 @@ body.edit-mode .edit-only { display:inline-flex; }
 body.edit-mode .add-row { display:flex; }
 
 [contenteditable="true"] { outline:1px dashed rgba(45,184,74,.4); border-radius:3px; padding:1px 3px; }
+
+/* ── TABLET (≤768px) ── */
+@media (max-width: 768px) {
+  .page { padding: 32px 20px 60px !important; }
+  .info-grid { grid-template-columns: 1fr 1fr !important; }
+  .torneo-title { font-size: clamp(24px, 5vw, 38px) !important; }
+  .pagamento-section { flex-wrap: wrap !important; }
+  .pagamento-box { min-width: unset !important; width: 100% !important; }
+}
+
+/* ── MOBILE (≤480px) ── */
+@media (max-width: 480px) {
+  body { font-size: 15px; }
+  .page { padding: 24px 16px 60px !important; }
+  .info-grid { grid-template-columns: 1fr !important; }
+  .torneo-title { font-size: clamp(22px, 6vw, 32px) !important; letter-spacing: 1px; }
+  .pagamento-section { flex-direction: column !important; gap: 16px !important; }
+  .pagamento-box { min-width: unset !important; width: 100% !important; }
+  .iscritti-table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+  table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+  .iban-value { font-size: 13px !important; letter-spacing: 1px; }
+  .toolbar { padding: 8px 12px !important; }
+  .toolbar-title { font-size: 11px !important; }
+}
 </style>
 </head>
-<body class="">
+<body>
 
 <script>
 (function(){
@@ -97,11 +122,11 @@ body.edit-mode .add-row { display:flex; }
 </script>
 
 <div class="toolbar">
-  <a class="btn btn-back" href="index.html">← Home</a>
-  <span class="toolbar-title">🏆 TORNEO CLASSIC MAZZONE</span>
+  <a class="btn btn-back" href="index.html">&#x2190; Home</a>
+  <span class="toolbar-title">&#x1F3C6; TORNEO CLASSIC MAZZONE</span>
   <div class="spacer"></div>
-  <button class="btn btn-edit" id="btn-edit" onclick="toggleEdit()">✏ Modifica</button>
-  <button class="btn btn-github" id="btn-github" disabled="">⏳ Caricando...</button>
+  <button class="btn btn-edit" id="btn-edit" onclick="toggleEdit()">&#x270F; Modifica</button>
+  <button class="btn btn-github" id="btn-github">&#x1F4E4; Su GitHub</button>
 </div>
 
 <div class="page">
@@ -112,22 +137,22 @@ body.edit-mode .add-row { display:flex; }
     <div class="torneo-header">
       <div class="torneo-badge" contenteditable="false">Torneo Classic</div>
       <div class="torneo-title" contenteditable="false">TORNEO CLASSIC <span contenteditable="false">MAZZONE</span></div>
-      <div class="torneo-sub" contenteditable="false">Fantacalcio 2026-27 • MisterFabry Community ASTA 21 AGOSTO 2026</div>
+      <div class="torneo-sub" contenteditable="false">Fantacalcio 2026-27 &bull; MisterFabry Community</div>
     </div>
 
     <br>
     <div class="info-grid">
       <div class="info-card">
         <div class="info-label">Quota iscrizione</div>
-        <div class="info-value green" contenteditable="false">€70</div>
+        <div class="info-value green" contenteditable="false">&euro;70</div>
       </div>
       <div class="info-card">
         <div class="info-label">Posti disponibili</div>
-        <div class="info-value" contenteditable="false">0</div>
+        <div class="info-value" contenteditable="false">&#x2014;</div>
       </div>
       <div class="info-card">
         <div class="info-label">Scadenza iscrizioni</div>
-        <div class="info-value" contenteditable="false">31 LUGLIO 2026</div>
+        <div class="info-value" contenteditable="false">&#x2014;</div>
       </div>
     </div>
 
@@ -136,38 +161,39 @@ body.edit-mode .add-row { display:flex; }
     <div class="pagamento-section">
       <!-- IBAN / Satispay -->
       <div class="pagamento-box satispay">
-        <div class="pag-title">1️⃣ Paga tramite bonifico</div>
-        <div class="pag-icon">💳</div>
+        <div class="pag-title">&#x31;&#xFE0F;&#x20E3; Paga tramite bonifico</div>
+        <div class="pag-icon">&#x1F4B3;</div>
         <div class="pag-desc">
           Usa Satispay o la tua banca.<br>
-          Copia l’IBAN qui sotto e invia <strong>€70</strong>
+          Copia l&rsquo;IBAN qui sotto e invia <strong>&euro;70</strong>
         </div>
         <div class="iban-box">
           <div class="iban-label">IBAN Satispay</div>
           <div class="iban-value" id="iban-value">LU49 8100 SATI 6673 6084</div>
-          <button class="btn-copia-iban" onclick="copiaIban()">📋 Copia IBAN</button>
+          <button class="btn-copia-iban" onclick="copiaIban()">&#x1F4CB; Copia IBAN</button>
         </div>
         <div class="causale-hint">
-          Causale: <strong style="color:#a8a8a8" contenteditable="false">Nome Cognome — Iscrizione Torneo Classic Mazzone</strong>
+          Causale: <strong style="color:#a8a8a8" contenteditable="false">Nome Cognome &mdash; Iscrizione Torneo Classic Mazzone</strong>
         </div>
       </div>
 
       <!-- WhatsApp -->
       <div class="pagamento-box whatsapp">
-        <div class="pag-title">2️⃣ Conferma pagamento</div>
-        <div class="pag-icon">💬</div>
-        <div class="wa-group-name" contenteditable="false" id="wa-group-name">CLASSIC MAZZONE</div>
+        <div class="pag-title">&#x32;&#xFE0F;&#x20E3; Conferma pagamento</div>
+        <div class="pag-icon">&#x1F4AC;</div>
+        <div class="wa-group-name" contenteditable="false" id="wa-group-name">Nome Gruppo WhatsApp</div>
         <div class="pag-desc">
           Dopo aver pagato, manda uno<br>
           screenshot della ricevuta nel gruppo
         </div>
         <a class="btn-whatsapp" id="wa-link-classico" href="https://chat.whatsapp.com/EUl1BfkWtRuL22OahWuKy4?mode=gi_t" target="_blank">
-          💬 Apri gruppo WhatsApp
+          &#x1F4AC; Apri gruppo WhatsApp
         </a>
         <!-- edit link -->
         <div class="edit-only" style="flex-direction:column;gap:4px;width:100%">
           <div style="font-size:9px;letter-spacing:2px;color:#444">LINK GRUPPO:</div>
-          <input class="add-input" id="wa-link-input-classico" type="text" placeholder="https://chat.whatsapp.com/..." style="font-size:11px" oninput="document.getElementById('wa-link-classico').href=this.value">
+          <input class="add-input" id="wa-link-input-classico" type="text" placeholder="https://chat.whatsapp.com/..." style="font-size:11px"
+            oninput="document.getElementById('wa-link-classico').href=this.value">
         </div>
       </div>
     </div>
@@ -177,7 +203,7 @@ body.edit-mode .add-row { display:flex; }
     <div>
       <div class="section-title">
         Iscritti confermati
-        <span class="cnt" id="cnt-classico">1</span>
+        <span class="cnt" id="cnt-classico">0</span>
       </div>
       <table class="iscritti-table">
         <thead>
@@ -191,7 +217,7 @@ body.edit-mode .add-row { display:flex; }
           </tr>
         </thead>
         <tbody id="tbody-classico">
-          <tr class="data-row"><td><span class="num-circle">1</span></td><td>Fabrizio</td><td>Miscia</td><td>22 Giugno</td><td><span class="badge-pagato">✅ Pagato</span></td><td class="edit-only"><button class="btn-del" onclick="delIscritto('classico',0)">✕</button></td></tr><tr id="empty-classico" style="display: none;">
+          <tr id="empty-classico">
             <td colspan="6" style="text-align:center;color:#333;font-size:12px;letter-spacing:2px;padding:32px">
               Nessun iscritto ancora
             </td>
@@ -318,5 +344,5 @@ document.getElementById('btn-github').addEventListener('click', async function()
 
 window.addEventListener('DOMContentLoaded', loadData);
 </script>
-
-</body></html>
+</body>
+</html>
