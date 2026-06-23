@@ -135,6 +135,37 @@ td .badge-novita{display:inline-block;background:var(--oro);color:#000;font-fami
 .edit-active .btn-add-nota{display:block}
 .edit-active .nota-text{cursor:text}
 .edit-active .nota-text:hover{background:rgba(77,143,208,.05)}
+
+/* ── TABLET (≤768px) ── */
+@media (max-width: 768px) {
+  .hero { padding: 40px 16px 32px !important; }
+  .hero h1 { font-size: clamp(40px, 10vw, 72px) !important; }
+  .main { padding: 32px 20px 60px !important; }
+  .stat-hero { padding: 12px 20px !important; }
+  .premi-grid { grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)) !important; }
+  table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+}
+
+/* ── MOBILE (≤480px) ── */
+@media (max-width: 480px) {
+  body { font-size: 14px; }
+  .hero { padding: 28px 12px 24px !important; }
+  .hero h1 { font-size: clamp(36px, 11vw, 60px) !important; }
+  .hero h2 { font-size: clamp(12px, 3.5vw, 18px) !important; letter-spacing: 3px; }
+  .main { padding: 20px 14px 50px !important; }
+  .stat-hero { padding: 10px 14px !important; }
+  .stats-hero { flex-direction: column !important; display: flex !important; border-radius: 4px !important; }
+  .stat-hero { border-right: none !important; border-bottom: 1px solid rgba(77,143,208,.2) !important; }
+  .stat-hero:last-child { border-bottom: none !important; }
+  .asta-info { flex-direction: column !important; text-align: center !important; padding: 10px 14px !important; }
+  .premi-grid { grid-template-columns: 1fr 1fr !important; }
+  .sezione-header { padding: 12px 14px !important; gap: 10px !important; }
+  .sezione-num { font-size: 26px !important; min-width: 36px !important; }
+  .toolbar { padding: 8px 12px !important; gap: 6px !important; }
+  .toolbar-title { font-size: 11px !important; }
+  table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+  .footer { flex-direction: column !important; gap: 6px !important; text-align: center !important; }
+}
 </style>
 
 <script>
