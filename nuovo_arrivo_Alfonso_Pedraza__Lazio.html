@@ -1,6 +1,5 @@
 <!DOCTYPE html>
-<html lang="it">
-<head>
+<html lang="it"><head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Alfonso Pedraza – Card Fantacalcio</title>
@@ -523,20 +522,26 @@ table.inj-tbl thead th {
 }
 
 /* Stelle */
-.stars-widget {
-  display:flex;
-  gap:6px;
-}
-.star {
+.stars-widget { display:flex; gap:6px; }
+.star-wrap {
+  position:relative;
   font-size:32px;
-  color:#333;
-  cursor:pointer;
-  transition:color .1s, transform .1s;
-  user-select:none;
   line-height:1;
+  cursor:pointer;
+  user-select:none;
+  transition:transform .1s;
 }
-.star.filled { color:#FFD700; }
-.star:hover { transform:scale(1.15); }
+.star-wrap:hover { transform:scale(1.15); }
+.star-bg { color:#333; display:block; }
+.star-fg {
+  position:absolute; left:0; top:0;
+  color:#FFD700;
+  overflow:hidden;
+  width:0%;
+  white-space:nowrap;
+  display:block;
+  transition:width .08s;
+}
 
 /* Consiglio spesa */
 .s3-spesa {
@@ -574,24 +579,144 @@ table.inj-tbl thead th {
 ::-webkit-scrollbar-track { background:#111; }
 ::-webkit-scrollbar-thumb { background:#333; border-radius:2px; }
 
+/* ══════════════════════════════════════════════
+   MOBILE VIEW – layout alternativo ≤900px
+══════════════════════════════════════════════ */
+.mobile-view {
+  display: none;
+  width: 100%;
+  max-width: 500px;
+  margin: 0 auto;
+  background: #0a0a0a;
+  border-radius: 16px;
+  overflow: hidden;
+  font-family: Arial, sans-serif;
+}
+.mv-hero {
+  position: relative;
+  width: 100%;
+  background: #0a0a0a;
+}
+.mv-hero img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+.mv-hero-overlay {
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  background: linear-gradient(transparent, rgba(0,0,0,.95));
+  padding: 40px 16px 14px;
+}
+.mv-name {
+  font-size: 26px;
+  font-weight: 900;
+  color: #fff;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  line-height: 1.1;
+}
+.mv-meta-line {
+  font-size: 12px;
+  color: #b0ff00;
+  font-weight: 700;
+  margin-top: 4px;
+  letter-spacing: 1px;
+}
+.mv-badge {
+  position: absolute;
+  top: 12px; right: 12px;
+  background: #b0ff00;
+  color: #000;
+  font-size: 9px;
+  font-weight: 900;
+  letter-spacing: 2px;
+  padding: 4px 10px;
+  border-radius: 4px;
+  text-transform: uppercase;
+}
+.mv-tabs {
+  display: flex;
+  background: #111;
+  border-bottom: 1px solid #1e1e1e;
+}
+.mv-tab {
+  flex: 1;
+  background: none;
+  border: none;
+  color: #fff;
+  font-size: 12px;
+  font-weight: 700;
+  padding: 11px 4px;
+  cursor: pointer;
+  border-bottom: 3px solid transparent;
+  transition: .15s;
+  letter-spacing: .4px;
+}
+.mv-tab.active { color: #b0ff00; border-bottom-color: #b0ff00; }
+.mv-slide { display: none; padding: 14px 14px 20px; flex-direction: column; gap: 10px; }
+.mv-slide.active { display: flex; }
+.mv-section-title {
+  font-size: 9.5px;
+  font-weight: 800;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: #b0ff00;
+  padding-bottom: 5px;
+  border-bottom: 1px solid #1e1e1e;
+  margin-bottom: 2px;
+  margin-top: 6px;
+}
+.mv-section-title:first-child { margin-top: 0; }
+/* Stats rows – slide 1 */
+.mv-stat-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 0;
+  border-bottom: 1px solid #141414;
+}
+.mv-stat-row:last-child { border-bottom: none; }
+.mv-stat-icon { font-size: 16px; width: 26px; text-align: center; flex-shrink: 0; }
+.mv-stat-label { flex: 1; font-size: 12px; color: #fff; opacity: .7; }
+.mv-stat-val { font-size: 13px; font-weight: 700; color: #fff; text-align: right; }
+.mv-stat-val.hl { color: #b0ff00; }
+/* Tables – slide 2 */
+.mv-tbl-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; border-radius: 6px; background: #0f0f0f; }
+.mv-tbl { width: 100%; border-collapse: collapse; font-size: 12px; min-width: 280px; }
+.mv-tbl th { color: #fff; font-size: 9.5px; letter-spacing: .7px; text-transform: uppercase; padding: 7px 8px 5px; text-align: left; border-bottom: 1px solid #1c1c1c; font-weight: 700; white-space: nowrap; }
+.mv-tbl td { padding: 6px 8px; color: #fff; border-bottom: 1px solid #111; vertical-align: middle; }
+.mv-tbl tr:last-child td { border-bottom: none; }
+.mv-tbl .hl { color: #b0ff00; font-weight: 800; }
+.mv-tbl .hl2 { color: #f87171; }
+.mv-tbl .c { text-align: center; }
+/* Slide 3 */
+.mv-stars { display: flex; gap: 6px; font-size: 28px; }
+.mv-star-e { color: #333; }
+.mv-star-f { color: #FFD700; }
+.mv-card-text { background: #0f0f0f; border: 1px solid #1e1e1e; border-left: 3px solid #b0ff00; border-radius: 4px; padding: 11px 13px; font-size: 13px; color: #fff; line-height: 1.6; }
+.mv-notes { background: #0f0f0f; border: 1px solid #1a1a1a; border-radius: 6px; padding: 12px 14px; font-size: 13px; color: #fff; line-height: 1.7; }
+
 /* ── RESPONSIVE SCALE ── */
 .card { transform-origin: top left; }
-@media (max-width: 768px) {
-  body { padding: 12px 0 30px; overflow-x: hidden; }
-  .nav button { padding: 6px 12px; font-size: 11px; }
-  .toolbar { flex-wrap: wrap; gap: 6px; padding: 6px 10px; border-radius: 14px; }
+@media (max-width: 900px) {
+  .card { display: none !important; }
+  .mobile-view { display: flex; flex-direction: column; }
+  body { padding: 0 0 30px; overflow-x: hidden; }
+  .nav { display: none !important; }
+  .toolbar { flex-wrap: wrap; gap: 6px; padding: 6px 10px; border-radius: 14px; margin: 8px 8px 0; }
   .toolbar button { padding: 6px 12px; font-size: 11px; }
   .toolbar .tip { display: none; }
 }
 </style>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 </head>
-<body>
+<body style="overflow-x: hidden;">
 
 <div class="nav">
-  <button class="active" onclick="go(1)">📋 Info</button>
+  <button class="" onclick="go(1)">📋 Info</button>
   <button onclick="go(2)">📊 Statistiche</button>
-  <button onclick="go(3)">⭐ Consigli Fantacalcio</button>
+  <button onclick="go(3)" class="active">⭐ Consigli Fantacalcio</button>
 </div>
 
 <!-- Toolbar -->
@@ -600,22 +725,84 @@ table.inj-tbl thead th {
   <button onclick="exportPNG(2)">💾 Slide 2</button>
   <button onclick="exportPNG(3)">💾 Slide 3</button>
   <button class="gh-btn" onclick="pubblicaGitHub()">🚀 Pubblica su GitHub</button>
+  <button id="btn-salva-locale" onclick="salvaInLocale()" style="background: rgb(26, 26, 26); color: rgb(255, 255, 255); border: 1px solid rgb(51, 51, 51); padding: 7px 14px; border-radius: 6px; cursor: pointer; font-size: 12px; font-weight: 700; letter-spacing: 0.5px; transition: 0.15s;" onmouseover="this.style.borderColor='#b0ff00';this.style.color='#b0ff00'" onmouseout="this.style.borderColor='#333';this.style.color='#fff'">💾 Salva in locale</button>
   <span class="tip">← → per navigare | Click sulla foto per cambiarla</span>
 </div>
 
 <!-- Input nascosti per upload -->
 <input type="file" id="photo-input" accept="image/*" style="display:none">
-<input type="file" id="logo-input"  accept="image/*" style="display:none">
+<input type="file" id="logo-input" accept="image/*" style="display:none">
+
+<!-- ══ MOBILE VIEW (visibile solo su ≤900px) ══════════════════════════════ -->
+<div class="mobile-view" id="mobile-view">
+  <div class="mv-hero">
+    <img id="mv-photo" src="https://img.a.transfermarkt.technology/portrait/big/356197-1620304916.jpg?lm=1" alt="">
+    <div class="mv-badge">NUOVO ARRIVO</div>
+    <div class="mv-hero-overlay">
+      <div class="mv-name" id="mv-name">Alfonso Pedraza</div>
+      <div class="mv-meta-line" id="mv-meta">ETÀ: 30 ANNI | RUOLO: TS | SQUADRA: VILLARREAL</div>
+    </div>
+  </div>
+  <div class="mv-tabs">
+    <button class="mv-tab active" onclick="mvGo(1)">📋 Info</button>
+    <button class="mv-tab" onclick="mvGo(2)">📊 Stats</button>
+    <button class="mv-tab" onclick="mvGo(3)">⭐ Consigli</button>
+  </div>
+  <div class="mv-slide active" id="mv-s1"><div><div class="mv-stat-row"><span class="mv-stat-icon">💰</span><span class="mv-stat-label">Valore mercato</span><span class="mv-stat-val">2,50 mln €</span></div><div class="mv-stat-row"><span class="mv-stat-icon">🔄</span><span class="mv-stat-label">Transfer</span><span class="mv-stat-val">Acquisto definitivo</span></div><div class="mv-stat-row"><span class="mv-stat-icon"><img src="https://tmssl.akamaized.net//images/flagge/tiny/157.png" style="height:16px;vertical-align:middle;margin-right:5px;border:1px solid #555"></span><span class="mv-stat-label">Nazionalità</span><span class="mv-stat-val hl">SPAGNA</span></div><div class="mv-stat-row"><span class="mv-stat-icon">👟</span><span class="mv-stat-label">Piede</span><span class="mv-stat-val">SINISTRO</span></div><div class="mv-stat-row"><span class="mv-stat-icon">📏</span><span class="mv-stat-label">Altezza</span><span class="mv-stat-val hl">1,84&nbsp;m</span></div><div class="mv-stat-row"><span class="mv-stat-icon"><img src="https://tmssl.akamaized.net//images/wappen/profil/1108_1721688046.png?lm=1721688046" style="height:20px;vertical-align:middle;margin-right:5px"></span><span class="mv-stat-label">Ultimo club</span><span class="mv-stat-val">DEPORTIVO ALAVÉS</span></div><div class="mv-stat-row"><span class="mv-stat-icon">✅</span><span class="mv-stat-label">Presenze 2025/26</span><span class="mv-stat-val">35</span></div><div class="mv-stat-row"><span class="mv-stat-icon">⚽</span><span class="mv-stat-label">Gol</span><span class="mv-stat-val">1</span></div><div class="mv-stat-row"><span class="mv-stat-icon">🎯</span><span class="mv-stat-label">Assist</span><span class="mv-stat-val">4</span></div><div class="mv-stat-row"><span class="mv-stat-icon">📝</span><span class="mv-stat-label">Scadenza</span><span class="mv-stat-val">30/06/2026</span></div><div class="mv-stat-row"><span class="mv-stat-icon">🚑</span><span class="mv-stat-label">Infortuni</span><span class="mv-stat-val">12 infortuni registrati</span></div></div><div style="margin-top: 10px; border-radius: 8px; overflow: hidden; background: rgb(242, 242, 242); max-width: 220px; align-self: center; width: 100%;"><div class="role-col" style="width: 100%; margin: 0px; border-radius: 0px; display: flex; flex-direction: column; color: rgb(34, 34, 34);">
+    <div class="role-hdr">Ruolo</div>
+    <div class="role-field" style="min-height: 160px;">
+      <svg viewBox="0 0 100 150" preserveAspectRatio="xMidYMid meet">
+        <rect x="0" y="0" width="100" height="150" fill="#1e4d8c"></rect>
+        <rect x="6" y="5" width="88" height="140" rx="2" fill="none" stroke="rgba(255,255,255,.6)" stroke-width="1"></rect>
+        <line x1="6" y1="75" x2="94" y2="75" stroke="rgba(255,255,255,.4)" stroke-width=".8"></line>
+        <circle cx="50" cy="75" r="13" fill="none" stroke="rgba(255,255,255,.4)" stroke-width=".8"></circle>
+        <circle cx="50" cy="75" r="1.5" fill="rgba(255,255,255,.4)"></circle>
+        <rect x="22" y="117" width="56" height="23" rx="1" fill="none" stroke="rgba(255,255,255,.6)" stroke-width=".9"></rect>
+        <rect x="36" y="130" width="28" height="10" rx="1" fill="none" stroke="rgba(255,255,255,.5)" stroke-width=".7"></rect>
+        <rect x="22" y="10" width="56" height="23" rx="1" fill="none" stroke="rgba(255,255,255,.6)" stroke-width=".9"></rect>
+        <rect x="36" y="10" width="28" height="10" rx="1" fill="none" stroke="rgba(255,255,255,.5)" stroke-width=".7"></rect>
+        <circle cx="22%" cy="73%" r="7" fill="white" stroke="#3b82f6" stroke-width="2.5"></circle><circle cx="22%" cy="73%" r="3.5" fill="#3b82f6"></circle>
+        <circle cx="18%" cy="23%" r="5.5" fill="#b0ff00" stroke="white" stroke-width="1.5" opacity=".85"></circle><circle cx="18%" cy="23%" r="2" fill="white" opacity=".9"></circle>
+      </svg>
+    </div>
+    <div class="role-meta">
+      <div class="rl">Ruolo naturale:</div>
+      <div class="rv" contenteditable="true">Terzino Sinistro</div>
+      <div class="rl" style="margin-top:4px">Ruoli secondari:</div>
+      <div class="rv" contenteditable="true">Ala sinistra</div>
+    </div>
+    <div class="role-legend">
+      <div class="legend-dot"><span class="dot" style="background:white;border-color:#fff"></span> Primario</div>
+      <div class="legend-dot"><span class="dot" style="background:#b0ff00"></span> Offensivo</div>
+      <div class="legend-dot"><span class="dot" style="background:#22c55e"></span> Centrocampo</div>
+      <div class="legend-dot"><span class="dot" style="background:#3b82f6"></span> Difensivo</div>
+    </div>
+  </div></div></div>
+  <div class="mv-slide" id="mv-s2"><div class="mv-section-title">Rendimento per stagione</div>
+<div class="mv-tbl-wrap"><table class="mv-tbl">
+<thead><tr><th>Anno</th><th>Squadra</th><th class="c">G</th><th class="c">⚽</th><th class="c">🎯</th></tr></thead><tbody><tr><td class="hl">25/26</td><td>Villarreal CF</td><td class="c">49</td><td class="c hl">1</td><td class="c hl">4</td></tr><tr><td class="hl">24/25</td><td>Villarreal CF</td><td class="c">40</td><td class="c hl">—</td><td class="c hl">2</td></tr><tr><td class="hl">23/24</td><td>Villarreal CF</td><td class="c">49</td><td class="c hl">1</td><td class="c hl">3</td></tr></tbody></table></div><div class="mv-section-title">Storico infortuni</div>
+<div class="mv-tbl-wrap"><table class="mv-tbl">
+<thead><tr><th>Stagione</th><th>Infortunio</th><th class="c">Gg</th></tr></thead><tbody><tr><td class="hl">24/25</td><td class="hl2">Operazione alla caviglia</td><td class="c">182 giorni</td></tr><tr><td class="hl">23/24</td><td class="hl2">Infortunio alla caviglia</td><td class="c">51 giorni</td></tr><tr><td class="hl">23/24</td><td class="hl2">Caviglia slogata</td><td class="c">68 giorni</td></tr><tr><td class="hl">22/23</td><td class="hl2">Strappo del muscolo femorale</td><td class="c">37 giorni</td></tr><tr><td class="hl">22/23</td><td class="hl2">Infortunio muscolare</td><td class="c">33 giorni</td></tr><tr><td class="hl">20/21</td><td class="hl2">Infortunio muscolare</td><td class="c">25 giorni</td></tr><tr><td class="hl">19/20</td><td class="hl2">Problemi al tendine d'Achille</td><td class="c">33 giorni</td></tr><tr><td class="hl">19/20</td><td class="hl2">Infortunio muscolare</td><td class="c">52 giorni</td></tr><tr><td class="hl">19/20</td><td class="hl2">Infortunio al ginocchio</td><td class="c">22 giorni</td></tr><tr><td class="hl">19/20</td><td class="hl2">Problemi al tallone</td><td class="c">1 giorni</td></tr><tr><td class="hl">17/18</td><td class="hl2">Infortunio alla coscia</td><td class="c">15 giorni</td></tr><tr><td class="hl">17/18</td><td class="hl2">Caviglia slogata</td><td class="c">6 giorni</td></tr></tbody></table></div></div>
+  <div class="mv-slide" id="mv-s3">
+<div class="mv-section-title">Appetibilità al Fantacalcio</div><div class="mv-stars"><span class="mv-star-f">★</span><span class="mv-star-f">★</span><span class="mv-star-e">★</span><span class="mv-star-e">★</span><span class="mv-star-e">★</span></div>
+<div class="mv-section-title">Consiglio di spesa del Mister</div>
+<div class="mv-card-text">Acquisto low-cost, da prendere tra gli ultimi slot difensivi. Ideale come quarta/quinta scelta in difesa.</div>
+<div class="mv-section-title">Appunti del Mister</div>
+<div class="mv-notes">Terzino sinistro spagnolo classe 1996, arriva a parametro zero dal Villarreal. Primo acquisto dell'era Gattuso alla Lazio: il tecnico lo ha voluto espressamente per la sua duttilità e la propensione offensiva sulla fascia sinistra.
+
+In 25/26 ha totalizzato 35 presenze con 1 gol e 4 assist. Nella sua carriera al Villarreal vanta 224 presenze totali, 13 gol e 28 assist, con l'Europa League 2020/21 nel palmarès.&nbsp;&nbsp;✅ Pro: parametro zero (valorizzabile all'asta), esperienza internazionale.❌ Contro: 30 anni, concorrenza interna ancora da definire, non garantisce molti gol.
+
+Aspetta le prime amichevoli per capire il ruolo definitivo. Profilo da quinto difensore, con potenziale da quarto se parte titolare.</div></div>
+</div>
 
 <!-- ══════════════════════════════════════════════
      SLIDE 1
 ══════════════════════════════════════════════ -->
-<div id="s1" class="card active">
+<div id="s1" class="card" style="transform: scale(1); transform-origin: center top; margin-bottom: 0px;">
 
   <!-- Foto cliccabile -->
   <div class="photo-col" onclick="triggerPhotoUpload('all')">
-    <img class="player-img photo-all" src="https://img.a.transfermarkt.technology/portrait/big/356197-1620304916.jpg?lm=1" alt="Alfonso Pedraza"
-         onerror="this.src='https://img.a.transfermarkt.technology/portrait/big/default.jpg'">
+    <img class="player-img photo-all" src="https://img.a.transfermarkt.technology/portrait/big/356197-1620304916.jpg?lm=1" alt="Alfonso Pedraza" onerror="this.src='https://img.a.transfermarkt.technology/portrait/big/default.jpg'">
     <div class="photo-upload-hint">📷 Click per cambiare foto</div>
   </div>
 
@@ -656,7 +843,7 @@ table.inj-tbl thead th {
       <div class="srow">
         <span class="sic">📏</span>
         <span class="slbl">Altezza</span>
-        <span class="sval bold-xl" contenteditable="true">1,84 m</span>
+        <span class="sval bold-xl" contenteditable="true">1,84&nbsp;m</span>
       </div>
       <div class="srow">
         <span class="sic"><img src="https://tmssl.akamaized.net//images/wappen/profil/1108_1721688046.png?lm=1721688046" style="height:20px;vertical-align:middle;margin-right:5px"></span>
@@ -696,17 +883,17 @@ table.inj-tbl thead th {
     <div class="role-hdr">Ruolo</div>
     <div class="role-field">
       <svg viewBox="0 0 100 150" preserveAspectRatio="xMidYMid meet">
-        <rect x="0" y="0" width="100" height="150" fill="#1e4d8c"/>
-        <rect x="6" y="5" width="88" height="140" rx="2" fill="none" stroke="rgba(255,255,255,.6)" stroke-width="1"/>
-        <line x1="6" y1="75" x2="94" y2="75" stroke="rgba(255,255,255,.4)" stroke-width=".8"/>
-        <circle cx="50" cy="75" r="13" fill="none" stroke="rgba(255,255,255,.4)" stroke-width=".8"/>
-        <circle cx="50" cy="75" r="1.5" fill="rgba(255,255,255,.4)"/>
-        <rect x="22" y="117" width="56" height="23" rx="1" fill="none" stroke="rgba(255,255,255,.6)" stroke-width=".9"/>
-        <rect x="36" y="130" width="28" height="10" rx="1" fill="none" stroke="rgba(255,255,255,.5)" stroke-width=".7"/>
-        <rect x="22" y="10" width="56" height="23" rx="1" fill="none" stroke="rgba(255,255,255,.6)" stroke-width=".9"/>
-        <rect x="36" y="10" width="28" height="10" rx="1" fill="none" stroke="rgba(255,255,255,.5)" stroke-width=".7"/>
-        <circle cx="22%" cy="73%" r="7" fill="white" stroke="#3b82f6" stroke-width="2.5"/><circle cx="22%" cy="73%" r="3.5" fill="#3b82f6"/>
-        <circle cx="18%" cy="23%" r="5.5" fill="#b0ff00" stroke="white" stroke-width="1.5" opacity=".85"/><circle cx="18%" cy="23%" r="2" fill="white" opacity=".9"/>
+        <rect x="0" y="0" width="100" height="150" fill="#1e4d8c"></rect>
+        <rect x="6" y="5" width="88" height="140" rx="2" fill="none" stroke="rgba(255,255,255,.6)" stroke-width="1"></rect>
+        <line x1="6" y1="75" x2="94" y2="75" stroke="rgba(255,255,255,.4)" stroke-width=".8"></line>
+        <circle cx="50" cy="75" r="13" fill="none" stroke="rgba(255,255,255,.4)" stroke-width=".8"></circle>
+        <circle cx="50" cy="75" r="1.5" fill="rgba(255,255,255,.4)"></circle>
+        <rect x="22" y="117" width="56" height="23" rx="1" fill="none" stroke="rgba(255,255,255,.6)" stroke-width=".9"></rect>
+        <rect x="36" y="130" width="28" height="10" rx="1" fill="none" stroke="rgba(255,255,255,.5)" stroke-width=".7"></rect>
+        <rect x="22" y="10" width="56" height="23" rx="1" fill="none" stroke="rgba(255,255,255,.6)" stroke-width=".9"></rect>
+        <rect x="36" y="10" width="28" height="10" rx="1" fill="none" stroke="rgba(255,255,255,.5)" stroke-width=".7"></rect>
+        <circle cx="22%" cy="73%" r="7" fill="white" stroke="#3b82f6" stroke-width="2.5"></circle><circle cx="22%" cy="73%" r="3.5" fill="#3b82f6"></circle>
+        <circle cx="18%" cy="23%" r="5.5" fill="#b0ff00" stroke="white" stroke-width="1.5" opacity=".85"></circle><circle cx="18%" cy="23%" r="2" fill="white" opacity=".9"></circle>
       </svg>
     </div>
     <div class="role-meta">
@@ -728,11 +915,10 @@ table.inj-tbl thead th {
 <!-- ══════════════════════════════════════════════
      SLIDE 2 – Statistiche
 ══════════════════════════════════════════════ -->
-<div id="s2" class="card">
+<div id="s2" class="card" style="transform: scale(1); transform-origin: center top; margin-bottom: 0px;">
 
   <div class="s2-photo" onclick="triggerPhotoUpload('all')">
-    <img class="photo-all" src="https://img.a.transfermarkt.technology/portrait/big/356197-1620304916.jpg?lm=1" alt="Alfonso Pedraza"
-         onerror="this.src='https://img.a.transfermarkt.technology/portrait/big/default.jpg'">
+    <img class="photo-all" src="https://img.a.transfermarkt.technology/portrait/big/356197-1620304916.jpg?lm=1" alt="Alfonso Pedraza" onerror="this.src='https://img.a.transfermarkt.technology/portrait/big/default.jpg'">
   </div>
 
   <div class="s2-body">
@@ -1016,11 +1202,10 @@ table.inj-tbl thead th {
 <!-- ══════════════════════════════════════════════
      SLIDE 3 – Consigli Fantacalcio
 ══════════════════════════════════════════════ -->
-<div id="s3" class="card">
+<div id="s3" class="card active" style="transform: scale(1); transform-origin: center top; margin-bottom: 0px;">
 
   <div class="s3-photo" onclick="triggerPhotoUpload('all')">
-    <img class="photo-all" src="https://img.a.transfermarkt.technology/portrait/big/356197-1620304916.jpg?lm=1" alt="Alfonso Pedraza"
-         onerror="this.src='https://img.a.transfermarkt.technology/portrait/big/default.jpg'">
+    <img class="photo-all" src="https://img.a.transfermarkt.technology/portrait/big/356197-1620304916.jpg?lm=1" alt="Alfonso Pedraza" onerror="this.src='https://img.a.transfermarkt.technology/portrait/big/default.jpg'">
   </div>
 
   <div class="s3-body">
@@ -1034,25 +1219,29 @@ table.inj-tbl thead th {
     <!-- Appetibilità -->
     <div class="s3-section">
       <div class="s3-label">APPETIBILITÀ AL FANTACALCIO</div>
-      <div class="stars-widget" id="stars-widget">
-        <span class="star" data-v="1">★</span>
-        <span class="star" data-v="2">★</span>
-        <span class="star" data-v="3">★</span>
-        <span class="star" data-v="4">★</span>
-        <span class="star" data-v="5">★</span>
+      <div class="stars-widget" id="stars-widget" data-value="2">
+        <span class="star-wrap" data-v="1"><span class="star-bg">★</span><span class="star-fg" style="width: 100%;">★</span></span>
+        <span class="star-wrap" data-v="2"><span class="star-bg">★</span><span class="star-fg" style="width: 100%;">★</span></span>
+        <span class="star-wrap" data-v="3"><span class="star-bg">★</span><span class="star-fg" style="width: 0%;">★</span></span>
+        <span class="star-wrap" data-v="4"><span class="star-bg">★</span><span class="star-fg" style="width: 0%;">★</span></span>
+        <span class="star-wrap" data-v="5"><span class="star-bg">★</span><span class="star-fg" style="width: 0%;">★</span></span>
       </div>
     </div>
 
     <!-- Consiglio di spesa -->
     <div class="s3-section">
       <div class="s3-label">CONSIGLIO DI SPESA DEL MISTER</div>
-      <div class="s3-spesa" contenteditable="true">Scrivi qui il consiglio di spesa…</div>
+      <div class="s3-spesa" contenteditable="true">Acquisto low-cost, da prendere tra gli ultimi slot difensivi. Ideale come quarta/quinta scelta in difesa.</div>
     </div>
 
     <!-- Appunti -->
     <div class="s3-section s3-grow">
       <div class="s3-label">APPUNTI DEL MISTER</div>
-      <div class="s3-notes" contenteditable="true">Clicca qui per scrivere i tuoi appunti sul giocatore…</div>
+      <div class="s3-notes" contenteditable="true">Terzino sinistro spagnolo classe 1996, arriva a parametro zero dal Villarreal. Primo acquisto dell'era Gattuso alla Lazio: il tecnico lo ha voluto espressamente per la sua duttilità e la propensione offensiva sulla fascia sinistra.
+
+In 25/26 ha totalizzato 35 presenze con 1 gol e 4 assist. Nella sua carriera al Villarreal vanta 224 presenze totali, 13 gol e 28 assist, con l'Europa League 2020/21 nel palmarès.&nbsp;&nbsp;<div>✅ Pro: parametro zero (valorizzabile all'asta), esperienza internazionale.</div><div>❌ Contro: 30 anni, concorrenza interna ancora da definire, non garantisce molti gol.
+
+Aspetta le prime amichevoli per capire il ruolo definitivo. Profilo da quinto difensore, con potenziale da quarto se parte titolare.</div></div>
     </div>
 
   </div>
@@ -1060,7 +1249,7 @@ table.inj-tbl thead th {
 
 <!-- Overlay GitHub -->
 <!-- Overlay GitHub -->
-<div id="gh-overlay" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.88);z-index:999;align-items:center;justify-content:center;">
+<div id="gh-overlay" style="display: none; position: fixed; inset: 0px; background: rgba(0, 0, 0, 0.88); z-index: 999; align-items: center; justify-content: center;">
   <div style="background:#1a1a1a;border:1px solid #333;border-radius:12px;padding:28px 32px;max-width:480px;width:90%;text-align:center;font-family:Arial,sans-serif;">
     <div id="gh-view-token" style="display:none">
       <div style="font-size:26px;margin-bottom:10px">🔑</div>
@@ -1069,8 +1258,7 @@ table.inj-tbl thead th {
         Inserisci il tuo <strong style="color:#fff">Personal Access Token</strong> GitHub.<br>
         Sarà salvato solo su questo browser.
       </div>
-      <input id="gh-token-input" type="password" placeholder="ghp_xxxxxxxxxxxxxxxx"
-        style="width:100%;background:#0d0d0d;border:1px solid #333;border-radius:6px;padding:10px 12px;color:#fff;font-size:13px;font-family:monospace;margin-bottom:14px;outline:none">
+      <input id="gh-token-input" type="password" placeholder="ghp_xxxxxxxxxxxxxxxx" style="width:100%;background:#0d0d0d;border:1px solid #333;border-radius:6px;padding:10px 12px;color:#fff;font-size:13px;font-family:monospace;margin-bottom:14px;outline:none">
       <div style="display:flex;gap:10px;justify-content:center;">
         <button onclick="salvaSalvaPubblica()" style="background:#b0ff00;color:#000;border:none;padding:9px 24px;border-radius:20px;cursor:pointer;font-weight:800;font-size:12px">Salva e pubblica</button>
         <button onclick="chiudiOverlay()" style="background:#222;color:#fff;border:1px solid #333;padding:9px 20px;border-radius:20px;cursor:pointer;font-size:12px">Annulla</button>
@@ -1079,13 +1267,12 @@ table.inj-tbl thead th {
         Crea il token su GitHub → Settings → Developer settings → Personal access tokens → Contents: Read &amp; Write
       </div>
     </div>
-    <div id="gh-view-progress" style="display:none">
-      <div style="font-size:32px;margin-bottom:12px" id="gh-icon">⏳</div>
-      <div id="gh-status" style="font-size:14px;color:#fff;margin-bottom:6px">Pubblicazione in corso…</div>
+    <div id="gh-view-progress" style="display: none;">
+      <div style="font-size:32px;margin-bottom:12px" id="gh-icon">🚀</div>
+      <div id="gh-status" style="font-size: 14px; margin-bottom: 6px;">Pubblica su GitHub Pages</div>
       <div id="gh-detail" style="font-size:11px;color:#fff;margin-bottom:18px"></div>
       <div id="gh-link-wrap" style="display:none;margin-bottom:14px">
-        <a id="gh-link" href="#" target="_blank"
-           style="color:#b0ff00;font-size:12px;text-decoration:none;border:1px solid #b0ff00;padding:6px 16px;border-radius:16px">
+        <a id="gh-link" href="#" target="_blank" style="color:#b0ff00;font-size:12px;text-decoration:none;border:1px solid #b0ff00;padding:6px 16px;border-radius:16px">
           🌐 Apri su GitHub Pages
         </a>
       </div>
@@ -1377,22 +1564,151 @@ function addInjRow() {
   tbody.appendChild(tr);
 }
 
-// ── Stelle Appetibilità ──────────────────────
+// ── Stelle Appetibilità (con mezze stelle) ───
 (function() {
-  let starsValue = 0;
   const widget = document.getElementById('stars-widget');
   if (!widget) return;
-  const stars = widget.querySelectorAll('.star');
+  let starsValue = parseFloat(widget.dataset.value) || 0;
+  const wraps = widget.querySelectorAll('.star-wrap');
+
   function render(v) {
-    stars.forEach(s => s.classList.toggle('filled', parseInt(s.dataset.v) <= v));
+    wraps.forEach(w => {
+      const wv = parseInt(w.dataset.v);
+      const fg = w.querySelector('.star-fg');
+      if (v >= wv)          fg.style.width = '100%';
+      else if (v >= wv-0.5) fg.style.width = '50%';
+      else                  fg.style.width = '0%';
+    });
+    widget.dataset.value = v;
   }
-  stars.forEach(s => {
-    s.addEventListener('mouseover', () => render(parseInt(s.dataset.v)));
-    s.addEventListener('mouseout',  () => render(starsValue));
-    s.addEventListener('click', () => { starsValue = parseInt(s.dataset.v); render(starsValue); });
+
+  wraps.forEach(w => {
+    w.addEventListener('mousemove', e => {
+      const rect = w.getBoundingClientRect();
+      const half = (e.clientX - rect.left) < rect.width / 2;
+      render(half ? parseInt(w.dataset.v) - 0.5 : parseInt(w.dataset.v));
+    });
+    w.addEventListener('mouseleave', () => render(starsValue));
+    w.addEventListener('click', e => {
+      const rect = w.getBoundingClientRect();
+      const half = (e.clientX - rect.left) < rect.width / 2;
+      starsValue = half ? parseInt(w.dataset.v) - 0.5 : parseInt(w.dataset.v);
+      render(starsValue);
+    });
   });
+
   render(starsValue);
 })();
+
+// ── Mobile View ──────────────────────────────
+function mvGo(n) {
+  document.querySelectorAll('.mv-tab').forEach((t,i) => t.classList.toggle('active', i===n-1));
+  document.querySelectorAll('.mv-slide').forEach((s,i) => s.classList.toggle('active', i===n-1));
+}
+
+function mvBuildS1() {
+  const container = document.getElementById('mv-s1');
+  container.innerHTML = '';
+  // Stats list
+  const statsDiv = document.createElement('div');
+  document.querySelectorAll('#s1 .srow').forEach(row => {
+    const iconEl = row.querySelector('.sic');
+    const icon   = iconEl ? iconEl.innerHTML : '';
+    const lbl    = row.querySelector('.slbl')?.textContent.trim() || '';
+    const val    = row.querySelector('.sval');
+    const valTxt = val?.textContent.trim() || '';
+    const cls    = val?.classList.contains('bold-xl') ? ' hl' : '';
+    const d = document.createElement('div');
+    d.className = 'mv-stat-row';
+    d.innerHTML = `<span class="mv-stat-icon">${icon}</span><span class="mv-stat-label">${lbl}</span><span class="mv-stat-val${cls}">${valTxt}</span>`;
+    statsDiv.appendChild(d);
+  });
+  container.appendChild(statsDiv);
+  // Campetto ruoli – clona il role-col dalla card desktop
+  const roleCol = document.querySelector('#s1 .role-col');
+  if (roleCol) {
+    const wrapper = document.createElement('div');
+    wrapper.style.cssText = 'margin-top:10px;border-radius:8px;overflow:hidden;background:#f2f2f2;max-width:220px;align-self:center;width:100%';
+    const clone = roleCol.cloneNode(true);
+    clone.style.cssText = 'width:100%;margin:0;border-radius:0;display:flex;flex-direction:column;color:#222';
+    // Rendi la role-field più alta su mobile
+    const rf = clone.querySelector('.role-field');
+    if (rf) rf.style.minHeight = '160px';
+    wrapper.appendChild(clone);
+    container.appendChild(wrapper);
+  }
+}
+
+function mvBuildS2() {
+  let html = `<div class="mv-section-title">Rendimento per stagione</div>
+<div class="mv-tbl-wrap"><table class="mv-tbl">
+<thead><tr><th>Anno</th><th>Squadra</th><th class="c">G</th><th class="c">⚽</th><th class="c">🎯</th></tr></thead><tbody>`;
+  document.querySelectorAll('#last2-body .career-row').forEach(tr => {
+    const cells = tr.querySelectorAll('td');
+    const anno  = cells[0]?.textContent.trim() || '—';
+    const club  = tr.querySelector('.career-club span')?.textContent.trim() || cells[1]?.textContent.trim() || '—';
+    const g     = cells[3]?.textContent.trim() || '—';
+    const gol   = cells[4]?.textContent.trim() || '—';
+    const ast   = cells[5]?.textContent.trim() || '—';
+    html += `<tr><td class="hl">${anno}</td><td>${club}</td><td class="c">${g}</td><td class="c hl">${gol}</td><td class="c hl">${ast}</td></tr>`;
+  });
+  html += `</tbody></table></div>`;
+  html += `<div class="mv-section-title">Storico infortuni</div>
+<div class="mv-tbl-wrap"><table class="mv-tbl">
+<thead><tr><th>Stagione</th><th>Infortunio</th><th class="c">Gg</th></tr></thead><tbody>`;
+  document.querySelectorAll('#inj-body .inj-row').forEach(tr => {
+    const cells = tr.querySelectorAll('td');
+    const stz = cells[0]?.textContent.trim() || '—';
+    const inj = cells[1]?.textContent.trim() || '—';
+    const gg  = cells[4]?.textContent.trim() || '—';
+    html += `<tr><td class="hl">${stz}</td><td class="hl2">${inj}</td><td class="c">${gg}</td></tr>`;
+  });
+  html += `</tbody></table></div>`;
+  document.getElementById('mv-s2').innerHTML = html;
+}
+
+function mvBuildS3() {
+  const v = parseFloat(document.getElementById('stars-widget')?.dataset.value || '0');
+  let stars = '<div class="mv-stars">';
+  for (let i = 1; i <= 5; i++) {
+    if (v >= i)        stars += `<span class="mv-star-f">★</span>`;
+    else if (v >= i-0.5) stars += `<span style="background:linear-gradient(90deg,#FFD700 50%,#333 50%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;font-size:28px">★</span>`;
+    else               stars += `<span class="mv-star-e">★</span>`;
+  }
+  stars += '</div>';
+  const spesa = document.querySelector('.s3-spesa')?.textContent.trim() || '—';
+  const notes = document.querySelector('.s3-notes')?.textContent.trim() || '—';
+  document.getElementById('mv-s3').innerHTML = `
+<div class="mv-section-title">Appetibilità al Fantacalcio</div>${stars}
+<div class="mv-section-title">Consiglio di spesa del Mister</div>
+<div class="mv-card-text">${spesa}</div>
+<div class="mv-section-title">Appunti del Mister</div>
+<div class="mv-notes">${notes}</div>`;
+}
+
+function mvSync() {
+  const name = document.querySelector('#s1 .player-name')?.textContent.trim() || '';
+  document.getElementById('mv-name').textContent = name;
+  const subRow = document.querySelector('#s1 .sub-row');
+  if (subRow) {
+    const meta = subRow.textContent.replace(/\s+/g,' ').trim();
+    document.getElementById('mv-meta').textContent = meta;
+  }
+  const imgSrc = document.querySelector('.player-img')?.src;
+  if (imgSrc) document.getElementById('mv-photo').src = imgSrc;
+  mvBuildS1();
+  mvBuildS2();
+  mvBuildS3();
+}
+
+window.addEventListener('load', mvSync);
+setTimeout(mvSync, 400);
+document.querySelectorAll('#s1, #s2, #s3').forEach(slide => slide.addEventListener('input', mvSync));
+document.getElementById('photo-input').addEventListener('change', () => setTimeout(() => {
+  const src = document.querySelector('.player-img')?.src;
+  if (src) document.getElementById('mv-photo').src = src;
+}, 100));
+document.getElementById('stars-widget').addEventListener('click', () => setTimeout(mvBuildS3, 50));
 
 // ── Scala le card su mobile ──
 function scaleCards() {
@@ -1413,6 +1729,42 @@ function scaleCards() {
 }
 window.addEventListener('resize', scaleCards);
 scaleCards();
+
+// ── Salva in locale ──────────────────────────
+async function salvaInLocale() {
+  const html = '<!DOCTYPE html>\n' + document.documentElement.outerHTML;
+  const blob = new Blob([html], {type: 'text/html'});
+  const fname = location.pathname.split('/').pop() || document.title.replace(/[^a-z0-9_\-]/gi,'_') + '.html';
+  try {
+    if (window.showSaveFilePicker) {
+      const handle = await window.showSaveFilePicker({
+        suggestedName: fname,
+        types: [{description:'HTML', accept:{'text/html':['.html']}}]
+      });
+      const w = await handle.createWritable();
+      await w.write(blob);
+      await w.close();
+      const btn = document.getElementById('btn-salva-locale');
+      if (btn) { const orig = btn.textContent; btn.textContent = '✅ Salvato!'; setTimeout(()=>btn.textContent=orig,2000); }
+    } else { throw new Error('no picker'); }
+  } catch(e) {
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = fname;
+    a.click();
+  }
+}
+
 </script>
-</body>
-</html>
+
+<script>
+<script>if(location.protocol!=='file:'){
+  document.querySelectorAll('button,a').forEach(function(el){
+    var t=el.textContent||''; var id=el.id||''; var cl=el.className||''; var oc=el.getAttribute('onclick')||'';
+    if(t.toLowerCase().includes('github')||id.toLowerCase().includes('github')||cl.includes('gh-btn')||oc.toLowerCase().includes('github')){
+      el.style.display='none';
+    }
+  });
+}
+</script>
+</body></html>
