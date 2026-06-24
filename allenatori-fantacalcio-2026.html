@@ -316,7 +316,7 @@ body {
 
 <!-- TOOLBAR -->
 <div class="toolbar">
-  <h2>⚽ Fantacalcio 2026-27 — Coach Card Editor</h2>
+  <h2>⚽ Fantacalcio 2026-27</h2>
   <span>Clicca su qualsiasi elemento per modificarlo</span>
   <button class="btn btn-add-note" id="btn-add-note">+ Aggiungi nota</button>
   <button class="btn btn-github" id="btn-github">📤 Su GitHub</button>
@@ -2431,8 +2431,10 @@ function loadFromStorage() {
       });
     }
     for (let i = 0; i < 20; i++) {
-      coachImages[i] = localStorage.getItem(`fanta-coach-${i}`) || null;
-      logoImages[i]  = localStorage.getItem(`fanta-logo-${i}`)  || null;
+      const sc = localStorage.getItem(`fanta-coach-${i}`);
+      if (sc) coachImages[i] = sc;
+      const sl = localStorage.getItem(`fanta-logo-${i}`);
+      if (sl) logoImages[i] = sl;
     }
   } catch(e) { /* dati corrotti, usa defaults */ }
 }
