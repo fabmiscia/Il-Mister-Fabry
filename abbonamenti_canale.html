@@ -973,6 +973,7 @@ async function salvaInLocale() {
 
 <script>if(location.protocol!=='file:'){var b=document.getElementById('btn-salva-locale');if(b)b.style.display='none';}</script>
 
+<script>
 if(location.protocol!=='file:'){
   document.querySelectorAll('button,a').forEach(function(el){
     var t=el.textContent||''; var id=el.id||''; var cl=el.className||''; var oc=el.getAttribute('onclick')||'';
@@ -981,5 +982,6 @@ if(location.protocol!=='file:'){
     }
   });
 }
+</script>
 </body>
 </html>
