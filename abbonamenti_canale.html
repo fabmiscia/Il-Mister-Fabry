@@ -464,7 +464,7 @@ body {
 /* ── TABLET (≤768px) ── */
 @media (max-width: 768px) {
   body { padding: 12px 12px 24px; gap: 10px; }
-  .slide { overflow: visible; }
+  .slide { overflow: hidden; }
   #index { padding: 20px 16px 16px; }
   .plans-grid { grid-template-columns: 1fr 1fr !important; gap: 10px; }
   .col-photo { width: 200px !important; min-width: 200px !important; }
@@ -476,7 +476,7 @@ body {
 /* ── MOBILE (≤480px) ── */
 @media (max-width: 480px) {
   body { font-size: 14px; padding: 8px 8px 20px; gap: 8px; }
-  .slide { overflow: visible; }
+  .slide { overflow: hidden; }
   #index { padding: 16px 12px !important; }
   .index-header { flex-wrap: wrap !important; gap: 8px !important; }
   .index-sub { margin-left: 0 !important; font-size: 9px; }
@@ -908,12 +908,20 @@ async function salvaInLocale() {
 
 // ── Scale slides per mobile/tablet ───────────
 function scaleSlide() {
-  var vw = window.innerWidth - 32;
+  var vw = window.innerWidth;
   var scale = Math.min(1, vw / 1280);
   document.querySelectorAll('.slide').forEach(function(slide) {
-    slide.style.transform = scale < 1 ? 'scale(' + scale + ')' : '';
-    slide.style.transformOrigin = 'top center';
-    slide.style.marginBottom = scale < 1 ? Math.round(720 * (scale - 1)) + 'px' : '';
+    if (scale < 1) {
+      slide.style.transform = 'scale(' + scale + ')';
+      slide.style.transformOrigin = 'top left';
+      slide.style.marginBottom = Math.round(720 * (scale - 1)) + 'px';
+      slide.style.marginRight = Math.round(1280 * (scale - 1)) + 'px';
+    } else {
+      slide.style.transform = '';
+      slide.style.transformOrigin = '';
+      slide.style.marginBottom = '';
+      slide.style.marginRight = '';
+    }
   });
   document.body.style.overflowX = 'hidden';
 }
