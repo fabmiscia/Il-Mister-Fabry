@@ -894,6 +894,15 @@ async function salvaInLocale() {
 </script>
 
 <script>if(location.protocol!=='file:'){var b=document.getElementById('btn-salva-locale');if(b)b.style.display='none';}</script>
+
+if(location.protocol!=='file:'){
+  document.querySelectorAll('button,a').forEach(function(el){
+    var t=el.textContent||''; var id=el.id||''; var cl=el.className||''; var oc=el.getAttribute('onclick')||'';
+    if(t.toLowerCase().includes('github')||id.toLowerCase().includes('github')||cl.includes('gh-btn')||oc.toLowerCase().includes('github')){
+      el.style.display='none';
+    }
+  });
+}
 </body>
 </html>
 
