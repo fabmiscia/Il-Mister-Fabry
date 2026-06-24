@@ -467,12 +467,12 @@ body {
   .slide { width: 100% !important; height: auto !important; overflow: visible !important; min-height: unset !important; }
   #index { padding: 20px 16px 16px; }
   .plans-grid { grid-template-columns: 1fr 1fr !important; gap: 10px; }
-  .col-photo { width: 240px !important; min-width: 240px !important; height: auto !important; min-height: 420px !important; }
+  .col-photo { width: 240px !important; min-width: 240px !important; height: 420px !important; flex-shrink: 0; }
   .col-photo img { object-position: center top !important; }
   .mister-name { font-size: clamp(24px, 4vw, 38px) !important; }
   .benefit-item { font-size: 14px !important; }
   .benefits-grid { gap: 8px 12px !important; }
-  .col-content { padding: 20px 20px !important; }
+  .col-content { padding: 20px !important; flex: 1; min-width: 0; }
 }
 
 /* ── MOBILE (≤480px) ── */
@@ -822,6 +822,13 @@ async function exportPNG() {
   const btn = document.querySelector('.png-btn');
   btn.textContent = '⏳ Generando...';
   btn.disabled = true;
+  // Forza 1280×720 per cattura corretta
+  const savedStyle = active.style.cssText;
+  active.style.cssText = 'display:flex;flex-direction:row;width:1280px;height:720px;overflow:hidden;';
+  const colPhoto = active.querySelector('.col-photo');
+  const savedPhotoStyle = colPhoto ? colPhoto.style.cssText : '';
+  if (colPhoto) colPhoto.style.cssText = 'width:380px;min-width:380px;height:720px;position:relative;overflow:hidden;flex-shrink:0;';
+  await new Promise(r => setTimeout(r, 50));
   try {
     const canvas = await html2canvas(active, {
       width: 1280, height: 720,
@@ -837,6 +844,8 @@ async function exportPNG() {
   } catch(e) {
     alert('Errore export: ' + e.message);
   }
+  active.style.cssText = savedStyle;
+  if (colPhoto) colPhoto.style.cssText = savedPhotoStyle;
   btn.textContent = '🖼 Esporta PNG';
   btn.disabled = false;
 }
