@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Classic Avanzato — Il Mister Fabry</title>
+<script>
+(function(){
+  if(location.protocol==='file:') return;
+  var HASH='57a910719dbe1def6e5e374e21698568a6d2725ed80248b21661df6e48eac9f5';
+  var KEY='spogliatoio_token';
+  if(localStorage.getItem(KEY)!==HASH){ window.location.replace('index.html'); }
+})();
+</script>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+body{background:radial-gradient(ellipse at top left,#0a1a4e 0%,#060d28 50%,#030618 100%);min-height:100vh;font-family:'Inter',sans-serif;color:#fff;overflow-x:hidden;padding-bottom:60px;}
+.toolbar{display:flex;align-items:center;gap:10px;flex-wrap:wrap;padding:10px 24px;background:rgba(0,0,0,.5);border-bottom:1px solid rgba(255,255,255,.08);position:sticky;top:0;z-index:100;backdrop-filter:blur(8px);}
+.toolbar-title{font-family:'Oswald',sans-serif;font-size:13px;letter-spacing:2.5px;color:#60a5fa;flex:1;white-space:nowrap;}
+.tb-btn{background:rgba(255,255,255,.08);color:#fff;border:1px solid rgba(255,255,255,.15);padding:6px 14px;border-radius:6px;cursor:pointer;font-size:11px;font-weight:600;letter-spacing:.5px;transition:.15s;}
+.tb-btn:hover{background:rgba(255,255,255,.15);}
+.tb-btn.gh{background:rgba(96,165,250,.12);border-color:rgba(96,165,250,.4);color:#60a5fa;}
+.tb-btn.gh:hover{background:rgba(96,165,250,.25);}
+.back-btn{background:none;border:none;color:rgba(255,255,255,.4);cursor:pointer;font-size:11px;letter-spacing:1px;display:flex;align-items:center;gap:5px;padding:0;transition:.15s;}
+.back-btn:hover{color:#fff;}
+.page{max-width:820px;margin:0 auto;padding:40px 20px;}
+.level-badge{display:inline-flex;align-items:center;gap:6px;background:rgba(96,165,250,.12);border:1px solid rgba(96,165,250,.3);border-radius:20px;padding:4px 12px;font-size:10px;font-weight:700;letter-spacing:2px;color:#60a5fa;text-transform:uppercase;margin-bottom:20px;}
+.progress-wrap{margin-bottom:36px;}
+.progress-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;}
+.progress-label{font-size:11px;letter-spacing:2px;color:rgba(255,255,255,.4);text-transform:uppercase;}
+.progress-counter{font-family:'Oswald',sans-serif;font-size:13px;color:#60a5fa;letter-spacing:1px;}
+.progress-bar-wrap{height:3px;background:rgba(255,255,255,.08);border-radius:2px;overflow:hidden;}
+.progress-bar{height:100%;background:linear-gradient(90deg,#3b82f6,#60a5fa);border-radius:2px;transition:width .4s ease;}
+.lesson{display:none;}.lesson.active{display:block;}
+.lesson-num{font-size:10px;letter-spacing:3px;color:#60a5fa;text-transform:uppercase;font-weight:600;display:block;margin-bottom:10px;}
+.lesson-title{font-family:'Oswald',sans-serif;font-size:clamp(26px,5vw,44px);font-weight:700;color:#fff;line-height:1.1;margin-bottom:28px;outline:none;cursor:text;}
+.lesson-title:focus{border-bottom:2px solid rgba(96,165,250,.3);}
+.intro-box{background:rgba(96,165,250,.08);border:1px solid rgba(96,165,250,.2);border-radius:12px;padding:20px 24px;margin-bottom:28px;font-size:15px;line-height:1.75;color:rgba(255,255,255,.85);outline:none;cursor:text;}
+.intro-box:focus{border-color:rgba(96,165,250,.5);}
+.lesson-section{margin-bottom:28px;}
+.section-label{font-size:10px;letter-spacing:2.5px;color:rgba(255,255,255,.35);text-transform:uppercase;margin-bottom:12px;font-weight:600;}
+.key-points{list-style:none;display:flex;flex-direction:column;gap:10px;}
+.key-points li{display:flex;align-items:flex-start;gap:12px;font-size:14px;line-height:1.6;color:rgba(255,255,255,.8);}
+.key-points li::before{content:'';width:6px;height:6px;border-radius:50%;background:#3b82f6;flex-shrink:0;margin-top:8px;}
+.key-points li span{outline:none;cursor:text;flex:1;}
+.key-points li span:focus{outline:1px solid rgba(255,255,255,.1);border-radius:4px;padding:2px 4px;}
+.tip-box{background:linear-gradient(135deg,rgba(96,165,250,.06),rgba(59,130,246,.06));border:1px solid rgba(96,165,250,.25);border-radius:12px;padding:20px 24px;margin:28px 0;}
+.tip-label{font-family:'Oswald',sans-serif;font-size:11px;letter-spacing:2px;color:#60a5fa;text-transform:uppercase;display:block;margin-bottom:8px;}
+.tip-text{font-size:14px;line-height:1.75;color:rgba(255,255,255,.85);font-style:italic;outline:none;cursor:text;}
+.warn-box{background:rgba(239,68,68,.06);border:1px solid rgba(239,68,68,.2);border-radius:12px;padding:20px 24px;margin:28px 0;}
+.warn-label{font-family:'Oswald',sans-serif;font-size:11px;letter-spacing:2px;color:#f87171;text-transform:uppercase;display:block;margin-bottom:8px;}
+.warn-text{font-size:14px;line-height:1.75;color:rgba(255,255,255,.8);outline:none;cursor:text;}
+.stat-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-bottom:8px;}
+.stat-card{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:10px;padding:14px 16px;}
+.stat-card .stat-val{font-family:'Oswald',sans-serif;font-size:28px;font-weight:700;color:#60a5fa;line-height:1;}
+.stat-card .stat-lbl{font-size:11px;color:rgba(255,255,255,.45);margin-top:4px;outline:none;cursor:text;}
+.stat-card .stat-desc{font-size:12px;color:rgba(255,255,255,.6);margin-top:6px;line-height:1.5;outline:none;cursor:text;}
+.divider{height:1px;background:rgba(255,255,255,.06);margin:28px 0;}
+.nav-row{display:flex;justify-content:space-between;align-items:center;margin-top:48px;gap:12px;}
+.nav-btn{display:flex;align-items:center;gap:8px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);color:#fff;border-radius:10px;padding:12px 20px;cursor:pointer;font-family:'Oswald',sans-serif;font-size:13px;font-weight:600;letter-spacing:1px;transition:.15s;}
+.nav-btn:hover{background:rgba(255,255,255,.12);}
+.nav-btn.next{background:rgba(59,130,246,.12);border-color:rgba(59,130,246,.3);color:#93c5fd;margin-left:auto;}
+.nav-btn.next:hover{background:rgba(59,130,246,.22);}
+.nav-btn.prev{margin-right:auto;}
+.nav-btn:disabled{opacity:.25;cursor:not-allowed;pointer-events:none;}
+.nav-dot-wrap{display:flex;gap:6px;align-items:center;}
+.nav-dot{width:7px;height:7px;border-radius:50%;background:rgba(255,255,255,.15);cursor:pointer;transition:.15s;}
+.nav-dot.done{background:rgba(59,130,246,.5);}
+.nav-dot.active{background:#3b82f6;width:20px;border-radius:4px;}
+.finale-hero{text-align:center;padding:32px 0 20px;}
+.finale-emoji{font-size:56px;display:block;margin-bottom:16px;}
+.finale-title{font-family:'Oswald',sans-serif;font-size:clamp(24px,5vw,38px);font-weight:700;color:#fff;margin-bottom:12px;outline:none;cursor:text;}
+.finale-sub{font-size:14px;color:rgba(255,255,255,.55);line-height:1.7;max-width:520px;margin:0 auto;outline:none;cursor:text;}
+@media(max-width:768px){body{overflow-x:hidden;}.toolbar{padding:8px 14px;gap:6px;}.toolbar-title{font-size:11px;}.tb-btn{padding:5px 10px;font-size:10px;}.page{padding:24px 14px;}.stat-grid{grid-template-columns:1fr;}}
+@media(max-width:480px){body{overflow-x:hidden;}.toolbar{padding:6px 10px;gap:4px;}.tb-btn{padding:4px 8px;font-size:9px;}.page{padding:16px 12px;}.nav-btn{padding:10px 14px;font-size:12px;}.nav-dot-wrap{display:none;}}
+</style>
+</head>
+<body>
+<div class="toolbar">
+  <button class="back-btn" onclick="window.location.href='academy.html'">← Academy</button>
+  <span class="toolbar-title">⚡ CLASSIC AVANZATO</span>
+  <button id="btn-salva-locale" class="tb-btn" onclick="salvaInLocale()">💾 Salva</button>
+  <button id="btn-gh" class="tb-btn gh" onclick="pubblicaGitHub()">🚀 Pubblica</button>
+</div>
+<div class="page">
+  <div class="level-badge">⚡ Livello Avanzato</div>
+  <div class="progress-wrap">
+    <div class="progress-top">
+      <span class="progress-label">Il tuo percorso</span>
+      <span class="progress-counter" id="prog-counter">Lezione 1 di 10</span>
+    </div>
+    <div class="progress-bar-wrap"><div class="progress-bar" id="prog-bar" style="width:10%"></div></div>
+  </div>
+
+  <!-- L1 -->
+  <div class="lesson active" id="l1">
+    <span class="lesson-num">Lezione 1</span>
+    <h1 class="lesson-title" contenteditable="true">Oltre il Voto Medio: le statistiche che contano davvero</h1>
+    <div class="intro-box" contenteditable="true">Chi gioca al Fantacalcio da anni sa che il voto medio da solo dice poco. Un giocatore con 6.2 di media può valere il doppio di uno con 6.5 se ha il profilo bonus giusto. Impara a leggere i numeri che fanno davvero la differenza.</div>
+    <div class="stat-grid">
+      <div class="stat-card"><div class="stat-val">+3</div><div class="stat-lbl" contenteditable="true">Bonus Gol</div><div class="stat-desc" contenteditable="true">Ogni gol vale 3 punti. Un attaccante da 15 gol fa +45 punti bonus in una stagione — quasi 1.2 a giornata solo dai gol.</div></div>
+      <div class="stat-card"><div class="stat-val">+1</div><div class="stat-lbl" contenteditable="true">Bonus Assist</div><div class="stat-desc" contenteditable="true">Spesso sottovalutato. Un centrocampista da 10 assist fa +10 punti bonus. Cerca chi assist con costanza.</div></div>
+      <div class="stat-card"><div class="stat-val">-0.5</div><div class="stat-lbl" contenteditable="true">Malus Ammonizione</div><div class="stat-desc" contenteditable="true">Una ammonizione a settimana per 20 giornate = -10 punti. Un giocatore "sporco" ti costa quanto vale.</div></div>
+      <div class="stat-card"><div class="stat-val">+3</div><div class="stat-lbl" contenteditable="true">Porta Inviolata (POR)</div><div class="stat-desc" contenteditable="true">Un portiere con 12 clean sheet in stagione fa +36 punti bonus. È come avere un secondo attaccante in porta.</div></div>
+    </div>
+    <div class="divider"></div>
+    <div class="lesson-section">
+      <div class="section-label">Le metriche da guardare prima dell'asta</div>
+      <ul class="key-points">
+        <li><span contenteditable="true"><strong>Fantapunti totali stagione precedente</strong> — non il voto medio, ma i punti totali inclusi bonus. È il dato più predittivo</span></li>
+        <li><span contenteditable="true"><strong>Percentuale di titolarità</strong> — quante partite su 38 ha giocato dal primo minuto? Sotto il 70% è rischioso</span></li>
+        <li><span contenteditable="true"><strong>Gol + assist ogni 90 minuti</strong> — misura la produttività reale indipendente dal minutaggio</span></li>
+        <li><span contenteditable="true"><strong>Media ammonizioni per partita</strong> — un giocatore con 0.4+ ammonizioni a partita è un malus ambulante</span></li>
+        <li><span contenteditable="true"><strong>Contributo su calci piazzati</strong> — chi batte rigori, punizioni e corner ha più occasioni di fare bonus</span></li>
+      </ul>
+    </div>
+    <div class="tip-box">
+      <span class="tip-label">💡 Tip del Mister</span>
+      <p class="tip-text" contenteditable="true">Prima dell'asta, crea un foglio Excel con i fantapunti totali degli ultimi 2 anni per ogni giocatore che ti interessa. Chi è costante su 2 stagioni è molto più affidabile di chi ha avuto un'esplosione singola. La continuità batte il colpo di genio isolato.</p>
+    </div>
+  </div>
+
+  <!-- L2 -->
+  <div class="lesson" id="l2">
+    <span class="lesson-num">Lezione 2</span>
+    <h1 class="lesson-title" contenteditable="true">La Psicologia dell'Asta: vincere con la testa</h1>
+    <div class="intro-box" contenteditable="true">L'asta non è solo una questione di budget — è una battaglia psicologica. Chi mantiene la lucidità mentre gli altri perdono la testa ha già vinto metà della partita. Ecco le trappole mentali da evitare e le leve da usare a tuo vantaggio.</div>
+    <div class="lesson-section">
+      <div class="section-label">Le trappole cognitive più comuni</div>
+      <ul class="key-points">
+        <li><span contenteditable="true"><strong>L'effetto ancoraggio</strong> — il primo prezzo offerto condiziona tutte le offerte successive. Se qualcuno apre a 80 per un giocatore che vale 50, la percezione del valore si alza per tutti</span></li>
+        <li><span contenteditable="true"><strong>Il FOMO (paura di perdere)</strong> — "devo averlo a tutti i costi". Questa emozione ti fa pagare 30-40% in più del dovuto</span></li>
+        <li><span contenteditable="true"><strong>La rivalità personale</strong> — fare guerra a un avversario specifico ti distrae dalla strategia globale e ti fa sprecare crediti</span></li>
+        <li><span contenteditable="true"><strong>Il rimpianto anticipato</strong> — "se non lo prendo ora non trovo nessuno" è quasi sempre falso. C'è sempre un'alternativa valida</span></li>
+      </ul>
+    </div>
+    <div class="divider"></div>
+    <div class="lesson-section">
+      <div class="section-label">Le leve da usare sugli avversari</div>
+      <ul class="key-points">
+        <li><span contenteditable="true"><strong>Lancia i giocatori che non vuoi</strong> — metti all'asta i profili che sai piaceranno agli altri. Falli spendere presto e tanto</span></li>
+        <li><span contenteditable="true"><strong>Rimani in silenzio strategico</strong> — non mostrare entusiasmo per i giocatori che vuoi davvero. L'interesse attira l'attenzione e le rilancio</span></li>
+        <li><span contenteditable="true"><strong>Aspetta la coda dell'asta</strong> — gli ultimi 30-40 minuti sono i più ricchi di occasioni. Chi ha budget vince qui</span></li>
+        <li><span contenteditable="true"><strong>Conosci i budget degli avversari</strong> — tieni traccia di quanto ha speso ognuno. Chi è quasi a secco non può rilanciare</span></li>
+      </ul>
+    </div>
+    <div class="tip-box">
+      <span class="tip-label">💡 Tip del Mister</span>
+      <p class="tip-text" contenteditable="true">Definisci prima dell'asta il tetto massimo per ogni giocatore che vuoi. Scrivilo su carta. Quando arrivi a quel numero, smetti di rilanciare — qualunque cosa succeda in sala. La disciplina pre-asta vale più di qualsiasi intuizione sul momento.</p>
+    </div>
+  </div>
+
+  <!-- L3 -->
+  <div class="lesson" id="l3">
+    <span class="lesson-num">Lezione 3</span>
+    <h1 class="lesson-title" contenteditable="true">La Rosa Perfetta: costruire l'equilibrio ideale</h1>
+    <div class="intro-box" contenteditable="true">Non esiste una rosa perfetta uguale per tutti. Ma esiste un principio universale: ogni credito speso deve avere un ritorno concreto in punti. Vediamo come distribuire il budget in modo che nessuna parte della rosa sia un punto debole.</div>
+    <div class="lesson-section">
+      <div class="section-label">La distribuzione ideale del budget (500 crediti)</div>
+      <ul class="key-points">
+        <li><span contenteditable="true"><strong>Portieri (3 slot) — 5-8% del budget (~25-40 cr)</strong> — 1 titolare solido + 2 riserve da 1 cr. Non di più</span></li>
+        <li><span contenteditable="true"><strong>Difensori (8 slot) — 15-20% del budget (~75-100 cr)</strong> — 4 titolari veri + 4 riserve economiche</span></li>
+        <li><span contenteditable="true"><strong>Centrocampisti (8 slot) — 30-35% del budget (~150-175 cr)</strong> — il reparto più importante. Investi qui</span></li>
+        <li><span contenteditable="true"><strong>Attaccanti (6 slot) — 40-45% del budget (~200-225 cr)</strong> — 1 top + 2 medi affidabili + 3 riserve</span></li>
+      </ul>
+    </div>
+    <div class="divider"></div>
+    <div class="lesson-section">
+      <div class="section-label">I segnali di una rosa sbilanciata</div>
+      <ul class="key-points">
+        <li><span contenteditable="true">Hai 3 attaccanti top ma i tuoi difensori sono tutti riserve — perderai punti ogni settimana per infortuni non coperti</span></li>
+        <li><span contenteditable="true">Hai speso 80 crediti in portieri — stai sprecando budget che vale triplo sui centrocampisti</span></li>
+        <li><span contenteditable="true">Tutti i tuoi titolari sono della stessa squadra — un turno di riposo o una settimana no di quella squadra ti azzera</span></li>
+        <li><span contenteditable="true">Non hai riserve per ogni ruolo — un infortunio al portiere e devi schierare un giocatore da 0 punti</span></li>
+      </ul>
+    </div>
+    <div class="tip-box">
+      <span class="tip-label">💡 Tip del Mister</span>
+      <p class="tip-text" contenteditable="true">La regola d'oro: nessun singolo giocatore deve valere più del 30% del tuo budget totale (150 crediti su 500). Se stai per superare quel numero, fermati. Una rosa equilibrata con 11 buoni titolari batte quasi sempre una rosa con 2 fenomeni e 9 riserve.</p>
+    </div>
+  </div>
+
+  <!-- L4 -->
+  <div class="lesson" id="l4">
+    <span class="lesson-num">Lezione 4</span>
+    <h1 class="lesson-title" contenteditable="true">Il Mercato di Riparazione: la seconda asta</h1>
+    <div class="intro-box" contenteditable="true">Il mercato di gennaio è la tua seconda opportunità. Chi ha costruito bene la rosa a settembre può ignorarlo. Chi ha lacune o infortuni gravi può trasformare una stagione mediocre in una da podio. Ma ci sono regole precise per non sbagliare.</div>
+    <div class="lesson-section">
+      <div class="section-label">Quando intervenire al mercato di riparazione</div>
+      <ul class="key-points">
+        <li><span contenteditable="true"><strong>Infortunio lungo a un titolare inamovibile</strong> — se un tuo top si ferma 3+ mesi, devi sostituirlo. Non aspettare</span></li>
+        <li><span contenteditable="true"><strong>Un titolare ha perso il posto</strong> — se dopo 10 giornate gioca meno del 50%, è meglio un cambio che sperare nel recupero</span></li>
+        <li><span contenteditable="true"><strong>Sei scoperto in un ruolo</strong> — se tutte le tue riserve di un ruolo si sono infortunate, il mercato di riparazione è obbligatorio</span></li>
+        <li><span contenteditable="true"><strong>C'è un'occasione d'oro</strong> — un giocatore esploso nella prima parte di stagione che costa ancora poco perché ignorato a settembre</span></li>
+      </ul>
+    </div>
+    <div class="divider"></div>
+    <div class="lesson-section">
+      <div class="section-label">I rischi da evitare</div>
+      <ul class="key-points">
+        <li><span contenteditable="true">I top player costano il doppio a gennaio — il mercato li prezza già. Meglio puntare su profili emergenti</span></li>
+        <li><span contenteditable="true">Non comprare scommesse a gennaio — il tempo per ammortizzare un flop è troppo poco (solo 19 giornate)</span></li>
+        <li><span contenteditable="true">Non svincolare giocatori che stai ancora sperando si riprendano — la speranza non fa punti</span></li>
+        <li><span contenteditable="true">Se non hai bisogni reali, non toccare niente — il mercato di riparazione ha distrutto rose buone per cambiare il cambiabile</span></li>
+      </ul>
+    </div>
+    <div class="tip-box">
+      <span class="tip-label">💡 Tip del Mister</span>
+      <p class="tip-text" contenteditable="true">Al mercato di riparazione valgono più il minutaggio garantito e la titolarità che i bonus potenziali. In 19 giornate hai bisogno di qualcuno che giochi sempre, non di una scommessa che ogni tanto esplode. Punta sulla certezza, non sul potenziale.</p>
+    </div>
+  </div>
+
+  <!-- L5 -->
+  <div class="lesson" id="l5">
+    <span class="lesson-num">Lezione 5</span>
+    <h1 class="lesson-title" contenteditable="true">Gli Scambi: come trattare e quando accettare</h1>
+    <div class="intro-box" contenteditable="true">Gli scambi sono una delle armi più sottovalutate del Fantacalcio. Un buono scambio a novembre può cambiarti la stagione. Ma uno scambio sbagliato può distruggerla. Ecco come capire quando uno scambio conviene davvero a te.</div>
+    <div class="lesson-section">
+      <div class="section-label">Quando uno scambio è conveniente per te</div>
+      <ul class="key-points">
+        <li><span contenteditable="true"><strong>Hai un surplus in un ruolo</strong> — se hai 3 attaccanti forti ma solo 2 slot, puoi scambiarne uno con un centrocampista di cui hai bisogno</span></li>
+        <li><span contenteditable="true"><strong>Conosci il valore futuro meglio dell'avversario</strong> — sai che quel centrocampista recupererà tra 3 settimane. Il tuo avversario no. Compralo basso</span></li>
+        <li><span contenteditable="true"><strong>L'avversario è in difficoltà</strong> — chi sta perdendo vuole cambiare qualcosa. Offrire in quel momento ti dà più potere contrattuale</span></li>
+        <li><span contenteditable="true"><strong>Lo scambio bilancia la tua rosa</strong> — qualità per qualità, ma risolve una lacuna strutturale nella tua squadra</span></li>
+      </ul>
+    </div>
+    <div class="warn-box">
+      <span class="warn-label">⚠️ Segnali che lo scambio NON conviene</span>
+      <p class="warn-text" contenteditable="true">Se sei tu a proporre lo scambio con urgenza, hai già perso potere negoziale. Se l'avversario ci mette troppo a rispondere, probabilmente sta aspettando un'offerta migliore da qualcun altro. E se devi convincerti che "potrebbe essere buono", quasi sempre non lo è.</p>
+    </div>
+    <div class="tip-box">
+      <span class="tip-label">💡 Tip del Mister</span>
+      <p class="tip-text" contenteditable="true">Prima di proporre uno scambio, chiediti: "Se le posizioni fossero invertite, accetterei?" Se la risposta è no, significa che stai cercando di fregare l'avversario. Può funzionare una volta, ma distrugge la fiducia per tutta la stagione — e il Fantacalcio si gioca con le stesse persone per anni.</p>
+    </div>
+  </div>
+
+  <!-- L6 -->
+  <div class="lesson" id="l6">
+    <span class="lesson-num">Lezione 6</span>
+    <h1 class="lesson-title" contenteditable="true">Sfruttare il Calendario: le giornate d'oro</h1>
+    <div class="intro-box" contenteditable="true">Il calendario di Serie A è la tua mappa del tesoro. Ogni giornata ha squadre che affrontano avversari deboli e squadre che affrontano corazzate. Chi studia il calendario in anticipo può pianificare il capitano e le scelte di formazione con settimane di anticipo.</div>
+    <div class="lesson-section">
+      <div class="section-label">Come analizzare il calendario</div>
+      <ul class="key-points">
+        <li><span contenteditable="true"><strong>Le ultime 5 in classifica</strong> — chi gioca contro di loro nelle prossime 3 giornate ha alte probabilità di segnare</span></li>
+        <li><span contenteditable="true"><strong>I turni infrasettimanali</strong> — alcune squadre ruotano molto in Coppa Italia. Controlla chi è a riposo il giovedì</span></li>
+        <li><span contenteditable="true"><strong>Le giornate "secche"</strong> — quando una squadra forte non ha impegni europei può concentrarsi sul campionato</span></li>
+        <li><span contenteditable="true"><strong>Periodi di sosta</strong> — le settimane post-sosta sono statisticamente le peggiori per i giocatori: meno ritmo, più rischio infortuni</span></li>
+        <li><span contenteditable="true"><strong>I big match</strong> — gli scontri diretti producono meno gol in media. Evita il capitano in queste giornate</span></li>
+      </ul>
+    </div>
+    <div class="tip-box">
+      <span class="tip-label">💡 Tip del Mister</span>
+      <p class="tip-text" contenteditable="true">A inizio stagione, evidenzia sul calendario le 5 giornate migliori e le 5 peggiori per ogni tuo titolare. Pianifica il capitano sulle giornate d'oro. Questa analisi da 30 minuti può valerti 20-30 punti extra a fine stagione — spesso la differenza tra primo e secondo posto.</p>
+    </div>
+  </div>
+
+  <!-- L7 -->
+  <div class="lesson" id="l7">
+    <span class="lesson-num">Lezione 7</span>
+    <h1 class="lesson-title" contenteditable="true">Il Fantacapitano: ottimizzazione avanzata</h1>
+    <div class="intro-box" contenteditable="true">Il capitano raddoppia i punti del tuo migliore giocatore ogni settimana. Usarlo sempre sullo stesso giocatore "per abitudine" è uno degli errori più costosi che un esperto può fare. Il capitano va ottimizzato, non automatizzato.</div>
+    <div class="lesson-section">
+      <div class="section-label">Come scegliere il capitano ogni settimana</div>
+      <ul class="key-points">
+        <li><span contenteditable="true"><strong>Avversario della giornata</strong> — chi affronta la peggior difesa del campionato? Quello è il tuo candidato numero uno</span></li>
+        <li><span contenteditable="true"><strong>Momento di forma</strong> — chi ha segnato nelle ultime 3 partite è statisticamente più probabile che continui</span></li>
+        <li><span contenteditable="true"><strong>Il rigorista</strong> — se c'è un rigore in quella partita, chi lo calcia fa +3 bonus. I rigoristi vanno preferiti nelle gare tirate</span></li>
+        <li><span contenteditable="true"><strong>Casa vs trasferta</strong> — le statistiche dicono che in casa si segna il 15-20% in più. Privilegia chi gioca in casa</span></li>
+        <li><span contenteditable="true"><strong>Stanchezza da coppe</strong> — un attaccante che ha giocato 120 minuti in Champions il mercoledì rende meno la domenica</span></li>
+      </ul>
+    </div>
+    <div class="tip-box">
+      <span class="tip-label">💡 Tip del Mister</span>
+      <p class="tip-text" contenteditable="true">Crea una gerarchia di 3 possibili capitani per ogni giornata. La sera del venerdì, dopo aver visto le probabili formazioni ufficiali, scegli il definitivo. Non farlo il sabato mattina: rischi di perdere giocatori che giocano il venerdì sera. Pianifica con anticipo, decidi con le ultime informazioni disponibili.</p>
+    </div>
+  </div>
+
+  <!-- L8 -->
+  <div class="lesson" id="l8">
+    <span class="lesson-num">Lezione 8</span>
+    <h1 class="lesson-title" contenteditable="true">I Bonus Nascosti: i punti che nessuno calcola</h1>
+    <div class="intro-box" contenteditable="true">Oltre ai gol e agli assist, ci sono bonus e malus che la maggior parte dei fantallenatori ignora fino a quando non li trova nel conteggio finale. Conoscerli ti dà un vantaggio reale nella scelta dei giocatori.</div>
+    <div class="lesson-section">
+      <div class="section-label">Bonus spesso trascurati</div>
+      <ul class="key-points">
+        <li><span contenteditable="true"><strong>Rigore parato (+3)</strong> — un portiere che para un rigore vale quanto un attaccante che segna. I portieri da big match vanno rivalutati</span></li>
+        <li><span contenteditable="true"><strong>Autogol avversario</strong> — in alcune leghe viene assegnato come "gol" al giocatore che ha scatenato l'azione. Controlla il regolamento della tua lega</span></li>
+        <li><span contenteditable="true"><strong>Porta inviolata difensori (+1)</strong> — i tuoi 4 difensori in campo prendono ciascuno +1 punto per ogni clean sheet. In stagione fanno la differenza</span></li>
+        <li><span contenteditable="true"><strong>Espulsione avversaria</strong> — alcune leghe assegnano bonus a chi causa un'espulsione. Controlla le regole specifiche</span></li>
+      </ul>
+    </div>
+    <div class="divider"></div>
+    <div class="lesson-section">
+      <div class="section-label">I malus che svuotano il punteggio</div>
+      <ul class="key-points">
+        <li><span contenteditable="true"><strong>Ammonizione (-0.5)</strong> — sottovalutata. Un centrocampista con 8+ ammonizioni stagione ti costa 4+ punti solo in malus</span></li>
+        <li><span contenteditable="true"><strong>Espulsione (-1 o -2)</strong> — doppio danno: punti persi e il giocatore salta la partita successiva</span></li>
+        <li><span contenteditable="true"><strong>Gol subito dal portiere (-1 ogni gol)</strong> — un portiere di una squadra che prende 60 gol in stagione vale 60 punti in meno rispetto a uno di una difesa solida</span></li>
+        <li><span contenteditable="true"><strong>Rigore sbagliato (-3)</strong> — devastante. I "rigoristi poco affidabili" vanno tenuti sotto controllo</span></li>
+      </ul>
+    </div>
+    <div class="tip-box">
+      <span class="tip-label">💡 Tip del Mister</span>
+      <p class="tip-text" contenteditable="true">Prima dell'asta, calcola il "netto" di ogni giocatore: fantapunti totali meno tutti i malus della stagione precedente. Troverai giocatori che sembrano forti ma costano -15 punti di malus in una stagione. Non è un buon affare anche se segnano tanto.</p>
+    </div>
+  </div>
+
+  <!-- L9 -->
+  <div class="lesson" id="l9">
+    <span class="lesson-num">Lezione 9</span>
+    <h1 class="lesson-title" contenteditable="true">Gestire gli Infortuni: mosse rapide e priorità</h1>
+    <div class="intro-box" contenteditable="true">Gli infortuni sono inevitabili. La differenza tra chi vince e chi perde spesso sta in quanto velocemente e quanto bene si reagisce. Chi ha un protocollo di risposta agli infortuni perde meno punti e recupera prima.</div>
+    <div class="lesson-section">
+      <div class="section-label">Il protocollo quando si infortuna un titolare</div>
+      <ul class="key-points">
+        <li><span contenteditable="true"><strong>Capire i tempi di recupero</strong> — infortunio muscolare lieve (2-3 settimane) vs rottura legamentosa (3+ mesi) cambiano completamente la risposta</span></li>
+        <li><span contenteditable="true"><strong>Verificare le riserve disponibili</strong> — hai già qualcuno in panchina che può sostituirlo decentemente? Prima di comprare, usa quello che hai</span></li>
+        <li><span contenteditable="true"><strong>Monitorare il mercato degli svincolati</strong> — nelle prime settimane di stagione spesso ci sono giocatori svincolati di buon livello rimasti senza squadra</span></li>
+        <li><span contenteditable="true"><strong>Valutare gli scambi</strong> — se hai un surplus in un altro ruolo, è il momento di proporre uno scambio vantaggioso</span></li>
+        <li><span contenteditable="true"><strong>Non cedere al panico</strong> — non vendere il giocatore infortunato in preda all'emotività. Se è un top, aspetta la guarigione</span></li>
+      </ul>
+    </div>
+    <div class="tip-box">
+      <span class="tip-label">💡 Tip del Mister</span>
+      <p class="tip-text" contenteditable="true">Compra sempre almeno 2 riserve "usabili" per ogni ruolo, non solo per completare i 25 slot. Spendi 3-5 crediti in più per avere una riserva vera invece di un fantaposto. Quei 5 crediti extra possono valere 40-50 punti in una stagione quando il titolare si fa male.</p>
+    </div>
+  </div>
+
+  <!-- L10 -->
+  <div class="lesson" id="l10">
+    <span class="lesson-num">Lezione 10</span>
+    <div class="finale-hero">
+      <span class="finale-emoji">🏆</span>
+      <h1 class="finale-title" contenteditable="true">La Mentalità del Campione</h1>
+      <p class="finale-sub" contenteditable="true">Hai completato il Corso Classic Avanzato. Ora hai gli strumenti per vincere. Manca solo una cosa: la mentalità giusta.</p>
+    </div>
+    <div class="divider"></div>
+    <div class="lesson-section">
+      <div class="section-label">I principi del fantallenatore esperto</div>
+      <ul class="key-points">
+        <li><span contenteditable="true"><strong>Il Fantacalcio si vince in 38 giornate, non in una</strong> — non esistono settimane decisive a ottobre. La classifica si costruisce con la costanza</span></li>
+        <li><span contenteditable="true"><strong>Le informazioni valgono oro</strong> — chi segue le conferenze stampa del giovedì ha un vantaggio reale e concreto ogni settimana</span></li>
+        <li><span contenteditable="true"><strong>Adattarsi è più importante che avere ragione</strong> — il mercato cambia, gli infortuni cambiano tutto. Chi si adatta velocemente vince</span></li>
+        <li><span contenteditable="true"><strong>La fortuna esiste, ma si prepara</strong> — le rose ben costruite "attirano" la fortuna perché hanno più giocatori con più occasioni</span></li>
+        <li><span contenteditable="true"><strong>Non smettere mai di imparare</strong> — ogni stagione il Fantacalcio cambia. I campioni si evolvono, i perdenti ripetono gli stessi errori</span></li>
+      </ul>
+    </div>
+    <div class="tip-box">
+      <span class="tip-label">💡 Il Consiglio Finale del Mister</span>
+      <p class="tip-text" contenteditable="true">Il miglior investimento che puoi fare nel Fantacalcio non è sui giocatori — è su te stesso. Studia, segui i canali giusti, leggi le analisi pre-giornata. Nello Spogliatoio trovi tutto quello di cui hai bisogno. Ora che conosci le regole avanzate, non hai più scuse per non vincere.</p>
+    </div>
+  </div>
+
+  <div class="nav-row">
+    <button class="nav-btn prev" id="btn-prev" onclick="goLesson(-1)">← Precedente</button>
+    <div class="nav-dot-wrap" id="nav-dots"></div>
+    <button class="nav-btn next" id="btn-next" onclick="goLesson(1)">Successiva →</button>
+  </div>
+</div>
+
+<script>
+const TOTAL=10; let current=1;
+function goLesson(dir){const n=current+dir;if(n<1||n>TOTAL)return;document.getElementById('l'+current).classList.remove('active');current=n;document.getElementById('l'+current).classList.add('active');updateUI();window.scrollTo({top:0,behavior:'smooth'});}
+function jumpTo(n){document.getElementById('l'+current).classList.remove('active');current=n;document.getElementById('l'+current).classList.add('active');updateUI();window.scrollTo({top:0,behavior:'smooth'});}
+function updateUI(){document.getElementById('prog-counter').textContent='Lezione '+current+' di '+TOTAL;document.getElementById('prog-bar').style.width=(current/TOTAL*100)+'%';document.getElementById('btn-prev').disabled=current===1;document.getElementById('btn-next').disabled=current===TOTAL;const wrap=document.getElementById('nav-dots');wrap.innerHTML='';for(let i=1;i<=TOTAL;i++){const d=document.createElement('div');d.className='nav-dot'+(i<current?' done':'')+(i===current?' active':'');d.onclick=()=>jumpTo(i);wrap.appendChild(d);}}
+updateUI();
+async function salvaInLocale(){const html='<!DOCTYPE html>\n'+document.documentElement.outerHTML;const blob=new Blob([html],{type:'text/html'});try{if(window.showSaveFilePicker){const h=await window.showSaveFilePicker({suggestedName:'corso-classic-avanzato.html',types:[{description:'HTML',accept:{'text/html':['.html']}}]});const w=await h.createWritable();await w.write(blob);await w.close();const b=document.getElementById('btn-salva-locale');if(b){const o=b.textContent;b.textContent='✅ Salvato!';setTimeout(()=>b.textContent=o,2000);}}else throw new Error();}catch(e){const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='corso-classic-avanzato.html';a.click();}}
+async function pubblicaGitHub(){const token=localStorage.getItem('gh_token')||prompt('GitHub Token:');if(!token)return;localStorage.setItem('gh_token',token);const html='<!DOCTYPE html>\n'+document.documentElement.outerHTML;const b64=await new Promise((resolve,reject)=>{const blob=new Blob([html],{type:'text/plain'});const reader=new FileReader();reader.onloadend=()=>resolve(reader.result.split(',')[1]);reader.onerror=reject;reader.readAsDataURL(blob);});const url='https://api.github.com/repos/fabmiscia/Il-Mister-Fabry/contents/corso-classic-avanzato.html';const hdrs={'Authorization':'token '+token,'Accept':'application/vnd.github+json','Content-Type':'application/json'};const check=await fetch(url,{headers:hdrs});const sha=check.ok?(await check.json()).sha:null;const body={message:'feat: aggiorna corso classic avanzato',content:b64};if(sha)body.sha=sha;const res=await fetch(url,{method:'PUT',headers:hdrs,body:JSON.stringify(body)});if(res.ok){alert('✅ Pubblicato!');}else{alert('❌ Errore');localStorage.removeItem('gh_token');}}
+if(location.protocol!=='file:'){['btn-salva-locale','btn-gh'].forEach(function(id){var b=document.getElementById(id);if(b)b.style.display='none';});}
+</script>
+</body>
+</html>
