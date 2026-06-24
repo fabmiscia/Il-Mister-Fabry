@@ -417,20 +417,20 @@ function buildSW(container, nStars) {
   });
 }
 
-function setSW(container, val) {
+function setSW(container, val, skipGlobal) {
   container.dataset.val=val;
   container.querySelectorAll('.sw-st').forEach((st,i)=>{
     const fg=st.querySelector('.sw-fg');
     const p=i+1;
     fg.style.width=val>=p?'100%':val>=p-0.5?'50%':'0%';
   });
-  updateGlobalStars();
+  if(!skipGlobal && container.id!=='sw-global') updateGlobalStars();
 }
 
 function updateGlobalStars() {
   const ids=['sw-por-1','sw-por-2','sw-dif-1','sw-dif-2','sw-cen-1','sw-cen-2','sw-att-1','sw-att-2'];
   const avg=ids.reduce((s,id)=>s+parseFloat(document.getElementById(id).dataset.val||0),0)/ids.length;
-  setSW(document.getElementById('sw-global'), Math.round(avg*2)/2);
+  setSW(document.getElementById('sw-global'), Math.round(avg*2)/2, true);
 }
 
 function initAllSW() {
@@ -457,8 +457,9 @@ function addSlot(role, data={}) {
   const tier=data.tier||'ott';
   const tierObj=TIERS.find(t=>t.key===tier)||TIERS[2];
   const credits=data.credits||1;
+  const ph=data.photo||`data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='38' height='38' viewBox='0 0 38 38'%3E%3Crect width='38' height='38' rx='19' fill='%231a1a3e'/%3E%3Ccircle cx='19' cy='15' r='7' fill='%23555'/%3E%3Cellipse cx='19' cy='30' rx='12' ry='8' fill='%23555'/%3E%3C/svg%3E`;
   slot.innerHTML=`
-    <img class="slot-photo" src="${data.photo||'https://i.pravatar.cc/38?u='+id}" onerror="this.src='https://via.placeholder.com/38/1a1a3e/ffffff?text=?'" onclick="changePhoto(this)">
+    <img class="slot-photo" src="${ph}" onerror="this.style.opacity='.3'" onclick="changePhoto(this)">
     <div class="slot-info">
       <div class="slot-name" contenteditable="true" oninput="updateSlotPcts()">${data.name||'Giocatore'}</div>
       <span class="slot-tier ${tierObj.cls}" onclick="openTierPicker(this,${id})">${tierObj.label}</span>
