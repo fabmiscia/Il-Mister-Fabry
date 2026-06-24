@@ -906,6 +906,21 @@ async function salvaInLocale() {
   }
 }
 
+// ── Scale slides per mobile/tablet ───────────
+function scaleSlide() {
+  var vw = window.innerWidth - 32;
+  var scale = Math.min(1, vw / 1280);
+  document.querySelectorAll('.slide').forEach(function(slide) {
+    slide.style.transform = scale < 1 ? 'scale(' + scale + ')' : '';
+    slide.style.transformOrigin = 'top center';
+    slide.style.marginBottom = scale < 1 ? Math.round(720 * (scale - 1)) + 'px' : '';
+  });
+  document.body.style.overflowX = 'hidden';
+}
+window.addEventListener('resize', scaleSlide);
+scaleSlide();
+
+
 </script>
 
 
