@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Banner – Lo Spogliatoio</title>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@700&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+body {
+  background:#0d0d0d;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  min-height:100vh;
+  gap:14px;
+  padding:18px 20px 40px;
+  font-family:'Inter',sans-serif;
+}
+
+/* ── TOOLBAR ── */
+.toolbar {
+  display:flex; gap:10px; align-items:center; flex-wrap:wrap;
+  background:#1a1a1a; border:1px solid #2a2a2a; border-radius:30px;
+  padding:8px 18px; position:sticky; top:0; z-index:200;
+  box-shadow:0 2px 12px rgba(0,0,0,.5);
+}
+.toolbar button {
+  background:#2a2a2a; color:#fff; border:1px solid #333;
+  padding:7px 16px; border-radius:20px; cursor:pointer;
+  font-size:12px; font-weight:700; letter-spacing:.5px; transition:.15s;
+}
+.toolbar button:hover { background:#333; }
+.toolbar .gh { background:#2DB84A; color:#000; border-color:#2DB84A; }
+.toolbar .gh:hover { background:#25a040; }
+.tip { font-size:11px; color:#555; }
+
+/* ── CARD ── */
+.card {
+  width:1280px; height:720px;
+  position:relative; overflow:hidden;
+  background:#060c12;
+  flex-shrink:0;
+  transform-origin:top center;
+}
+
+/* ── BACKGROUND EFFECTS ── */
+.bg-glow {
+  position:absolute; inset:0; pointer-events:none;
+  background:
+    radial-gradient(ellipse 600px 500px at 20% 50%, rgba(45,184,74,.18) 0%, transparent 70%),
+    radial-gradient(ellipse 400px 300px at 75% 80%, rgba(45,184,74,.06) 0%, transparent 70%),
+    radial-gradient(ellipse 800px 400px at 50% -10%, rgba(10,30,20,.8) 0%, transparent 80%);
+}
+.bg-lines {
+  position:absolute; inset:0; pointer-events:none;
+  background-image:
+    repeating-linear-gradient(0deg, transparent, transparent 59px, rgba(45,184,74,.04) 60px),
+    repeating-linear-gradient(90deg, transparent, transparent 59px, rgba(45,184,74,.04) 60px);
+}
+.bg-vignette {
+  position:absolute; inset:0; pointer-events:none;
+  background:radial-gradient(ellipse 130% 130% at 50% 50%, transparent 40%, rgba(0,0,0,.7) 100%);
+}
+
+/* ── PHOTO AREA ── */
+.photo-wrap {
+  position:absolute;
+  right:0; bottom:0;
+  width:520px; height:720px;
+  cursor:pointer;
+  overflow:hidden;
+}
+.photo-wrap img {
+  width:100%; height:100%;
+  object-fit:cover; object-position:top center;
+  display:block;
+}
+.photo-gradient {
+  position:absolute; inset:0;
+  background:linear-gradient(90deg, #060c12 0%, rgba(6,12,18,.6) 35%, transparent 65%),
+             linear-gradient(0deg, #060c12 0%, transparent 30%);
+  pointer-events:none;
+}
+.photo-hint {
+  position:absolute; bottom:14px; right:14px;
+  background:rgba(0,0,0,.6); color:#2DB84A;
+  font-size:10px; font-weight:700; letter-spacing:.5px;
+  padding:5px 10px; border-radius:8px; pointer-events:none; opacity:.7;
+}
+
+/* ── LOCK ICON ── */
+.lock-icon {
+  position:absolute;
+  top:44px; left:54px;
+  width:52px; height:52px;
+}
+.lock-icon svg { width:100%; height:100%; }
+
+/* ── BADGE ── */
+.badge {
+  position:absolute;
+  top:52px; left:120px;
+  background:rgba(45,184,74,.15);
+  border:1.5px solid rgba(45,184,74,.5);
+  border-radius:6px;
+  padding:6px 16px;
+  font-size:11px; font-weight:800;
+  letter-spacing:3px; color:#2DB84A;
+  text-transform:uppercase;
+  outline:none; cursor:text;
+}
+
+/* ── MAIN TEXT ── */
+.main-title {
+  position:absolute;
+  top:118px; left:54px;
+  right:480px;
+}
+.label-lo {
+  font-family:'Oswald',sans-serif;
+  font-size:52px; font-weight:700;
+  color:#fff; letter-spacing:6px;
+  text-transform:uppercase; line-height:1;
+  opacity:.65;
+  outline:none; cursor:text; display:block;
+}
+.label-spogliatoio {
+  font-family:'Oswald',sans-serif;
+  font-size:130px; font-weight:700;
+  color:#fff; letter-spacing:-2px;
+  text-transform:uppercase; line-height:.9;
+  outline:none; cursor:text; display:block;
+  text-shadow:0 0 60px rgba(45,184,74,.3), 0 4px 30px rgba(0,0,0,.8);
+}
+.green-line {
+  width:80px; height:4px;
+  background:linear-gradient(90deg,#2DB84A,transparent);
+  border-radius:2px; margin:20px 0 18px;
+}
+.subtitle {
+  font-family:'Inter',sans-serif;
+  font-size:18px; font-weight:600;
+  color:rgba(255,255,255,.75); letter-spacing:1.5px;
+  text-transform:uppercase; line-height:1.5;
+  outline:none; cursor:text;
+  max-width:560px;
+}
+
+/* ── FEATURES LIST ── */
+.features {
+  position:absolute;
+  bottom:80px; left:54px;
+  display:flex; gap:12px; flex-wrap:wrap;
+  max-width:640px;
+}
+.feat-tag {
+  background:rgba(255,255,255,.06);
+  border:1px solid rgba(255,255,255,.12);
+  border-radius:20px;
+  padding:7px 16px;
+  font-size:13px; font-weight:600;
+  color:rgba(255,255,255,.8);
+  letter-spacing:.5px;
+  outline:none; cursor:text;
+}
+.feat-tag.green {
+  background:rgba(45,184,74,.12);
+  border-color:rgba(45,184,74,.35);
+  color:#2DB84A;
+}
+
+/* ── CHANNEL NAME ── */
+.channel {
+  position:absolute;
+  bottom:32px; left:54px;
+  display:flex; align-items:center; gap:10px;
+}
+.channel-dot {
+  width:8px; height:8px; border-radius:50%; background:#2DB84A;
+  box-shadow:0 0 10px #2DB84A;
+}
+.channel-name {
+  font-family:'Oswald',sans-serif;
+  font-size:15px; font-weight:700; letter-spacing:3px;
+  color:rgba(255,255,255,.5); text-transform:uppercase;
+  outline:none; cursor:text;
+}
+
+/* ── RESPONSIVE SCALE ── */
+@media (max-width:1300px) {
+  .toolbar { flex-wrap:wrap; gap:6px; padding:6px 12px; }
+  .toolbar button { padding:6px 12px; font-size:11px; }
+  .tip { display:none; }
+}
+</style>
+</head>
+<body>
+
+<div class="toolbar">
+  <button onclick="exportPNG()">💾 Esporta PNG</button>
+  <button id="btn-salva-locale" onclick="salvaInLocale()">💾 Salva in locale</button>
+  <button class="gh" onclick="pubblicaGitHub()">🚀 Pubblica su GitHub</button>
+  <span class="tip">Click sulla foto per cambiarla · Click sui testi per modificarli</span>
+</div>
+
+<input type="file" id="photo-input" accept="image/*" style="display:none">
+
+<div class="card" id="card">
+  <!-- Background -->
+  <div class="bg-lines"></div>
+  <div class="bg-glow"></div>
+  <div class="bg-vignette"></div>
+
+  <!-- Foto host -->
+  <div class="photo-wrap" onclick="document.getElementById('photo-input').click()">
+    <img id="host-photo" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='520' height='720' viewBox='0 0 520 720'%3E%3Crect width='520' height='720' fill='%23060c12'/%3E%3Ccircle cx='260' cy='240' r='110' fill='%23111d14'/%3E%3Cellipse cx='260' cy='560' rx='180' ry='140' fill='%23111d14'/%3E%3Ctext x='260' y='260' text-anchor='middle' font-size='14' fill='%232DB84A' font-family='Arial' letter-spacing='1'%3E📷 AGGIUNGI FOTO%3C/text%3E%3C/svg%3E" alt="Host">
+    <div class="photo-gradient"></div>
+    <div class="photo-hint">📷 Click per aggiungere foto</div>
+  </div>
+
+  <!-- Lock icon -->
+  <div class="lock-icon">
+    <svg viewBox="0 0 52 52" fill="none">
+      <rect x="8" y="24" width="36" height="24" rx="5" fill="rgba(45,184,74,.2)" stroke="#2DB84A" stroke-width="2"/>
+      <path d="M16 24V18a10 10 0 0 1 20 0v6" stroke="#2DB84A" stroke-width="2.5" stroke-linecap="round" fill="none"/>
+      <circle cx="26" cy="36" r="3.5" fill="#2DB84A"/>
+      <line x1="26" y1="39" x2="26" y2="44" stroke="#2DB84A" stroke-width="2.5" stroke-linecap="round"/>
+    </svg>
+  </div>
+
+  <!-- Badge -->
+  <div class="badge" contenteditable="true">🔐 Area Riservata</div>
+
+  <!-- Main title -->
+  <div class="main-title">
+    <span class="label-lo" contenteditable="true">LO</span>
+    <span class="label-spogliatoio" contenteditable="true">SPOGLIA&shy;TOIO</span>
+    <div class="green-line"></div>
+    <div class="subtitle" contenteditable="true">L'area esclusiva del Mister Fabry<br>per vincere al fantacalcio</div>
+  </div>
+
+  <!-- Feature tags -->
+  <div class="features">
+    <div class="feat-tag green" contenteditable="true">📊 Analisi Nuovi Arrivi</div>
+    <div class="feat-tag" contenteditable="true">💸 Simulazioni Asta</div>
+    <div class="feat-tag" contenteditable="true">👔 Schede Allenatori</div>
+    <div class="feat-tag" contenteditable="true">🏆 Tornei Esclusivi</div>
+    <div class="feat-tag" contenteditable="true">📋 Regolamenti</div>
+  </div>
+
+  <!-- Channel name -->
+  <div class="channel">
+    <div class="channel-dot"></div>
+    <div class="channel-name" contenteditable="true">Il Mister Fabry</div>
+  </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script>
+// ── Foto ─────────────────────────────────────
+document.getElementById('photo-input').addEventListener('change', function(e) {
+  const file = e.target.files[0];
+  if (!file) return;
+  document.getElementById('host-photo').src = URL.createObjectURL(file);
+});
+
+// ── Scale ────────────────────────────────────
+function scaleCard() {
+  const vw = window.innerWidth;
+  const card = document.querySelector('.card');
+  if (vw >= 1300) { card.style.transform = ''; card.style.marginBottom = ''; return; }
+  const scale = vw / 1280;
+  card.style.transform = `scale(${scale})`;
+  card.style.transformOrigin = 'top center';
+  card.style.marginBottom = Math.round(720 * (scale - 1)) + 'px';
+  document.body.style.overflowX = 'hidden';
+}
+window.addEventListener('resize', scaleCard);
+scaleCard();
+
+// ── Export PNG ───────────────────────────────
+function exportPNG() {
+  const card = document.getElementById('card');
+  const saved = card.style.transform;
+  card.style.transform = '';
+  html2canvas(card, { scale:2, useCORS:true, allowTaint:true, width:1280, height:720, backgroundColor:'#060c12' }).then(canvas => {
+    const a = document.createElement('a');
+    a.href = canvas.toDataURL('image/png');
+    a.download = 'banner-spogliatoio.png';
+    a.click();
+    card.style.transform = saved;
+  });
+}
+
+// ── Salva in locale ──────────────────────────
+async function salvaInLocale() {
+  const html = '<!DOCTYPE html>\n' + document.documentElement.outerHTML;
+  const blob = new Blob([html], {type:'text/html'});
+  try {
+    if (window.showSaveFilePicker) {
+      const h = await window.showSaveFilePicker({suggestedName:'banner-spogliatoio.html', types:[{description:'HTML',accept:{'text/html':['.html']}}]});
+      const w = await h.createWritable(); await w.write(blob); await w.close();
+      const btn = document.getElementById('btn-salva-locale');
+      if (btn) { const o=btn.textContent; btn.textContent='✅ Salvato!'; setTimeout(()=>btn.textContent=o,2000); }
+    } else throw new Error();
+  } catch(e) { const a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download='banner-spogliatoio.html'; a.click(); }
+}
+
+// ── Pubblica su GitHub ───────────────────────
+async function pubblicaGitHub() {
+  const token = localStorage.getItem('gh_token') || prompt('GitHub Token:');
+  if (!token) return;
+  localStorage.setItem('gh_token', token);
+  const card = document.getElementById('card');
+  const saved = card.style.transform; card.style.transform = '';
+  const html = '<!DOCTYPE html>\n' + document.documentElement.outerHTML;
+  card.style.transform = saved;
+  const b64 = btoa(unescape(encodeURIComponent(html)));
+  const url = 'https://api.github.com/repos/fabmiscia/Il-Mister-Fabry/contents/banner-spogliatoio.html';
+  const hdrs = {'Authorization':'token '+token,'Accept':'application/vnd.github+json','Content-Type':'application/json'};
+  const check = await fetch(url,{headers:hdrs});
+  const sha = check.ok ? (await check.json()).sha : null;
+  const body = {message:'feat: banner Lo Spogliatoio', content:b64};
+  if (sha) body.sha = sha;
+  const res = await fetch(url,{method:'PUT',headers:hdrs,body:JSON.stringify(body)});
+  if (res.ok) alert('✅ Pubblicato!'); else { alert('❌ Errore'); localStorage.removeItem('gh_token'); }
+}
+
+// Nascondi Salva in locale su GitHub Pages
+if (location.protocol !== 'file:') { const b=document.getElementById('btn-salva-locale'); if(b) b.style.display='none'; }
+</script>
+</body>
+</html>
