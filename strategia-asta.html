@@ -191,7 +191,7 @@ body {
   <span class="toolbar-title">⚽ STRATEGIA ASTA FANTACALCIO</span>
   <button class="tb-btn" onclick="exportPNG()">📸 Esporta PNG</button>
   <button id="btn-salva-locale" class="tb-btn" onclick="salvaInLocale()">💾 Salva in locale</button>
-  <button class="tb-btn gh" onclick="pubblicaGitHub()">🚀 Pubblica su GitHub</button>
+  <button id="btn-pubblica-github" class="tb-btn gh" onclick="pubblicaGitHub()">🚀 Pubblica su GitHub</button>
 </div>
 
 <div class="page">
@@ -594,7 +594,7 @@ const GH_REPO='fabmiscia/Il-Mister-Fabry';
 const GH_FILE='strategia-asta.html';
 const GH_PAGES='https://fabmiscia.github.io/Il-Mister-Fabry/'+GH_FILE;
 
-async async function pubblicaGitHub() {
+async function pubblicaGitHub() {
   const token=localStorage.getItem('gh_token')||prompt('GitHub Token (ghp_...):');
   if(!token) return;
   localStorage.setItem('gh_token',token);
@@ -651,15 +651,10 @@ if(!document.querySelector('.slot')){
   addSlot('ATT',{name:'Nzola',tier:'low',credits:2});
 }
 
-// Nascondi btn Salva locale su GitHub Pages
-if(location.protocol!=='file:'){const b=document.getElementById('btn-salva-locale');if(b)b.style.display='none';}
-
+// Nascondi bottoni locali su GitHub Pages
 if(location.protocol!=='file:'){
-  document.querySelectorAll('button,a').forEach(function(el){
-    var t=el.textContent||''; var id=el.id||''; var cl=el.className||''; var oc=el.getAttribute('onclick')||'';
-    if(t.toLowerCase().includes('github')||id.toLowerCase().includes('github')||cl.includes('gh-btn')||oc.toLowerCase().includes('github')){
-      el.style.display='none';
-    }
+  ['btn-salva-locale','btn-pubblica-github'].forEach(function(id){
+    var b=document.getElementById(id); if(b) b.style.display='none';
   });
 }
 </script>
