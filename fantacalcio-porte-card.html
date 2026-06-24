@@ -824,10 +824,14 @@ document.getElementById('btn-github').addEventListener('click', async () => {
     clone.querySelector('body').appendChild(script);
     const html = '<!DOCTYPE html>\n' + clone.outerHTML;
 
-    // 3. Codifica UTF-8 → base64
-    const bytes = new TextEncoder().encode(html);
-    const binStr = Array.from(bytes).map(b => String.fromCharCode(b)).join('');
-    const content = btoa(binStr);
+    // 3. Codifica UTF-8 → base64 (FileReader, robusto su file grandi)
+    const content = await new Promise((resolve, reject) => {
+      const blob = new Blob([html], {type:'text/plain'});
+      const reader = new FileReader();
+      reader.onloadend = () => resolve(reader.result.split(',')[1]);
+      reader.onerror = reject;
+      reader.readAsDataURL(blob);
+    });
 
     // 4. Carica su GitHub
     const upResp = await fetch(`https://api.github.com/repos/${GH_OWNER}/${GH_REPO}/contents/${GH_FILE}`, {
@@ -923,13 +927,12 @@ async function salvaInLocale() {
 
 <script>if(location.protocol!=='file:'){var b=document.getElementById('btn-salva-locale');if(b)b.style.display='none';}</script>
 
+<script>
 if(location.protocol!=='file:'){
-  document.querySelectorAll('button,a').forEach(function(el){
-    var t=el.textContent||''; var id=el.id||''; var cl=el.className||''; var oc=el.getAttribute('onclick')||'';
-    if(t.toLowerCase().includes('github')||id.toLowerCase().includes('github')||cl.includes('gh-btn')||oc.toLowerCase().includes('github')){
-      el.style.display='none';
-    }
+  ['btn-salva-locale','btn-github'].forEach(function(id){
+    var b=document.getElementById(id); if(b) b.style.display='none';
   });
 }
+</script>
 </body>
 </html>
