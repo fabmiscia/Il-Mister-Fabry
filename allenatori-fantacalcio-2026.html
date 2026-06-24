@@ -2080,6 +2080,10 @@ const coaches = COACHES_DEFAULT.map(c => Object.assign({}, c, {
 }));
 
 // immagini caricate (separate dalla card data)
+/* <<PHOTOS_START>> */
+window._COACH_IMGS = null;
+window._LOGO_IMGS  = null;
+/* <<PHOTOS_END>> */
 const coachImages = (window._COACH_IMGS && window._COACH_IMGS.length) ? window._COACH_IMGS : new Array(20).fill(null);
 const logoImages  = (window._LOGO_IMGS  && window._LOGO_IMGS.length)  ? window._LOGO_IMGS  : new Array(20).fill(null);
 
@@ -2478,8 +2482,19 @@ document.getElementById('btn-github').addEventListener('click', async () => {
     const newBlock = `/* <<COACHES_START>> */\nconst COACHES_DEFAULT = ${JSON.stringify(currentCoaches, null, 2)};\n/* <<COACHES_END>> */`;
     source = source.replace(/\/\* <<COACHES_START>> \*\/[\s\S]*?\/\* <<COACHES_END>> \*\//, newBlock);
 
-    // 4. Codifica e invia
-    const encoded = btoa(unescape(encodeURIComponent(source)));
+    // 3b. Sostituisce le foto degli allenatori e loghi squadre
+    saveCurrentState();
+    const photosBlock = `/* <<PHOTOS_START>> */\nwindow._COACH_IMGS = ${JSON.stringify(coachImages)};\nwindow._LOGO_IMGS  = ${JSON.stringify(logoImages)};\n/* <<PHOTOS_END>> */`;
+    source = source.replace(/\/\* <<PHOTOS_START>> \*\/[\s\S]*?\/\* <<PHOTOS_END>> \*\//, photosBlock);
+
+    // 4. Codifica e invia (supporta UTF-8 + dati binari)
+    // 4. Codifica e invia (supporta UTF-8 + dati binari)
+    const bytes = new TextEncoder().encode(source);
+    let bin = ''; const chunk = 8192;
+    for (let i = 0; i < bytes.length; i += chunk) {
+      bin += String.fromCharCode(...bytes.subarray(i, i + chunk));
+    }
+    const encoded = btoa(bin);
     const date = new Date().toLocaleDateString('it-IT');
     const pushResp = await fetch(`https://api.github.com/repos/${GH_REPO}/contents/${GH_FILE}`, {
       method: 'PUT', headers,
