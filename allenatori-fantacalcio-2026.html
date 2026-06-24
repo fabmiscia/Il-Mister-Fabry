@@ -231,10 +231,10 @@ body {
 }
 .app-lbl { font-size:10px; color:#ffc800; text-transform:uppercase; letter-spacing:2.2px; line-height:1; user-select:none; pointer-events:none; }
 .app-stars { display:flex; gap:6px; }
-.app-st { font-size:30px; line-height:1; cursor:pointer; transition:transform .1s; user-select:none; }
-.app-st:hover { transform:scale(1.2); }
-.app-st.on  { color:#ffc800; text-shadow:0 0 10px rgba(255,200,0,.55); }
-.app-st.off { color:rgba(255,200,0,.18); }
+.star-wrap { position:relative; display:inline-block; font-size:30px; line-height:1; cursor:pointer; user-select:none; transition:transform .1s; }
+.star-wrap:hover { transform:scale(1.15); }
+.star-back { display:block; color:rgba(255,200,0,.18); }
+.star-fill { position:absolute; top:0; left:0; overflow:hidden; width:0%; display:block; color:#ffc800; text-shadow:0 0 10px rgba(255,200,0,.55); white-space:nowrap; pointer-events:none; }
 
 [contenteditable]:focus { outline:1.5px solid rgba(0,195,255,.45); border-radius:4px; }
 
@@ -272,7 +272,7 @@ body {
   .field-svg-wrap svg { width: 100% !important; height: auto !important; }
   .notes-section { overflow: visible !important; }
   .ind-val { font-size: 16px !important; }
-  .app-st { font-size: 22px !important; }
+  .star-wrap { font-size: 22px !important; }
 }
 </style>
 
@@ -418,9 +418,11 @@ body {
       <div class="appetibilita">
         <span class="app-lbl">Appetibilità Fantacalcistica</span>
         <div class="app-stars" id="app-stars">
-          <span class="app-st on">★</span><span class="app-st on">★</span>
-          <span class="app-st on">★</span><span class="app-st on">★</span>
-          <span class="app-st off">★</span>
+          <span class="star-wrap"><span class="star-back">★</span><span class="star-fill">★</span></span>
+          <span class="star-wrap"><span class="star-back">★</span><span class="star-fill">★</span></span>
+          <span class="star-wrap"><span class="star-back">★</span><span class="star-fill">★</span></span>
+          <span class="star-wrap"><span class="star-back">★</span><span class="star-fill">★</span></span>
+          <span class="star-wrap"><span class="star-back">★</span><span class="star-fill">★</span></span>
         </div>
       </div>
     </div>
@@ -732,7 +734,7 @@ function saveCurrentState() {
   c.basso     = document.getElementById('ind-basso').classList.contains('si');
   c.turnover  = document.getElementById('ind-turnover').classList.contains('si');
   c.alternanza= document.getElementById('ind-alternanza').classList.contains('si');
-  c.appStars  = [...document.querySelectorAll('#app-stars .app-st')].filter(s=>s.classList.contains('on')).length;
+  c.appStars  = window._appStarsValue || 0;
   c.notes     = [...document.querySelectorAll('.note-text')].map(n => n.textContent.trim());
   c.dotPositions = [...document.querySelectorAll('.player-dot')].map(g => {
     const ci = g.querySelector('circle');
@@ -774,8 +776,7 @@ function loadCoach(idx) {
   setIndicator('ind-alternanza',c.alternanza);
 
   // stelle appetibilità
-  document.querySelectorAll('#app-stars .app-st').forEach((s,i) =>
-    s.className = 'app-st ' + (i < c.appStars ? 'on' : 'off'));
+  setAppStars(c.appStars || 0);
 
   // note
   const list = document.getElementById('notes-list');
@@ -840,13 +841,28 @@ document.getElementById('stab-stars').addEventListener('click', e => {
   stars.forEach((s,i) => s.className = 'st ' + (i <= idx ? 'on' : 'off'));
 });
 
-// stelle appetibilità
+// stelle appetibilità con mezze stelle
+function setAppStars(value) {
+  window._appStarsValue = value;
+  document.querySelectorAll('#app-stars .star-wrap').forEach((wrap, i) => {
+    const fill = wrap.querySelector('.star-fill');
+    const pos = i + 1;
+    if (value >= pos)        fill.style.width = '100%';
+    else if (value >= pos - 0.5) fill.style.width = '50%';
+    else                     fill.style.width = '0%';
+  });
+}
 document.getElementById('app-stars').addEventListener('click', e => {
-  const stars = [...document.querySelectorAll('#app-stars .app-st')];
-  const idx = stars.indexOf(e.target);
-  if (idx < 0) return;
-  stars.forEach((s,i) => s.className = 'app-st ' + (i <= idx ? 'on' : 'off'));
+  const wrap = e.target.closest('.star-wrap');
+  if (!wrap) return;
+  const wraps = [...document.querySelectorAll('#app-stars .star-wrap')];
+  const pos = wraps.indexOf(wrap) + 1;
+  const rect = wrap.getBoundingClientRect();
+  const isLeft = (e.clientX - rect.left) < rect.width / 2;
+  setAppStars(isLeft ? pos - 0.5 : pos);
 });
+window._appStarsValue = 4;
+setAppStars(4);
 
 // indicatori
 ['ind-possesso','ind-basso','ind-turnover','ind-alternanza'].forEach(id => {
