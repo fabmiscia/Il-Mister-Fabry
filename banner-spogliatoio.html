@@ -262,7 +262,11 @@ body {
 document.getElementById('photo-input').addEventListener('change', function(e) {
   const file = e.target.files[0];
   if (!file) return;
-  document.getElementById('host-photo').src = URL.createObjectURL(file);
+  const reader = new FileReader();
+  reader.onload = function(ev) {
+    document.getElementById('host-photo').src = ev.target.result;
+  };
+  reader.readAsDataURL(file);
 });
 
 // ── Scale ────────────────────────────────────
