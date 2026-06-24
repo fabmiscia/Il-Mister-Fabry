@@ -2080,8 +2080,8 @@ const coaches = COACHES_DEFAULT.map(c => Object.assign({}, c, {
 }));
 
 // immagini caricate (separate dalla card data)
-const coachImages = new Array(20).fill(null);
-const logoImages  = new Array(20).fill(null);
+const coachImages = (window._COACH_IMGS && window._COACH_IMGS.length) ? window._COACH_IMGS : new Array(20).fill(null);
+const logoImages  = (window._LOGO_IMGS  && window._LOGO_IMGS.length)  ? window._LOGO_IMGS  : new Array(20).fill(null);
 
 /* ════════════════════════════════════════════════
    RENDER CAMPO
@@ -2504,7 +2504,16 @@ loadCoach(0);
 
 // ── Salva in locale ──────────────────────────
 async function salvaInLocale() {
+  saveCurrentState();
+  // Inietta le foto nell'HTML prima di salvare
+  const old = document.getElementById('_photo_cache_');
+  if (old) old.remove();
+  const ps = document.createElement('script');
+  ps.id = '_photo_cache_';
+  ps.textContent = 'window._COACH_IMGS=' + JSON.stringify(coachImages) + ';window._LOGO_IMGS=' + JSON.stringify(logoImages) + ';';
+  document.head.appendChild(ps);
   const html = '<!DOCTYPE html>\n' + document.documentElement.outerHTML;
+  ps.remove();
   const blob = new Blob([html], {type: 'text/html'});
   const fname = location.pathname.split('/').pop() || 'file.html';
   try {
