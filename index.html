@@ -10,7 +10,7 @@
 body { background:#0a0a0a; font-family:'Oswald',sans-serif; min-height:100vh; }
 
 
-#main-screen { display:none; flex-direction:column; }
+#main-screen { display:flex; flex-direction:column; }
 .toolbar { background:#0a0a0a; border-bottom:1px solid #1a1a1a; padding:10px 24px; display:flex; align-items:center; gap:10px; flex-wrap:wrap; position:sticky; top:0; z-index:100; }
 .toolbar-title { color:#2DB84A; font-size:13px; letter-spacing:2px; white-space:nowrap; }
 .hero { display:flex; flex-direction:column; align-items:center; gap:16px; padding:40px 24px 20px; background:linear-gradient(180deg,#111 0%,#0a0a0a 100%); border-bottom:1px solid #1a1a1a; }
@@ -58,68 +58,10 @@ a.card .sub { font-size:11px; font-weight:400; color:#2DB84A; letter-spacing:2px
   a.card { width: 100% !important; height: 130px !important; font-size: 14px !important; }
   a.card .icon { font-size: 28px !important; }
 }
-
-/* ── LOGIN OVERLAY ── */
-#login-overlay{
-  position:fixed;inset:0;z-index:9999;
-  background:radial-gradient(ellipse at 30% 50%,rgba(45,184,74,.15) 0%,transparent 60%),#060c12;
-  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:32px;
-  padding:20px;
-}
-.login-lock svg{width:52px;height:52px;}
-.login-title{
-  font-family:'Oswald',sans-serif;font-size:clamp(28px,6vw,52px);font-weight:700;
-  letter-spacing:4px;text-align:center;color:#fff;
-  text-shadow:0 0 40px rgba(45,184,74,.4);
-}
-.login-sub{font-size:13px;color:rgba(255,255,255,.45);letter-spacing:2px;text-transform:uppercase;text-align:center;}
-.login-box{
-  background:rgba(255,255,255,.05);border:1px solid rgba(45,184,74,.25);
-  border-radius:16px;padding:32px 36px;display:flex;flex-direction:column;gap:16px;
-  width:100%;max-width:380px;
-}
-.login-box label{font-size:11px;letter-spacing:2px;color:rgba(255,255,255,.5);text-transform:uppercase;}
-#pwd-input{
-  background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.15);
-  border-radius:8px;color:#fff;font-size:16px;
-  padding:12px 16px;outline:none;transition:.2s;width:100%;letter-spacing:2px;
-}
-#pwd-input:focus{border-color:rgba(45,184,74,.6);}
-#login-btn{
-  background:linear-gradient(135deg,#2DB84A,#1a9a34);color:#fff;border:none;
-  border-radius:8px;padding:13px;font-family:'Oswald',sans-serif;font-size:14px;
-  font-weight:700;letter-spacing:2px;cursor:pointer;
-}
-#login-btn:hover{opacity:.88;}
-#login-err{font-size:12px;color:#ff5555;text-align:center;display:none;}
-#login-overlay.shake .login-box{animation:shake .35s;}
-@keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-8px)}75%{transform:translateX(8px)}}
-
 </style>
 </head>
 <body>
 
-
-<div id="login-overlay">
-  <div style="display:flex;flex-direction:column;align-items:center;gap:12px;">
-    <div class="login-lock">
-      <svg viewBox="0 0 52 52" fill="none">
-        <rect x="8" y="24" width="36" height="24" rx="5" fill="rgba(45,184,74,.2)" stroke="#2DB84A" stroke-width="2"/>
-        <path d="M16 24V18a10 10 0 0 1 20 0v6" stroke="#2DB84A" stroke-width="2.5" stroke-linecap="round" fill="none"/>
-        <circle cx="26" cy="36" r="3.5" fill="#2DB84A"/>
-        <line x1="26" y1="39" x2="26" y2="44" stroke="#2DB84A" stroke-width="2.5" stroke-linecap="round"/>
-      </svg>
-    </div>
-    <div class="login-title">LO SPOGLIATOIO</div>
-    <div class="login-sub">Area riservata · Il Mister Fabry</div>
-  </div>
-  <div class="login-box">
-    <label for="pwd-input">Password</label>
-    <input type="password" id="pwd-input" placeholder="Inserisci la password" autocomplete="off">
-    <button id="login-btn">ENTRA</button>
-    <div id="login-err">Password errata. Controlla nel gruppo abbonati.</div>
-  </div>
-</div>
 
 <div id="main-screen">
   <div class="toolbar">
@@ -137,6 +79,12 @@ a.card .sub { font-size:11px; font-weight:400; color:#2DB84A; letter-spacing:2px
     <div class="hero-sub">Fantacalcio 2026-2027</div>
   </div>
   <div class="page">
+    <div class="sezione">
+      <div class="sezione-title"><span>&#x2022;</span> Academy</div>
+      <div class="cards">
+        <div class="card-wrap"><a class="card" href="academy.html"><span class="icon">&#x1F393;</span><span>Academy</span><span class="sub">Classic &middot; Mantra &middot; 4 Corsi</span></a><div class="card-date">4 corsi · 40 lezioni</div></div>
+      </div>
+    </div>
     <div class="sezione">
       <div class="sezione-title"><span>&#x2022;</span> Materiali per l'Asta</div>
       <div class="cards">
@@ -211,51 +159,13 @@ async function salvaInLocale() {
 
 <script>if(location.protocol!=='file:'){var b=document.getElementById('btn-salva-locale');if(b)b.style.display='none';}</script>
 
-<script>
-(function(){
-  var HASH='57a910719dbe1def6e5e374e21698568a6d2725ed80248b21661df6e48eac9f5';
-  var KEY='spogliatoio_token';
-
-  async function sha256(str){
-    var buf=await crypto.subtle.digest('SHA-256',new TextEncoder().encode(str));
-    return Array.from(new Uint8Array(buf)).map(function(b){return b.toString(16).padStart(2,'0')}).join('');
-  }
-
-  function showMain(){
-    document.getElementById('login-overlay').style.display='none';
-    document.getElementById('main-screen').style.display='flex';
-  }
-
-  if(localStorage.getItem(KEY)===HASH){ showMain(); }
-
-  document.getElementById('login-btn').addEventListener('click',async function(){
-    var val=document.getElementById('pwd-input').value.trim();
-    if(!val) return;
-    var h=await sha256(val);
-    if(h===HASH){
-      localStorage.setItem(KEY,HASH);
-      showMain();
-    } else {
-      document.getElementById('login-err').style.display='block';
-      var ov=document.getElementById('login-overlay');
-      ov.classList.add('shake');
-      setTimeout(function(){ov.classList.remove('shake');},400);
-      document.getElementById('pwd-input').value='';
-      document.getElementById('pwd-input').focus();
+if(location.protocol!=='file:'){
+  document.querySelectorAll('button,a').forEach(function(el){
+    var t=el.textContent||''; var id=el.id||''; var cl=el.className||''; var oc=el.getAttribute('onclick')||'';
+    if(t.toLowerCase().includes('github')||id.toLowerCase().includes('github')||cl.includes('gh-btn')||oc.toLowerCase().includes('github')){
+      el.style.display='none';
     }
   });
-
-  document.getElementById('pwd-input').addEventListener('keydown',function(e){
-    if(e.key==='Enter') document.getElementById('login-btn').click();
-  });
-
-  // Nascondi bottoni locali su GitHub Pages
-  if(location.protocol!=='file:'){
-    ['btn-salva-locale','btn-github'].forEach(function(id){
-      var b=document.getElementById(id); if(b) b.style.display='none';
-    });
-  }
-})();
-</script>
+}
 </body>
 </html>
