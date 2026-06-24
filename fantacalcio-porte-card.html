@@ -1,6 +1,15 @@
 <!DOCTYPE html>
 <html lang="it">
 <head>
+<script>
+(function(){
+  var HASH='57a910719dbe1def6e5e374e21698568a6d2725ed80248b21661df6e48eac9f5';
+  var KEY='spogliatoio_token';
+  if(localStorage.getItem(KEY)!==HASH){
+    window.location.replace('spogliatoio.html');
+  }
+})();
+</script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Fantacalcio 2026-27 – Porte Serie A</title>
