@@ -798,23 +798,25 @@ initAddBtns();
 drawPie();
 updateAll();
 
-// Dati di esempio
-addSlot('POR',{name:'Provedel',tier:'semi',credits:35});
-addSlot('POR',{name:'Montipò',tier:'low',credits:3});
-addSlot('POR',{name:'Motta',tier:'low',credits:1});
-addSlot('DIF',{name:'Kalulu',tier:'top',credits:25});
-addSlot('DIF',{name:'Bisseck',tier:'semi',credits:20});
-addSlot('DIF',{name:'Mancini',tier:'ott',credits:19});
-addSlot('DIF',{name:'Ostigard',tier:'ott',credits:18});
-addSlot('DIF',{name:'Gabbia',tier:'ott',credits:16});
-addSlot('CEN',{name:'Mandragora',tier:'top',credits:35});
-addSlot('CEN',{name:'Malinovsky',tier:'semi',credits:33});
-addSlot('CEN',{name:'Conceicao',tier:'ott',credits:28});
-addSlot('CEN',{name:'Pasalic',tier:'jolly',credits:8});
-addSlot('ATT',{name:'Yildiz',tier:'top',credits:120});
-addSlot('ATT',{name:'Douvikas',tier:'semi',credits:60});
-addSlot('ATT',{name:'Raspadori',tier:'ott',credits:32});
-addSlot('ATT',{name:'Ekuban',tier:'jolly',credits:2});
+// Dati di esempio — solo al primo caricamento
+if(!document.querySelector('.slot')){
+  addSlot('POR',{name:'Provedel',tier:'semi',credits:35});
+  addSlot('POR',{name:'Montipò',tier:'low',credits:3});
+  addSlot('POR',{name:'Motta',tier:'low',credits:1});
+  addSlot('DIF',{name:'Kalulu',tier:'top',credits:25});
+  addSlot('DIF',{name:'Bisseck',tier:'semi',credits:20});
+  addSlot('DIF',{name:'Mancini',tier:'ott',credits:19});
+  addSlot('DIF',{name:'Ostigard',tier:'ott',credits:18});
+  addSlot('DIF',{name:'Gabbia',tier:'ott',credits:16});
+  addSlot('CEN',{name:'Mandragora',tier:'top',credits:35});
+  addSlot('CEN',{name:'Malinovsky',tier:'semi',credits:33});
+  addSlot('CEN',{name:'Conceicao',tier:'ott',credits:28});
+  addSlot('CEN',{name:'Pasalic',tier:'jolly',credits:8});
+  addSlot('ATT',{name:'Yildiz',tier:'top',credits:120});
+  addSlot('ATT',{name:'Douvikas',tier:'semi',credits:60});
+  addSlot('ATT',{name:'Raspadori',tier:'ott',credits:32});
+  addSlot('ATT',{name:'Ekuban',tier:'jolly',credits:2});
+}
 
 // Nascondi btn Salva locale su GitHub Pages
 if(location.protocol!=='file:'){const b=document.getElementById('btn-salva-locale');if(b)b.style.display='none';}
