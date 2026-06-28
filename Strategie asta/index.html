@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Strategie Asta — Il Mister Fabry</title>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#0d0d0d;color:#fff;font-family:'Oswald',Arial,sans-serif;min-height:100vh}
+.toolbar{background:#111;border-bottom:2px solid #1a1a1a;padding:14px 24px;display:flex;align-items:center;gap:14px;flex-wrap:wrap;position:sticky;top:0;z-index:100}
+.toolbar h1{color:#2DB84A;font-size:16px;letter-spacing:2px;flex:1}
+.btn{padding:8px 18px;border-radius:6px;font-family:'Oswald',Arial,sans-serif;font-size:12px;font-weight:600;letter-spacing:1px;text-transform:uppercase;cursor:pointer;border:none;transition:opacity .15s,transform .1s;text-decoration:none;display:inline-flex;align-items:center;gap:6px}
+.btn:hover{opacity:.85;transform:translateY(-1px)}
+.btn-github{background:#24292e;color:#fff;border:1.5px solid rgba(255,255,255,.2)}
+.btn-new{background:#2DB84A;color:#000}
+.hero{padding:48px 24px 32px;border-bottom:1px solid #1a1a1a}
+.hero-label{font-size:11px;letter-spacing:3px;color:#2DB84A;margin-bottom:10px}
+.hero h2{font-size:32px;letter-spacing:2px;line-height:1.2;margin-bottom:10px}
+.hero p{font-size:14px;color:#aaa;max-width:600px;line-height:1.6}
+.grid{padding:32px 24px;display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:20px}
+.strategy-card{background:#111;border:1.5px solid #1a1a1a;border-radius:12px;padding:24px;cursor:pointer;transition:border-color .2s,transform .15s;text-decoration:none;color:#fff;display:block}
+.strategy-card:hover{border-color:#2DB84A;transform:translateY(-2px)}
+.strategy-card .sc-icon{font-size:28px;margin-bottom:12px}
+.strategy-card .sc-name{font-size:18px;letter-spacing:1px;margin-bottom:6px}
+.strategy-card .sc-sub{font-size:11px;color:#aaa;letter-spacing:1px;margin-bottom:14px}
+.strategy-card .sc-tags{display:flex;gap:6px;flex-wrap:wrap}
+.tag{padding:3px 10px;border-radius:20px;font-size:10px;letter-spacing:1px;border:1px solid}
+.tag-att{border-color:#e74c3c;color:#e74c3c}
+.tag-dif{border-color:#3498db;color:#3498db}
+.tag-por{border-color:#f39c12;color:#f39c12}
+.tag-cen{border-color:#9b59b6;color:#9b59b6}
+.tag-bal{border-color:#2DB84A;color:#2DB84A}
+.empty-state{grid-column:1/-1;text-align:center;padding:80px 20px;color:#333}
+.empty-state .es-icon{font-size:48px;margin-bottom:16px}
+.empty-state p{font-size:14px;letter-spacing:1px}
+.modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.85);z-index:200;align-items:center;justify-content:center}
+.modal-overlay.open{display:flex}
+.modal{background:#111;border:1.5px solid #1a1a1a;border-radius:14px;padding:32px;width:90%;max-width:480px}
+.modal h3{font-size:18px;letter-spacing:2px;margin-bottom:24px;color:#2DB84A}
+.form-group{margin-bottom:16px}
+.form-group label{display:block;font-size:11px;letter-spacing:2px;color:#aaa;margin-bottom:6px}
+.form-group input,.form-group select,.form-group textarea{width:100%;background:#1a1a1a;border:1px solid #333;border-radius:6px;padding:9px 12px;color:#fff;font-family:'Oswald',Arial,sans-serif;font-size:13px;outline:none}
+.form-group input:focus,.form-group select:focus,.form-group textarea:focus{border-color:#2DB84A}
+.form-group textarea{resize:vertical;min-height:80px}
+.modal-actions{display:flex;gap:10px;margin-top:24px;justify-content:flex-end}
+.btn-cancel{background:transparent;color:#aaa;border:1px solid #333}
+.btn-create{background:#2DB84A;color:#000}
+</style>
+</head>
+<body>
+
+<div class="toolbar">
+  <h1>⚔️ STRATEGIE ASTA</h1>
+  <button class="btn btn-new" onclick="openModal()">+ Nuova Strategia</button>
+  <button class="btn btn-github" onclick="pubblicaSuGitHub()">🚀 Pubblica su GitHub</button>
+</div>
+
+<div class="hero">
+  <div class="hero-label">IL MISTER FABRY · FANTACALCIO 2026-27</div>
+  <h2>Le mie Strategie d'Asta</h2>
+  <p>Ogni simulazione è una strategia diversa: nome, budget, obiettivi, lista giocatori target. Costruisci, testa, confronta.</p>
+</div>
+
+<div class="grid" id="grid">
+  <!-- Le card delle strategie vengono caricate dinamicamente -->
+</div>
+
+<!-- Modal nuova strategia -->
+<div class="modal-overlay" id="modal">
+  <div class="modal">
+    <h3>NUOVA STRATEGIA</h3>
+    <div class="form-group">
+      <label>Nome Strategia *</label>
+      <input type="text" id="inp-nome" placeholder="es. All-In Attaccanti, Portieri Pesanti…">
+    </div>
+    <div class="form-group">
+      <label>Icona</label>
+      <input type="text" id="inp-icon" placeholder="es. ⚔️ 🛡️ 💣 🎯 🔥" value="🎯">
+    </div>
+    <div class="form-group">
+      <label>Focus principale</label>
+      <select id="inp-tag">
+        <option value="bal">Bilanciata</option>
+        <option value="att">Attacco</option>
+        <option value="dif">Difesa</option>
+        <option value="por">Portieri</option>
+        <option value="cen">Centrocampo</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label>Note iniziali</label>
+      <textarea id="inp-note" placeholder="Descrivi l'idea della strategia…"></textarea>
+    </div>
+    <div class="modal-actions">
+      <button class="btn btn-cancel" onclick="closeModal()">Annulla</button>
+      <button class="btn btn-create" onclick="creaStrategia()">Crea file HTML</button>
+    </div>
+  </div>
+</div>
+
+<script>
+const GH_REPO = 'fabmiscia/Il-Mister-Fabry';
+const GH_FOLDER = 'Strategie asta';
+const TAG_LABELS = {bal:'Bilanciata',att:'Attacco',dif:'Difesa',por:'Portieri',cen:'Centrocampo'};
+
+// ── LISTA STRATEGIE (aggiornata manualmente o via GitHub API) ──
+const STRATEGIE = [
+  // Esempio (da scommentare/aggiungere quando crei la prima strategia):
+  // { nome: 'All-In Attaccanti', icon: '💣', tag: 'att', sub: 'Creata il 28 giu 2026', file: 'all-in-attaccanti.html' },
+];
+
+function render() {
+  const grid = document.getElementById('grid');
+  if (STRATEGIE.length === 0) {
+    grid.innerHTML = `<div class="empty-state"><div class="es-icon">📋</div><p>Nessuna strategia ancora.<br>Clicca "+ Nuova Strategia" per iniziare.</p></div>`;
+    return;
+  }
+  grid.innerHTML = STRATEGIE.map(s => `
+    <a class="strategy-card" href="${s.file}">
+      <div class="sc-icon">${s.icon}</div>
+      <div class="sc-name">${s.nome}</div>
+      <div class="sc-sub">${s.sub}</div>
+      <div class="sc-tags"><span class="tag tag-${s.tag}">${TAG_LABELS[s.tag]}</span></div>
+    </a>
+  `).join('');
+}
+
+function openModal() { document.getElementById('modal').classList.add('open'); document.getElementById('inp-nome').focus(); }
+function closeModal() { document.getElementById('modal').classList.remove('open'); }
+
+function slugify(s) {
+  return s.toLowerCase()
+    .replace(/[àáâä]/g,'a').replace(/[èéêë]/g,'e').replace(/[ìíî]/g,'i')
+    .replace(/[òóô]/g,'o').replace(/[ùúû]/g,'u')
+    .replace(/[^a-z0-9\s-]/g,'').trim().replace(/\s+/g,'-');
+}
+
+function creaStrategia() {
+  const nome = document.getElementById('inp-nome').value.trim();
+  if (!nome) { alert('Inserisci un nome per la strategia.'); return; }
+  const icon = document.getElementById('inp-icon').value.trim() || '🎯';
+  const tag  = document.getElementById('inp-tag').value;
+  const note = document.getElementById('inp-note').value.trim();
+  const slug = slugify(nome);
+  const oggi = new Date().toLocaleDateString('it-IT',{day:'2-digit',month:'long',year:'numeric'});
+  const filename = slug + '.html';
+
+  // Genera HTML della strategia
+  const html = generaHTMLStrategia(nome, icon, tag, note, oggi, filename);
+
+  // Download file localmente
+  const blob = new Blob([html], {type:'text/html;charset=utf-8'});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a'); a.href=url; a.download=filename;
+  document.body.appendChild(a); a.click();
+  setTimeout(()=>{ document.body.removeChild(a); URL.revokeObjectURL(url); },200);
+
+  // Aggiungi alla lista
+  STRATEGIE.push({ nome, icon, tag, sub:`Creata il ${oggi}`, file: filename });
+  render();
+  closeModal();
+  alert(`✅ File "${filename}" scaricato!\n\nMettilo nella cartella "Strategie ASTA" e poi clicca 🚀 Pubblica su GitHub.`);
+}
+
+function generaHTMLStrategia(nome, icon, tag, note, oggi, filename) {
+  const TAG_LABELS = {bal:'Bilanciata',att:'Attacco',dif:'Difesa',por:'Portieri',cen:'Centrocampo'};
+  return `<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>${nome} — Strategie Asta · Il Mister Fabry</title>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#0d0d0d;color:#fff;font-family:'Oswald',Arial,sans-serif;min-height:100vh}
+.toolbar{background:#111;border-bottom:2px solid #1a1a1a;padding:12px 20px;display:flex;align-items:center;gap:12px;flex-wrap:wrap;position:sticky;top:0;z-index:100}
+.toolbar .back{color:#aaa;text-decoration:none;font-size:12px;letter-spacing:1px}
+.toolbar .back:hover{color:#fff}
+.toolbar h1{color:#2DB84A;font-size:15px;letter-spacing:2px;flex:1}
+.btn{padding:7px 16px;border-radius:6px;font-family:'Oswald',Arial,sans-serif;font-size:12px;font-weight:600;letter-spacing:1px;text-transform:uppercase;cursor:pointer;border:none;transition:opacity .15s}
+.btn:hover{opacity:.85}
+.btn-edit{background:#1a1a1a;color:#fff;border:1px solid #333}
+.btn-save{background:#2DB84A;color:#000;display:none}
+.btn-github{background:#24292e;color:#fff;border:1.5px solid rgba(255,255,255,.2)}
+.hero{padding:40px 24px 28px;border-bottom:1px solid #1a1a1a}
+.hero-label{font-size:11px;letter-spacing:3px;color:#2DB84A;margin-bottom:8px}
+.hero-icon{font-size:40px;margin-bottom:10px}
+.hero h2{font-size:30px;letter-spacing:2px;margin-bottom:8px}
+.tag{display:inline-block;padding:3px 12px;border-radius:20px;font-size:11px;letter-spacing:1px;border:1px solid #2DB84A;color:#2DB84A;margin-bottom:16px}
+.hero-note{font-size:14px;color:#aaa;max-width:700px;line-height:1.7;outline:none}
+.section{padding:28px 24px;border-bottom:1px solid #1a1a1a}
+.section h3{font-size:13px;letter-spacing:3px;color:#2DB84A;margin-bottom:16px}
+.budget-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:12px;margin-bottom:20px}
+.budget-box{background:#111;border:1px solid #1a1a1a;border-radius:8px;padding:16px;text-align:center}
+.budget-box .bb-label{font-size:10px;letter-spacing:2px;color:#aaa;margin-bottom:6px}
+.budget-box .bb-value{font-size:24px;color:#fff;font-weight:600}
+.budget-box .bb-value[contenteditable="true"]{outline:2px dashed #2DB84A;border-radius:4px;padding:2px 6px}
+.target-table{width:100%;border-collapse:collapse;font-size:13px}
+.target-table th{background:#111;padding:8px 10px;text-align:left;font-size:10px;letter-spacing:1.5px;color:#aaa;border-bottom:1px solid #1a1a1a}
+.target-table td{padding:8px 10px;border-bottom:1px solid #0f0f0f;vertical-align:middle}
+.target-table tr:hover td{background:#111}
+.target-table td[contenteditable="true"]{outline:1px dashed #2DB84A}
+.add-row-btn{margin-top:10px;background:transparent;color:#2DB84A;border:1px dashed #2DB84A;border-radius:6px;padding:6px 14px;font-family:'Oswald',Arial,sans-serif;font-size:11px;letter-spacing:1px;cursor:pointer}
+.note-area{background:#111;border:1px solid #1a1a1a;border-radius:8px;padding:16px;min-height:120px;font-size:14px;color:#fff;line-height:1.7;outline:none;width:100%}
+.note-area[contenteditable="true"]{border-color:#333}
+</style>
+</head>
+<body>
+
+<div class="toolbar">
+  <a class="back" href="../index.html">← Strategie Asta</a>
+  <h1>${icon} ${nome.toUpperCase()}</h1>
+  <button class="btn btn-edit" id="btn-edit" onclick="attivaModifica()">✏️ Modifica</button>
+  <button class="btn btn-save" id="btn-save" onclick="salvaLocale()">💾 Salva</button>
+  <button class="btn btn-github" onclick="pubblicaSuGitHub()">🚀 Pubblica</button>
+</div>
+
+<div class="hero">
+  <div class="hero-label">STRATEGIE ASTA · IL MISTER FABRY 2026-27</div>
+  <div class="hero-icon">${icon}</div>
+  <h2 contenteditable="false" id="titolo">${nome}</h2>
+  <div class="tag">${TAG_LABELS[tag] || tag}</div>
+  <p class="hero-note" contenteditable="false" id="hero-note">${note || 'Clicca ✏️ Modifica per aggiungere una descrizione della strategia.'}</p>
+</div>
+
+<div class="section">
+  <h3>BUDGET</h3>
+  <div class="budget-grid">
+    <div class="budget-box"><div class="bb-label">CREDITI TOTALI</div><div class="bb-value" id="cred-totali">250</div></div>
+    <div class="budget-box"><div class="bb-label">PORTIERI (max)</div><div class="bb-value" id="cred-por">25</div></div>
+    <div class="budget-box"><div class="bb-label">DIFENSORI (max)</div><div class="bb-value" id="cred-dif">70</div></div>
+    <div class="budget-box"><div class="bb-label">CENTROCAMPISTI (max)</div><div class="bb-value" id="cred-cen">65</div></div>
+    <div class="budget-box"><div class="bb-label">ATTACCANTI (max)</div><div class="bb-value" id="cred-att">90</div></div>
+    <div class="budget-box"><div class="bb-label">RISERVE (max)</div><div class="bb-value" id="cred-ris">30</div></div>
+  </div>
+</div>
+
+<div class="section">
+  <h3>GIOCATORI TARGET</h3>
+  <table class="target-table" id="target-table">
+    <thead>
+      <tr>
+        <th>GIOCATORE</th>
+        <th>RUOLO</th>
+        <th>SQUADRA</th>
+        <th>BUDGET MAX</th>
+        <th>PRIORITÀ</th>
+        <th>NOTE</th>
+      </tr>
+    </thead>
+    <tbody id="target-body">
+      <tr>
+        <td contenteditable="false">Esempio: Lukaku</td>
+        <td contenteditable="false">ATT</td>
+        <td contenteditable="false">Napoli</td>
+        <td contenteditable="false">45</td>
+        <td contenteditable="false">🔴 Alta</td>
+        <td contenteditable="false">Prima scelta assoluta</td>
+      </tr>
+    </tbody>
+  </table>
+  <button class="add-row-btn" id="btn-add-row" style="display:none" onclick="aggiungiRiga()">+ Aggiungi giocatore</button>
+</div>
+
+<div class="section">
+  <h3>NOTE E TATTICHE</h3>
+  <div class="note-area" contenteditable="false" id="note-area">${note || 'Clicca ✏️ Modifica per aggiungere le tue note tattiche, idee, priorità e considerazioni per questa strategia d\'asta.'}</div>
+</div>
+
+<script>
+const GH_REPO = 'fabmiscia/Il-Mister-Fabry';
+const GH_FILE = 'Strategie ASTA/${filename}';
+const GH_PAGES = 'https://fabmiscia.github.io/Il-Mister-Fabry/Strategie%20ASTA/${filename}';
+let editing = false;
+
+function attivaModifica() {
+  editing = true;
+  document.getElementById('btn-edit').style.display = 'none';
+  document.getElementById('btn-save').style.display = 'inline-flex';
+  document.getElementById('btn-add-row').style.display = 'inline-block';
+  document.querySelectorAll('[contenteditable]').forEach(el => el.setAttribute('contenteditable','true'));
+  document.querySelectorAll('.bb-value').forEach(el => el.setAttribute('contenteditable','true'));
+}
+
+function salvaLocale() {
+  editing = false;
+  document.getElementById('btn-edit').style.display = 'inline-flex';
+  document.getElementById('btn-save').style.display = 'none';
+  document.getElementById('btn-add-row').style.display = 'none';
+  document.querySelectorAll('[contenteditable]').forEach(el => el.setAttribute('contenteditable','false'));
+  document.querySelectorAll('.bb-value').forEach(el => el.setAttribute('contenteditable','false'));
+}
+
+function aggiungiRiga() {
+  const tbody = document.getElementById('target-body');
+  const tr = document.createElement('tr');
+  ['Giocatore','Ruolo','Squadra','Budget','Priorità','Note'].forEach(label => {
+    const td = document.createElement('td');
+    td.setAttribute('contenteditable','true');
+    td.textContent = '';
+    tr.appendChild(td);
+  });
+  tbody.appendChild(tr);
+}
+
+async function pubblicaSuGitHub() {
+  const token = localStorage.getItem('gh_token');
+  if (!token) {
+    const t = prompt('Inserisci il tuo GitHub Token PAT:');
+    if (!t) return;
+    localStorage.setItem('gh_token', t);
+  }
+  const tk = localStorage.getItem('gh_token');
+  const headers = {'Authorization':'token '+tk,'Content-Type':'application/json','Accept':'application/vnd.github+json'};
+  const url = 'https://api.github.com/repos/'+GH_REPO+'/contents/'+GH_FILE;
+  try {
+    const getR = await fetch(url,{headers});
+    const fileData = getR.ok ? await getR.json() : null;
+    const sha = fileData?.sha;
+    const encoded = btoa(unescape(encodeURIComponent(document.documentElement.outerHTML)));
+    const pushR = await fetch(url,{method:'PUT',headers,body:JSON.stringify({message:'Aggiorna strategia: ${nome}',content:encoded,sha})});
+    if (pushR.ok) alert('✅ Pubblicato!\\n\\n'+GH_PAGES);
+    else { const e=await pushR.json(); alert('❌ Errore: '+e.message); }
+  } catch(e) { alert('❌ '+e.message); }
+}
+<\/script>
+</body>
+</html>`;
+}
+
+async function pubblicaSuGitHub() {
+  const token = localStorage.getItem('gh_token');
+  if (!token) {
+    const t = prompt('Inserisci il tuo GitHub Token PAT:');
+    if (!t) return;
+    localStorage.setItem('gh_token', t);
+  }
+  const tk = localStorage.getItem('gh_token');
+  const headers = {'Authorization':'token '+tk,'Content-Type':'application/json','Accept':'application/vnd.github+json'};
+  const url = `https://api.github.com/repos/${GH_REPO}/contents/${GH_FOLDER}/index.html`;
+  try {
+    const getR = await fetch(url,{headers});
+    const fileData = getR.ok ? await getR.json() : null;
+    const sha = fileData?.sha;
+    const encoded = btoa(unescape(encodeURIComponent(document.documentElement.outerHTML)));
+    const pushR = await fetch(url,{method:'PUT',headers,body:JSON.stringify({message:'Aggiorna indice Strategie ASTA',content:encoded,sha})});
+    if (pushR.ok) alert('✅ Pubblicato!\n\nhttps://fabmiscia.github.io/Il-Mister-Fabry/Strategie%20ASTA/index.html');
+    else { const e=await pushR.json(); alert('❌ Errore: '+e.message); }
+  } catch(e) { alert('❌ '+e.message); }
+}
+
+render();
+</script>
+</body>
+</html>
