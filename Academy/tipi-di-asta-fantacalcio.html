@@ -1,0 +1,596 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tutti i tipi di asta al fantacalcio: quali scegliere, pro e contro – Il Mister Fabry Academy</title>
+<style>
+* { margin:0; padding:0; box-sizing:border-box; }
+
+:root {
+  --neon: #b0ff00;
+  --bg: #0d0d0d;
+  --card: #111;
+  --border: #1e1e1e;
+  --text: #ddd;
+  --muted: #666;
+  --pro: #22c55e;
+  --contro: #ef4444;
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: 17px;
+  line-height: 1.85;
+  padding-bottom: 80px;
+}
+
+/* ── TOOLBAR ── */
+.toolbar {
+  position: sticky; top: 0; z-index: 100;
+  background: #0a0a0a;
+  border-bottom: 1px solid #1a1a1a;
+  padding: 10px 20px;
+  display: flex; align-items: center; gap: 10px; flex-wrap: wrap;
+  font-family: Arial, sans-serif;
+}
+.toolbar-brand { font-weight: 900; font-size: 13px; color: var(--neon); letter-spacing: 1px; }
+.tbtn {
+  background: #1a1a1a; color: #ccc; border: 1px solid #2a2a2a;
+  padding: 6px 14px; border-radius: 6px; cursor: pointer;
+  font-size: 12px; font-weight: 700; font-family: Arial, sans-serif; transition: all .15s;
+}
+.tbtn:hover { border-color: var(--neon); color: var(--neon); }
+.tbtn-gh {
+  margin-left: auto; background: #161b22; color: #ccc; border: 1px solid #2a2a2a;
+  padding: 6px 14px; border-radius: 6px; cursor: pointer;
+  font-size: 12px; font-weight: 700; font-family: Arial, sans-serif;
+  display: inline-flex; align-items: center; gap: 6px; transition: all .15s;
+}
+.tbtn-gh:hover { border-color: var(--neon); color: var(--neon); }
+
+/* ── LAYOUT ── */
+.wrap { max-width: 800px; margin: 0 auto; padding: 0 24px; }
+
+/* ── HEADER ── */
+.article-header { padding: 56px 0 40px; border-bottom: 1px solid var(--border); margin-bottom: 48px; }
+.category { font-family: Arial, sans-serif; font-size: 11px; font-weight: 900; letter-spacing: 3px; text-transform: uppercase; color: var(--neon); margin-bottom: 14px; }
+.article-title { font-family: 'Arial Black', Arial, sans-serif; font-size: clamp(24px, 4vw, 40px); font-weight: 900; color: #fff; line-height: 1.15; margin-bottom: 16px; }
+.article-sub { font-size: 19px; color: var(--muted); font-style: italic; margin-bottom: 20px; line-height: 1.5; }
+.article-meta { font-family: Arial, sans-serif; font-size: 13px; color: var(--muted); display: flex; align-items: center; gap: 14px; flex-wrap: wrap; }
+
+/* ── INTRO ── */
+.intro { margin-bottom: 52px; }
+.intro p { margin-bottom: 18px; }
+
+/* ── TIPO CARD ── */
+.tipo-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 32px 36px;
+  margin-bottom: 36px;
+}
+.tipo-header { display: flex; align-items: flex-start; gap: 18px; margin-bottom: 20px; }
+.tipo-icon { font-size: 36px; flex-shrink: 0; line-height: 1; }
+.tipo-info { flex: 1; }
+.tipo-numero { font-family: Arial, sans-serif; font-size: 10px; font-weight: 900; letter-spacing: 3px; color: var(--neon); text-transform: uppercase; margin-bottom: 4px; }
+.tipo-nome { font-family: 'Arial Black', Arial, sans-serif; font-size: 22px; font-weight: 900; color: #fff; line-height: 1.2; margin-bottom: 6px; }
+.tipo-tags { display: flex; gap: 8px; flex-wrap: wrap; }
+.tag { font-family: Arial, sans-serif; font-size: 11px; font-weight: 700; padding: 3px 10px; border-radius: 20px; letter-spacing: .5px; }
+.tag-durata { background: #1a1a2e; color: #818cf8; border: 1px solid #312e81; }
+.tag-strategia { background: #1a2e1a; color: #86efac; border: 1px solid #14532d; }
+.tag-divertimento { background: #2e1a1a; color: #fca5a5; border: 1px solid #7f1d1d; }
+
+.tipo-desc { margin-bottom: 24px; color: var(--text); }
+
+.pro-contro { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 20px; }
+.pro-box, .contro-box {
+  border-radius: 10px; padding: 16px 20px;
+}
+.pro-box { background: rgba(34,197,94,.07); border: 1px solid rgba(34,197,94,.2); }
+.contro-box { background: rgba(239,68,68,.07); border: 1px solid rgba(239,68,68,.2); }
+.box-title { font-family: Arial, sans-serif; font-size: 11px; font-weight: 900; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 10px; }
+.pro-box .box-title { color: var(--pro); }
+.contro-box .box-title { color: var(--contro); }
+.box-list { list-style: none; display: flex; flex-direction: column; gap: 6px; font-size: 14px; }
+.box-list li { padding-left: 14px; position: relative; }
+.pro-box .box-list li::before { content: '✓'; position: absolute; left: 0; color: var(--pro); font-weight: 900; }
+.contro-box .box-list li::before { content: '✗'; position: absolute; left: 0; color: var(--contro); font-weight: 900; }
+
+.consiglio-mister {
+  background: rgba(176,255,0,.05);
+  border: 1px solid rgba(176,255,0,.15);
+  border-radius: 10px;
+  padding: 14px 18px;
+  font-size: 14px;
+  display: flex; gap: 10px; align-items: flex-start;
+}
+.consiglio-mister .cm-icon { font-size: 18px; flex-shrink: 0; }
+.consiglio-mister .cm-text { color: #ccc; }
+.consiglio-mister strong { color: var(--neon); }
+
+/* ── TABELLA ── */
+.table-wrap { overflow-x: auto; margin: 48px 0; }
+table { width: 100%; border-collapse: collapse; font-family: Arial, sans-serif; font-size: 13px; }
+th { background: #111; color: var(--neon); font-size: 10px; letter-spacing: 2px; text-transform: uppercase; padding: 12px 16px; text-align: left; border-bottom: 2px solid var(--border); }
+td { padding: 12px 16px; border-bottom: 1px solid var(--border); color: var(--text); }
+tr:hover td { background: rgba(255,255,255,.02); }
+.dot-alto { color: #22c55e; font-weight: 900; }
+.dot-medio { color: #f59e0b; font-weight: 900; }
+.dot-basso { color: #ef4444; font-weight: 900; }
+
+/* ── DIVIDER ── */
+hr { border: none; border-top: 1px solid var(--border); margin: 48px 0; }
+
+/* ── GH OVERLAY ── */
+#gh-overlay { display:none; position:fixed; inset:0; background:rgba(0,0,0,.75); z-index:9999; align-items:center; justify-content:center; font-family:Arial,sans-serif; }
+#gh-box { background:#111; border:2px solid var(--neon); border-radius:14px; padding:32px 36px; max-width:440px; width:90%; text-align:center; }
+#gh-icon { font-size:34px; margin-bottom:10px; }
+#gh-status { font-size:17px; font-weight:700; color:#fff; margin-bottom:8px; }
+#gh-detail { font-size:13px; color:var(--muted); min-height:18px; margin-bottom:16px; }
+#gh-link-wrap { display:none; margin-bottom:14px; }
+#gh-link { color:var(--neon); font-size:12px; word-break:break-all; }
+#gh-close-btn { display:none; background:#1a1a1a; color:#fff; border:1px solid #333; padding:8px 22px; border-radius:8px; cursor:pointer; font-size:13px; font-family:Arial,sans-serif; }
+
+/* ── RESPONSIVE ── */
+@media (max-width: 600px) {
+  .tipo-card { padding: 22px 18px; }
+  .pro-contro { grid-template-columns: 1fr; }
+  .tipo-header { flex-direction: column; gap: 10px; }
+  .tbtn-gh { margin-left: 0; }
+}
+</style>
+</head>
+<body>
+
+<!-- TOOLBAR -->
+<div class="toolbar">
+  <span class="toolbar-brand">🎯 IL MISTER FABRY · ACADEMY</span>
+  <button class="tbtn" onclick="toggleEdit()" id="btn-edit">✏️ Modifica</button>
+  <button class="tbtn" onclick="salvaLocale()">💾 Salva</button>
+  <button class="tbtn-gh" id="gh-btn" onclick="pubblicaGitHub()">
+    <svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
+    🚀 Pubblica su GitHub
+  </button>
+</div>
+
+<div class="wrap">
+
+<!-- HEADER -->
+<header class="article-header">
+  <div class="category" contenteditable="false">Academy · Guida Completa</div>
+  <h1 class="article-title" contenteditable="false">Tutti i tipi di asta al fantacalcio: quali scegliere, pro e contro</h1>
+  <p class="article-sub" contenteditable="false">Dalla chiamata libera all'asta random Mantra, dal draft alle buste chiuse: tutto quello che devi sapere per scegliere il formato giusto per la tua lega.</p>
+  <div class="article-meta">
+    <span>Il Mister Fabry</span>
+    <span>·</span>
+    <span>Giugno 2026</span>
+    <span>·</span>
+    <span>📚 Academy</span>
+  </div>
+</header>
+
+<!-- INTRO -->
+<div class="intro">
+  <p contenteditable="false">L'asta è il momento più atteso dell'anno per ogni fantallenatore: è lì che si costruisce la rosa, si fanno gli affari, si commettono gli errori fatali. Ma non esiste un solo modo di fare l'asta — esistono formati diversi, ognuno con le sue regole, la sua durata e il suo livello di strategia. Scegliere quello sbagliato può rovinare l'esperienza a tutta la lega.</p>
+  <p contenteditable="false">In questa guida trovi tutti i tipi di asta, come funzionano, i pro e i contro, e il consiglio del Mister su quando usarli.</p>
+</div>
+
+<!-- 1. CHIAMATA LIBERA -->
+<div class="tipo-card">
+  <div class="tipo-header">
+    <div class="tipo-icon">🎤</div>
+    <div class="tipo-info">
+      <div class="tipo-numero">Tipo 01</div>
+      <div class="tipo-nome" contenteditable="false">Asta a Chiamata Libera</div>
+      <div class="tipo-tags">
+        <span class="tag tag-durata">⏱ 8–12 ore</span>
+        <span class="tag tag-strategia">🧠 Strategia Alta</span>
+        <span class="tag tag-divertimento">🔥 Divertimento Massimo</span>
+      </div>
+    </div>
+  </div>
+  <p class="tipo-desc" contenteditable="false">Il formato classico per eccellenza. Ogni fantallenatore, a rotazione, può chiamare qualsiasi giocatore del listone senza vincoli di ruolo o ordine. Chi vuole un giocatore rilancia, e vince chi offre di più. È la forma più libera e imprevedibile — puoi usare nomi esca per logorare il budget degli avversari, puoi chiamare un giocatore conteso al momento sbagliato per farlo pagare caro a un rivale. Richiede grande concentrazione per tutta la durata.</p>
+  <div class="pro-contro">
+    <div class="pro-box">
+      <div class="box-title">✅ Pro</div>
+      <ul class="box-list">
+        <li contenteditable="false">Massima libertà strategica</li>
+        <li contenteditable="false">Nomi esca per logorare i budget rivali</li>
+        <li contenteditable="false">Adrenalina e colpi di scena continui</li>
+        <li contenteditable="false">Ogni chiamata è una decisione tattica</li>
+      </ul>
+    </div>
+    <div class="contro-box">
+      <div class="box-title">❌ Contro</div>
+      <ul class="box-list">
+        <li contenteditable="false">Durata lunghissima (8–12 ore)</li>
+        <li contenteditable="false">Richiede disponibilità di tempo</li>
+        <li contenteditable="false">Rallentamenti negli ultimi turni</li>
+        <li contenteditable="false">Rischio stanchezza nelle fasi finali</li>
+      </ul>
+    </div>
+  </div>
+  <div class="consiglio-mister">
+    <div class="cm-icon">✏️</div>
+    <div class="cm-text" contenteditable="false"><strong>Consiglio del Mister:</strong> Il formato ideale per leghe di amici affiatati con tutta la giornata libera. Preparati una lista di priorità per ruolo, tieni d'occhio il budget degli avversari e non esitare a usare un'esca su un giocatore che sai essere conteso — ti fa risparmiare crediti e li fa spendere di più.</div>
+  </div>
+</div>
+
+<!-- 2. ORDINE ALFABETICO -->
+<div class="tipo-card">
+  <div class="tipo-header">
+    <div class="tipo-icon">🔤</div>
+    <div class="tipo-info">
+      <div class="tipo-numero">Tipo 02</div>
+      <div class="tipo-nome" contenteditable="false">Asta in Ordine Alfabetico</div>
+      <div class="tipo-tags">
+        <span class="tag tag-durata">⏱ 4–6 ore</span>
+        <span class="tag tag-strategia">🧠 Strategia Media</span>
+        <span class="tag tag-divertimento">🔥 Divertimento Medio</span>
+      </div>
+    </div>
+  </div>
+  <p class="tipo-desc" contenteditable="false">I giocatori vengono chiamati seguendo l'ordine alfabetico del listone, suddiviso per ruoli (prima i portieri, poi i difensori, ecc.). Non c'è libertà di chiamata: il presidente o il software scorre la lista e ogni giocatore viene messo all'asta nell'ordine stabilito. È prevedibile, ma consente una pianificazione accurata del budget.</p>
+  <div class="pro-contro">
+    <div class="pro-box">
+      <div class="box-title">✅ Pro</div>
+      <ul class="box-list">
+        <li contenteditable="false">Pianificazione accurata della spesa</li>
+        <li contenteditable="false">Sai in anticipo quando arriverà il tuo obiettivo</li>
+        <li contenteditable="false">Durata contenuta (4–6 ore)</li>
+        <li contenteditable="false">Facile da gestire anche senza software</li>
+      </ul>
+    </div>
+    <div class="contro-box">
+      <div class="box-title">❌ Contro</div>
+      <ul class="box-list">
+        <li contenteditable="false">Nessun elemento sorpresa</li>
+        <li contenteditable="false">Competizione feroce sulle lettere A–C</li>
+        <li contenteditable="false">Calo di attenzione nei ruoli meno affollati</li>
+        <li contenteditable="false">Impossibile usare tattiche di disturbo</li>
+      </ul>
+    </div>
+  </div>
+  <div class="consiglio-mister">
+    <div class="cm-icon">✏️</div>
+    <div class="cm-text" contenteditable="false"><strong>Consiglio del Mister:</strong> Studia il listone in anticipo e segna esattamente in quale "blocco" alfabetico cadono i tuoi obiettivi. Tieni budget di riserva per i giocatori nelle ultime lettere — spesso ci sono affari enormi perché gli altri hanno esaurito i crediti.</div>
+  </div>
+</div>
+
+<!-- 3. RANDOM -->
+<div class="tipo-card">
+  <div class="tipo-header">
+    <div class="tipo-icon">🎲</div>
+    <div class="tipo-info">
+      <div class="tipo-numero">Tipo 03</div>
+      <div class="tipo-nome" contenteditable="false">Asta Random (Casuale)</div>
+      <div class="tipo-tags">
+        <span class="tag tag-durata">⏱ 4–5 ore</span>
+        <span class="tag tag-strategia">🧠 Strategia Adattiva</span>
+        <span class="tag tag-divertimento">🔥 Divertimento Alto</span>
+      </div>
+    </div>
+  </div>
+  <p class="tipo-desc" contenteditable="false">Il software estrae casualmente i giocatori dal listone, applicando i filtri impostati (ruolo, squadra, fascia di prezzo). Qualsiasi calciatore può uscire in qualsiasi momento: puoi trovare Osimhen al secondo estratto come un baby sconosciuto. È il formato preferito nel Mantra perché si adatta bene alla varietà di ruoli e costringe tutti a restare attenti dall'inizio alla fine — non puoi mai abbassare la guardia.</p>
+  <div class="pro-contro">
+    <div class="pro-box">
+      <div class="box-title">✅ Pro</div>
+      <ul class="box-list">
+        <li contenteditable="false">Massima imprevedibilità, attenzione sempre alta</li>
+        <li contenteditable="false">Ottimi affari nelle ultime fasi</li>
+        <li contenteditable="false">Tutti partecipano attivamente fino alla fine</li>
+        <li contenteditable="false">Perfetto per il Mantra con tanti ruoli</li>
+      </ul>
+    </div>
+    <div class="contro-box">
+      <div class="box-title">❌ Contro</div>
+      <ul class="box-list">
+        <li contenteditable="false">Impossibile pianificare in anticipo</li>
+        <li contenteditable="false">Nessun ruolo per i nomi esca</li>
+        <li contenteditable="false">Il piano di gioco cambia continuamente</li>
+        <li contenteditable="false">Richiede prontezza di reazione costante</li>
+      </ul>
+    </div>
+  </div>
+  <div class="consiglio-mister">
+    <div class="cm-icon">✏️</div>
+    <div class="cm-text" contenteditable="false"><strong>Consiglio del Mister:</strong> Nel random la chiave è la gestione del budget. Tieni sempre una riserva di crediti — i veri affari arrivano a fine asta quando gli altri sono a secco. Monitora quanto hanno speso gli avversari e aspetta che siano in difficoltà prima di rilanciate sui tuoi obiettivi primari.</div>
+  </div>
+</div>
+
+<!-- 4. RANDOM MANTRA -->
+<div class="tipo-card" style="border-color: rgba(176,255,0,.25);">
+  <div class="tipo-header">
+    <div class="tipo-icon">⚽</div>
+    <div class="tipo-info">
+      <div class="tipo-numero" style="color:#b0ff00;">Tipo 03b · Focus Mantra</div>
+      <div class="tipo-nome" contenteditable="false">Asta Random nel Mantra</div>
+      <div class="tipo-tags">
+        <span class="tag tag-durata">⏱ 4–6 ore</span>
+        <span class="tag tag-strategia">🧠 Strategia Molto Alta</span>
+        <span class="tag tag-divertimento">🔥 Divertimento Alto</span>
+      </div>
+    </div>
+  </div>
+  <p class="tipo-desc" contenteditable="false">Nel Mantra ogni giocatore ha ruoli multipli (es. Theo Hernández è Ds/E — difensore sinistro ed esterno di centrocampo). Questo rende l'asta random particolarmente adatta: i ruoli specifici rendono quasi impossibile pianificare in ordine alfabetico, mentre il random mantiene alta la tensione e permette di trovare giocatori polivalenti a prezzi convenienti. Piattaforme come Fantalab e Fantacalcio.it supportano nativamente questa modalità con filtri per ruolo Mantra.</p>
+  <div class="pro-contro">
+    <div class="pro-box">
+      <div class="box-title">✅ Pro</div>
+      <ul class="box-list">
+        <li contenteditable="false">Perfetto per la complessità dei ruoli Mantra</li>
+        <li contenteditable="false">Filtrabile per ruolo specifico (Dd, Ds, M, T, ecc.)</li>
+        <li contenteditable="false">Giocatori polivalenti spesso sottovalutati</li>
+        <li contenteditable="false">Nessuno sa cosa uscirà — nessun vantaggio a priori</li>
+      </ul>
+    </div>
+    <div class="contro-box">
+      <div class="box-title">❌ Contro</div>
+      <ul class="box-list">
+        <li contenteditable="false">Senza software dedicato è impossibile da gestire</li>
+        <li contenteditable="false">Richiede conoscenza approfondita dei ruoli Mantra</li>
+        <li contenteditable="false">Rischio di ritrovarsi senza un ruolo coperto</li>
+        <li contenteditable="false">Più stressante dell'alfabetico classico</li>
+      </ul>
+    </div>
+  </div>
+  <div class="consiglio-mister">
+    <div class="cm-icon">✏️</div>
+    <div class="cm-text" contenteditable="false"><strong>Consiglio del Mister:</strong> Prima dell'asta random Mantra, definisci le priorità per reparto (quante coppie di terzini, quante mezzali, quanti trequartisti) e tieni una lista di backup per ogni ruolo. Il random ti sorprenderà sempre — l'importante è non farsi trovare senza portieri o senza un centravanti titolare.</div>
+  </div>
+</div>
+
+<!-- 5. BUSTE CHIUSE -->
+<div class="tipo-card">
+  <div class="tipo-header">
+    <div class="tipo-icon">✉️</div>
+    <div class="tipo-info">
+      <div class="tipo-numero">Tipo 04</div>
+      <div class="tipo-nome" contenteditable="false">Asta a Buste Chiuse</div>
+      <div class="tipo-tags">
+        <span class="tag tag-durata">⏱ 2–3 ore</span>
+        <span class="tag tag-strategia">🧠 Strategia Pura</span>
+        <span class="tag tag-divertimento">🔥 Divertimento Basso</span>
+      </div>
+    </div>
+  </div>
+  <p class="tipo-desc" contenteditable="false">Ogni fantallenatore prepara privatamente la propria lista completa di offerte per ogni giocatore, senza vedere le offerte degli altri. Tutte le buste vengono consegnate al presidente (o inserite nel software) entro la scadenza, dopodiché si aprono in una volta sola e vince chi ha offerto di più per ogni giocatore. Se due partecipanti offrono la stessa cifra, generalmente si ripete l'asta solo per quel giocatore. È il formato più rapido in assoluto.</p>
+  <div class="pro-contro">
+    <div class="pro-box">
+      <div class="box-title">✅ Pro</div>
+      <ul class="box-list">
+        <li contenteditable="false">Velocissima (2–3 ore o anche meno)</li>
+        <li contenteditable="false">Pura strategia psicologica sulle offerte</li>
+        <li contenteditable="false">Possibilità di fare affari enormi</li>
+        <li contenteditable="false">Si può fare anche a distanza, in modo asincrono</li>
+      </ul>
+    </div>
+    <div class="contro-box">
+      <div class="box-title">❌ Contro</div>
+      <ul class="box-list">
+        <li contenteditable="false">Zero interazione e adrenalina durante l'asta</li>
+        <li contenteditable="false">Rischio di sovrastimare e spendere troppo su un singolo</li>
+        <li contenteditable="false">Squilibri enormi nella distribuzione dei giocatori</li>
+        <li contenteditable="false">Gestione del budget molto difficile senza info sugli avversari</li>
+      </ul>
+    </div>
+  </div>
+  <div class="consiglio-mister">
+    <div class="cm-icon">✏️</div>
+    <div class="cm-text" contenteditable="false"><strong>Consiglio del Mister:</strong> Nelle buste chiuse la tentazione è sempre quella di offrire troppo per sicurezza. Invece, studia le medie storiche di spesa della tua lega e offri 1–2 crediti sopra la cifra che pensi offriranno gli altri — non di più. Dividi il budget per fascia (top, medi, low cost) prima di iniziare a compilare le offerte.</div>
+  </div>
+</div>
+
+<!-- 6. DRAFT -->
+<div class="tipo-card">
+  <div class="tipo-header">
+    <div class="tipo-icon">🐍</div>
+    <div class="tipo-info">
+      <div class="tipo-numero">Tipo 05</div>
+      <div class="tipo-nome" contenteditable="false">Asta Draft (a Serpentina)</div>
+      <div class="tipo-tags">
+        <span class="tag tag-durata">⏱ 3–4 ore</span>
+        <span class="tag tag-strategia">🧠 Strategia Media</span>
+        <span class="tag tag-divertimento">🔥 Divertimento Medio-Alto</span>
+      </div>
+    </div>
+  </div>
+  <p class="tipo-desc" contenteditable="false">Tecnicamente non è un'asta ma un draft: non ci sono crediti né rilanci. Si parte con una lottery (sorteggio) che determina l'ordine di scelta, poi ogni fantallenatore sceglie a turno un giocatore dal listone. Il "serpentino" inverte l'ordine ad ogni giro: chi ha scelto per primo al primo turno sceglie per ultimo al secondo, e così via. Questo meccanismo di riequilibrio garantisce la rosa finale più equilibrata di tutti i formati. Molto usato oltreoceano (stile NFL/NBA draft) e in crescita anche in Italia.</p>
+  <div class="pro-contro">
+    <div class="pro-box">
+      <div class="box-title">✅ Pro</div>
+      <ul class="box-list">
+        <li contenteditable="false">Massimo equilibrio tra tutte le rose</li>
+        <li contenteditable="false">Nessun rischio di ritrovarsi senza budget</li>
+        <li contenteditable="false">Gestione semplice, niente calcoli di crediti</li>
+        <li contenteditable="false">Campionato più equilibrato e competitivo</li>
+      </ul>
+    </div>
+    <div class="contro-box">
+      <div class="box-title">❌ Contro</div>
+      <ul class="box-list">
+        <li contenteditable="false">Nessuna strategia economica (non ci sono crediti)</li>
+        <li contenteditable="false">Meno adrenalina rispetto alle aste tradizionali</li>
+        <li contenteditable="false">Chi pesca male alla lottery parte svantaggiato sui top</li>
+        <li contenteditable="false">Meno popolare in Italia, richiede software dedicato</li>
+      </ul>
+    </div>
+  </div>
+  <div class="consiglio-mister">
+    <div class="cm-icon">✏️</div>
+    <div class="cm-text" contenteditable="false"><strong>Consiglio del Mister:</strong> Nel draft la posizione della lottery è tutto per il primo giro. Se esci tardi, non disperare: con la serpentina avrai due scelte consecutive tra un giro e l'altro. Punta ai migliori disponibili per ruolo critico (attaccanti prima), non ai nomi più famosi — spesso un centrocampista da bonus vale più di un trequartista bloccato.</div>
+  </div>
+</div>
+
+<hr>
+
+<!-- TABELLA COMPARATIVA -->
+<h2 style="font-family:'Arial Black',Arial,sans-serif;font-size:22px;font-weight:900;color:#fff;margin-bottom:24px;" contenteditable="false">Tabella comparativa</h2>
+
+<div class="table-wrap">
+  <table>
+    <thead>
+      <tr>
+        <th>Formato</th>
+        <th>Durata</th>
+        <th>Strategia</th>
+        <th>Divertimento</th>
+        <th>Ideale per</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>Chiamata Libera</strong></td>
+        <td>8–12 ore</td>
+        <td><span class="dot-alto">●●●</span> Alta</td>
+        <td><span class="dot-alto">●●●</span> Massimo</td>
+        <td contenteditable="false">Leghe di amici con tutto il giorno</td>
+      </tr>
+      <tr>
+        <td><strong>Ordine Alfabetico</strong></td>
+        <td>4–6 ore</td>
+        <td><span class="dot-medio">●●○</span> Media</td>
+        <td><span class="dot-medio">●●○</span> Medio</td>
+        <td contenteditable="false">Chi vuole pianificare in anticipo</td>
+      </tr>
+      <tr>
+        <td><strong>Random</strong></td>
+        <td>4–5 ore</td>
+        <td><span class="dot-medio">●●○</span> Adattiva</td>
+        <td><span class="dot-alto">●●●</span> Alto</td>
+        <td contenteditable="false">Leghe Mantra, massima imprevedibilità</td>
+      </tr>
+      <tr>
+        <td><strong>Buste Chiuse</strong></td>
+        <td>2–3 ore</td>
+        <td><span class="dot-alto">●●●</span> Pura</td>
+        <td><span class="dot-basso">●○○</span> Basso</td>
+        <td contenteditable="false">Leghe con poco tempo o a distanza</td>
+      </tr>
+      <tr>
+        <td><strong>Draft (Serpentina)</strong></td>
+        <td>3–4 ore</td>
+        <td><span class="dot-medio">●●○</span> Media</td>
+        <td><span class="dot-medio">●●○</span> Medio-Alto</td>
+        <td contenteditable="false">Leghe che vogliono massimo equilibrio</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<hr>
+
+<p style="margin-bottom:18px;" contenteditable="false">Non esiste il formato perfetto in assoluto — esiste quello perfetto per la tua lega. Se giocate in 8 persone molto competitive con tutta la domenica libera, la chiamata libera è imbattibile. Se avete poco tempo o qualcuno è fuori città, le buste chiuse o il random sono soluzioni più pratiche. Il draft è ideale se volete un campionato super equilibrato e meno dipendente dalla fortuna del budget.</p>
+
+<p contenteditable="false">Qualunque formato scelgiate: <strong style="color:#fff;">preparatevi prima</strong>. Chi arriva all'asta con una lista di priorità per ruolo, una divisione del budget pianificata e la conoscenza delle debolezze della squadra avversaria partirà sempre avvantaggiato — indipendentemente dal formato.</p>
+
+</div><!-- /wrap -->
+
+<!-- GH OVERLAY -->
+<div id="gh-overlay" onclick="if(event.target===this)chiudiOverlay()">
+  <div id="gh-box">
+    <div id="gh-icon">🚀</div>
+    <div id="gh-status">Pubblica su GitHub Pages</div>
+    <div id="gh-detail"></div>
+    <div id="gh-link-wrap"><a id="gh-link" href="#" target="_blank"></a></div>
+    <button id="gh-close-btn" onclick="chiudiOverlay()">✕ Chiudi</button>
+  </div>
+</div>
+
+<script>
+const GH_REPO   = 'fabmiscia/Il-Mister-Fabry';
+const GH_PATH   = 'Academy/tipi-di-asta-fantacalcio.html';
+const PAGES_URL = 'https://fabmiscia.github.io/Il-Mister-Fabry/Academy/tipi-di-asta-fantacalcio.html';
+
+let editMode = false;
+function toggleEdit() {
+  editMode = !editMode;
+  const btn = document.getElementById('btn-edit');
+  document.querySelectorAll('[contenteditable]').forEach(el => {
+    el.contentEditable = editMode ? 'true' : 'false';
+  });
+  btn.textContent = editMode ? '🔒 Blocca' : '✏️ Modifica';
+  btn.style.color = editMode ? '#b0ff00' : '';
+  btn.style.borderColor = editMode ? '#b0ff00' : '';
+}
+
+async function salvaLocale() {
+  const html = '<!DOCTYPE html>\n' + document.documentElement.outerHTML;
+  const blob = new Blob([html], {type:'text/html'});
+  try {
+    if (window.showSaveFilePicker) {
+      const fh = await window.showSaveFilePicker({suggestedName:'tipi-di-asta-fantacalcio.html', types:[{description:'HTML',accept:{'text/html':['.html']}}]});
+      const w = await fh.createWritable(); await w.write(blob); await w.close();
+      alert('✅ Salvato!');
+    } else throw new Error();
+  } catch(e) {
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob); a.download = 'tipi-di-asta-fantacalcio.html'; a.click();
+  }
+}
+
+async function pubblicaGitHub() {
+  let token = localStorage.getItem('gh_pat');
+  if (!token) {
+    token = prompt('GitHub Personal Access Token:');
+    if (!token) return;
+    localStorage.setItem('gh_pat', token.trim());
+  }
+  token = token.trim();
+
+  const ov = document.getElementById('gh-overlay');
+  const icon = document.getElementById('gh-icon');
+  const status = document.getElementById('gh-status');
+  const detail = document.getElementById('gh-detail');
+  const linkWrap = document.getElementById('gh-link-wrap');
+  const closeBtn = document.getElementById('gh-close-btn');
+  const btn = document.getElementById('gh-btn');
+
+  ov.style.display = 'flex'; icon.textContent = '⏳';
+  status.textContent = 'Pubblicazione in corso…'; detail.textContent = 'Preparo il contenuto…';
+  linkWrap.style.display = 'none'; closeBtn.style.display = 'none'; btn.disabled = true;
+
+  try {
+    ov.style.display = 'none';
+    const htmlContent = '<!DOCTYPE html>\n' + document.documentElement.outerHTML;
+    ov.style.display = 'flex';
+    const apiUrl = `https://api.github.com/repos/${GH_REPO}/contents/${GH_PATH.split('/').map(encodeURIComponent).join('/')}`;
+    const headers = {'Authorization':`token ${token}`,'Accept':'application/vnd.github+json','Content-Type':'application/json'};
+    detail.textContent = 'Verifico file esistente…';
+    let sha = null;
+    const check = await fetch(apiUrl, {headers});
+    if (check.ok) sha = (await check.json()).sha;
+    const b64 = btoa(unescape(encodeURIComponent(htmlContent)));
+    detail.textContent = 'Carico su GitHub…';
+    const res = await fetch(apiUrl, {
+      method:'PUT', headers,
+      body: JSON.stringify({message: sha ? 'Aggiorna guida tipi di asta' : 'Aggiunge guida tipi di asta', content:b64, ...(sha?{sha}:{})})
+    });
+    if (res.ok) {
+      icon.textContent = '✅'; status.textContent = 'Pubblicato!'; status.style.color = '#b0ff00';
+      detail.textContent = 'Disponibile su GitHub Pages (1–2 min):';
+      document.getElementById('gh-link').href = PAGES_URL;
+      document.getElementById('gh-link').textContent = PAGES_URL;
+      linkWrap.style.display = 'block';
+    } else {
+      const err = await res.json(); throw new Error(err.message || 'Errore');
+    }
+  } catch(e) {
+    icon.textContent = '❌'; status.textContent = 'Errore'; status.style.color = '#f87171';
+    detail.textContent = e.message;
+    if (e.message?.includes('401')) localStorage.removeItem('gh_pat');
+  } finally {
+    closeBtn.style.display = 'inline-block'; btn.disabled = false;
+  }
+}
+
+function chiudiOverlay() {
+  document.getElementById('gh-overlay').style.display = 'none';
+  document.getElementById('gh-status').style.color = '';
+}
+</script>
+</body>
+</html>
