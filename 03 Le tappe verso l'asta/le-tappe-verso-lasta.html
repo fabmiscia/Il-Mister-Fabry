@@ -702,6 +702,15 @@
   <div class="hero-sub1" id="heroSub1">—</div>
   <div class="hero-sub2" id="heroSub2">—</div>
   <div class="hero-meta" id="heroMeta"></div>
+  <div style="margin-top:10px;">
+    <span id="yt-badge" style="
+      display:inline-flex;align-items:center;gap:5px;
+      background:rgba(0,0,0,.35);border:1px solid #2a4060;
+      border-radius:20px;padding:4px 12px;
+      font-family:Arial,sans-serif;font-size:.72em;
+      color:#4a6880;letter-spacing:1px;cursor:default;
+    " title="Caricamento feed YouTube…">⏳ YouTube</span>
+  </div>
 </header>
 
 <!-- STATS -->
@@ -1647,9 +1656,76 @@ function resetData() {
   setTimeout(() => document.getElementById('saveNotice').textContent = '', 2500);
 }
 
+// ── YOUTUBE SYNC ────────────────────────────────────────────────────
+const YT_CHANNEL_ID = 'UCSYqBn1Dr39j5HToloeHOkE';
+const YT_FEED = `https://www.youtube.com/feeds/videos.xml?channel_id=${YT_CHANNEL_ID}`;
+const YT_PROXY = `https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(YT_FEED)}&count=50`;
+
+// Date di inizio e fine di ogni tappa (stesso ordine di DEFAULT_TAPPE)
+const TAPPA_RANGES = [
+  { start: new Date('2026-07-01'), end: new Date('2026-07-10') },  // I  – PINZOLO
+  { start: new Date('2026-07-11'), end: new Date('2026-07-22') },  // II – DIMARO
+  { start: new Date('2026-07-23'), end: new Date('2026-07-31') },  // III– BRUNICO
+  { start: new Date('2026-08-01'), end: new Date('2026-08-07') },  // IV – AURONZO
+  { start: new Date('2026-08-08'), end: new Date('2026-08-20') },  // V  – MOENA
+  { start: new Date('2026-08-21'), end: new Date('2026-09-08') },  // VI – GIORNO DELL'ASTA
+];
+
+const MESI = ['gen','feb','mar','apr','mag','giu','lug','ago','set','ott','nov','dic'];
+
+function dataBreve(d) {
+  return `${d.getDate()} ${MESI[d.getMonth()]}`;
+}
+
+async function syncYouTube() {
+  const badge = document.getElementById('yt-badge');
+  try {
+    const resp = await fetch(YT_PROXY);
+    if (!resp.ok) return;
+    const data = await resp.json();
+    if (data.status !== 'ok' || !data.items?.length) return;
+
+    let changed = false;
+
+    data.items.forEach(item => {
+      const pub = new Date(item.pubDate);
+      const idx = TAPPA_RANGES.findIndex(r => pub >= r.start && pub <= r.end);
+      if (idx === -1) return;
+
+      const tappa = tappe[idx];
+      const dataStr = dataBreve(pub);
+
+      // Cerca un placeholder con la stessa data
+      const existing = tappa.video.find(v => v.data === dataStr);
+      if (existing) {
+        // Aggiorna il placeholder con il vero titolo e link
+        if (!existing.fromYT) {
+          existing.titolo = item.title;
+          existing.url    = item.link;
+          existing.fromYT = true;
+          changed = true;
+        }
+      } else {
+        // Aggiungi il video se non è già presente
+        if (!tappa.video.some(v => v.url === item.link)) {
+          tappa.video.push({ data: dataStr, titolo: item.title, url: item.link, top: false, fromYT: true });
+          changed = true;
+        }
+      }
+    });
+
+    if (badge) { badge.textContent = '🔴 Live'; badge.title = 'Video aggiornati dal canale YouTube'; }
+    if (changed) renderHero();
+  } catch(e) {
+    if (badge) { badge.textContent = '⚫ Offline'; badge.title = 'Feed YouTube non raggiungibile'; }
+    console.warn('YouTube sync:', e);
+  }
+}
+
 // ── INIT ──
 loadData();
 renderHero();
+syncYouTube();
 
 document.addEventListener('keydown', e => { if (e.key === 'Escape') { closePanel(); closeEditModal(); } });
 
