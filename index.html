@@ -80,7 +80,13 @@ a.card .sub { font-size:11px; font-weight:400; color:#2DB84A; letter-spacing:2px
   </div>
   <div class="page">
     <div class="sezione">
-      <div class="sezione-title"><span>&#x2022;</span> Materiali per l'Asta</div>
+      
+      <div class="sezione-title"><span>&#x2022;</span> Aggiornamenti Recenti</div>
+      <div id="recent-list" style="display:flex;flex-direction:column;gap:8px;min-height:40px;">
+        <div style="color:#444;font-size:11px;letter-spacing:2px;">Caricamento…</div>
+      </div>
+
+<div class="sezione-title"><span>&#x2022;</span> Materiali per l'Asta</div>
       <div class="cards">
         <div class="card-wrap"><a class="card" href="Nuovi arrivi Fantacalcio/index.html"><span class="icon">&#x1F50D;</span><span>Analisi Nuovi Arrivi</span><span class="sub">Nuovi Arrivi &middot; Stats &middot; Consigli</span></a><div class="card-date">aggiornato il 24 giugno 2026</div></div>
         <div class="card-wrap"><a class="card" href="fantacalcio-porte-card.html"><span class="icon">&#x1F9E4;</span><span>Porte Serie A</span><span class="sub">Analisi &middot; Spesa &middot; Appetibilit&agrave;</span></a><div class="card-date">aggiornato il 14 giugno 2026</div></div>
@@ -91,7 +97,19 @@ a.card .sub { font-size:11px; font-weight:400; color:#2DB84A; letter-spacing:2px
       </div>
     </div>
     <div class="sezione">
-      <div class="sezione-title"><span>&#x2022;</span> Fasce</div>
+            <div class="sezione-title"><span>&#x2022;</span> Il Cammino verso l'Asta</div>
+      <div class="cards" id="cards-cammino">
+        <a class="card" href="03 Le tappe verso l'asta/le-tappe-verso-lasta.html">
+          <div class="icon">🗺️</div>
+          <div class="card-wrap"><div>Le tappe verso l'asta</div><div class="sub">Mappa del ritiro</div></div>
+        </a>
+        <a class="card" href="02 Il cammino verso l'asta/11-nomi-da-riconfermare-2026-27.html">
+          <div class="icon">🎥</div>
+          <div class="card-wrap"><div>11 nomi da riconfermare</div><div class="sub">Da YouTube · Giu 2026</div></div>
+        </a>
+      </div>
+
+<div class="sezione-title"><span>&#x2022;</span> Fasce</div>
       <div class="cards">
         <div class="card-wrap"><a class="card" href="fasce-mantra-marzo.html"><span class="icon">&#x1F4CA;</span><span>Fasce Mantra</span><span class="sub">Marzo &middot; Fantacalcio 2026-27</span></a><div class="card-date">aggiornato il 22 giugno 2026</div></div>
         <div class="card-wrap"><a class="card" href="fasce-classic-marzo.html"><span class="icon">&#x1F4CB;</span><span>Fasce Classic</span><span class="sub">Marzo &middot; Fantacalcio 2026-27</span></a><div class="card-date">aggiornato il 22 giugno 2026</div></div>
@@ -169,5 +187,32 @@ async function salvaInLocale() {
     }
   });
 }</script>
+
+<script>
+(async function loadRecenti() {
+  try {
+    const r = await fetch('https://api.github.com/repos/fabmiscia/Il-Mister-Fabry/commits?per_page=8');
+    if (!r.ok) return;
+    const commits = await r.json();
+    const el = document.getElementById('recent-list');
+    if (!el) return;
+    el.innerHTML = commits.map(c => {
+      const msg = c.commit.message.split('\n')[0];
+      const date = new Date(c.commit.author.date);
+      const dateStr = date.toLocaleDateString('it-IT', {day:'2-digit',month:'short',hour:'2-digit',minute:'2-digit'});
+      return `<div style="display:flex;align-items:center;gap:12px;padding:10px 14px;background:#111;border:1px solid #1e1e1e;border-radius:8px;">
+        <span style="font-size:18px">📄</span>
+        <div style="flex:1;min-width:0">
+          <div style="color:#fff;font-size:12px;font-weight:700;letter-spacing:.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${msg}</div>
+          <div style="color:#2DB84A;font-size:10px;letter-spacing:1.5px;margin-top:3px">${dateStr}</div>
+        </div>
+      </div>`;
+    }).join('');
+  } catch(e) {
+    const el = document.getElementById('recent-list');
+    if (el) el.innerHTML = '<div style="color:#333;font-size:11px">Feed non disponibile</div>';
+  }
+})();
+</script>
 </body>
 </html>
