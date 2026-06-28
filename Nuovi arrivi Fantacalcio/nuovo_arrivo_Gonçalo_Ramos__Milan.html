@@ -1,0 +1,1643 @@
+<!DOCTYPE html>
+<html lang="it"><head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gonçalo Ramos – Card Fantacalcio</title>
+<style>
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+
+body {
+  background:#141414;
+  font-family: Arial, 'Helvetica Neue', sans-serif;
+  color:#fff;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:flex-start;
+  min-height:100vh;
+  gap:14px;
+  padding:18px 20px 30px;
+}
+
+/* ── Nav ── */
+.nav {
+  display:flex;
+  gap:10px;
+  align-items:center;
+}
+.nav button {
+  background:#252525;
+  color:#ccc;
+  border:1px solid #333;
+  padding:7px 20px;
+  border-radius:20px;
+  cursor:pointer;
+  font-size:12px;
+  font-weight:700;
+  letter-spacing:.6px;
+  text-transform:uppercase;
+  transition:.15s;
+}
+.nav button:hover  { background:#2e2e2e; color:#ddd; }
+.nav button.active { background:#b0ff00; color:#000; border-color:#b0ff00; }
+
+/* ── Card ── */
+.card {
+  width:1280px;
+  height:720px;
+  overflow:hidden;
+  display:none;
+  position:relative;
+  background:#000;
+  flex-shrink:0;
+}
+.card.active { display:flex; }
+
+/* ── Export toolbar ── */
+.toolbar {
+  display:flex;
+  gap:10px;
+  align-items:center;
+  position:sticky;
+  top:0;
+  z-index:200;
+  background:#141414;
+  padding:8px 16px;
+  border-radius:30px;
+  border:1px solid #2a2a2a;
+  box-shadow:0 2px 12px rgba(0,0,0,.5);
+}
+.toolbar button {
+  background:#b0ff00;
+  color:#000;
+  border:none;
+  padding:8px 22px;
+  border-radius:20px;
+  cursor:pointer;
+  font-size:12px;
+  font-weight:800;
+  letter-spacing:.5px;
+  transition:.12s;
+}
+.toolbar button:hover { background:#d4ff55; }
+.toolbar .gh-btn {
+  background:#24292e;
+  color:#fff;
+  border:1px solid #444;
+}
+.toolbar .gh-btn:hover { background:#333; }
+.toolbar .tip {
+  color:#999;
+  font-size:11px;
+}
+
+/* ══════════════════════════════════════════════
+   SLIDE 1 – Info card
+══════════════════════════════════════════════ */
+#s1 { background:#000; }
+
+/* Foto (corpo intero visibile) */
+.photo-col {
+  width:320px;
+  min-width:320px;
+  height:720px;
+  position:relative;
+  overflow:hidden;
+  cursor:pointer;
+  background:#000;
+}
+.photo-col img.player-img {
+  width:100%;
+  height:100%;
+  object-fit:contain;
+  object-position:top center;
+  display:block;
+}
+.photo-col::after {
+  content:'';
+  position:absolute;
+  inset:0;
+  background:linear-gradient(90deg, transparent 60%, #000 100%);
+  pointer-events:none;
+}
+.photo-upload-hint {
+  position:absolute;
+  bottom:10px;
+  left:50%;
+  transform:translateX(-50%);
+  background:rgba(0,0,0,.7);
+  color:#b0ff00;
+  font-size:10px;
+  font-weight:700;
+  letter-spacing:.5px;
+  padding:5px 10px;
+  border-radius:10px;
+  pointer-events:none;
+  opacity:.6;
+}
+
+/* Info centrale */
+.info-col {
+  flex:1;
+  padding:26px 18px 18px 22px;
+  display:flex;
+  flex-direction:column;
+  min-width:0;
+}
+
+.player-name {
+  font-family:'Arial Black', Impact, sans-serif;
+  font-size:56px;
+  font-weight:900;
+  color:#b0ff00;
+  text-transform:uppercase;
+  letter-spacing:1px;
+  line-height:1;
+  margin-bottom:12px;
+  outline:none;
+  cursor:text;
+}
+
+.sub-row {
+  display:flex;
+  align-items:center;
+  margin-bottom:16px;
+  font-style:italic;
+  font-size:14.5px;
+  color:#fff;
+  gap:0;
+  flex-wrap:nowrap;
+}
+.sub-row em { color:#b0ff00; font-weight:700; font-style:normal; }
+.sub-row .pipe { margin:0 7px; color:#333; }
+
+/* Stats grid */
+.stats-list {
+  display:flex;
+  flex-direction:column;
+  flex:1;
+  gap:0;
+  overflow:hidden;
+}
+.srow {
+  display:flex;
+  align-items:center;
+  padding:6px 2px;
+  border-bottom:1px solid #161616;
+  gap:7px;
+  min-height:36px;
+}
+.srow:last-child { border-bottom:none; }
+.sic {
+  font-size:15px;
+  width:26px;
+  text-align:center;
+  flex-shrink:0;
+  line-height:1;
+}
+.sic img { height:16px; vertical-align:middle; }
+.slbl {
+  font-size:11px;
+  font-weight:700;
+  letter-spacing:.9px;
+  text-transform:uppercase;
+  color:#bbb;
+  flex:1;
+  white-space:nowrap;
+  min-width:0;
+}
+.slbl em { color:#aaa; font-style:normal; font-size:10px; }
+.sval {
+  font-size:13px;
+  font-weight:700;
+  color:#ffffff;
+  text-transform:uppercase;
+  letter-spacing:.4px;
+  text-align:right;
+  flex-shrink:0;
+  outline:none;
+  cursor:text;
+  max-width:260px;
+  text-shadow:0 0 8px rgba(255,255,255,.25);
+}
+.sval.bold-xl {
+  font-size:14.5px;
+  font-weight:900;
+  color:#ffffff;
+  letter-spacing:.6px;
+}
+
+/* Ruolo box */
+.role-col {
+  width:238px;
+  min-width:238px;
+  margin:18px 18px 18px 0;
+  background:#f2f2f2;
+  border-radius:6px;
+  display:flex;
+  flex-direction:column;
+  overflow:hidden;
+  color:#222;
+}
+.role-hdr {
+  padding:8px 12px 7px;
+  font-size:11.5px;
+  font-weight:700;
+  color:#333;
+  border-bottom:2px solid #ddd;
+  letter-spacing:.5px;
+  text-transform:uppercase;
+}
+.role-field {
+  flex:1;
+  position:relative;
+  background:#1e4d8c;
+  min-height:0;
+}
+.role-field svg {
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
+}
+.role-meta {
+  padding:7px 12px 9px;
+  font-size:10.5px;
+  color:#444;
+  line-height:1.65;
+}
+.role-meta .rl  { color:#999; font-size:10px; }
+.role-meta .rv  { font-weight:700; color:#111; outline:none; cursor:text; }
+.role-legend {
+  display:flex;
+  gap:6px;
+  flex-wrap:wrap;
+  margin-top:5px;
+  padding:0 12px 8px;
+  font-size:9.5px;
+}
+.legend-dot {
+  display:flex;
+  align-items:center;
+  gap:3px;
+  color:#aaa;
+}
+.legend-dot span.dot {
+  width:9px;
+  height:9px;
+  border-radius:50%;
+  display:inline-block;
+  border:1.5px solid rgba(0,0,0,.2);
+}
+
+/* ══════════════════════════════════════════════
+   SLIDE 2 – Statistiche stagione + carriera
+══════════════════════════════════════════════ */
+#s2 { background:#0a0a0a; }
+
+.s2-photo {
+  width:260px;
+  min-width:260px;
+  height:720px;
+  position:relative;
+  overflow:hidden;
+  cursor:pointer;
+}
+.s2-photo img {
+  width:100%;
+  height:100%;
+  object-fit:contain;
+  object-position:top center;
+}
+.s2-photo::after {
+  content:'';
+  position:absolute;
+  inset:0;
+  background:linear-gradient(90deg, transparent 60%, #0a0a0a 100%);
+  pointer-events:none;
+}
+
+.s2-body {
+  flex:1;
+  padding:20px 22px 16px 20px;
+  display:flex;
+  flex-direction:row;
+  gap:18px;
+  overflow:hidden;
+  min-width:0;
+}
+.s2-col {
+  flex:1;
+  display:flex;
+  flex-direction:column;
+  gap:12px;
+  overflow:hidden;
+  min-width:0;
+}
+.s2-col-narrow {
+  flex:0 0 280px;
+  min-width:0;
+}
+
+/* Blocco tabella */
+.tbl-block { display:flex; flex-direction:column; min-height:0; }
+.tbl-title {
+  font-size:11px;
+  font-weight:800;
+  letter-spacing:2px;
+  text-transform:uppercase;
+  color:#b0ff00;
+  padding-bottom:6px;
+  border-bottom:1px solid #1e1e1e;
+  margin-bottom:8px;
+}
+
+/* Tabella stagione corrente */
+table.stats-tbl {
+  width:100%;
+  border-collapse:collapse;
+  font-size:12px;
+}
+table.stats-tbl thead th {
+  color:#888;
+  font-size:10px;
+  letter-spacing:.7px;
+  text-transform:uppercase;
+  padding:0 10px 6px;
+  text-align:left;
+  border-bottom:1px solid #1c1c1c;
+  font-weight:700;
+}
+table.stats-tbl thead th.c { text-align:center; }
+table.stats-tbl tbody tr { border-bottom:1px solid #111; }
+table.stats-tbl tbody tr:last-child { border-bottom:none; }
+table.stats-tbl td { padding:7px 10px; vertical-align:middle; color:#fff; }
+table.stats-tbl td.num { text-align:center; color:#fff; font-size:12px; }
+table.stats-tbl td.hi { color:#fff; font-weight:700; }
+table.stats-tbl td.hi2 { color:#b0ff00; font-weight:800; font-size:14px; }
+table.stats-tbl td.comp-cell { display:flex; align-items:center; }
+table.stats-tbl td.comp-name { color:#4db6ff; font-weight:600; }
+table.stats-tbl .totals-row { background:#111; border-top:1px solid #222; }
+span.comp-name { color:#4db6ff; font-weight:600; }
+
+/* Tabella carriera – branded */
+table.career-tbl {
+  width:100%;
+  border-collapse:collapse;
+  font-size:12px;
+}
+table.career-tbl thead th {
+  color:#888;
+  font-size:9.5px;
+  letter-spacing:.7px;
+  text-transform:uppercase;
+  padding:0 10px 5px;
+  text-align:left;
+  border-bottom:1px solid #1c1c1c;
+  font-weight:700;
+}
+table.career-tbl thead th.c { text-align:center; }
+.career-row { border-bottom:1px solid #111; transition:background .12s; }
+.career-row:hover { background:#111; }
+.career-row:nth-child(even) { background:#0d0d0d; }
+.career-year { color:#b0ff00; font-weight:800; font-size:13px; padding:8px 10px; width:60px; outline:none; cursor:text; }
+.career-club { padding:8px 10px; color:#fff; font-weight:600; display:flex; align-items:center; }
+.career-club span { outline:none; cursor:text; }
+.career-comp { padding:8px 10px; color:#4db6ff; font-size:11.5px; outline:none; cursor:text; }
+.career-num  { padding:8px 10px; text-align:center; color:#fff; font-weight:700; outline:none; cursor:text; }
+.career-min  { padding:8px 10px; text-align:center; color:#ddd; font-size:11px; outline:none; cursor:text; }
+.add-row-btn {
+  margin-top:6px;
+  background:transparent;
+  border:1px dashed #333;
+  color:#444;
+  padding:5px 14px;
+  border-radius:4px;
+  cursor:pointer;
+  font-size:11px;
+  font-weight:600;
+  letter-spacing:.5px;
+  align-self:flex-start;
+  transition:.15s;
+}
+.add-row-btn:hover { border-color:#b0ff00; color:#b0ff00; }
+
+/* ══════════════════════════════════════════════
+   SLIDE 2 – tabella infortuni (in colonna destra)
+══════════════════════════════════════════════ */
+table.inj-tbl {
+  width:100%;
+  border-collapse:collapse;
+  font-size:11px;
+}
+table.inj-tbl thead th {
+  color:#888;
+  font-size:9px;
+  letter-spacing:.7px;
+  text-transform:uppercase;
+  padding:0 6px 5px;
+  text-align:left;
+  border-bottom:1px solid #1c1c1c;
+  font-weight:700;
+}
+.inj-row { border-bottom:1px solid #111; }
+.inj-row:nth-child(even) { background:#0d0d0d; }
+.inj-row td { padding:5px 6px; color:#fff; outline:none; cursor:text; font-size:11px; }
+.inj-row td:first-child { color:#b0ff00; font-weight:700; font-size:11px; width:52px; }
+.inj-row td:nth-child(2) { color:#f87171; }
+
+/* ══════════════════════════════════════════════
+   SLIDE 3 – Consigli Fantacalcio
+══════════════════════════════════════════════ */
+#s3 { background:#0a0a0a; }
+
+.s3-photo {
+  width:260px;
+  min-width:260px;
+  height:720px;
+  position:relative;
+  overflow:hidden;
+  cursor:pointer;
+}
+.s3-photo img {
+  width:100%;
+  height:100%;
+  object-fit:contain;
+  object-position:top center;
+}
+.s3-photo::after {
+  content:'';
+  position:absolute;
+  inset:0;
+  background:linear-gradient(90deg, transparent 60%, #0a0a0a 100%);
+  pointer-events:none;
+}
+
+.s3-body {
+  flex:1;
+  padding:28px 36px 28px 28px;
+  display:flex;
+  flex-direction:column;
+  gap:22px;
+  overflow:hidden;
+}
+
+.s3-header {
+  border-bottom:2px solid #b0ff00;
+  padding-bottom:12px;
+}
+.s3-badge {
+  font-size:10px;
+  font-weight:800;
+  letter-spacing:3px;
+  color:#b0ff00;
+  text-transform:uppercase;
+  margin-bottom:4px;
+}
+.s3-player {
+  font-size:26px;
+  font-weight:800;
+  letter-spacing:2px;
+  color:#fff;
+  text-transform:uppercase;
+  outline:none;
+  cursor:text;
+}
+
+.s3-section {
+  display:flex;
+  flex-direction:column;
+  gap:8px;
+}
+.s3-grow {
+  flex:1;
+  min-height:0;
+}
+.s3-label {
+  font-size:9.5px;
+  font-weight:800;
+  letter-spacing:2.5px;
+  color:#666;
+  text-transform:uppercase;
+}
+
+/* Stelle */
+.stars-widget { display:flex; gap:6px; }
+.star-wrap {
+  position:relative; font-size:32px; line-height:1;
+  cursor:pointer; user-select:none; transition:transform .1s;
+}
+.star-wrap:hover { transform:scale(1.15); }
+.star-bg { color:#333; display:block; }
+.star-fg {
+  position:absolute; left:0; top:0; color:#FFD700;
+  overflow:hidden; width:0%; white-space:nowrap; display:block; transition:width .08s;
+}
+
+/* Consiglio spesa */
+.s3-spesa {
+  background:#0f0f0f;
+  border:1px solid #1e1e1e;
+  border-left:3px solid #b0ff00;
+  border-radius:4px;
+  padding:12px 14px;
+  font-size:14px;
+  color:#fff;
+  line-height:1.6;
+  outline:none;
+  cursor:text;
+  min-height:44px;
+}
+
+/* Appunti */
+.s3-notes {
+  background:#0f0f0f;
+  border:1px solid #1a1a1a;
+  border-radius:6px;
+  padding:14px 16px;
+  font-size:13px;
+  color:#ccc;
+  line-height:1.75;
+  outline:none;
+  cursor:text;
+  flex:1;
+  min-height:0;
+  overflow:auto;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar { width:4px; height:4px; }
+::-webkit-scrollbar-track { background:#111; }
+::-webkit-scrollbar-thumb { background:#333; border-radius:2px; }
+
+/* ══════════════════════════════════════════════
+   MOBILE / TABLET VIEW
+══════════════════════════════════════════════ */
+.mobile-view { display:none; width:100%; max-width:500px; margin:0 auto; background:#0a0a0a; border-radius:16px; overflow:hidden; font-family:Arial,sans-serif; }
+.mv-hero { position:relative; width:100%; background:#0a0a0a; }
+.mv-hero img { width:100%; height:auto; display:block; }
+.mv-hero-overlay { position:absolute; bottom:0;left:0;right:0; background:linear-gradient(transparent,rgba(0,0,0,.95)); padding:40px 16px 14px; }
+.mv-name { font-size:26px; font-weight:900; color:#fff; text-transform:uppercase; letter-spacing:2px; line-height:1.1; }
+.mv-meta-line { font-size:12px; color:#b0ff00; font-weight:700; margin-top:4px; letter-spacing:1px; }
+.mv-badge { position:absolute; top:12px;right:12px; background:#b0ff00; color:#000; font-size:9px; font-weight:900; letter-spacing:2px; padding:4px 10px; border-radius:4px; text-transform:uppercase; }
+.mv-tabs { display:flex; background:#111; border-bottom:1px solid #1e1e1e; }
+.mv-tab { flex:1; background:none; border:none; color:#fff; font-size:12px; font-weight:700; padding:11px 4px; cursor:pointer; border-bottom:3px solid transparent; transition:.15s; letter-spacing:.4px; }
+.mv-tab.active { color:#b0ff00; border-bottom-color:#b0ff00; }
+.mv-slide { display:none; padding:14px 14px 20px; flex-direction:column; gap:10px; }
+.mv-slide.active { display:flex; }
+.mv-section-title { font-size:9.5px; font-weight:800; letter-spacing:2px; text-transform:uppercase; color:#b0ff00; padding-bottom:5px; border-bottom:1px solid #1e1e1e; margin-bottom:2px; margin-top:6px; }
+.mv-section-title:first-child { margin-top:0; }
+.mv-stat-row { display:flex; align-items:center; gap:10px; padding:8px 0; border-bottom:1px solid #141414; }
+.mv-stat-row:last-child { border-bottom:none; }
+.mv-stat-icon { font-size:16px; width:26px; text-align:center; flex-shrink:0; }
+.mv-stat-label { flex:1; font-size:12px; color:#fff; opacity:.7; }
+.mv-stat-val { font-size:13px; font-weight:700; color:#fff; text-align:right; }
+.mv-stat-val.hl { color:#b0ff00; }
+.mv-tbl-wrap { overflow-x:auto; -webkit-overflow-scrolling:touch; border-radius:6px; background:#0f0f0f; }
+.mv-tbl { width:100%; border-collapse:collapse; font-size:12px; min-width:280px; }
+.mv-tbl th { color:#fff; font-size:9.5px; letter-spacing:.7px; text-transform:uppercase; padding:7px 8px 5px; text-align:left; border-bottom:1px solid #1c1c1c; font-weight:700; white-space:nowrap; }
+.mv-tbl td { padding:6px 8px; color:#fff; border-bottom:1px solid #111; vertical-align:middle; }
+.mv-tbl tr:last-child td { border-bottom:none; }
+.mv-tbl .hl { color:#b0ff00; font-weight:800; }
+.mv-tbl .hl2 { color:#f87171; }
+.mv-tbl .c { text-align:center; }
+.mv-stars { display:flex; gap:6px; font-size:28px; }
+.mv-star-e { color:#333; }
+.mv-star-f { color:#FFD700; }
+.mv-card-text { background:#0f0f0f; border:1px solid #1e1e1e; border-left:3px solid #b0ff00; border-radius:4px; padding:11px 13px; font-size:13px; color:#fff; line-height:1.6; }
+.mv-notes { background:#0f0f0f; border:1px solid #1a1a1a; border-radius:6px; padding:12px 14px; font-size:13px; color:#fff; line-height:1.7; }
+.card { transform-origin:top left; }
+@media (max-width:900px) {
+  .card { display:none !important; }
+  .mobile-view { display:flex; flex-direction:column; }
+  body { padding:0 0 30px; overflow-x:hidden; }
+  .nav { display:none !important; }
+  .toolbar { flex-wrap:wrap; gap:6px; padding:6px 10px; border-radius:14px; margin:8px 8px 0; }
+  .toolbar button { padding:6px 12px; font-size:11px; }
+  .toolbar .tip { display:none; }
+}
+</style>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+</head>
+<body style="overflow-x: hidden;">
+
+<div class="nav">
+  <button class="" onclick="go(1)">📋 Info</button>
+  <button onclick="go(2)" class="">📊 Statistiche</button>
+  <button onclick="go(3)" class="active">⭐ Consigli Fantacalcio</button>
+</div>
+
+<!-- Toolbar -->
+<div class="toolbar">
+  <button onclick="exportPNG(1)">💾 Slide 1</button>
+  <button onclick="exportPNG(2)">💾 Slide 2</button>
+  <button onclick="exportPNG(3)">💾 Slide 3</button>
+  <button class="gh-btn" onclick="pubblicaGitHub()">🚀 Pubblica su GitHub</button>
+  <button id="btn-salva-locale" onclick="salvaInLocale()" style="background: rgb(26, 26, 26); color: rgb(255, 255, 255); border: 1px solid rgb(51, 51, 51); padding: 7px 14px; border-radius: 6px; cursor: pointer; font-size: 12px; font-weight: 700; letter-spacing: 0.5px; transition: 0.15s;" onmouseover="this.style.borderColor='#b0ff00';this.style.color='#b0ff00'" onmouseout="this.style.borderColor='#333';this.style.color='#fff'">💾 Salva in locale</button>
+  <span class="tip">← → per navigare | Click sulla foto per cambiarla</span>
+</div>
+
+<!-- Input nascosti per upload -->
+<input type="file" id="photo-input" accept="image/*" style="display:none">
+<input type="file" id="logo-input" accept="image/*" style="display:none">
+
+<!-- ══ MOBILE VIEW (visibile solo su ≤900px) ══════════════════════════════ -->
+<div class="mobile-view" id="mobile-view">
+  <div class="mv-hero">
+    <img id="mv-photo" src="https://img.a.transfermarkt.technology/portrait/big/550550-1681906158.jpg?lm=1" alt="Gonçalo Ramos">
+    <div class="mv-badge">NUOVO ARRIVO</div>
+    <div class="mv-hero-overlay">
+      <div class="mv-name" id="mv-name">Gonçalo Ramos</div>
+      <div class="mv-meta-line" id="mv-meta">ETÀ: 25 ANNI | RUOLO: PC | SQUADRA: PSG</div>
+    </div>
+  </div>
+  <div class="mv-tabs">
+    <button class="mv-tab active" onclick="mvGo(1)">📋 Info</button>
+    <button class="mv-tab" onclick="mvGo(2)">📊 Stats</button>
+    <button class="mv-tab" onclick="mvGo(3)">⭐ Consigli</button>
+  </div>
+  <div class="mv-slide active" id="mv-s1"><div><div class="mv-stat-row"><span class="mv-stat-icon">💰</span><span class="mv-stat-label">Valore mercato</span><span class="mv-stat-val">75,00 mln €</span></div><div class="mv-stat-row"><span class="mv-stat-icon">🔄</span><span class="mv-stat-label">Transfer</span><span class="mv-stat-val">Acquisto definitivo</span></div><div class="mv-stat-row"><span class="mv-stat-icon"><img src="https://tmssl.akamaized.net//images/flagge/tiny/136.png" style="height:16px;vertical-align:middle;margin-right:5px;border:1px solid #555"></span><span class="mv-stat-label">Nazionalità</span><span class="mv-stat-val hl">PORTOGALLO</span></div><div class="mv-stat-row"><span class="mv-stat-icon">👟</span><span class="mv-stat-label">Piede</span><span class="mv-stat-val">DESTRO</span></div><div class="mv-stat-row"><span class="mv-stat-icon">📏</span><span class="mv-stat-label">Altezza</span><span class="mv-stat-val hl">1,85&nbsp;m</span></div><div class="mv-stat-row"><span class="mv-stat-icon"><img src="https://tmssl.akamaized.net//images/wappen/profil/294.png?lm=1535908439" style="height:20px;vertical-align:middle;margin-right:5px"></span><span class="mv-stat-label">Ultimo club</span><span class="mv-stat-val">SL BENFICA</span></div><div class="mv-stat-row"><span class="mv-stat-icon">✅</span><span class="mv-stat-label">Presenze 2025/26</span><span class="mv-stat-val">45</span></div><div class="mv-stat-row"><span class="mv-stat-icon">⚽</span><span class="mv-stat-label">Gol</span><span class="mv-stat-val">12</span></div><div class="mv-stat-row"><span class="mv-stat-icon">🎯</span><span class="mv-stat-label">Assist</span><span class="mv-stat-val">2</span></div><div class="mv-stat-row"><span class="mv-stat-icon">📝</span><span class="mv-stat-label">Scadenza</span><span class="mv-stat-val">30/06/2028</span></div><div class="mv-stat-row"><span class="mv-stat-icon">🚑</span><span class="mv-stat-label">Infortuni</span><span class="mv-stat-val">8 infortuni registrati</span></div></div><div style="margin-top: 10px; border-radius: 8px; overflow: hidden; background: rgb(242, 242, 242); max-width: 220px; align-self: center; width: 100%;"><div class="role-col" style="width: 100%; margin: 0px; border-radius: 0px; display: flex; flex-direction: column; color: rgb(34, 34, 34);">
+    <div class="role-hdr">Ruolo</div>
+    <div class="role-field" style="min-height: 160px;">
+      <svg viewBox="0 0 100 150" preserveAspectRatio="xMidYMid meet">
+        <rect x="0" y="0" width="100" height="150" fill="#1e4d8c"></rect>
+        <rect x="6" y="5" width="88" height="140" rx="2" fill="none" stroke="rgba(255,255,255,.6)" stroke-width="1"></rect>
+        <line x1="6" y1="75" x2="94" y2="75" stroke="rgba(255,255,255,.4)" stroke-width=".8"></line>
+        <circle cx="50" cy="75" r="13" fill="none" stroke="rgba(255,255,255,.4)" stroke-width=".8"></circle>
+        <circle cx="50" cy="75" r="1.5" fill="rgba(255,255,255,.4)"></circle>
+        <rect x="22" y="117" width="56" height="23" rx="1" fill="none" stroke="rgba(255,255,255,.6)" stroke-width=".9"></rect>
+        <rect x="36" y="130" width="28" height="10" rx="1" fill="none" stroke="rgba(255,255,255,.5)" stroke-width=".7"></rect>
+        <rect x="22" y="10" width="56" height="23" rx="1" fill="none" stroke="rgba(255,255,255,.6)" stroke-width=".9"></rect>
+        <rect x="36" y="10" width="28" height="10" rx="1" fill="none" stroke="rgba(255,255,255,.5)" stroke-width=".7"></rect>
+        <circle cx="50%" cy="13%" r="7" fill="white" stroke="#ef4444" stroke-width="2.5"></circle><circle cx="50%" cy="13%" r="3.5" fill="#ef4444"></circle>
+      </svg>
+    </div>
+    <div class="role-meta">
+      <div class="rl">Ruolo naturale:</div>
+      <div class="rv" contenteditable="true">Prima Punta</div>
+      <div class="rl" style="margin-top:4px">Ruoli secondari:</div>
+      <div class="rv" contenteditable="true">—</div>
+    </div>
+    <div class="role-legend">
+      <div class="legend-dot"><span class="dot" style="background:white;border-color:#888"></span> Primario</div>
+      <div class="legend-dot"><span class="dot" style="background:#b0ff00"></span> Offensivo</div>
+      <div class="legend-dot"><span class="dot" style="background:#22c55e"></span> Centrocampo</div>
+      <div class="legend-dot"><span class="dot" style="background:#3b82f6"></span> Difensivo</div>
+    </div>
+  </div></div></div>
+  <div class="mv-slide" id="mv-s2"><div class="mv-section-title">Rendimento per stagione</div>
+<div class="mv-tbl-wrap"><table class="mv-tbl">
+<thead><tr><th>Anno</th><th>Squadra</th><th class="c">G</th><th class="c">⚽</th><th class="c">🎯</th></tr></thead><tbody><tr><td class="hl">25/26</td><td>FC Paris Saint-Germain</td><td class="c">56</td><td class="c hl">12</td><td class="c hl">1</td></tr><tr><td class="hl">24/25</td><td>FC Paris Saint-Germain</td><td class="c">58</td><td class="c hl">18</td><td class="c hl">6</td></tr><tr><td class="hl">23/24</td><td>FC Paris Saint-Germain</td><td class="c">53</td><td class="c hl">14</td><td class="c hl">1</td></tr></tbody></table></div><div class="mv-section-title">Storico infortuni</div>
+<div class="mv-tbl-wrap"><table class="mv-tbl">
+<thead><tr><th>Stagione</th><th>Infortunio</th><th class="c">Gg</th></tr></thead><tbody><tr><td class="hl">24/25</td><td class="hl2">Malato</td><td class="c">7 giorni</td></tr><tr><td class="hl">24/25</td><td class="hl2">Infortunio all'articolazione della caviglia</td><td class="c">92 giorni</td></tr><tr><td class="hl">23/24</td><td class="hl2">Influenza</td><td class="c">8 giorni</td></tr><tr><td class="hl">23/24</td><td class="hl2">Stiramento muscolare</td><td class="c">9 giorni</td></tr><tr><td class="hl">22/23</td><td class="hl2">Problema muscolare</td><td class="c">12 giorni</td></tr><tr><td class="hl">22/23</td><td class="hl2">Infortunio muscolare</td><td class="c">8 giorni</td></tr><tr><td class="hl">20/21</td><td class="hl2">Infortunio muscolare</td><td class="c">6 giorni</td></tr><tr><td class="hl">20/21</td><td class="hl2">Coronavirus</td><td class="c">13 giorni</td></tr></tbody></table></div></div>
+  <div class="mv-slide" id="mv-s3">
+<div class="mv-section-title">Appetibilità al Fantacalcio</div><div class="mv-stars"><span class="mv-star-f">★</span><span class="mv-star-f">★</span><span class="mv-star-f">★</span><span class="mv-star-f">★</span><span class="mv-star-e">★</span></div>
+<div class="mv-section-title">Consiglio di spesa del Mister</div>
+<div class="mv-card-text">Punta titolare del Milan, colpo record da 74M€. Prima scelta come centravanti.Probabilente inserito in prima fascia bassa.</div>
+<div class="mv-section-title">Appunti del Mister</div>
+<div class="mv-notes">Gonçalo Ramos, 25 anni, portoghese, arrivato dal PSG per circa 74 milioni di euro: il colpo più costoso della storia del Milan. Voluto fortemente da Ruben Amorim, suo connazionale e nuovo allenatore rossonero. Nel sistema di Amorim (3-4-2-1) sarà la prima punta titolare, con Pulisic e Leão? come trequartisti alle sue spalle. Stats 2025/26 al PSG: 45 presenze, 12 gol, 2 assist (spesso utilizzato come riserva).&nbsp;PRO: titolare in una big?, supporto offensivo top, ottimo finalizzatore.&nbsp;CONTRO: storico infortuni pesante (8 in carriera), al PSG era seconda scelta — da verificare continuità.e adattamento. Avrà grosso HYPE quindi si rischia di pagarlo più del dovuto.&nbsp;CONSIGLIO: da prendere, è la punta designata del nuovo Milan di Amorim. Spendi ma senza spendere per lui piu di attaccanti più collaudati e con uno storico in serie A..</div></div>
+</div>
+
+<!-- ══════════════════════════════════════════════
+     SLIDE 1
+══════════════════════════════════════════════ -->
+<div id="s1" class="card" style="transform: scale(1); transform-origin: center top; margin-bottom: 0px;">
+
+  <!-- Foto cliccabile -->
+  <div class="photo-col" onclick="triggerPhotoUpload('all')">
+    <img class="player-img photo-all" src="https://img.a.transfermarkt.technology/portrait/big/550550-1681906158.jpg?lm=1" alt="Gonçalo Ramos" onerror="this.src='https://img.a.transfermarkt.technology/portrait/big/default.jpg'">
+    <div class="photo-upload-hint">📷 Click per cambiare foto</div>
+  </div>
+
+  <!-- Info centrale -->
+  <div class="info-col">
+    <div class="player-name" contenteditable="true">Gonçalo Ramos</div>
+
+    <div class="sub-row">
+      <img id="team-logo-img" src="blob:null/322fa879-162a-4415-bd86-1be00292495a" onclick="triggerLogoUpload()" title="Click per sostituire il logo" style="height:46px;vertical-align:middle;margin-right:12px;cursor:pointer;border-radius:4px">
+      <em>ETÀ:</em>&nbsp;25 ANNI
+      <span class="pipe">|</span>
+      <em>RUOLO:</em>&nbsp;PC
+      <span class="pipe">|</span>
+      <em>SQUADRA:</em>&nbsp;<span contenteditable="true">PSG</span>
+    </div>
+
+    <div class="stats-list">
+      <div class="srow">
+        <span class="sic">💰</span>
+        <span class="slbl">Valore mercato</span>
+        <span class="sval" contenteditable="true">75,00 mln €</span>
+      </div>
+      <div class="srow">
+        <span class="sic">🔄</span>
+        <span class="slbl">Transfer</span>
+        <span class="sval" contenteditable="true">Acquisto definitivo</span>
+      </div>
+      <div class="srow">
+        <span class="sic"><img src="https://tmssl.akamaized.net//images/flagge/tiny/136.png" style="height:16px;vertical-align:middle;margin-right:5px;border:1px solid #555"></span>
+        <span class="slbl">Nazionalità</span>
+        <span class="sval bold-xl" contenteditable="true">PORTOGALLO</span>
+      </div>
+      <div class="srow">
+        <span class="sic">👟</span>
+        <span class="slbl">Piede</span>
+        <span class="sval" contenteditable="true">DESTRO</span>
+      </div>
+      <div class="srow">
+        <span class="sic">📏</span>
+        <span class="slbl">Altezza</span>
+        <span class="sval bold-xl" contenteditable="true">1,85&nbsp;m</span>
+      </div>
+      <div class="srow">
+        <span class="sic"><img src="https://tmssl.akamaized.net//images/wappen/profil/294.png?lm=1535908439" style="height:20px;vertical-align:middle;margin-right:5px"></span>
+        <span class="slbl">Ultimo club</span>
+        <span class="sval" contenteditable="true">SL BENFICA</span>
+      </div>
+      <div class="srow">
+        <span class="sic">✅</span>
+        <span class="slbl">Presenze <em>2025/26</em></span>
+        <span class="sval" contenteditable="true">45</span>
+      </div>
+      <div class="srow">
+        <span class="sic">⚽</span>
+        <span class="slbl">Gol</span>
+        <span class="sval" contenteditable="true">12</span>
+      </div>
+      <div class="srow">
+        <span class="sic">🎯</span>
+        <span class="slbl">Assist</span>
+        <span class="sval" contenteditable="true">2</span>
+      </div>
+      <div class="srow">
+        <span class="sic">📝</span>
+        <span class="slbl">Scadenza</span>
+        <span class="sval" contenteditable="true">30/06/2028</span>
+      </div>
+      <div class="srow">
+        <span class="sic">🚑</span>
+        <span class="slbl">Infortuni</span>
+        <span class="sval" contenteditable="true">8 infortuni registrati</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Box Ruolo -->
+  <div class="role-col">
+    <div class="role-hdr">Ruolo</div>
+    <div class="role-field">
+      <svg viewBox="0 0 100 150" preserveAspectRatio="xMidYMid meet">
+        <rect x="0" y="0" width="100" height="150" fill="#1e4d8c"></rect>
+        <rect x="6" y="5" width="88" height="140" rx="2" fill="none" stroke="rgba(255,255,255,.6)" stroke-width="1"></rect>
+        <line x1="6" y1="75" x2="94" y2="75" stroke="rgba(255,255,255,.4)" stroke-width=".8"></line>
+        <circle cx="50" cy="75" r="13" fill="none" stroke="rgba(255,255,255,.4)" stroke-width=".8"></circle>
+        <circle cx="50" cy="75" r="1.5" fill="rgba(255,255,255,.4)"></circle>
+        <rect x="22" y="117" width="56" height="23" rx="1" fill="none" stroke="rgba(255,255,255,.6)" stroke-width=".9"></rect>
+        <rect x="36" y="130" width="28" height="10" rx="1" fill="none" stroke="rgba(255,255,255,.5)" stroke-width=".7"></rect>
+        <rect x="22" y="10" width="56" height="23" rx="1" fill="none" stroke="rgba(255,255,255,.6)" stroke-width=".9"></rect>
+        <rect x="36" y="10" width="28" height="10" rx="1" fill="none" stroke="rgba(255,255,255,.5)" stroke-width=".7"></rect>
+        <circle cx="50%" cy="13%" r="7" fill="white" stroke="#ef4444" stroke-width="2.5"></circle><circle cx="50%" cy="13%" r="3.5" fill="#ef4444"></circle>
+      </svg>
+    </div>
+    <div class="role-meta">
+      <div class="rl">Ruolo naturale:</div>
+      <div class="rv" contenteditable="true">Prima Punta</div>
+      <div class="rl" style="margin-top:4px">Ruoli secondari:</div>
+      <div class="rv" contenteditable="true">—</div>
+    </div>
+    <div class="role-legend">
+      <div class="legend-dot"><span class="dot" style="background:white;border-color:#888"></span> Primario</div>
+      <div class="legend-dot"><span class="dot" style="background:#b0ff00"></span> Offensivo</div>
+      <div class="legend-dot"><span class="dot" style="background:#22c55e"></span> Centrocampo</div>
+      <div class="legend-dot"><span class="dot" style="background:#3b82f6"></span> Difensivo</div>
+    </div>
+  </div>
+
+</div><!-- /s1 -->
+
+<!-- ══════════════════════════════════════════════
+     SLIDE 2 – Statistiche
+══════════════════════════════════════════════ -->
+<div id="s2" class="card" style="transform: scale(1); transform-origin: center top; margin-bottom: 0px;">
+
+  <div class="s2-photo" onclick="triggerPhotoUpload('all')">
+    <img class="photo-all" src="https://img.a.transfermarkt.technology/portrait/big/550550-1681906158.jpg?lm=1" alt="Gonçalo Ramos" onerror="this.src='https://img.a.transfermarkt.technology/portrait/big/default.jpg'">
+  </div>
+
+  <div class="s2-body">
+
+    <!-- Colonna sinistra: ultimi 2 anni + per squadra -->
+    <div class="s2-col">
+
+      <!-- Ultimi 2 anni -->
+      <div class="tbl-block" style="margin-bottom:10px">
+        <div class="tbl-title">Rendimento per stagione (ultimi 3 anni)</div>
+        <div style="overflow-y:auto;max-height:170px">
+          <table class="career-tbl">
+            <thead><tr>
+              <th>Anno</th><th>Squadra</th><th>Competizione</th>
+              <th class="c">G</th><th class="c">⚽</th><th class="c">🎯</th><th class="c">Min</th>
+            </tr></thead>
+            <tbody id="last2-body">
+            <tr class="career-row">
+              <td class="career-year" contenteditable="true">25/26</td>
+              <td class="career-club" style="min-width:130px"><img src="https://tmssl.akamaized.net/images/wappen/big/583.png" style="height:18px;vertical-align:middle;margin-right:6px;border-radius:2px"><span contenteditable="true">FC Paris Saint-Germain</span></td>
+              <td class="career-comp" contenteditable="true">UEFA Champions League / FIFA Intercontinental Cup / Ligue 1 / Coupe de France / Trophée des Champions / Supercoppa UEFA</td>
+              <td class="career-num" contenteditable="true">56</td>
+              <td class="career-num hi" contenteditable="true">12</td>
+              <td class="career-num hi" contenteditable="true">1</td>
+              <td class="career-min" contenteditable="true">—</td>
+            </tr>
+            <tr class="career-row">
+              <td class="career-year" contenteditable="true">24/25</td>
+              <td class="career-club" style="min-width:130px"><img src="https://tmssl.akamaized.net/images/wappen/big/583.png" style="height:18px;vertical-align:middle;margin-right:6px;border-radius:2px"><span contenteditable="true">FC Paris Saint-Germain</span></td>
+              <td class="career-comp" contenteditable="true">UEFA Champions League / Ligue 1 / Coupe de France / Trophée des Champions</td>
+              <td class="career-num" contenteditable="true">58</td>
+              <td class="career-num hi" contenteditable="true">18</td>
+              <td class="career-num hi" contenteditable="true">6</td>
+              <td class="career-min" contenteditable="true">—</td>
+            </tr>
+            <tr class="career-row">
+              <td class="career-year" contenteditable="true">23/24</td>
+              <td class="career-club" style="min-width:130px"><img src="https://tmssl.akamaized.net/images/wappen/big/583.png" style="height:18px;vertical-align:middle;margin-right:6px;border-radius:2px"><span contenteditable="true">FC Paris Saint-Germain</span></td>
+              <td class="career-comp" contenteditable="true">UEFA Champions League / Ligue 1 / Coupe de France / Trophée des Champions</td>
+              <td class="career-num" contenteditable="true">53</td>
+              <td class="career-num hi" contenteditable="true">14</td>
+              <td class="career-num hi" contenteditable="true">1</td>
+              <td class="career-min" contenteditable="true">—</td>
+            </tr></tbody>
+          </table>
+        </div>
+        <button class="add-row-btn" onclick="addLast2Row()">+ Aggiungi riga</button>
+      </div>
+
+      <!-- Per squadra -->
+      <div class="tbl-block">
+        <div class="tbl-title">Rendimento per squadra (totale carriera)</div>
+        <div style="overflow-y:auto;max-height:190px">
+          <table class="career-tbl">
+            <thead><tr>
+              <th>Squadra</th>
+              <th class="c">G</th><th class="c">⚽</th><th class="c">🎯</th><th class="c">Min</th>
+            </tr></thead>
+            <tbody id="perclub-body">
+            <tr class="career-row">
+              <td class="career-club" contenteditable="true"><img src="https://tmssl.akamaized.net/images/wappen/big/294.png" style="height:18px;vertical-align:middle;margin-right:6px;border-radius:2px"><span contenteditable="true">SL Benfica</span></td>
+              <td class="career-num" contenteditable="true">251</td>
+              <td class="career-num hi" contenteditable="true">37</td>
+              <td class="career-num hi" contenteditable="true">6</td>
+              <td class="career-min" contenteditable="true">—</td>
+            </tr>
+            <tr class="career-row">
+              <td class="career-club" contenteditable="true"><img src="https://tmssl.akamaized.net/images/wappen/big/583.png" style="height:18px;vertical-align:middle;margin-right:6px;border-radius:2px"><span contenteditable="true">FC Paris Saint-Germain</span></td>
+              <td class="career-num" contenteditable="true">174</td>
+              <td class="career-num hi" contenteditable="true">45</td>
+              <td class="career-num hi" contenteditable="true">8</td>
+              <td class="career-min" contenteditable="true">—</td>
+            </tr></tbody>
+          </table>
+        </div>
+        <button class="add-row-btn" onclick="addPerClubRow()">+ Aggiungi riga</button>
+      </div>
+
+    </div><!-- /s2-col -->
+
+    <!-- Colonna destra: carriera nazionale + infortuni -->
+    <div class="s2-col s2-col-narrow">
+      <div class="tbl-block">
+        <div class="tbl-title">Carriera in Nazionale</div>
+        <div style="overflow-y:auto;max-height:180px">
+          <table class="career-tbl">
+            <thead><tr>
+              <th>Competizione</th>
+              <th class="c">G</th><th class="c">⚽</th><th class="c">🎯</th><th class="c">Min</th>
+            </tr></thead>
+            <tbody id="naz-body">
+            <tr class="career-row">
+              <td class="career-comp" contenteditable="true">Amichevoli Nazionale</td>
+              <td class="career-num" contenteditable="true">28</td>
+              <td class="career-num hi" contenteditable="true">2</td>
+              <td class="career-num hi" contenteditable="true">1</td>
+              <td class="career-min" contenteditable="true">—</td>
+            </tr>
+            <tr class="career-row">
+              <td class="career-comp" contenteditable="true">Qualificazioni Europei U21</td>
+              <td class="career-num" contenteditable="true">13</td>
+              <td class="career-num hi" contenteditable="true">—</td>
+              <td class="career-num hi" contenteditable="true">—</td>
+              <td class="career-min" contenteditable="true">—</td>
+            </tr>
+            <tr class="career-row">
+              <td class="career-comp" contenteditable="true">Qualificazioni Europei</td>
+              <td class="career-num" contenteditable="true">10</td>
+              <td class="career-num hi" contenteditable="true">3</td>
+              <td class="career-num hi" contenteditable="true">—</td>
+              <td class="career-min" contenteditable="true">—</td>
+            </tr>
+            <tr class="career-row">
+              <td class="career-comp" contenteditable="true">Mondiali</td>
+              <td class="career-num" contenteditable="true">8</td>
+              <td class="career-num hi" contenteditable="true">3</td>
+              <td class="career-num hi" contenteditable="true">1</td>
+              <td class="career-min" contenteditable="true">—</td>
+            </tr>
+            <tr class="career-row">
+              <td class="career-comp" contenteditable="true">UEFA Nations League A</td>
+              <td class="career-num" contenteditable="true">8</td>
+              <td class="career-num hi" contenteditable="true">—</td>
+              <td class="career-num hi" contenteditable="true">—</td>
+              <td class="career-min" contenteditable="true">—</td>
+            </tr>
+            <tr class="career-row">
+              <td class="career-comp" contenteditable="true">Qualificazioni Mondiali (Europa)</td>
+              <td class="career-num" contenteditable="true">6</td>
+              <td class="career-num hi" contenteditable="true">1</td>
+              <td class="career-num hi" contenteditable="true">1</td>
+              <td class="career-min" contenteditable="true">—</td>
+            </tr>
+            <tr class="career-row">
+              <td class="career-comp" contenteditable="true">Europei U21</td>
+              <td class="career-num" contenteditable="true">6</td>
+              <td class="career-num hi" contenteditable="true">—</td>
+              <td class="career-num hi" contenteditable="true">—</td>
+              <td class="career-min" contenteditable="true">—</td>
+            </tr>
+            <tr class="career-row">
+              <td class="career-comp" contenteditable="true">Europei</td>
+              <td class="career-num" contenteditable="true">5</td>
+              <td class="career-num hi" contenteditable="true">—</td>
+              <td class="career-num hi" contenteditable="true">—</td>
+              <td class="career-min" contenteditable="true">—</td>
+            </tr>
+            <tr class="career-row">
+              <td class="career-comp" contenteditable="true">Europei U19</td>
+              <td class="career-num" contenteditable="true">5</td>
+              <td class="career-num hi" contenteditable="true">—</td>
+              <td class="career-num hi" contenteditable="true">—</td>
+              <td class="career-min" contenteditable="true">—</td>
+            </tr>
+            <tr class="career-row">
+              <td class="career-comp" contenteditable="true">UEFA Nations League Finals</td>
+              <td class="career-num" contenteditable="true">4</td>
+              <td class="career-num hi" contenteditable="true">1</td>
+              <td class="career-num hi" contenteditable="true">—</td>
+              <td class="career-min" contenteditable="true">—</td>
+            </tr>
+            <tr class="career-row">
+              <td class="career-comp" contenteditable="true">Qualificazioni Europei U19</td>
+              <td class="career-num" contenteditable="true">3</td>
+              <td class="career-num hi" contenteditable="true">—</td>
+              <td class="career-num hi" contenteditable="true">—</td>
+              <td class="career-min" contenteditable="true">—</td>
+            </tr>
+            <tr class="career-row">
+              <td class="career-comp" contenteditable="true">Europei U17</td>
+              <td class="career-num" contenteditable="true">3</td>
+              <td class="career-num hi" contenteditable="true">—</td>
+              <td class="career-num hi" contenteditable="true">—</td>
+              <td class="career-min" contenteditable="true">—</td>
+            </tr>
+            <tr class="career-row">
+              <td class="career-comp" contenteditable="true">Qualificazioni Europei U17</td>
+              <td class="career-num" contenteditable="true">3</td>
+              <td class="career-num hi" contenteditable="true">—</td>
+              <td class="career-num hi" contenteditable="true">—</td>
+              <td class="career-min" contenteditable="true">—</td>
+            </tr>
+            <tr class="career-row">
+              <td class="career-comp" contenteditable="true">Torneio Internacional Algarve U17</td>
+              <td class="career-num" contenteditable="true">3</td>
+              <td class="career-num hi" contenteditable="true">—</td>
+              <td class="career-num hi" contenteditable="true">—</td>
+              <td class="career-min" contenteditable="true">—</td>
+            </tr>
+            <tr class="career-row">
+              <td class="career-comp" contenteditable="true">U20 Elite League</td>
+              <td class="career-num" contenteditable="true">2</td>
+              <td class="career-num hi" contenteditable="true">—</td>
+              <td class="career-num hi" contenteditable="true">—</td>
+              <td class="career-min" contenteditable="true">—</td>
+            </tr></tbody>
+          </table>
+        </div>
+        <button class="add-row-btn" onclick="addNazRow()">+ Aggiungi riga</button>
+      </div>
+      <div class="tbl-block">
+        <div class="tbl-title">Storico infortuni</div>
+        <div style="overflow-y:auto;max-height:190px">
+          <table class="inj-tbl">
+            <thead>
+              <tr>
+                <th>Stagione</th>
+                <th>Infortunio</th>
+                <th>Dal</th>
+                <th>Al</th>
+                <th>Gg</th>
+                <th>Perse</th>
+              </tr>
+            </thead>
+            <tbody id="inj-body">
+              
+              <tr class="inj-row">
+                <td contenteditable="true">24/25</td>
+                <td contenteditable="true">Malato</td>
+                <td contenteditable="true">15/03/2025</td>
+                <td contenteditable="true">21/03/2025</td>
+                <td contenteditable="true">7 giorni</td>
+                <td contenteditable="true">2</td>
+              </tr>
+              <tr class="inj-row">
+                <td contenteditable="true">24/25</td>
+                <td contenteditable="true">Infortunio all'articolazione della caviglia</td>
+                <td contenteditable="true">16/08/2024</td>
+                <td contenteditable="true">15/11/2024</td>
+                <td contenteditable="true">92 giorni</td>
+                <td contenteditable="true">18</td>
+              </tr>
+              <tr class="inj-row">
+                <td contenteditable="true">23/24</td>
+                <td contenteditable="true">Influenza</td>
+                <td contenteditable="true">11/12/2023</td>
+                <td contenteditable="true">18/12/2023</td>
+                <td contenteditable="true">8 giorni</td>
+                <td contenteditable="true">2</td>
+              </tr>
+              <tr class="inj-row">
+                <td contenteditable="true">23/24</td>
+                <td contenteditable="true">Stiramento muscolare</td>
+                <td contenteditable="true">24/08/2023</td>
+                <td contenteditable="true">01/09/2023</td>
+                <td contenteditable="true">9 giorni</td>
+                <td contenteditable="true">1</td>
+              </tr>
+              <tr class="inj-row">
+                <td contenteditable="true">22/23</td>
+                <td contenteditable="true">Problema muscolare</td>
+                <td contenteditable="true">27/01/2023</td>
+                <td contenteditable="true">07/02/2023</td>
+                <td contenteditable="true">12 giorni</td>
+                <td contenteditable="true">2</td>
+              </tr>
+              <tr class="inj-row">
+                <td contenteditable="true">22/23</td>
+                <td contenteditable="true">Infortunio muscolare</td>
+                <td contenteditable="true">03/11/2022</td>
+                <td contenteditable="true">10/11/2022</td>
+                <td contenteditable="true">8 giorni</td>
+                <td contenteditable="true">2</td>
+              </tr>
+              <tr class="inj-row">
+                <td contenteditable="true">20/21</td>
+                <td contenteditable="true">Infortunio muscolare</td>
+                <td contenteditable="true">16/02/2021</td>
+                <td contenteditable="true">21/02/2021</td>
+                <td contenteditable="true">6 giorni</td>
+                <td contenteditable="true">1</td>
+              </tr>
+              <tr class="inj-row">
+                <td contenteditable="true">20/21</td>
+                <td contenteditable="true">Coronavirus</td>
+                <td contenteditable="true">24/12/2020</td>
+                <td contenteditable="true">05/01/2021</td>
+                <td contenteditable="true">13 giorni</td>
+                <td contenteditable="true">2</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <button class="add-row-btn" onclick="addInjRow()">+ Aggiungi infortunio</button>
+      </div>
+    </div><!-- /s2-col-narrow -->
+
+  </div>
+</div><!-- /s2 -->
+
+<!-- ══════════════════════════════════════════════
+     SLIDE 3 – Consigli Fantacalcio
+══════════════════════════════════════════════ -->
+<div id="s3" class="card active" style="transform: scale(1); transform-origin: center top; margin-bottom: 0px;">
+
+  <div class="s3-photo" onclick="triggerPhotoUpload('all')">
+    <img class="photo-all" src="https://img.a.transfermarkt.technology/portrait/big/550550-1681906158.jpg?lm=1" alt="Gonçalo Ramos" onerror="this.src='https://img.a.transfermarkt.technology/portrait/big/default.jpg'">
+  </div>
+
+  <div class="s3-body">
+
+    <!-- Header -->
+    <div class="s3-header">
+      <div class="s3-badge">⭐ CONSIGLI FANTACALCIO</div>
+      <div class="s3-player" contenteditable="true">Gonçalo Ramos</div>
+    </div>
+
+    <!-- Appetibilità -->
+    <div class="s3-section">
+      <div class="s3-label">APPETIBILITÀ AL FANTACALCIO</div>
+      <div class="stars-widget" id="stars-widget" data-value="4">
+        <span class="star-wrap" data-v="1"><span class="star-bg">★</span><span class="star-fg" style="width: 100%;">★</span></span>
+        <span class="star-wrap" data-v="2"><span class="star-bg">★</span><span class="star-fg" style="width: 100%;">★</span></span>
+        <span class="star-wrap" data-v="3"><span class="star-bg">★</span><span class="star-fg" style="width: 100%;">★</span></span>
+        <span class="star-wrap" data-v="4"><span class="star-bg">★</span><span class="star-fg" style="width: 100%;">★</span></span>
+        <span class="star-wrap" data-v="5"><span class="star-bg">★</span><span class="star-fg" style="width: 0%;">★</span></span>
+      </div>
+    </div>
+
+    <!-- Consiglio di spesa -->
+    <div class="s3-section">
+      <div class="s3-label">CONSIGLIO DI SPESA DEL MISTER</div>
+      <div class="s3-spesa" contenteditable="true">Punta titolare del Milan, colpo record da 74M€. Prima scelta come centravanti.Probabilente inserito in prima fascia bassa.</div>
+    </div>
+
+    <!-- Appunti -->
+    <div class="s3-section s3-grow">
+      <div class="s3-label">APPUNTI DEL MISTER</div>
+      <div class="s3-notes" contenteditable="true">Gonçalo Ramos, 25 anni, portoghese, arrivato dal PSG per circa 74 milioni di euro: il colpo più costoso della storia del Milan. Voluto fortemente da Ruben Amorim, suo connazionale e nuovo allenatore rossonero. Nel sistema di Amorim (3-4-2-1) sarà la prima punta titolare, con Pulisic e Leão? come trequartisti alle sue spalle. Stats 2025/26 al PSG: 45 presenze, 12 gol, 2 assist (spesso utilizzato come riserva).&nbsp;<div>PRO: titolare in una big?, supporto offensivo top, ottimo finalizzatore.&nbsp;</div><div>CONTRO: storico infortuni pesante (8 in carriera), al PSG era seconda scelta — da verificare continuità.e adattamento. Avrà grosso HYPE quindi si rischia di pagarlo più del dovuto.&nbsp;</div><div>CONSIGLIO: da prendere, è la punta designata del nuovo Milan di Amorim. Spendi ma senza spendere per lui piu di attaccanti più collaudati e con uno storico in serie A..</div></div>
+    </div>
+
+  </div>
+</div><!-- /s3 -->
+
+<!-- Overlay GitHub -->
+<!-- Overlay GitHub -->
+<div id="gh-overlay" style="display: none; position: fixed; inset: 0px; background: rgba(0, 0, 0, 0.88); z-index: 999; align-items: center; justify-content: center;">
+  <div style="background:#1a1a1a;border:1px solid #333;border-radius:12px;padding:28px 32px;max-width:480px;width:90%;text-align:center;font-family:Arial,sans-serif;">
+    <div id="gh-view-token" style="display:none">
+      <div style="font-size:26px;margin-bottom:10px">🔑</div>
+      <div style="font-size:15px;font-weight:700;color:#b0ff00;margin-bottom:8px">Token GitHub richiesto</div>
+      <div style="font-size:12px;color:#888;margin-bottom:14px;line-height:1.6">
+        Inserisci il tuo <strong style="color:#ccc">Personal Access Token</strong> GitHub.<br>
+        Sarà salvato solo su questo browser.
+      </div>
+      <input id="gh-token-input" type="password" placeholder="ghp_xxxxxxxxxxxxxxxx" style="width:100%;background:#0d0d0d;border:1px solid #333;border-radius:6px;padding:10px 12px;color:#fff;font-size:13px;font-family:monospace;margin-bottom:14px;outline:none">
+      <div style="display:flex;gap:10px;justify-content:center;">
+        <button onclick="salvaSalvaPubblica()" style="background:#b0ff00;color:#000;border:none;padding:9px 24px;border-radius:20px;cursor:pointer;font-weight:800;font-size:12px">Salva e pubblica</button>
+        <button onclick="chiudiOverlay()" style="background:#222;color:#aaa;border:1px solid #333;padding:9px 20px;border-radius:20px;cursor:pointer;font-size:12px">Annulla</button>
+      </div>
+      <div style="font-size:10px;color:#444;margin-top:12px">
+        Crea il token su GitHub → Settings → Developer settings → Personal access tokens → Contents: Read &amp; Write
+      </div>
+    </div>
+    <div id="gh-view-progress" style="display: none;">
+      <div style="font-size:32px;margin-bottom:12px" id="gh-icon">🚀</div>
+      <div id="gh-status" style="font-size: 14px; margin-bottom: 6px;">Pubblica su GitHub Pages</div>
+      <div id="gh-detail" style="font-size:11px;color:#555;margin-bottom:18px"></div>
+      <div id="gh-link-wrap" style="display:none;margin-bottom:14px">
+        <a id="gh-link" href="#" target="_blank" style="color:#b0ff00;font-size:12px;text-decoration:none;border:1px solid #b0ff00;padding:6px 16px;border-radius:16px">
+          🌐 Apri su GitHub Pages
+        </a>
+      </div>
+      <button onclick="chiudiOverlay()" id="gh-close-btn" style="display:none;background:#222;color:#aaa;border:1px solid #333;padding:8px 22px;border-radius:20px;cursor:pointer;font-size:12px">Chiudi</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// ── Modalità lettura su GitHub Pages ────────
+(function() {
+  const isOnline = location.hostname !== 'localhost' && location.protocol !== 'file:';
+  if (isOnline) {
+    // Nascondi toolbar e disabilita editing
+    const style = document.createElement('style');
+    style.textContent = '.toolbar{display:none!important} [contenteditable]{pointer-events:none;cursor:default} .add-row-btn{display:none!important}';
+    document.head.appendChild(style);
+    document.querySelectorAll('[contenteditable]').forEach(el => el.removeAttribute('contenteditable'));
+  }
+})();
+
+// ── Nav ─────────────────────────────────────
+function go(n) {
+  document.querySelectorAll('.card').forEach(c => c.classList.remove('active'));
+  document.querySelectorAll('.nav button').forEach(b => b.classList.remove('active'));
+  document.getElementById('s' + n).classList.add('active');
+  document.querySelectorAll('.nav button')[n - 1].classList.add('active');
+}
+document.addEventListener('keydown', e => {
+  const idx = [...document.querySelectorAll('.card')].findIndex(c => c.classList.contains('active'));
+  if (e.key === 'ArrowRight' && idx < 2) go(idx + 2);
+  if (e.key === 'ArrowLeft'  && idx > 0) go(idx);
+});
+
+// ── Cambio foto ─────────────────────────────
+function triggerPhotoUpload() {
+  document.getElementById('photo-input').click();
+}
+document.getElementById('photo-input').addEventListener('change', function(e) {
+  const file = e.target.files[0];
+  if (!file) return;
+  const url = URL.createObjectURL(file);
+  document.querySelectorAll('.photo-all').forEach(img => img.src = url);
+});
+
+// ── Cambio logo squadra ──────────────────────
+function triggerLogoUpload() {
+  document.getElementById('logo-input').click();
+}
+document.getElementById('logo-input').addEventListener('change', function(e) {
+  const file = e.target.files[0];
+  if (!file) return;
+  const url = URL.createObjectURL(file);
+  const el = document.getElementById('team-logo-img');
+  if (el.tagName === 'IMG') {
+    el.src = url;
+  } else {
+    // era un placeholder span → sostituisci con img
+    const img = document.createElement('img');
+    img.id = 'team-logo-img';
+    img.src = url;
+    img.onclick = triggerLogoUpload;
+    img.title = 'Click per sostituire il logo';
+    img.style.cssText = 'height:46px;vertical-align:middle;margin-right:12px;cursor:pointer;border-radius:4px';
+    el.replaceWith(img);
+  }
+});
+
+// ── Export PNG ──────────────────────────────
+function exportPNG(n) {
+  const slide = document.getElementById('s' + n);
+  const wasHidden = !slide.classList.contains('active');
+  if (wasHidden) { slide.style.display = 'flex'; }
+  html2canvas(slide, {
+    scale: 2, useCORS: true, allowTaint: true,
+    width: 1280, height: 720, backgroundColor: '#000'
+  }).then(canvas => {
+    const a = document.createElement('a');
+    a.href = canvas.toDataURL('image/png');
+    a.download = 'Gonçalo_Ramos_slide' + n + '.png';
+    a.click();
+  }).finally(() => {
+    if (wasHidden) { slide.style.display = ''; }
+  });
+}
+
+// ── Pubblica su GitHub (API diretta) ────────
+const REPO    = 'fabmiscia/Il-Mister-Fabry';
+const FNAME   = 'nuovo_arrivo_Gonçalo_Ramos__Milan.html';
+const PLAYER  = 'Gonçalo Ramos';
+const GH_PATH = `Nuovi arrivi Fantacalcio/${FNAME}`;
+const PAGES_URL = `https://fabmiscia.github.io/Il-Mister-Fabry/Nuovi%20arrivi%20Fanta%20Calcio/${FNAME}`;
+
+function chiudiOverlay() {
+  document.getElementById('gh-overlay').style.display = 'none';
+}
+document.getElementById('gh-overlay').addEventListener('click', e => {
+  if (e.target === document.getElementById('gh-overlay')) chiudiOverlay();
+});
+
+function pubblicaGitHub() {
+  const token = localStorage.getItem('gh_token');
+  const overlay = document.getElementById('gh-overlay');
+  overlay.style.display = 'flex';
+  if (!token) {
+    document.getElementById('gh-view-token').style.display = 'block';
+    document.getElementById('gh-view-progress').style.display = 'none';
+    document.getElementById('gh-token-input').value = '';
+    setTimeout(() => document.getElementById('gh-token-input').focus(), 100);
+  } else {
+    mostraProgress();
+    eseguiPubblicazione(token);
+  }
+}
+
+function salvaSalvaPubblica() {
+  const token = document.getElementById('gh-token-input').value.trim();
+  if (!token) { alert('Inserisci il token!'); return; }
+  localStorage.setItem('gh_token', token);
+  mostraProgress();
+  eseguiPubblicazione(token);
+}
+
+function mostraProgress() {
+  document.getElementById('gh-view-token').style.display = 'none';
+  document.getElementById('gh-view-progress').style.display = 'block';
+  document.getElementById('gh-icon').textContent = '⏳';
+  document.getElementById('gh-status').textContent = 'Pubblicazione in corso…';
+  document.getElementById('gh-detail').textContent = '';
+  document.getElementById('gh-link-wrap').style.display = 'none';
+  document.getElementById('gh-close-btn').style.display = 'none';
+}
+
+async function eseguiPubblicazione(token) {
+  const apiUrl = `https://api.github.com/repos/${REPO}/contents/${GH_PATH}`;
+  const headers = {
+    'Authorization': `token ${token}`,
+    'Accept': 'application/vnd.github+json',
+    'Content-Type': 'application/json',
+  };
+
+  try {
+    // Reset completo overlay prima di serializzare (fix: evita che lo stato visibile venga salvato)
+    const overlay      = document.getElementById('gh-overlay');
+    const viewProgress = document.getElementById('gh-view-progress');
+    const viewToken    = document.getElementById('gh-view-token');
+    const linkWrap     = document.getElementById('gh-link-wrap');
+    const closeBtn     = document.getElementById('gh-close-btn');
+    const ghIcon       = document.getElementById('gh-icon');
+    const ghStatus     = document.getElementById('gh-status');
+    const ghDetail     = document.getElementById('gh-detail');
+
+    // Salva stato corrente
+    const _od = overlay.style.display;
+    const _pd = viewProgress.style.display;
+    const _td = viewToken.style.display;
+    const _ld = linkWrap.style.display;
+    const _cd = closeBtn.style.display;
+    const _it = ghIcon.textContent;
+    const _st = ghStatus.textContent;
+    const _sc = ghStatus.style.color;
+    const _dt = ghDetail.textContent;
+
+    // Reset allo stato iniziale (tutto nascosto, testo neutro)
+    overlay.style.display      = 'none';
+    viewProgress.style.display = 'none';
+    viewToken.style.display    = 'none';
+    linkWrap.style.display     = 'none';
+    closeBtn.style.display     = 'none';
+    ghIcon.textContent         = '🚀';
+    ghStatus.textContent       = 'Pubblica su GitHub Pages';
+    ghStatus.style.color       = '';
+    ghDetail.textContent       = '';
+
+    const htmlContent = '<!DOCTYPE html>\n' + document.documentElement.outerHTML;
+
+    // Ripristina stato
+    overlay.style.display      = _od;
+    viewProgress.style.display = _pd;
+    viewToken.style.display    = _td;
+    linkWrap.style.display     = _ld;
+    closeBtn.style.display     = _cd;
+    ghIcon.textContent         = _it;
+    ghStatus.textContent       = _st;
+    ghStatus.style.color       = _sc;
+    ghDetail.textContent       = 'Preparo il contenuto…';
+
+    const b64 = btoa(unescape(encodeURIComponent(htmlContent)));
+
+    // Controlla se il file esiste già (serve lo SHA per aggiornarlo)
+    document.getElementById('gh-detail').textContent = 'Verifico se il file esiste già…';
+    let sha = null;
+    const check = await fetch(apiUrl, { headers });
+    if (check.ok) {
+      const existing = await check.json();
+      sha = existing.sha;
+    }
+
+    // Crea o aggiorna il file
+    document.getElementById('gh-detail').textContent = sha ? 'Aggiorno il file esistente…' : 'Carico il file…';
+    const body = {
+      message: `Nuovo arrivo: ${PLAYER}`,
+      content: b64,
+      ...(sha ? { sha } : {})
+    };
+    const put = await fetch(apiUrl, { method: 'PUT', headers, body: JSON.stringify(body) });
+
+    if (put.ok) {
+      document.getElementById('gh-icon').textContent = '✅';
+      document.getElementById('gh-status').style.color = '#b0ff00';
+      document.getElementById('gh-status').textContent = 'Pubblicato con successo!';
+      document.getElementById('gh-detail').textContent = PAGES_URL;
+      document.getElementById('gh-link').href = PAGES_URL;
+      document.getElementById('gh-link-wrap').style.display = 'block';
+    } else {
+      const err = await put.json();
+      throw new Error(err.message || put.statusText);
+    }
+  } catch(e) {
+    document.getElementById('gh-icon').textContent = '❌';
+    document.getElementById('gh-status').style.color = '#ff4444';
+    document.getElementById('gh-status').textContent = 'Errore durante la pubblicazione';
+    document.getElementById('gh-detail').textContent = e.message;
+    // Se token non valido, rimuovilo
+    if (e.message && (e.message.includes('401') || e.message.toLowerCase().includes('bad credential'))) {
+      localStorage.removeItem('gh_token');
+      document.getElementById('gh-detail').textContent += ' — Token rimosso, riprova.';
+    }
+  }
+  document.getElementById('gh-close-btn').style.display = 'inline-block';
+}
+
+// ── Aggiungi righe Slide 2 ──────────────────
+function addLast2Row() {
+  const tbody = document.getElementById('last2-body');
+  const tr = document.createElement('tr');
+  tr.className = 'career-row';
+  tr.innerHTML = `
+    <td class="career-year" contenteditable="true">—</td>
+    <td class="career-club"><span contenteditable="true">—</span></td>
+    <td class="career-comp" contenteditable="true">—</td>
+    <td class="career-num hi" contenteditable="true">—</td>
+    <td class="career-num hi" contenteditable="true">—</td>
+    <td class="career-num hi" contenteditable="true">—</td>
+    <td class="career-min"  contenteditable="true">—</td>`;
+  tbody.appendChild(tr);
+}
+function addPerClubRow() {
+  const tbody = document.getElementById('perclub-body');
+  const tr = document.createElement('tr');
+  tr.className = 'career-row';
+  tr.innerHTML = `
+    <td class="career-club"><span contenteditable="true">—</span></td>
+    <td class="career-num" contenteditable="true">—</td>
+    <td class="career-num hi" contenteditable="true">—</td>
+    <td class="career-num hi" contenteditable="true">—</td>
+    <td class="career-min" contenteditable="true">—</td>`;
+  tbody.appendChild(tr);
+}
+function addNazRow() {
+  const tbody = document.getElementById('naz-body');
+  const tr = document.createElement('tr');
+  tr.className = 'career-row';
+  tr.innerHTML = `
+    <td class="career-comp" contenteditable="true">—</td>
+    <td class="career-num" contenteditable="true">—</td>
+    <td class="career-num hi" contenteditable="true">—</td>
+    <td class="career-num hi" contenteditable="true">—</td>
+    <td class="career-min" contenteditable="true">—</td>`;
+  tbody.appendChild(tr);
+}
+
+// ── Aggiungi riga infortuni ──────────────────
+function addInjRow() {
+  const tbody = document.getElementById('inj-body');
+  // Rimuovi riga "nessun infortunio" se presente
+  const empty = tbody.querySelector('td[colspan]');
+  if (empty) empty.closest('tr').remove();
+  const tr = document.createElement('tr');
+  tr.className = 'inj-row';
+  tr.innerHTML = `
+    <td contenteditable="true">—</td>
+    <td contenteditable="true">—</td>
+    <td contenteditable="true">—</td>
+    <td contenteditable="true">—</td>
+    <td contenteditable="true">—</td>
+    <td contenteditable="true">—</td>
+  `;
+  tbody.appendChild(tr);
+}
+
+// ── Stelle Appetibilità (mezze stelle) ───────
+(function() {
+  const widget = document.getElementById('stars-widget');
+  if (!widget) return;
+  let starsValue = 4;
+  const wraps = widget.querySelectorAll('.star-wrap');
+  function render(v) {
+    wraps.forEach(w => {
+      const wv = parseInt(w.dataset.v);
+      const fg = w.querySelector('.star-fg');
+      if (v >= wv)          fg.style.width = '100%';
+      else if (v >= wv-0.5) fg.style.width = '50%';
+      else                  fg.style.width = '0%';
+    });
+    widget.dataset.value = v;
+  }
+  wraps.forEach(w => {
+    w.addEventListener('mousemove', e => {
+      const rect = w.getBoundingClientRect();
+      render((e.clientX - rect.left) < rect.width/2 ? parseInt(w.dataset.v)-0.5 : parseInt(w.dataset.v));
+    });
+    w.addEventListener('mouseleave', () => render(starsValue));
+    w.addEventListener('click', e => {
+      const rect = w.getBoundingClientRect();
+      starsValue = (e.clientX - rect.left) < rect.width/2 ? parseInt(w.dataset.v)-0.5 : parseInt(w.dataset.v);
+      render(starsValue);
+    });
+  });
+  render(starsValue);
+})();
+
+// ── Mobile View ──────────────────────────────
+function mvGo(n) {
+  document.querySelectorAll('.mv-tab').forEach((t,i) => t.classList.toggle('active', i===n-1));
+  document.querySelectorAll('.mv-slide').forEach((s,i) => s.classList.toggle('active', i===n-1));
+}
+
+function mvBuildS1() {
+  const container = document.getElementById('mv-s1');
+  container.innerHTML = '';
+  const statsDiv = document.createElement('div');
+  document.querySelectorAll('#s1 .srow').forEach(row => {
+    const icon   = row.querySelector('.sic')?.innerHTML || '';
+    const lbl    = row.querySelector('.slbl')?.textContent.trim() || '';
+    const val    = row.querySelector('.sval');
+    const valTxt = val?.textContent.trim() || '';
+    const cls    = val?.classList.contains('bold-xl') ? ' hl' : '';
+    const d = document.createElement('div');
+    d.className = 'mv-stat-row';
+    d.innerHTML = `<span class="mv-stat-icon">${icon}</span><span class="mv-stat-label">${lbl}</span><span class="mv-stat-val${cls}">${valTxt}</span>`;
+    statsDiv.appendChild(d);
+  });
+  container.appendChild(statsDiv);
+  const roleCol = document.querySelector('#s1 .role-col');
+  if (roleCol) {
+    const wrapper = document.createElement('div');
+    wrapper.style.cssText = 'margin-top:10px;border-radius:8px;overflow:hidden;background:#f2f2f2;max-width:220px;align-self:center;width:100%';
+    const clone = roleCol.cloneNode(true);
+    clone.style.cssText = 'width:100%;margin:0;border-radius:0;display:flex;flex-direction:column;color:#222';
+    const rf = clone.querySelector('.role-field');
+    if (rf) rf.style.minHeight = '160px';
+    wrapper.appendChild(clone);
+    container.appendChild(wrapper);
+  }
+}
+
+function mvBuildS2() {
+  let html = `<div class="mv-section-title">Rendimento per stagione</div>
+<div class="mv-tbl-wrap"><table class="mv-tbl">
+<thead><tr><th>Anno</th><th>Squadra</th><th class="c">G</th><th class="c">⚽</th><th class="c">🎯</th></tr></thead><tbody>`;
+  document.querySelectorAll('#last2-body .career-row').forEach(tr => {
+    const cells = tr.querySelectorAll('td');
+    const anno  = cells[0]?.textContent.trim() || '—';
+    const club  = tr.querySelector('.career-club span')?.textContent.trim() || cells[1]?.textContent.trim() || '—';
+    const g     = cells[3]?.textContent.trim() || '—';
+    const gol   = cells[4]?.textContent.trim() || '—';
+    const ast   = cells[5]?.textContent.trim() || '—';
+    html += `<tr><td class="hl">${anno}</td><td>${club}</td><td class="c">${g}</td><td class="c hl">${gol}</td><td class="c hl">${ast}</td></tr>`;
+  });
+  html += `</tbody></table></div>`;
+  html += `<div class="mv-section-title">Storico infortuni</div>
+<div class="mv-tbl-wrap"><table class="mv-tbl">
+<thead><tr><th>Stagione</th><th>Infortunio</th><th class="c">Gg</th></tr></thead><tbody>`;
+  document.querySelectorAll('#inj-body .inj-row').forEach(tr => {
+    const cells = tr.querySelectorAll('td');
+    html += `<tr><td class="hl">${cells[0]?.textContent.trim()||'—'}</td><td class="hl2">${cells[1]?.textContent.trim()||'—'}</td><td class="c">${cells[4]?.textContent.trim()||'—'}</td></tr>`;
+  });
+  html += `</tbody></table></div>`;
+  document.getElementById('mv-s2').innerHTML = html;
+}
+
+function mvBuildS3() {
+  const v = parseFloat(document.getElementById('stars-widget')?.dataset.value || '0');
+  let stars = '<div class="mv-stars">';
+  for (let i = 1; i <= 5; i++) {
+    if (v >= i)          stars += `<span class="mv-star-f">★</span>`;
+    else if (v >= i-0.5) stars += `<span style="background:linear-gradient(90deg,#FFD700 50%,#333 50%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;font-size:28px">★</span>`;
+    else                 stars += `<span class="mv-star-e">★</span>`;
+  }
+  stars += '</div>';
+  const spesa = document.querySelector('.s3-spesa')?.textContent.trim() || '—';
+  const notes = document.querySelector('.s3-notes')?.textContent.trim() || '—';
+  document.getElementById('mv-s3').innerHTML = `
+<div class="mv-section-title">Appetibilità al Fantacalcio</div>${stars}
+<div class="mv-section-title">Consiglio di spesa del Mister</div>
+<div class="mv-card-text">${spesa}</div>
+<div class="mv-section-title">Appunti del Mister</div>
+<div class="mv-notes">${notes}</div>`;
+}
+
+function mvSync() {
+  const name = document.querySelector('#s1 .player-name')?.textContent.trim() || '';
+  document.getElementById('mv-name').textContent = name;
+  const subRow = document.querySelector('#s1 .sub-row');
+  if (subRow) document.getElementById('mv-meta').textContent = subRow.textContent.replace(/\s+/g,' ').trim();
+  const imgSrc = document.querySelector('.player-img')?.src;
+  if (imgSrc) document.getElementById('mv-photo').src = imgSrc;
+  mvBuildS1(); mvBuildS2(); mvBuildS3();
+}
+
+window.addEventListener('load', mvSync);
+setTimeout(mvSync, 400);
+document.querySelectorAll('#s1, #s2, #s3').forEach(slide => slide.addEventListener('input', mvSync));
+document.getElementById('photo-input').addEventListener('change', () => setTimeout(() => {
+  const src = document.querySelector('.player-img')?.src;
+  if (src) document.getElementById('mv-photo').src = src;
+}, 100));
+document.getElementById('stars-widget').addEventListener('click', () => setTimeout(mvBuildS3, 50));
+
+// ── Scala le card su schermi intermedi ───────
+function scaleCards() {
+  const vw = window.innerWidth;
+  const cards = document.querySelectorAll('.card');
+  if (vw >= 1300) {
+    cards.forEach(c => { c.style.transform=''; c.style.marginBottom=''; });
+    document.body.style.overflowX = '';
+    return;
+  }
+  document.body.style.overflowX = 'hidden';
+  const scale = vw / 1280;
+  cards.forEach(c => {
+    c.style.transform = `scale(${scale})`;
+    c.style.transformOrigin = 'top center';
+    c.style.marginBottom = Math.round(720 * (scale - 1)) + 'px';
+  });
+}
+window.addEventListener('resize', scaleCards);
+scaleCards();
+
+// ── Salva in locale ──────────────────────────
+async function salvaInLocale() {
+  const html = '<!DOCTYPE html>\n' + document.documentElement.outerHTML;
+  const blob = new Blob([html], {type:'text/html'});
+  const fname = location.pathname.split('/').pop() || 'card.html';
+  try {
+    const fh = await window.showSaveFilePicker({ suggestedName: fname, types: [{ description:'HTML', accept:{'text/html':['.html']} }] });
+    const w = await fh.createWritable();
+    await w.write(blob); await w.close();
+  } catch(e) {
+    if (e.name !== 'AbortError') {
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(blob);
+      a.download = fname; a.click();
+    }
+  }
+}
+</script>
+
+</body></html>
