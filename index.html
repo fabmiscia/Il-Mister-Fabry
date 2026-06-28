@@ -9,8 +9,21 @@
 * { margin:0; padding:0; box-sizing:border-box; }
 body { background:#0a0a0a; font-family:'Oswald',sans-serif; min-height:100vh; }
 
+#login-overlay{position:fixed;inset:0;background:#0a0a0a;display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:9999;padding:24px}
+.login-lock svg{width:52px;height:52px}
+.login-title{font-size:22px;letter-spacing:6px;text-transform:uppercase;color:#fff;margin:18px 0 4px;text-align:center}
+.login-sub{font-size:11px;color:rgba(255,255,255,.45);letter-spacing:2px;text-transform:uppercase;text-align:center;margin-bottom:28px}
+.login-box{background:#111;border:1px solid #222;border-radius:12px;padding:32px 28px;width:100%;max-width:380px;display:flex;flex-direction:column;gap:14px}
+.login-box label{font-size:11px;letter-spacing:2px;color:rgba(255,255,255,.5);text-transform:uppercase}
+#pwd-input{background:#1a1a1a;border:1px solid #333;color:#fff;padding:12px 14px;border-radius:7px;font-family:'Oswald',sans-serif;font-size:15px;outline:none;transition:border-color .2s;width:100%}
+#pwd-input:focus{border-color:#2DB84A}
+#login-btn{background:#2DB84A;color:#000;border:none;padding:13px;border-radius:7px;font-family:'Oswald',sans-serif;font-size:14px;font-weight:700;letter-spacing:2px;text-transform:uppercase;cursor:pointer;transition:opacity .15s}
+#login-btn:hover{opacity:.88}
+#login-err{color:#e74c3c;font-size:12px;letter-spacing:1px;text-align:center;display:none}
+@keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-8px)}75%{transform:translateX(8px)}}
+#login-overlay.shake .login-box{animation:shake .35s}
 
-#main-screen { display:flex; flex-direction:column; }
+#main-screen { display:none; flex-direction:column; }
 .toolbar { background:#0a0a0a; border-bottom:1px solid #1a1a1a; padding:10px 24px; display:flex; align-items:center; gap:10px; flex-wrap:wrap; position:sticky; top:0; z-index:100; }
 .toolbar-title { color:#2DB84A; font-size:13px; letter-spacing:2px; white-space:nowrap; }
 .hero { display:flex; flex-direction:column; align-items:center; gap:16px; padding:40px 24px 20px; background:linear-gradient(180deg,#111 0%,#0a0a0a 100%); border-bottom:1px solid #1a1a1a; }
@@ -61,6 +74,24 @@ a.card .sub { font-size:11px; font-weight:400; color:#2DB84A; letter-spacing:2px
 </style>
 </head>
 <body>
+
+<div id="login-overlay">
+  <div class="login-lock">
+    <svg viewBox="0 0 52 52" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <rect x="10" y="22" width="32" height="22" rx="4" fill="#2DB84A"/>
+      <path d="M17 22V16a9 9 0 0 1 18 0v6" stroke="#2DB84A" stroke-width="3" stroke-linecap="round" fill="none"/>
+      <circle cx="26" cy="33" r="3" fill="#000"/>
+    </svg>
+  </div>
+  <div class="login-title">LO <span style="color:#2DB84A">SPOGLIATOIO</span></div>
+  <div class="login-sub">Area riservata · Il Mister Fabry</div>
+  <div class="login-box">
+    <label for="pwd-input">Password abbonati</label>
+    <input type="password" id="pwd-input" placeholder="Inserisci la password" autocomplete="off">
+    <button id="login-btn">ENTRA</button>
+    <div id="login-err">Password errata. Controlla nel gruppo abbonati.</div>
+  </div>
+</div>
 
 
 <div id="main-screen">
@@ -185,6 +216,46 @@ async function salvaInLocale() {
     }
   });
 }</script>
+
+<script>
+const HASH = '57a910719dbe1def6e5e374e21698568a6d2725ed80248b21661df6e48eac9f5';
+const KEY  = 'spogliatoio_token';
+
+async function sha256(str) {
+  const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(str));
+  return Array.from(new Uint8Array(buf)).map(b=>b.toString(16).padStart(2,'0')).join('');
+}
+
+function showHome() {
+  document.getElementById('login-overlay').style.display = 'none';
+  document.getElementById('main-screen').style.display = 'flex';
+}
+
+if (localStorage.getItem(KEY) === HASH) {
+  showHome();
+}
+
+document.getElementById('login-btn').addEventListener('click', async () => {
+  const val = document.getElementById('pwd-input').value.trim();
+  if (!val) return;
+  const h = await sha256(val);
+  if (h === HASH) {
+    localStorage.setItem(KEY, HASH);
+    showHome();
+  } else {
+    const overlay = document.getElementById('login-overlay');
+    document.getElementById('login-err').style.display = 'block';
+    overlay.classList.add('shake');
+    setTimeout(() => overlay.classList.remove('shake'), 400);
+    document.getElementById('pwd-input').value = '';
+    document.getElementById('pwd-input').focus();
+  }
+});
+
+document.getElementById('pwd-input').addEventListener('keydown', e => {
+  if (e.key === 'Enter') document.getElementById('login-btn').click();
+});
+</script>
 
 </body>
 </html>
