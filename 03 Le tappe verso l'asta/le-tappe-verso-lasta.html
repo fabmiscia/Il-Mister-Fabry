@@ -702,6 +702,14 @@
   <div class="hero-sub1" id="heroSub1">—</div>
   <div class="hero-sub2" id="heroSub2">—</div>
   <div class="hero-meta" id="heroMeta"></div>
+  <div id="countdown-wrap" style="margin-top:14px;font-family:'Oswald',sans-serif;">
+    <div style="font-size:.65em;letter-spacing:3px;color:#6a90b0;text-transform:uppercase;margin-bottom:6px;">Mancano all'asta</div>
+    <div style="display:flex;gap:16px;justify-content:center;">
+      <div style="text-align:center"><span id="cd-days" style="font-size:2em;font-weight:700;color:#f08040;line-height:1">—</span><div style="font-size:.55em;letter-spacing:2px;color:#4a6880;margin-top:2px">GIORNI</div></div>
+      <div style="text-align:center"><span id="cd-hours" style="font-size:2em;font-weight:700;color:#f08040;line-height:1">—</span><div style="font-size:.55em;letter-spacing:2px;color:#4a6880;margin-top:2px">ORE</div></div>
+      <div style="text-align:center"><span id="cd-mins" style="font-size:2em;font-weight:700;color:#f08040;line-height:1">—</span><div style="font-size:.55em;letter-spacing:2px;color:#4a6880;margin-top:2px">MINUTI</div></div>
+    </div>
+  </div>
   <div style="margin-top:10px;">
     <span id="yt-badge" style="
       display:inline-flex;align-items:center;gap:5px;
@@ -1059,50 +1067,7 @@ const DEFAULT_TAPPE = [
     "dates": "1 – 10 Luglio 2026",
     "icon": "⛺",
     "citazione": "\"Il primo giorno di ritiro è sempre uguale: qualcuno è scarico, qualcuno è già in forma. Il Mister sa già chi punta. Tu?\"",
-    "video": []",
-        "top": false
-      },
-      {
-        "data": "2 lug",
-        "titolo": "ALLENATORI GIOCHISTI E RISULTATISTI",
-        "top": false
-      },
-      {
-        "data": "3 lug",
-        "titolo": "Come prepararti all'asta in 5 passi",
-        "top": false
-      },
-      {
-        "data": "4 lug",
-        "titolo": "FANTALAB NOVITÀ",
-        "top": false
-      },
-      {
-        "data": "6 lug",
-        "titolo": "GIOCATORI CHE POSSONO RISCATTARSI",
-        "top": false
-      },
-      {
-        "data": "7 lug",
-        "titolo": "Tutti i PORTIERI in ordine di appetibilità – budget di spesa",
-        "top": false
-      },
-      {
-        "data": "8 lug",
-        "titolo": "MERCATO E FANTACALCIO: domande e risposte",
-        "top": false
-      },
-      {
-        "data": "9 lug",
-        "titolo": "ERRORI DA NON FARE CLASSIC",
-        "top": false
-      },
-      {
-        "data": "10 lug",
-        "titolo": "MANTRA DECALOGO D'ORO",
-        "top": false
-      }
-    ]
+    "video": []
   },
   {
     "nome": "DIMARO",
@@ -1112,55 +1077,7 @@ const DEFAULT_TAPPE = [
     "dates": "11 – 22 Luglio 2026",
     "icon": "🏃",
     "citazione": "\"In ritiro i doppi allenamenti ti spezzano le gambe ma costruiscono il carattere. A luglio non si risparmia — si lavora duro su ogni ruolo.\"",
-    "video": []",
-        "top": false
-      },
-      {
-        "data": "14 lug",
-        "titolo": "7 DIFENSORI esterni/centrali in ordine di appetibilità",
-        "top": false
-      },
-      {
-        "data": "15 lug",
-        "titolo": "COSTRUIRE LA ROSA PERFETTA",
-        "top": false
-      },
-      {
-        "data": "16 lug",
-        "titolo": "GESTIONE DEL BUDGET",
-        "top": false
-      },
-      {
-        "data": "17 lug",
-        "titolo": "FASCE GIOCATORI LUGLIO CLASSIC",
-        "top": false
-      },
-      {
-        "data": "18 lug",
-        "titolo": "I migliori ABBINAMENTI portieri per l'asta",
-        "top": false
-      },
-      {
-        "data": "19 lug",
-        "titolo": "MODULI MANTRA",
-        "top": false
-      },
-      {
-        "data": "20 lug",
-        "titolo": "ARRIVI MERCATO ANALISI",
-        "top": false
-      },
-      {
-        "data": "21 lug",
-        "titolo": "GIOCATORI CHIAVE",
-        "top": false
-      },
-      {
-        "data": "22 lug",
-        "titolo": "CERTEZZE",
-        "top": false
-      }
-    ]
+    "video": []
   },
   {
     "nome": "BRUNICO",
@@ -1197,7 +1114,7 @@ const DEFAULT_TAPPE = [
     "numero": "VI",
     "luogo": "Fine ritiro — si torna in campo",
     "altitude": "Il ritiro è finito. Si gioca.",
-    "dates": "21 Agosto – 8 Settembre 2026",
+    "dates": "21 Agosto 2026",
     "icon": "🏆",
     "citazione": "\"Il ritiro è finito. La squadra è pronta. Adesso si va all'asta con la testa di chi ha sudato ogni singola sessione in montagna. Buona fortuna, Mister.\"",
     "video": []
@@ -1530,7 +1447,70 @@ async function exportToGitHub() {
     source = source.replace(/\/\* <<DEFAULT_CONFIG_START>> \*\/[\s\S]*?\/\* <<DEFAULT_CONFIG_END>> \*\//,  newConfig);
 
     // 4. Sostituisce DEFAULT_TAPPE con i dati attuali
-    const newTappe = `/* <<DEFAULT_TAPPE_START>> */\nconst DEFAULT_TAPPE = ${JSON.stringify(tappe, null, 2)};\n/* <<DEFAULT_TAPPE_END>> */`;
+    const newTappe = `/* <<DEFAULT_TAPPE_START>> */
+const DEFAULT_TAPPE = [
+  {
+    "nome": "PINZOLO",
+    "numero": "I",
+    "luogo": "Val Rendena, Trentino",
+    "altitude": "800 m s.l.m.",
+    "dates": "1 – 10 Luglio 2026",
+    "icon": "⛺",
+    "citazione": "\"Il primo giorno di ritiro è sempre uguale: qualcuno è scarico, qualcuno è già in forma. Il Mister sa già chi punta. Tu?\"",
+    "video": []
+  },
+  {
+    "nome": "DIMARO",
+    "numero": "II",
+    "luogo": "Val di Sole, Trentino",
+    "altitude": "1450 m s.l.m.",
+    "dates": "11 – 22 Luglio 2026",
+    "icon": "🏃",
+    "citazione": "\"In ritiro i doppi allenamenti ti spezzano le gambe ma costruiscono il carattere. A luglio non si risparmia — si lavora duro su ogni ruolo.\"",
+    "video": []
+  },
+  {
+    "nome": "BRUNICO",
+    "numero": "III",
+    "luogo": "Alto Adige",
+    "altitude": "1600 m s.l.m.",
+    "dates": "23 – 31 Luglio 2026",
+    "icon": "🏔️",
+    "citazione": "\"Si sale. L'aria è già diversa. Qui si impara a scegliere: chi tenere, chi evitare, chi può sorprendere. Il cammino si fa più ripido.\"",
+    "video": []
+  },
+  {
+    "nome": "AURONZO DI CADORE",
+    "numero": "IV",
+    "luogo": "Dolomiti, Veneto",
+    "altitude": "2200 m s.l.m. — massima quota",
+    "dates": "1 – 7 Agosto 2026",
+    "icon": "🏔️",
+    "citazione": "\"Siamo al picco. Da qui si vede tutto: il mercato, le strategie, i pericoli. Chi arriva a questa quota con la testa libera, vince l'asta.\"",
+    "video": []
+  },
+  {
+    "nome": "MOENA",
+    "numero": "V",
+    "luogo": "Val di Fassa, Trentino",
+    "altitude": "1350 m s.l.m.",
+    "dates": "8 – 20 Agosto 2026",
+    "icon": "🎯",
+    "citazione": "\"Si scende dalla montagna, ma la testa è già all'asta. Ultima rifinitura: fasce aggiornate, prezzi, la rosa definitiva. Il Mister è pronto.\"",
+    "video": []
+  },
+  {
+    "nome": "GIORNO DELL'ASTA",
+    "numero": "VI",
+    "luogo": "Fine ritiro — si torna in campo",
+    "altitude": "Il ritiro è finito. Si gioca.",
+    "dates": "21 Agosto 2026",
+    "icon": "🏆",
+    "citazione": "\"Il ritiro è finito. La squadra è pronta. Adesso si va all'asta con la testa di chi ha sudato ogni singola sessione in montagna. Buona fortuna, Mister.\"",
+    "video": []
+  }
+];
+/* <<DEFAULT_TAPPE_END>> */`;
     source = source.replace(/\/\* <<DEFAULT_TAPPE_START>> \*\/[\s\S]*?\/\* <<DEFAULT_TAPPE_END>> \*\//, newTappe);
 
     // 5. Codifica e invia a GitHub
@@ -1590,6 +1570,28 @@ async function salvaInLocale() {
 </script>
 
 <script>if(location.protocol!=='file:'){var b=document.getElementById('btn-salva-locale');if(b)b.style.display='none';}</script>
+
+<script>
+(function countdown() {
+  const target = new Date('2026-08-21T00:00:00');
+  function tick() {
+    const now = new Date();
+    const diff = target - now;
+    if (diff <= 0) {
+      document.getElementById('countdown-wrap').innerHTML = '<div style="font-family:Oswald,sans-serif;font-size:1.1em;letter-spacing:3px;color:#f08040">🏆 È IL GIORNO DELL\'ASTA!</div>';
+      return;
+    }
+    const days  = Math.floor(diff / 86400000);
+    const hours = Math.floor((diff % 86400000) / 3600000);
+    const mins  = Math.floor((diff % 3600000) / 60000);
+    document.getElementById('cd-days').textContent  = String(days).padStart(2,'0');
+    document.getElementById('cd-hours').textContent = String(hours).padStart(2,'0');
+    document.getElementById('cd-mins').textContent  = String(mins).padStart(2,'0');
+    setTimeout(tick, 30000);
+  }
+  tick();
+})();
+</script>
 
 <script>if(location.protocol!=='file:'){
   document.querySelectorAll('button,a').forEach(function(el){
