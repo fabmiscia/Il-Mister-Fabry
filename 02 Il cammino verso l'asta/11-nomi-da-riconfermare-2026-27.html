@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>11 Nomi da Riconfermare al Fantacalcio 2026/27 a Pochi Crediti – Il Mister Fabry</title>
+<style>
+* { margin:0; padding:0; box-sizing:border-box; }
+
+:root {
+  --neon: #b0ff00;
+  --bg: #0d0d0d;
+  --card: #141414;
+  --border: #1e1e1e;
+  --text: #ddd;
+  --muted: #777;
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: 17px;
+  line-height: 1.85;
+  padding-bottom: 80px;
+}
+
+/* ── TOOLBAR ── */
+.toolbar {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: #0a0a0a;
+  border-bottom: 1px solid #1a1a1a;
+  padding: 10px 20px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  font-family: Arial, sans-serif;
+}
+.toolbar-brand {
+  font-weight: 900;
+  font-size: 13px;
+  color: var(--neon);
+  letter-spacing: 1px;
+  margin-right: 4px;
+}
+.tbtn {
+  background: #1a1a1a;
+  color: #ccc;
+  border: 1px solid #2a2a2a;
+  padding: 6px 14px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 12px;
+  font-weight: 700;
+  font-family: Arial, sans-serif;
+  transition: all .15s;
+}
+.tbtn:hover { border-color: var(--neon); color: var(--neon); }
+.tbtn-gh {
+  margin-left: auto;
+  background: #161b22;
+  color: #ccc;
+  border: 1px solid #2a2a2a;
+  padding: 6px 14px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 12px;
+  font-weight: 700;
+  font-family: Arial, sans-serif;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition: all .15s;
+}
+.tbtn-gh:hover { border-color: var(--neon); color: var(--neon); }
+.tbtn-gh:disabled { opacity: .4; cursor: not-allowed; }
+
+/* ── ARTICOLO ── */
+.article {
+  max-width: 740px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+/* ── HEADER ── */
+.article-header {
+  padding: 60px 0 40px;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 42px;
+}
+.article-category {
+  font-family: Arial, sans-serif;
+  font-size: 11px;
+  font-weight: 900;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--neon);
+  margin-bottom: 16px;
+}
+.article-title {
+  font-family: 'Arial Black', Arial, sans-serif;
+  font-size: clamp(26px, 4vw, 42px);
+  font-weight: 900;
+  color: #fff;
+  line-height: 1.15;
+  margin-bottom: 18px;
+}
+.article-subtitle {
+  font-size: 19px;
+  color: var(--muted);
+  font-style: italic;
+  margin-bottom: 22px;
+  line-height: 1.5;
+}
+.article-meta {
+  font-family: Arial, sans-serif;
+  font-size: 13px;
+  color: var(--muted);
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+.article-meta a {
+  color: var(--neon);
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+}
+.article-meta a:hover { text-decoration: underline; }
+
+/* ── TESTO ── */
+.article p {
+  margin-bottom: 22px;
+  color: var(--text);
+}
+.article h2 {
+  font-family: 'Arial Black', Arial, sans-serif;
+  font-size: 20px;
+  font-weight: 900;
+  color: #fff;
+  margin: 48px 0 6px;
+  padding-left: 16px;
+  border-left: 3px solid var(--neon);
+  line-height: 1.2;
+}
+.article h2 .team-tag {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--muted);
+  font-family: Arial, sans-serif;
+  display: block;
+  margin-top: 2px;
+}
+.article .numero {
+  font-size: 11px;
+  font-weight: 900;
+  letter-spacing: 2px;
+  color: var(--neon);
+  font-family: Arial, sans-serif;
+  text-transform: uppercase;
+  display: block;
+  margin-bottom: 4px;
+}
+
+/* ── DIVIDER ── */
+.divider {
+  border: none;
+  border-top: 1px solid var(--border);
+  margin: 40px 0;
+}
+
+/* ── GH OVERLAY ── */
+#gh-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,.75);
+  z-index: 9999;
+  align-items: center;
+  justify-content: center;
+  font-family: Arial, sans-serif;
+}
+#gh-box {
+  background: #111;
+  border: 2px solid var(--neon);
+  border-radius: 14px;
+  padding: 32px 36px;
+  max-width: 440px;
+  width: 90%;
+  text-align: center;
+  box-shadow: 0 0 40px rgba(176,255,0,.2);
+}
+#gh-icon { font-size: 34px; margin-bottom: 10px; }
+#gh-status { font-size: 17px; font-weight: 700; color:#fff; margin-bottom: 8px; }
+#gh-detail { font-size: 13px; color: var(--muted); min-height: 18px; margin-bottom: 16px; }
+#gh-link-wrap { display:none; margin-bottom: 14px; }
+#gh-link { color: var(--neon); font-size: 12px; word-break: break-all; }
+#gh-close-btn {
+  display: none;
+  background: #1a1a1a;
+  color: #fff;
+  border: 1px solid #333;
+  padding: 8px 22px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 13px;
+  font-family: Arial, sans-serif;
+}
+
+/* ── RESPONSIVE ── */
+@media (max-width: 600px) {
+  .article-header { padding: 36px 0 28px; }
+  .article h2 { font-size: 18px; }
+  .tbtn-gh { margin-left: 0; }
+}
+</style>
+</head>
+<body>
+
+<!-- TOOLBAR -->
+<div class="toolbar">
+  <span class="toolbar-brand">🎯 IL MISTER FABRY</span>
+  <button class="tbtn" onclick="toggleEdit()" id="btn-edit">✏️ Modifica</button>
+  <button class="tbtn" onclick="salvaLocale()">💾 Salva</button>
+  <button class="tbtn-gh" id="gh-btn" onclick="pubblicaGitHub()">
+    <svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
+    🚀 Pubblica su GitHub
+  </button>
+</div>
+
+<!-- ARTICOLO -->
+<div class="article">
+
+  <header class="article-header">
+    <div class="article-category" contenteditable="false">Consigli Fantacalcio · Stagione 2026/27</div>
+    <h1 class="article-title" contenteditable="false">11 Nomi da Riconfermare al Fantacalcio 2026/27 a Pochi Crediti</h1>
+    <p class="article-subtitle" contenteditable="false">I giocatori presi a 1–5 crediti che possono diventare le fondamenta della tua rosa vincente per il prossimo anno.</p>
+    <div class="article-meta">
+      <span>Il Mister Fabry</span>
+      <span>·</span>
+      <span>Giugno 2026</span>
+      <span>·</span>
+      <a href="https://youtu.be/LKEmdpW-yy0" target="_blank">▶ Guarda il video</a>
+    </div>
+  </header>
+
+  <p contenteditable="false">Sia che tu faccia un fantacalcio continuativo, un manageriale, che giochi a Fantalab Manager o che voglia già adocchiare i nomi da prendere il prossimo anno, questo è il video — e l'articolo — che fa per te. Ti do <strong>11 nomi</strong>, praticamente una squadra intera, che hai pagato pochissimo: un credito, due crediti, massimo cinque. Qualcuno è forse andato leggermente oltre, ma sono giocatori che vale assolutamente la pena tenere nelle tue rose. Possono costruire le fondamenta della tua rosa vincente per il 2026/27.</p>
+
+  <hr class="divider">
+
+  <!-- 1 -->
+  <h2 contenteditable="false">
+    <span class="numero">01 · Atalanta</span>
+    Ahanor
+    <span class="team-tag">Terzino Sinistro · 18 anni</span>
+  </h2>
+  <p contenteditable="false">Questo difensore lo avrai pagato pochissimo — un credito, due crediti — preso nelle aste iniziali o anche da svincolato. Sicuramente rappresenta il futuro della difesa dell'Atalanta, e stiamo assistendo ora a un passaggio di allenatore e a un cambio di impianto di gioco: con l'arrivo di Sarri ci sarà un ritorno alla difesa a quattro. Ahanor è praticamente un terzino sinistro nato, e Sarri gioca proprio con i terzini. Potrebbe essere un nuovo titolare dell'Atalanta e si potrebbe assistere a una crescita esponenziale sotto la guida del tecnico toscano. Ha solo 18 anni, quindi ha avuto alti e bassi, ma i mezzi tecnici e atletici ci sono tutti. Chissà che il prossimo anno non sia uno dei nomi rivelazione in difesa.</p>
+
+  <!-- 2 -->
+  <h2 contenteditable="false">
+    <span class="numero">02 · Bologna</span>
+    Jonathan Rowe
+    <span class="team-tag">Ala Sinistra / Trequartista · 23 anni</span>
+  </h2>
+  <p contenteditable="false">Un nome già più affermato, ma comunque pagato poco. L'ho preso in due fantacalcio Mantra e l'ho pagato anche poco nelle aste iniziali. La sua evoluzione si è avuta da gennaio in poi, quindi nelle aste iniziali si è preso a pochissimo. Potrebbe ripercorrere il cammino di Ndoye a Bologna: primo anno in sordina, finale in crescendo, secondo anno esplosione. Ora bisogna capire chi sarà l'allenatore perché con l'uscita probabile di Italiano cambieranno anche delle dinamiche, ma Rowe rimane un giocatore futuribile anche se dovesse cambiare squadra, perché ha dei mezzi atletici e tecnici davvero impressionanti. Il prossimo anno potrebbe tranquillamente arrivare a 7–8 gol.</p>
+
+  <!-- 3 -->
+  <h2 contenteditable="false">
+    <span class="numero">03 · Cagliari</span>
+    Paul Mendy
+    <span class="team-tag">Attaccante · 19 anni</span>
+  </h2>
+  <p contenteditable="false">Attaccante senegalese, 19 anni. Ho avuto modo di vedere qualche partita della Primavera ed è un giocatore impressionante. Al suo primo avvio da titolare in Serie A ha segnato una doppietta importantissima — è il terzo più giovane di sempre a farlo — e ha già fatto vedere qualcosa anche in Serie A. Magari non prenderà subito la titolarità dell'attacco del Cagliari, ma è un prospetto sul quale il club punta parecchio, tanto da rinnovargli il contratto fino al 2031. Gli manca ancora un po' di velocità e di cattiveria, ma sono doti che si acquisiscono nei prossimi 2–3 anni. Potrebbe essere il bomber del Cagliari del futuro.</p>
+
+  <!-- 4 -->
+  <h2 contenteditable="false">
+    <span class="numero">04 · Fiorentina</span>
+    Cher Ndour
+    <span class="team-tag">Centrocampista · 21 anni</span>
+  </h2>
+  <p contenteditable="false">Centrocampista italo-senegalese, nazionale italiano Under 21. È stato un po' coinvolto nell'annata non facile della Fiorentina, ma parliamo di un giocatore che ha messo a segno tre gol al suo primo anno in Serie A, chiudendo in crescendo — ricordiamo il bel gol alla Juventus. Media voto insufficiente e zero assist, ma il potenziale è evidente. L'anno prossimo ci sarà un cambio di allenatore, e questo può essere un plus. Se dovesse arrivare Grosso — che ha valorizzato moltissimo le mezzali al Sassuolo, pensiamo a Ismaïl Köné — chissà che Ndour non ripercorra quel cammino in casa Fiorentina. Grande prestanza fisica, ottimi tempi di inserimento, discreta tecnica. Ci si può puntare.</p>
+
+  <!-- 5 -->
+  <h2 contenteditable="false">
+    <span class="numero">05 · Genoa</span>
+    Jeff Ekhator
+    <span class="team-tag">Centravanti · 20 anni</span>
+  </h2>
+  <p contenteditable="false">Un attaccante che mi piace molto, ancora un po' da sgrezzare, ma De Rossi ne parla in maniera entusiasta: "Ha una forza selvaggia, tra pochi anni varrà decine di milioni." Quest'anno tre gol sono un bottino abbastanza magro, ma le potenzialità si intravedono eccome. Lo avete preso magari come sesto attaccante a un credito: tenetevelo, perché Ekhator potrebbe essere il centravanti del futuro sia per la Serie A che per la Nazionale italiana. In alcune caratteristiche mi ricorda Moïse Kean, e potrebbe anche fare meglio in prospettiva. Un campionato con una titolarità pressoché certa — soprattutto se dovesse rimanere De Rossi — potrebbe essere quello della consacrazione. Segnalo il nome con la matita blu.</p>
+
+  <!-- 6 -->
+  <h2 contenteditable="false">
+    <span class="numero">06 · Inter</span>
+    Pio Esposito
+    <span class="team-tag">Attaccante · 21 anni</span>
+  </h2>
+  <p contenteditable="false">Nome abbastanza scontato, ma chi l'ha preso a uno o cinque crediti nelle aste di agosto scorso ha fatto un investimento che ha già reso. Sette gol stagionali sono un ottimo bottino, ed è un giocatore che sta prendendo sempre più spazio nell'Inter presente e futura. L'anno prossimo giocheranno la Champions League, quindi ci sarà tanta rotazione in campionato e Esposito avrà ancora più spazio. Un investimento che può continuare a rendere — se non ancora di più — nella prossima stagione.</p>
+
+  <!-- 7 -->
+  <h2 contenteditable="false">
+    <span class="numero">07 · Napoli</span>
+    Antonio Vergara
+    <span class="team-tag">Mezzala / Esterno · 21 anni</span>
+  </h2>
+  <p contenteditable="false">Ha avuto una fiammata a ridosso del mercato di riparazione, poi si è fermato per infortunio. Ha mostrato doti tecniche un po' fuori dal comune, ha rubato l'occhio, ha messo a segno numeri importanti e qualche partita in coppa. Nel cambiamento di linea politica del Napoli potrebbe imporsi come titolare del futuro, specialmente se dovesse arrivare Italiano, un allenatore che valorizza molto gli esterni. Può giocare da esterno in un tridente offensivo, da mezzala o da trequartista: è un giocatore polivalente, un jolly molto importante — come Orsolini, Ndoye e Bernardeschi a Bologna. Attenzione però: se lo avete preso alla riparazione spendendo dei bei crediti, forse è meglio guardare altrove. Se invece ve lo ritrovate a uno o cinque crediti massimo, vale assolutamente la pena puntarci.</p>
+
+  <!-- 8 -->
+  <h2 contenteditable="false">
+    <span class="numero">08 · Roma</span>
+    Niccolò Pisilli
+    <span class="team-tag">Centrocampista · 21 anni</span>
+  </h2>
+  <p contenteditable="false">Molto sottovalutato nelle aste iniziali, ma anche nelle riparazioni. Con Gasperini è diventato titolarissimo nella seconda parte di stagione, praticamente inamovibile nel centrocampo della Roma: due gol e quattro assist in 13 presenze da titolare. Con Gasp è diventato un tuttocampista, capace di giocare sia in mediana che da trequartista nel 3-4-2-1. Per caratteristiche potrebbe essere il nuovo Pašalić della Roma. L'anno prossimo, giocando un campionato quasi interamente da titolare, potrebbe almeno raddoppiare il suo bottino. Io personalmente l'ho tenuto su Fantalab Managerò anche insieme ad Ahanor. Da tenere a occhi chiusi.</p>
+
+  <!-- 9 -->
+  <h2 contenteditable="false">
+    <span class="numero">09 · Sassuolo</span>
+    Darryl Bakola
+    <span class="team-tag">Trequartista / Mezzala · 18 anni</span>
+  </h2>
+  <p contenteditable="false">Un giocatore dalla grande potenzialità arrivato dal Marsiglia. Quest'anno è stato frenato dalla crescita e dall'esplosione di Köné e Thorstvedt, che sono state due mezzali inamovibili. Ma quando ha giocato ha rubato l'occhio — memorabile il numero di tacco che ha portato a un gol. Se dovesse partire uno dei due, Bakola si prenderà tanto spazio. Dipenderà anche da chi arriva in panchina al Sassuolo — si parla di Abate — ma comunque ci saranno allenatori in grado di valorizzare un giovane promettente come lui. Se lo avete pagato un credito, tenetevelo senza pensarci.</p>
+
+  <!-- 10 -->
+  <h2 contenteditable="false">
+    <span class="numero">10 · Torino</span>
+    Rafa Obrador
+    <span class="team-tag">Esterno · 21 anni</span>
+  </h2>
+  <p contenteditable="false">Nelle aste di riparazione si prendeva poco perché era uno dei nomi nascosti. Poi è diventato titolare inamovibile: un gol e tre assist da gennaio in poi, e ora viene conteso da più squadre — si parla di un interessamento della Roma, mentre il Torino vorrebbe tenerlo. Il cartellino è del Benfica, quindi bisognerà capire che fine farà. Ma se dovesse rimanere a Torino è da tenere quasi a occhi chiusi perché sarà titolarissimo. E se anche dovesse andare alla Roma o in una big, è comunque un giocatore destinato a crescere. Avete pagato poco e può raddoppiare o triplicare la resa portata quest'anno. Vale anche come difensore modificatore.</p>
+
+  <!-- 11 -->
+  <h2 contenteditable="false">
+    <span class="numero">11 · Udinese</span>
+    Branimir Mlačić
+    <span class="team-tag">Difensore Centrale · 18 anni</span>
+  </h2>
+  <p contenteditable="false">Difensore prospetto molto giovane, pochi l'avranno preso nelle aste, e chi lo ha fatto l'ha preso a uno. Ha giocato poco e non sempre bene, ma è un prospetto di cui si parla benissimo: lo voleva l'Inter, e non si tratta di una squadra pazza. È stato soffiato ai nerazzurri e ha preferito scegliere l'Udinese per non saltare le tappe. L'anno prossimo è probabile che possano partire giocatori come Solet o Kristensen, e sappiamo che la missione principale dell'Udinese è valorizzare i giovani. Mi aspetto che giochi almeno più della metà delle presenze: in quel caso vedremo il suo valore raddoppiare o triplicare, e potrebbe diventare anche una plusvalenza importante, oltre che un titolare da godersi in rosa.</p>
+
+  <hr class="divider">
+
+  <p contenteditable="false">Questi sono gli 11 nomi. Tante dinamiche di mercato possono ancora cambiare, ma ad oggi, se dovessi fare delle scelte, valuterei tutti questi giocatori con grande attenzione. <strong>Come sempre, like e commento tattico sul video</strong> — e dimmi nei commenti su quali di questi nomi punteresti nelle tue rose!</p>
+
+  <div style="text-align:center; margin: 48px 0 24px;">
+    <a href="https://youtu.be/LKEmdpW-yy0" target="_blank" style="
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      background: #ff0000;
+      color: #fff;
+      font-family: Arial, sans-serif;
+      font-weight: 900;
+      font-size: 16px;
+      text-decoration: none;
+      padding: 16px 32px;
+      border-radius: 10px;
+      letter-spacing: .5px;
+      transition: opacity .15s;
+    " onmouseover="this.style.opacity='.85'" onmouseout="this.style.opacity='1'">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="white"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+      ▶ Guarda il video completo su YouTube
+    </a>
+  </div>
+
+</div><!-- /article -->
+
+<!-- GH OVERLAY -->
+<div id="gh-overlay" onclick="if(event.target===this)chiudiOverlay()">
+  <div id="gh-box">
+    <div id="gh-icon">🚀</div>
+    <div id="gh-status">Pubblica su GitHub Pages</div>
+    <div id="gh-detail"></div>
+    <div id="gh-link-wrap"><a id="gh-link" href="#" target="_blank"></a></div>
+    <button id="gh-close-btn" onclick="chiudiOverlay()">✕ Chiudi</button>
+  </div>
+</div>
+
+<script>
+const GH_REPO   = 'fabmiscia/Il-Mister-Fabry';
+const GH_PATH   = '02 Il cammino verso l\'asta/11-nomi-da-riconfermare-2026-27.html';
+const PAGES_URL = 'https://fabmiscia.github.io/Il-Mister-Fabry/02%20Il%20cammino%20verso%20l%27asta/11-nomi-da-riconfermare-2026-27.html';
+
+let editMode = false;
+function toggleEdit() {
+  editMode = !editMode;
+  const btn = document.getElementById('btn-edit');
+  document.querySelectorAll('[contenteditable]').forEach(el => {
+    el.contentEditable = editMode ? 'true' : 'false';
+  });
+  btn.textContent = editMode ? '🔒 Blocca' : '✏️ Modifica';
+  btn.style.color = editMode ? '#b0ff00' : '';
+  btn.style.borderColor = editMode ? '#b0ff00' : '';
+}
+
+async function salvaLocale() {
+  const html = '<!DOCTYPE html>\n' + document.documentElement.outerHTML;
+  const blob = new Blob([html], {type:'text/html'});
+  const fname = '11-nomi-da-riconfermare-2026-27.html';
+  try {
+    if (window.showSaveFilePicker) {
+      const fh = await window.showSaveFilePicker({suggestedName:fname, types:[{description:'HTML',accept:{'text/html':['.html']}}]});
+      const w = await fh.createWritable(); await w.write(blob); await w.close();
+      alert('✅ Salvato!');
+    } else throw new Error('no picker');
+  } catch(e) {
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob); a.download = fname; a.click();
+  }
+}
+
+async function pubblicaGitHub() {
+  let token = localStorage.getItem('gh_pat');
+  if (!token) {
+    token = prompt('GitHub Personal Access Token\n(salvato solo nel browser)');
+    if (!token) return;
+    localStorage.setItem('gh_pat', token.trim());
+  }
+  token = token.trim();
+
+  const overlay = document.getElementById('gh-overlay');
+  const icon    = document.getElementById('gh-icon');
+  const status  = document.getElementById('gh-status');
+  const detail  = document.getElementById('gh-detail');
+  const linkWrap= document.getElementById('gh-link-wrap');
+  const closeBtn= document.getElementById('gh-close-btn');
+  const ghBtn   = document.getElementById('gh-btn');
+
+  overlay.style.display = 'flex';
+  icon.textContent = '⏳'; status.textContent = 'Pubblicazione in corso…';
+  detail.textContent = 'Preparo il contenuto…';
+  linkWrap.style.display = 'none'; closeBtn.style.display = 'none';
+  ghBtn.disabled = true;
+
+  try {
+    overlay.style.display = 'none';
+    const htmlContent = '<!DOCTYPE html>\n' + document.documentElement.outerHTML;
+    overlay.style.display = 'flex';
+
+    const apiUrl = `https://api.github.com/repos/${GH_REPO}/contents/${GH_PATH.split('/').map(encodeURIComponent).join('/')}`;
+    const headers = {'Authorization':`token ${token}`,'Accept':'application/vnd.github+json','Content-Type':'application/json'};
+
+    detail.textContent = 'Verifico file esistente…';
+    let sha = null;
+    const check = await fetch(apiUrl, {headers});
+    if (check.ok) sha = (await check.json()).sha;
+
+    const b64 = btoa(unescape(encodeURIComponent(htmlContent)));
+    detail.textContent = 'Carico su GitHub…';
+    const res = await fetch(apiUrl, {
+      method:'PUT', headers,
+      body: JSON.stringify({message: sha ? 'Aggiorna articolo 11 nomi da riconfermare' : 'Aggiunge articolo 11 nomi da riconfermare', content:b64, ...(sha?{sha}:{})})
+    });
+
+    if (res.ok) {
+      icon.textContent = '✅'; status.textContent = 'Pubblicato!';
+      status.style.color = '#b0ff00';
+      detail.textContent = 'Disponibile su GitHub Pages (attendi 1-2 min):';
+      document.getElementById('gh-link').href = PAGES_URL;
+      document.getElementById('gh-link').textContent = PAGES_URL;
+      linkWrap.style.display = 'block';
+    } else {
+      const err = await res.json();
+      throw new Error(err.message || 'Errore sconosciuto');
+    }
+  } catch(e) {
+    icon.textContent = '❌'; status.textContent = 'Errore';
+    status.style.color = '#f87171'; detail.textContent = e.message;
+    if (e.message?.includes('401')) localStorage.removeItem('gh_pat');
+  } finally {
+    closeBtn.style.display = 'inline-block';
+    ghBtn.disabled = false;
+  }
+}
+
+function chiudiOverlay() {
+  document.getElementById('gh-overlay').style.display = 'none';
+  document.getElementById('gh-status').style.color = '';
+}
+</script>
+</body>
+</html>
