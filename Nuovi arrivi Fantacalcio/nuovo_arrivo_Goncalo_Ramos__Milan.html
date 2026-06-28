@@ -1,6 +1,5 @@
 <!DOCTYPE html>
-<html lang="it">
-<head>
+<html lang="it"><head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Gonçalo Ramos – Card Fantacalcio</title>
@@ -620,12 +619,12 @@ table.inj-tbl thead th {
 </style>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 </head>
-<body>
+<body style="overflow-x: hidden;">
 
 <div class="nav">
-  <button class="active" onclick="go(1)">📋 Info</button>
-  <button onclick="go(2)">📊 Statistiche</button>
-  <button onclick="go(3)">⭐ Consigli Fantacalcio</button>
+  <button class="" onclick="go(1)">📋 Info</button>
+  <button onclick="go(2)" class="">📊 Statistiche</button>
+  <button onclick="go(3)" class="active">⭐ Consigli Fantacalcio</button>
 </div>
 
 <!-- Toolbar -->
@@ -634,13 +633,13 @@ table.inj-tbl thead th {
   <button onclick="exportPNG(2)">💾 Slide 2</button>
   <button onclick="exportPNG(3)">💾 Slide 3</button>
   <button class="gh-btn" onclick="pubblicaGitHub()">🚀 Pubblica su GitHub</button>
-  <button id="btn-salva-locale" onclick="salvaInLocale()" style="background:#1a1a1a;color:#fff;border:1px solid #333;padding:7px 14px;border-radius:6px;cursor:pointer;font-size:12px;font-weight:700;letter-spacing:.5px;transition:.15s" onmouseover="this.style.borderColor='#b0ff00';this.style.color='#b0ff00'" onmouseout="this.style.borderColor='#333';this.style.color='#fff'">💾 Salva in locale</button>
+  <button id="btn-salva-locale" onclick="salvaInLocale()" style="background: rgb(26, 26, 26); color: rgb(255, 255, 255); border: 1px solid rgb(51, 51, 51); padding: 7px 14px; border-radius: 6px; cursor: pointer; font-size: 12px; font-weight: 700; letter-spacing: 0.5px; transition: 0.15s;" onmouseover="this.style.borderColor='#b0ff00';this.style.color='#b0ff00'" onmouseout="this.style.borderColor='#333';this.style.color='#fff'">💾 Salva in locale</button>
   <span class="tip">← → per navigare | Click sulla foto per cambiarla</span>
 </div>
 
 <!-- Input nascosti per upload -->
 <input type="file" id="photo-input" accept="image/*" style="display:none">
-<input type="file" id="logo-input"  accept="image/*" style="display:none">
+<input type="file" id="logo-input" accept="image/*" style="display:none">
 
 <!-- ══ MOBILE VIEW (visibile solo su ≤900px) ══════════════════════════════ -->
 <div class="mobile-view" id="mobile-view">
@@ -649,7 +648,7 @@ table.inj-tbl thead th {
     <div class="mv-badge">NUOVO ARRIVO</div>
     <div class="mv-hero-overlay">
       <div class="mv-name" id="mv-name">Gonçalo Ramos</div>
-      <div class="mv-meta-line" id="mv-meta"></div>
+      <div class="mv-meta-line" id="mv-meta">ETÀ: 25 ANNI | RUOLO: PC | SQUADRA: PSG</div>
     </div>
   </div>
   <div class="mv-tabs">
@@ -657,20 +656,56 @@ table.inj-tbl thead th {
     <button class="mv-tab" onclick="mvGo(2)">📊 Stats</button>
     <button class="mv-tab" onclick="mvGo(3)">⭐ Consigli</button>
   </div>
-  <div class="mv-slide active" id="mv-s1"></div>
-  <div class="mv-slide" id="mv-s2"></div>
-  <div class="mv-slide" id="mv-s3"></div>
+  <div class="mv-slide active" id="mv-s1"><div><div class="mv-stat-row"><span class="mv-stat-icon">💰</span><span class="mv-stat-label">Valore mercato</span><span class="mv-stat-val">30,00 mln €</span></div><div class="mv-stat-row"><span class="mv-stat-icon">🔄</span><span class="mv-stat-label">Transfer</span><span class="mv-stat-val">Acquisto definitivo</span></div><div class="mv-stat-row"><span class="mv-stat-icon"><img src="https://tmssl.akamaized.net//images/flagge/tiny/136.png" style="height:16px;vertical-align:middle;margin-right:5px;border:1px solid #555"></span><span class="mv-stat-label">Nazionalità</span><span class="mv-stat-val hl">PORTOGALLO</span></div><div class="mv-stat-row"><span class="mv-stat-icon">👟</span><span class="mv-stat-label">Piede</span><span class="mv-stat-val">DESTRO</span></div><div class="mv-stat-row"><span class="mv-stat-icon">📏</span><span class="mv-stat-label">Altezza</span><span class="mv-stat-val hl">1,85&nbsp;m</span></div><div class="mv-stat-row"><span class="mv-stat-icon"><img src="https://tmssl.akamaized.net//images/wappen/homepageWappen150x150/583.png" style="height:20px;vertical-align:middle;margin-right:5px"></span><span class="mv-stat-label">Ultimo club</span><span class="mv-stat-val">PSG</span></div><div class="mv-stat-row"><span class="mv-stat-icon">✅</span><span class="mv-stat-label">Presenze 2025/26</span><span class="mv-stat-val">45</span></div><div class="mv-stat-row"><span class="mv-stat-icon">⚽</span><span class="mv-stat-label">Gol</span><span class="mv-stat-val">12</span></div><div class="mv-stat-row"><span class="mv-stat-icon">🎯</span><span class="mv-stat-label">Assist</span><span class="mv-stat-val">2</span></div><div class="mv-stat-row"><span class="mv-stat-icon">📝</span><span class="mv-stat-label">Scadenza</span><span class="mv-stat-val">30/06/2028</span></div><div class="mv-stat-row"><span class="mv-stat-icon">🚑</span><span class="mv-stat-label">Infortuni</span><span class="mv-stat-val">8 infortuni registrati</span></div></div><div style="margin-top: 10px; border-radius: 8px; overflow: hidden; background: rgb(242, 242, 242); max-width: 220px; align-self: center; width: 100%;"><div class="role-col" style="width: 100%; margin: 0px; border-radius: 0px; display: flex; flex-direction: column; color: rgb(34, 34, 34);">
+    <div class="role-hdr">Ruolo</div>
+    <div class="role-field" style="min-height: 160px;">
+      <svg viewBox="0 0 100 150" preserveAspectRatio="xMidYMid meet">
+        <rect x="0" y="0" width="100" height="150" fill="#1e4d8c"></rect>
+        <rect x="6" y="5" width="88" height="140" rx="2" fill="none" stroke="rgba(255,255,255,.6)" stroke-width="1"></rect>
+        <line x1="6" y1="75" x2="94" y2="75" stroke="rgba(255,255,255,.4)" stroke-width=".8"></line>
+        <circle cx="50" cy="75" r="13" fill="none" stroke="rgba(255,255,255,.4)" stroke-width=".8"></circle>
+        <circle cx="50" cy="75" r="1.5" fill="rgba(255,255,255,.4)"></circle>
+        <rect x="22" y="117" width="56" height="23" rx="1" fill="none" stroke="rgba(255,255,255,.6)" stroke-width=".9"></rect>
+        <rect x="36" y="130" width="28" height="10" rx="1" fill="none" stroke="rgba(255,255,255,.5)" stroke-width=".7"></rect>
+        <rect x="22" y="10" width="56" height="23" rx="1" fill="none" stroke="rgba(255,255,255,.6)" stroke-width=".9"></rect>
+        <rect x="36" y="10" width="28" height="10" rx="1" fill="none" stroke="rgba(255,255,255,.5)" stroke-width=".7"></rect>
+        <circle cx="50%" cy="13%" r="7" fill="white" stroke="#ef4444" stroke-width="2.5"></circle><circle cx="50%" cy="13%" r="3.5" fill="#ef4444"></circle>
+      </svg>
+    </div>
+    <div class="role-meta">
+      <div class="rl">Ruolo naturale:</div>
+      <div class="rv" contenteditable="true">Prima Punta</div>
+      <div class="rl" style="margin-top:4px">Ruoli secondari:</div>
+      <div class="rv" contenteditable="true">—</div>
+    </div>
+    <div class="role-legend">
+      <div class="legend-dot"><span class="dot" style="background:white;border-color:#888"></span> Primario</div>
+      <div class="legend-dot"><span class="dot" style="background:#b0ff00"></span> Offensivo</div>
+      <div class="legend-dot"><span class="dot" style="background:#22c55e"></span> Centrocampo</div>
+      <div class="legend-dot"><span class="dot" style="background:#3b82f6"></span> Difensivo</div>
+    </div>
+  </div></div></div>
+  <div class="mv-slide" id="mv-s2"><div class="mv-section-title">Rendimento per stagione</div>
+<div class="mv-tbl-wrap"><table class="mv-tbl">
+<thead><tr><th>Anno</th><th>Squadra</th><th class="c">G</th><th class="c">⚽</th><th class="c">🎯</th></tr></thead><tbody><tr><td class="hl">25/26</td><td>FC Paris Saint-Germain</td><td class="c">56</td><td class="c hl">12</td><td class="c hl">1</td></tr><tr><td class="hl">24/25</td><td>FC Paris Saint-Germain</td><td class="c">58</td><td class="c hl">18</td><td class="c hl">6</td></tr><tr><td class="hl">23/24</td><td>FC Paris Saint-Germain</td><td class="c">53</td><td class="c hl">14</td><td class="c hl">1</td></tr></tbody></table></div><div class="mv-section-title">Storico infortuni</div>
+<div class="mv-tbl-wrap"><table class="mv-tbl">
+<thead><tr><th>Stagione</th><th>Infortunio</th><th class="c">Gg</th></tr></thead><tbody><tr><td class="hl">24/25</td><td class="hl2">Malato</td><td class="c">7 giorni</td></tr><tr><td class="hl">24/25</td><td class="hl2">Infortunio all'articolazione della caviglia</td><td class="c">92 giorni</td></tr><tr><td class="hl">23/24</td><td class="hl2">Influenza</td><td class="c">8 giorni</td></tr><tr><td class="hl">23/24</td><td class="hl2">Stiramento muscolare</td><td class="c">9 giorni</td></tr><tr><td class="hl">22/23</td><td class="hl2">Problema muscolare</td><td class="c">12 giorni</td></tr><tr><td class="hl">22/23</td><td class="hl2">Infortunio muscolare</td><td class="c">8 giorni</td></tr><tr><td class="hl">20/21</td><td class="hl2">Infortunio muscolare</td><td class="c">6 giorni</td></tr><tr><td class="hl">20/21</td><td class="hl2">Coronavirus</td><td class="c">13 giorni</td></tr></tbody></table></div></div>
+  <div class="mv-slide" id="mv-s3">
+<div class="mv-section-title">Appetibilità al Fantacalcio</div><div class="mv-stars"><span class="mv-star-f">★</span><span class="mv-star-f">★</span><span class="mv-star-f">★</span><span class="mv-star-f">★</span><span class="mv-star-e">★</span></div>
+<div class="mv-section-title">Consiglio di spesa del Mister</div>
+<div class="mv-card-text">Punta titolare del Milan, colpo record da 74M€.&nbsp; Potremmo collocarlo come attaccante di prima fascia bassa seconda alta (dipende dalle leghe)</div>
+<div class="mv-section-title">Appunti del Mister</div>
+<div class="mv-notes">Gonçalo Ramos, 25 anni, portoghese, arrivato dal PSG per circa 74 milioni di euro: il colpo più costoso della storia del Milan. Voluto fortemente da Ruben Amorim, suo connazionale e nuovo allenatore rossonero. Nel sistema di Amorim (3-4-2-1) sarà la prima punta titolare, con Pulisic e Leão come trequartisti alle sue spalle. Stats 2025/26 al PSG: 45 presenze, 12 gol, 2 assist (spesso utilizzato come riserva). Abile a finalizzare e a legare l gioco, Attaccante fisico e tecnico.🟢PRO: titolare in una big, supporto offensivo top, ottimo finalizzatore, voluto fortemente dall'allenatore.🔴CONTRO: storico infortuni pesante (8 in carriera), al PSG e in nazionale era seconda scelta — da verificare continuità e adattamento. Potrebbe avere il fardello della spesa importantissima pagata per il suo acquisto.🖊️CONSIGLIO: da prendere, è la punta designata del nuovo Milan di Amorim. Attenzione a non pagarlo troppo, avrà parecchio Hype e si rischia di pagarlo più di attaccanti collaudati alla serie A e con uno storico più sicuro.</div></div>
 </div>
 
 <!-- ══════════════════════════════════════════════
      SLIDE 1
 ══════════════════════════════════════════════ -->
-<div id="s1" class="card active">
+<div id="s1" class="card" style="transform: scale(1); transform-origin: center top; margin-bottom: 0px;">
 
   <!-- Foto cliccabile -->
   <div class="photo-col" onclick="triggerPhotoUpload('all')">
-    <img class="player-img photo-all" src="https://img.a.transfermarkt.technology/portrait/big/550550-1681906158.jpg?lm=1" alt="Gonçalo Ramos"
-         onerror="this.src='https://img.a.transfermarkt.technology/portrait/big/default.jpg'">
+    <img class="player-img photo-all" src="https://img.a.transfermarkt.technology/portrait/big/550550-1681906158.jpg?lm=1" alt="Gonçalo Ramos" onerror="this.src='https://img.a.transfermarkt.technology/portrait/big/default.jpg'">
     <div class="photo-upload-hint">📷 Click per cambiare foto</div>
   </div>
 
@@ -679,7 +714,7 @@ table.inj-tbl thead th {
     <div class="player-name" contenteditable="true">Gonçalo Ramos</div>
 
     <div class="sub-row">
-      <img id="team-logo-img" src="https://tmssl.akamaized.net//images/wappen/homepageWappen150x150/583.png" onclick="triggerLogoUpload()" title="Click per sostituire il logo" style="height:46px;vertical-align:middle;margin-right:12px;cursor:pointer;border-radius:4px">
+      <img id="team-logo-img" src="blob:null/287df6ff-e02d-44db-859f-08ae5cc8a278" onclick="triggerLogoUpload()" title="Click per sostituire il logo" style="height:46px;vertical-align:middle;margin-right:12px;cursor:pointer;border-radius:4px">
       <em>ETÀ:</em>&nbsp;25 ANNI
       <span class="pipe">|</span>
       <em>RUOLO:</em>&nbsp;PC
@@ -711,7 +746,7 @@ table.inj-tbl thead th {
       <div class="srow">
         <span class="sic">📏</span>
         <span class="slbl">Altezza</span>
-        <span class="sval bold-xl" contenteditable="true">1,85 m</span>
+        <span class="sval bold-xl" contenteditable="true">1,85&nbsp;m</span>
       </div>
       <div class="srow">
         <span class="sic"><img src="https://tmssl.akamaized.net//images/wappen/homepageWappen150x150/583.png" style="height:20px;vertical-align:middle;margin-right:5px"></span>
@@ -751,16 +786,16 @@ table.inj-tbl thead th {
     <div class="role-hdr">Ruolo</div>
     <div class="role-field">
       <svg viewBox="0 0 100 150" preserveAspectRatio="xMidYMid meet">
-        <rect x="0" y="0" width="100" height="150" fill="#1e4d8c"/>
-        <rect x="6" y="5" width="88" height="140" rx="2" fill="none" stroke="rgba(255,255,255,.6)" stroke-width="1"/>
-        <line x1="6" y1="75" x2="94" y2="75" stroke="rgba(255,255,255,.4)" stroke-width=".8"/>
-        <circle cx="50" cy="75" r="13" fill="none" stroke="rgba(255,255,255,.4)" stroke-width=".8"/>
-        <circle cx="50" cy="75" r="1.5" fill="rgba(255,255,255,.4)"/>
-        <rect x="22" y="117" width="56" height="23" rx="1" fill="none" stroke="rgba(255,255,255,.6)" stroke-width=".9"/>
-        <rect x="36" y="130" width="28" height="10" rx="1" fill="none" stroke="rgba(255,255,255,.5)" stroke-width=".7"/>
-        <rect x="22" y="10" width="56" height="23" rx="1" fill="none" stroke="rgba(255,255,255,.6)" stroke-width=".9"/>
-        <rect x="36" y="10" width="28" height="10" rx="1" fill="none" stroke="rgba(255,255,255,.5)" stroke-width=".7"/>
-        <circle cx="50%" cy="13%" r="7" fill="white" stroke="#ef4444" stroke-width="2.5"/><circle cx="50%" cy="13%" r="3.5" fill="#ef4444"/>
+        <rect x="0" y="0" width="100" height="150" fill="#1e4d8c"></rect>
+        <rect x="6" y="5" width="88" height="140" rx="2" fill="none" stroke="rgba(255,255,255,.6)" stroke-width="1"></rect>
+        <line x1="6" y1="75" x2="94" y2="75" stroke="rgba(255,255,255,.4)" stroke-width=".8"></line>
+        <circle cx="50" cy="75" r="13" fill="none" stroke="rgba(255,255,255,.4)" stroke-width=".8"></circle>
+        <circle cx="50" cy="75" r="1.5" fill="rgba(255,255,255,.4)"></circle>
+        <rect x="22" y="117" width="56" height="23" rx="1" fill="none" stroke="rgba(255,255,255,.6)" stroke-width=".9"></rect>
+        <rect x="36" y="130" width="28" height="10" rx="1" fill="none" stroke="rgba(255,255,255,.5)" stroke-width=".7"></rect>
+        <rect x="22" y="10" width="56" height="23" rx="1" fill="none" stroke="rgba(255,255,255,.6)" stroke-width=".9"></rect>
+        <rect x="36" y="10" width="28" height="10" rx="1" fill="none" stroke="rgba(255,255,255,.5)" stroke-width=".7"></rect>
+        <circle cx="50%" cy="13%" r="7" fill="white" stroke="#ef4444" stroke-width="2.5"></circle><circle cx="50%" cy="13%" r="3.5" fill="#ef4444"></circle>
       </svg>
     </div>
     <div class="role-meta">
@@ -782,11 +817,10 @@ table.inj-tbl thead th {
 <!-- ══════════════════════════════════════════════
      SLIDE 2 – Statistiche
 ══════════════════════════════════════════════ -->
-<div id="s2" class="card">
+<div id="s2" class="card" style="transform: scale(1); transform-origin: center top; margin-bottom: 0px;">
 
   <div class="s2-photo" onclick="triggerPhotoUpload('all')">
-    <img class="photo-all" src="https://img.a.transfermarkt.technology/portrait/big/550550-1681906158.jpg?lm=1" alt="Gonçalo Ramos"
-         onerror="this.src='https://img.a.transfermarkt.technology/portrait/big/default.jpg'">
+    <img class="photo-all" src="https://img.a.transfermarkt.technology/portrait/big/550550-1681906158.jpg?lm=1" alt="Gonçalo Ramos" onerror="this.src='https://img.a.transfermarkt.technology/portrait/big/default.jpg'">
   </div>
 
   <div class="s2-body">
@@ -1080,11 +1114,10 @@ table.inj-tbl thead th {
 <!-- ══════════════════════════════════════════════
      SLIDE 3 – Consigli Fantacalcio
 ══════════════════════════════════════════════ -->
-<div id="s3" class="card">
+<div id="s3" class="card active" style="transform: scale(1); transform-origin: center top; margin-bottom: 0px;">
 
   <div class="s3-photo" onclick="triggerPhotoUpload('all')">
-    <img class="photo-all" src="https://img.a.transfermarkt.technology/portrait/big/550550-1681906158.jpg?lm=1" alt="Gonçalo Ramos"
-         onerror="this.src='https://img.a.transfermarkt.technology/portrait/big/default.jpg'">
+    <img class="photo-all" src="https://img.a.transfermarkt.technology/portrait/big/550550-1681906158.jpg?lm=1" alt="Gonçalo Ramos" onerror="this.src='https://img.a.transfermarkt.technology/portrait/big/default.jpg'">
   </div>
 
   <div class="s3-body">
@@ -1099,24 +1132,24 @@ table.inj-tbl thead th {
     <div class="s3-section">
       <div class="s3-label">APPETIBILITÀ AL FANTACALCIO</div>
       <div class="stars-widget" id="stars-widget" data-value="4">
-        <span class="star-wrap" data-v="1"><span class="star-bg">★</span><span class="star-fg">★</span></span>
-        <span class="star-wrap" data-v="2"><span class="star-bg">★</span><span class="star-fg">★</span></span>
-        <span class="star-wrap" data-v="3"><span class="star-bg">★</span><span class="star-fg">★</span></span>
-        <span class="star-wrap" data-v="4"><span class="star-bg">★</span><span class="star-fg">★</span></span>
-        <span class="star-wrap" data-v="5"><span class="star-bg">★</span><span class="star-fg">★</span></span>
+        <span class="star-wrap" data-v="1"><span class="star-bg">★</span><span class="star-fg" style="width: 100%;">★</span></span>
+        <span class="star-wrap" data-v="2"><span class="star-bg">★</span><span class="star-fg" style="width: 100%;">★</span></span>
+        <span class="star-wrap" data-v="3"><span class="star-bg">★</span><span class="star-fg" style="width: 100%;">★</span></span>
+        <span class="star-wrap" data-v="4"><span class="star-bg">★</span><span class="star-fg" style="width: 100%;">★</span></span>
+        <span class="star-wrap" data-v="5"><span class="star-bg">★</span><span class="star-fg" style="width: 0%;">★</span></span>
       </div>
     </div>
 
     <!-- Consiglio di spesa -->
     <div class="s3-section">
       <div class="s3-label">CONSIGLIO DI SPESA DEL MISTER</div>
-      <div class="s3-spesa" contenteditable="true">Punta titolare del Milan, colpo record da 74M€. Vale 30-40 crediti in asta. Prima scelta assoluta come centravanti.</div>
+      <div class="s3-spesa" contenteditable="true">Punta titolare del Milan, colpo record da 74M€.&nbsp; Potremmo collocarlo come attaccante di prima fascia bassa seconda alta (dipende dalle leghe)</div>
     </div>
 
     <!-- Appunti -->
     <div class="s3-section s3-grow">
       <div class="s3-label">APPUNTI DEL MISTER</div>
-      <div class="s3-notes" contenteditable="true">Gonçalo Ramos, 25 anni, portoghese, arrivato dal PSG per circa 74 milioni di euro: il colpo più costoso della storia del Milan. Voluto fortemente da Ruben Amorim, suo connazionale e nuovo allenatore rossonero. Nel sistema di Amorim (3-4-2-1) sarà la prima punta titolare, con Pulisic e Leão come trequartisti alle sue spalle. Stats 2025/26 al PSG: 45 presenze, 12 gol, 2 assist (spesso riserva). 🟢 PRO: titolare in una big, ottimo finalizzatore, pieno supporto offensivo con Amorim. 🔴 CONTRO: storico infortuni pesante (8 in carriera), al PSG era spesso riserva — da monitorare continuità. ✏️ CONSIGLIO: da prendere, è la punta designata del nuovo Milan. Spendi senza rimpianti ma tieni un sostituto pronto.</div>
+      <div class="s3-notes" contenteditable="true">Gonçalo Ramos, 25 anni, portoghese, arrivato dal PSG per circa 74 milioni di euro: il colpo più costoso della storia del Milan. Voluto fortemente da Ruben Amorim, suo connazionale e nuovo allenatore rossonero. Nel sistema di Amorim (3-4-2-1) sarà la prima punta titolare, con Pulisic e Leão come trequartisti alle sue spalle. Stats 2025/26 al PSG: 45 presenze, 12 gol, 2 assist (spesso utilizzato come riserva). Abile a finalizzare e a legare l gioco, Attaccante fisico e tecnico.<div>🟢PRO: titolare in una big, supporto offensivo top, ottimo finalizzatore, voluto fortemente dall'allenatore.</div><div>🔴CONTRO: storico infortuni pesante (8 in carriera), al PSG e in nazionale era seconda scelta — da verificare continuità e adattamento. Potrebbe avere il fardello della spesa importantissima pagata per il suo acquisto.</div><div>🖊️CONSIGLIO: da prendere, è la punta designata del nuovo Milan di Amorim. Attenzione a non pagarlo troppo, avrà parecchio Hype e si rischia di pagarlo più di attaccanti collaudati alla serie A e con uno storico più sicuro.</div></div>
     </div>
 
   </div>
@@ -1124,7 +1157,7 @@ table.inj-tbl thead th {
 
 <!-- Overlay GitHub -->
 <!-- Overlay GitHub -->
-<div id="gh-overlay" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.88);z-index:999;align-items:center;justify-content:center;">
+<div id="gh-overlay" style="display: none; position: fixed; inset: 0px; background: rgba(0, 0, 0, 0.88); z-index: 999; align-items: center; justify-content: center;">
   <div style="background:#1a1a1a;border:1px solid #333;border-radius:12px;padding:28px 32px;max-width:480px;width:90%;text-align:center;font-family:Arial,sans-serif;">
     <div id="gh-view-token" style="display:none">
       <div style="font-size:26px;margin-bottom:10px">🔑</div>
@@ -1133,8 +1166,7 @@ table.inj-tbl thead th {
         Inserisci il tuo <strong style="color:#ccc">Personal Access Token</strong> GitHub.<br>
         Sarà salvato solo su questo browser.
       </div>
-      <input id="gh-token-input" type="password" placeholder="ghp_xxxxxxxxxxxxxxxx"
-        style="width:100%;background:#0d0d0d;border:1px solid #333;border-radius:6px;padding:10px 12px;color:#fff;font-size:13px;font-family:monospace;margin-bottom:14px;outline:none">
+      <input id="gh-token-input" type="password" placeholder="ghp_xxxxxxxxxxxxxxxx" style="width:100%;background:#0d0d0d;border:1px solid #333;border-radius:6px;padding:10px 12px;color:#fff;font-size:13px;font-family:monospace;margin-bottom:14px;outline:none">
       <div style="display:flex;gap:10px;justify-content:center;">
         <button onclick="salvaSalvaPubblica()" style="background:#b0ff00;color:#000;border:none;padding:9px 24px;border-radius:20px;cursor:pointer;font-weight:800;font-size:12px">Salva e pubblica</button>
         <button onclick="chiudiOverlay()" style="background:#222;color:#aaa;border:1px solid #333;padding:9px 20px;border-radius:20px;cursor:pointer;font-size:12px">Annulla</button>
@@ -1143,13 +1175,12 @@ table.inj-tbl thead th {
         Crea il token su GitHub → Settings → Developer settings → Personal access tokens → Contents: Read &amp; Write
       </div>
     </div>
-    <div id="gh-view-progress" style="display:none">
-      <div style="font-size:32px;margin-bottom:12px" id="gh-icon">⏳</div>
-      <div id="gh-status" style="font-size:14px;color:#ccc;margin-bottom:6px">Pubblicazione in corso…</div>
+    <div id="gh-view-progress" style="display: none;">
+      <div style="font-size:32px;margin-bottom:12px" id="gh-icon">🚀</div>
+      <div id="gh-status" style="font-size: 14px; margin-bottom: 6px;">Pubblica su GitHub Pages</div>
       <div id="gh-detail" style="font-size:11px;color:#555;margin-bottom:18px"></div>
       <div id="gh-link-wrap" style="display:none;margin-bottom:14px">
-        <a id="gh-link" href="#" target="_blank"
-           style="color:#b0ff00;font-size:12px;text-decoration:none;border:1px solid #b0ff00;padding:6px 16px;border-radius:16px">
+        <a id="gh-link" href="#" target="_blank" style="color:#b0ff00;font-size:12px;text-decoration:none;border:1px solid #b0ff00;padding:6px 16px;border-radius:16px">
           🌐 Apri su GitHub Pages
         </a>
       </div>
@@ -1608,5 +1639,5 @@ async function salvaInLocale() {
   }
 }
 </script>
-</body>
-</html>
+
+</body></html>
