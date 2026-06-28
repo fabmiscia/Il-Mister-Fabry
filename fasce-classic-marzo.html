@@ -219,8 +219,37 @@ document.getElementById('btn-github').addEventListener('click',async()=>{
 });
 buildTabs();render();
 
+// ── ESPORTA CSV ──────────────────────────────
+function getVisiblePlayers() {
+  const q = (document.getElementById('search-box')?.value || '').toLowerCase();
+  let players = [...DATA[currentRole]];
+  if (q) players = players.filter(p => p.Nome.toLowerCase().includes(q) || (p.Team||'').toLowerCase().includes(q));
+  if (currentFascia !== 'Tutti') players = players.filter(p => p.Fascia === currentFascia);
+  if (objOnly) players = players.filter(p => isObj(p));
+  return players;
+}
+function exportCSV() {
+  const cols = ['Nome','Team','Ruolo','Fascia','Prezzo','Quo','FMV','Titolarità','Affidabilità','Integrità'];
+  const rows = [cols.join(',')];
+  getVisiblePlayers().forEach(p => {
+    rows.push(cols.map(c => {
+      const v = String(p[c] ?? '').replace(/"/g,'""');
+      return v.includes(',') || v.includes('"') ? `"${v}"` : v;
+    }).join(','));
+  });
+  const csv = '﻿' + rows.join('\r\n'); // BOM per Excel
+  const blob = new Blob([csv], {type:'text/csv;charset=utf-8'});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url; a.download = 'fasce-classic.csv';
+  document.body.appendChild(a); a.click();
+  setTimeout(() => { document.body.removeChild(a); URL.revokeObjectURL(url); }, 200);
+}
 
-
+// ── ESPORTA PDF (via stampa) ──────────────────
+function exportPDF() {
+  window.print();
+}
 
 
 
