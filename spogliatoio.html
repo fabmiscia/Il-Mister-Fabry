@@ -311,7 +311,7 @@ document.getElementById('login-btn').addEventListener('click', async () => {
   const h = await sha256(val);
   if (h === HASH) {
     localStorage.setItem(KEY, HASH);
-    showMain();
+    window.location.href = 'index.html';
   } else {
     const overlay = document.getElementById('login-overlay');
     document.getElementById('login-err').style.display = 'block';
