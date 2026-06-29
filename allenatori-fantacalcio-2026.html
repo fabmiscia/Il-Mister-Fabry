@@ -2536,6 +2536,7 @@ function saveToStorage() {
 }
 
 function loadFromStorage() {
+  if (location.protocol !== "file:") return;
   try {
     const saved = localStorage.getItem(STORAGE_KEY);
     if (saved) {
