@@ -1,0 +1,823 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Glossario Fantacalcio — Il Mister Fabry</title>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#0d0d0d;color:#fff;font-family:'Oswald',Arial,sans-serif;min-height:100vh}
+
+.toolbar{background:#111;border-bottom:2px solid #1a1a1a;padding:12px 20px;display:flex;align-items:center;gap:10px;flex-wrap:wrap;position:sticky;top:0;z-index:100}
+.toolbar h1{color:#2DB84A;font-size:14px;letter-spacing:2px;flex:1}
+.btn{padding:7px 16px;border-radius:6px;font-family:'Oswald',Arial,sans-serif;font-size:12px;font-weight:600;letter-spacing:1px;text-transform:uppercase;cursor:pointer;border:none;transition:opacity .15s}
+.btn:hover{opacity:.85}
+.btn-edit{background:#1a1a1a;color:#fff;border:1px solid #333}
+.btn-gh{background:#b0ff00;color:#000}
+
+.page{max-width:900px;margin:0 auto;padding:32px 20px 80px}
+
+/* HERO */
+.hero{text-align:center;margin-bottom:32px;padding:40px 20px;background:linear-gradient(135deg,#0d1a0d,#0d0d0d);border:1px solid #1a1a1a;border-radius:16px;position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,#2DB84A,transparent)}
+.hero-label{font-size:9px;letter-spacing:5px;color:#2DB84A;margin-bottom:12px}
+.hero-title{font-size:36px;font-weight:700;letter-spacing:4px;margin-bottom:8px}
+.hero-title span{color:#2DB84A}
+.hero-sub{font-size:12px;color:#666;letter-spacing:2px}
+
+/* SEARCH */
+.search-wrap{margin-bottom:28px;position:relative}
+.search-wrap input{width:100%;background:#111;border:1.5px solid #222;border-radius:10px;padding:14px 20px 14px 48px;font-family:'Oswald',sans-serif;font-size:15px;color:#fff;letter-spacing:1px;outline:none;transition:border-color .2s}
+.search-wrap input:focus{border-color:#2DB84A}
+.search-wrap input::placeholder{color:#444}
+.search-icon{position:absolute;left:16px;top:50%;transform:translateY(-50%);font-size:18px;color:#444;pointer-events:none}
+.search-count{position:absolute;right:16px;top:50%;transform:translateY(-50%);font-size:11px;color:#555;letter-spacing:1px}
+.no-results{text-align:center;padding:60px 20px;color:#444;font-size:14px;letter-spacing:2px;display:none}
+
+/* LETTERA NAV */
+.letter-nav{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:36px;justify-content:center}
+.letter-nav a{display:inline-flex;align-items:center;justify-content:center;width:36px;height:36px;background:#111;border:1px solid #222;border-radius:6px;color:#888;font-size:13px;font-weight:700;letter-spacing:1px;text-decoration:none;transition:all .15s}
+.letter-nav a:hover,.letter-nav a.active{background:#1a3a1a;border-color:#2DB84A;color:#2DB84A}
+.letter-nav a.empty{opacity:.3;pointer-events:none}
+
+/* SEZIONE LETTERA */
+.letter-section{margin-bottom:40px}
+.letter-header{font-size:28px;font-weight:700;color:#2DB84A;letter-spacing:4px;border-bottom:1px solid #1a1a1a;padding-bottom:10px;margin-bottom:20px}
+
+/* TERMINE */
+.term{display:flex;gap:16px;padding:14px 0;border-bottom:1px solid #111;align-items:flex-start;transition:background .15s}
+.term.hidden{display:none}
+.term:last-child{border-bottom:none}
+.term-left{min-width:200px;flex-shrink:0;padding-top:2px}
+.term-name{font-size:15px;font-weight:700;letter-spacing:1px;color:#fff;display:block}
+.term-def{font-size:14px;color:#aaa;line-height:1.7;flex:1}
+.term-def b{color:#fff}
+
+.badges{display:flex;gap:4px;flex-wrap:wrap;margin-top:5px}
+.badge{display:inline-block;font-size:9px;letter-spacing:1.5px;padding:2px 7px;border-radius:3px;font-weight:700}
+.badge-classic{background:#1a2a3a;border:1px solid #4a9fd4;color:#4a9fd4}
+.badge-mantra{background:#1a1a3a;border:1px solid #9b59b6;color:#9b59b6}
+.badge-entrambi{background:#1a3a1a;border:1px solid #2DB84A;color:#2DB84A}
+.badge-slang{background:#2a1a0a;border:1px solid #e67e22;color:#e67e22}
+
+mark{background:#1a3a1a;color:#2DB84A;border-radius:2px;padding:0 2px}
+
+/* BACK TO TOP */
+.back-top{position:fixed;bottom:24px;right:24px;background:#2DB84A;color:#000;border:none;width:42px;height:42px;border-radius:50%;font-size:18px;cursor:pointer;display:flex;align-items:center;justify-content:center;opacity:.85;transition:opacity .15s;text-decoration:none;font-family:'Oswald',sans-serif;font-weight:700}
+.back-top:hover{opacity:1}
+</style>
+</head>
+<body>
+
+<div class="toolbar">
+  <h1>📖 GLOSSARIO FANTACALCIO · IL MISTER FABRY</h1>
+  <button class="btn btn-edit" onclick="attivaModifica(this)">✏️ Modifica</button>
+  <button class="btn btn-gh" onclick="esportaGitHub()">🚀 Pubblica su GitHub</button>
+</div>
+
+<div class="page">
+
+  <div class="hero">
+    <div class="hero-label">Il Mister Fabry · Academy</div>
+    <div class="hero-title">GLOSSARIO <span>FANTACALCIO</span></div>
+    <div class="hero-sub">Tutti i termini · Classic &amp; Mantra · Slang · Serie A 2026-27</div>
+  </div>
+
+  <div class="search-wrap">
+    <span class="search-icon">🔍</span>
+    <input type="text" id="search-input" placeholder="Cerca un termine..." oninput="filtra(this.value)">
+    <span class="search-count" id="search-count"></span>
+  </div>
+
+  <div class="letter-nav" id="letter-nav">
+    <a href="#A">A</a><a href="#B">B</a><a href="#C">C</a><a href="#D">D</a>
+    <a href="#E">E</a><a href="#F">F</a><a href="#G">G</a><a href="#H" class="empty">H</a>
+    <a href="#I">I</a><a href="#H" class="empty">J</a><a href="#H" class="empty">K</a>
+    <a href="#L">L</a><a href="#M">M</a><a href="#N" class="empty">N</a>
+    <a href="#O" class="empty">O</a><a href="#P">P</a><a href="#Q">Q</a>
+    <a href="#R">R</a><a href="#S">S</a><a href="#T">T</a>
+    <a href="#U" class="empty">U</a><a href="#V">V</a><a href="#W">W</a>
+    <a href="#X" class="empty">X</a><a href="#Y" class="empty">Y</a><a href="#Z" class="empty">Z</a>
+  </div>
+
+  <div class="no-results" id="no-results">Nessun termine trovato.</div>
+
+  <!-- A -->
+  <div class="letter-section" id="A">
+    <div class="letter-header">A</div>
+
+    <div class="term" data-term="alternanza">
+      <div class="term-left">
+        <span class="term-name" contenteditable="false">Alternanza</span>
+        <div class="badges"><span class="badge badge-entrambi">Classic · Mantra</span></div>
+      </div>
+      <div class="term-def" contenteditable="false">Situazione in cui due giocatori si dividono il posto fisso, alternandosi nelle partite. Rischio alto per il fantacalcio: non sai mai chi gioca.</div>
+    </div>
+
+    <div class="term" data-term="assist man">
+      <div class="term-left">
+        <span class="term-name" contenteditable="false">Assist man</span>
+        <div class="badges"><span class="badge badge-slang">Slang</span><span class="badge badge-entrambi">Classic · Mantra</span></div>
+      </div>
+      <div class="term-def" contenteditable="false">Giocatore specializzato negli assist. Molto ricercato soprattutto al Mantra dove l'assist vale punti extra. Tipicamente un trequartista o un'ala.</div>
+    </div>
+
+    <div class="term" data-term="asta">
+      <div class="term-left">
+        <span class="term-name" contenteditable="false">Asta</span>
+        <div class="badges"><span class="badge badge-entrambi">Classic · Mantra</span></div>
+      </div>
+      <div class="term-def" contenteditable="false">Sistema di acquisto dei giocatori tramite offerte al rialzo. Ogni fantamister rilancia finché non si aggiudica il giocatore. Chi offre di più lo porta a casa.</div>
+    </div>
+
+    <div class="term" data-term="attaccante att a">
+      <div class="term-left">
+        <span class="term-name" contenteditable="false">Attaccante (Att / A)</span>
+        <div class="badges"><span class="badge badge-entrambi">Classic · Mantra</span></div>
+      </div>
+      <div class="term-def" contenteditable="false">In Classic include tutte le punte e i trequartisti avanzati (bonus gol <b>+3</b>). In Mantra è un ruolo specifico per le seconde punte, distinto da <b>Pc</b> (prima punta).</div>
+    </div>
+
+  </div>
+
+  <!-- B -->
+  <div class="letter-section" id="B">
+    <div class="letter-header">B</div>
+
+    <div class="term" data-term="bomber">
+      <div class="term-left">
+        <span class="term-name" contenteditable="false">Bomber</span>
+        <div class="badges"><span class="badge badge-slang">Slang</span><span class="badge badge-entrambi">Classic · Mantra</span></div>
+      </div>
+      <div class="term-def" contenteditable="false">Centravanti prolifico di gol. Il giocatore che segna di più in assoluto. Indispensabile in qualsiasi rosa, ma costa tantissimo all'asta.</div>
+    </div>
+
+    <div class="term" data-term="bonus">
+      <div class="term-left">
+        <span class="term-name" contenteditable="false">Bonus</span>
+        <div class="badges"><span class="badge badge-entrambi">Classic · Mantra</span></div>
+      </div>
+      <div class="term-def" contenteditable="false">Punteggio aggiuntivo che si somma al voto base per prestazioni positive: <b>gol segnato, assist, rigore parato, clean sheet</b>. I valori esatti variano per lega e piattaforma.</div>
+    </div>
+
+    <div class="term" data-term="budget crediti">
+      <div class="term-left">
+        <span class="term-name" contenteditable="false">Budget</span>
+        <div class="badges"><span class="badge badge-entrambi">Classic · Mantra</span></div>
+      </div>
+      <div class="term-def" contenteditable="false">Crediti a disposizione per costruire la rosa all'asta. Di solito <b>500 crediti</b>. Gestirli bene — senza sprecarli sulle chiamate sbagliate — è la chiave per vincere.</div>
+    </div>
+
+  </div>
+
+  <!-- C -->
+  <div class="letter-section" id="C">
+    <div class="letter-header">C</div>
+
+    <div class="term" data-term="c centrocampista mediano">
+      <div class="term-left">
+        <span class="term-name" contenteditable="false">C (Centrocampista)</span>
+        <div class="badges"><span class="badge badge-mantra">Mantra</span></div>
+      </div>
+      <div class="term-def" contenteditable="false">Ruolo Mantra per le mezzali e i centrocampisti centrali. Diverso da <b>M</b> (mediano difensivo) e <b>T</b> (trequartista).</div>
+    </div>
+
+    <div class="term" data-term="centrocampista cen classic">
+      <div class="term-left">
+        <span class="term-name" contenteditable="false">Centrocampista (Cen)</span>
+        <div class="badges"><span class="badge badge-classic">Classic</span></div>
+      </div>
+      <div class="term-def" contenteditable="false">Uno dei 4 ruoli del Classic. Include mezzali, mediani, trequartisti e fantasisti. Bonus gol: <b>+4,5 punti</b>. Ruolo versatile con alto potenziale bonus.</div>
+    </div>
+
+    <div class="term" data-term="chiamata asta">
+      <div class="term-left">
+        <span class="term-name" contenteditable="false">Chiamata</span>
+        <div class="badges"><span class="badge badge-entrambi">Classic · Mantra</span></div>
+      </div>
+      <div class="term-def" contenteditable="false">Momento in cui un fantamister nomina un giocatore durante l'asta per aprire le offerte. Chi chiama deve offrire almeno 1 credito.</div>
+    </div>
+
+    <div class="term" data-term="classic modalità 4 ruoli">
+      <div class="term-left">
+        <span class="term-name" contenteditable="false">Classic</span>
+        <div class="badges"><span class="badge badge-classic">Classic</span></div>
+      </div>
+      <div class="term-def" contenteditable="false">Modalità tradizionale del fantacalcio con <b>4 ruoli</b>: Portiere, Difensore, Centrocampista, Attaccante. La modalità più diffusa e adatta ai principianti.</div>
+    </div>
+
+    <div class="term" data-term="clean sheet porta inviolata difensore portiere">
+      <div class="term-left">
+        <span class="term-name" contenteditable="false">Clean Sheet</span>
+        <div class="badges"><span class="badge badge-entrambi">Classic · Mantra</span></div>
+      </div>
+      <div class="term-def" contenteditable="false">Porta inviolata a fine partita. Genera bonus per il portiere e i difensori. Uno degli eventi più importanti per i ruoli arretrati, spesso vale quanto un gol.</div>
+    </div>
+
+    <div class="term" data-term="coppa torneo">
+      <div class="term-left">
+        <span class="term-name" contenteditable="false">Coppa</span>
+        <div class="badges"><span class="badge badge-entrambi">Classic · Mantra</span></div>
+      </div>
+      <div class="term-def" contenteditable="false">Torneo ad eliminazione diretta che si svolge in parallelo alla classifica. Ha un proprio montepremi separato. Vince chi sopravvive agli scontri diretti.</div>
+    </div>
+
+    <div class="term" data-term="crack fenomeno top">
+      <div class="term-left">
+        <span class="term-name" contenteditable="false">Crack</span>
+        <div class="badges"><span class="badge badge-slang">Slang</span><span class="badge badge-entrambi">Classic · Mantra</span></div>
+      </div>
+      <div class="term-def" contenteditable="false">Giocatore fenomenale, di livello assoluto. Il crack è il giocatore che tutti vogliono all'asta e che fa la differenza da solo. Spesso costa la metà del budget.</div>
+    </div>
+
+    <div class="term" data-term="crediti budget asta monete">
+      <div class="term-left">
+        <span class="term-name" contenteditable="false">Crediti</span>
+        <div class="badges"><span class="badge badge-entrambi">Classic · Mantra</span></div>
+      </div>
+      <div class="term-def" contenteditable="false">Valuta virtuale usata durante l'asta per acquistare i giocatori. Non si trasferiscono tra stagioni. Finire l'asta con 0 crediti avanzati è l'obiettivo ideale.</div>
+    </div>
+
+  </div>
+
+  <!-- D -->
+  <div class="letter-section" id="D">
+    <div class="letter-header">D</div>
+
+    <div class="term" data-term="dc difensore centrale mantra">
+      <div class="term-left">
+        <span class="term-name" contenteditable="false">Dc (Difensore Centrale)</span>
+        <div class="badges"><span class="badge badge-mantra">Mantra</span></div>
+      </div>
+      <div class="term-def" contenteditable="false">Ruolo Mantra specifico per i difensori centrali. Non può essere schierato come terzino (Dd/Ds) senza malus da modificatore.</div>
+    </div>
+
+    <div class="term" data-term="dd ds terzino mantra">
+      <div class="term-left">
+        <span class="term-name" contenteditable="false">Dd / Ds (Terzini)</span>
+        <div class="badges"><span class="badge badge-mantra">Mantra</span></div>
+      </div>
+      <div class="term-def" contenteditable="false">Ruoli Mantra per i terzini: <b>Dd</b> (Difensore Destro) e <b>Ds</b> (Difensore Sinistro). Le fasce della difesa. I terzini offensivi sono molto ricercati per gli assist.</div>
+    </div>
+
+    <div class="term" data-term="difensore dif classic">
+      <div class="term-left">
+        <span class="term-name" contenteditable="false">Difensore (Dif)</span>
+        <div class="badges"><span class="badge badge-classic">Classic</span></div>
+      </div>
+      <div class="term-def" contenteditable="false">Uno dei 4 ruoli del Classic. Include terzini e difensori centrali. Bonus gol: <b>+6 punti</b>. Bonus clean sheet variabile per lega.</div>
+    </div>
+
+    <div class="term" data-term="doppio ruolo mantra jolly">
+      <div class="term-left">
+        <span class="term-name" contenteditable="false">Doppio Ruolo</span>
+        <div class="badges"><span class="badge badge-mantra">Mantra</span></div>
+      </div>
+      <div class="term-def" contenteditable="false">Giocatore con due ruoli assegnati (es. Dc/M, C/T). Può essere schierato in entrambe le posizioni. Un jolly preziosissimo per coprire i buchi di rosa.</div>
+    </div>
+
+  </div>
+
+  <!-- E -->
+  <div class="letter-section" id="E">
+    <div class="letter-header">E</div>
+
+    <div class="term" data-term="e esterno ala fascia mantra">
+      <div class="term-left">
+        <span class="term-name" contenteditable="false">E (Esterno)</span>
+        <div class="badges"><span class="badge badge-mantra">Mantra</span></div>
+      </div>
+      <div class="term-def" contenteditable="false">Ruolo Mantra per i giocatori che agiscono sulle fasce a centrocampo (tornanti, mezzali esterne). Diverso da <b>W</b> (ala offensiva alta).</div>
+    </div>
+
+    <div class="term" data-term="esaurito lega posti">
+      <div class="term-left">
+        <span class="term-name" contenteditable="false">Esaurito</span>
+        <div class="badges"><span class="badge badge-entrambi">Classic · Mantra</span></div>
+      </div>
+      <div class="term-def" contenteditable="false">Lega con tutti i posti già occupati. Non è più possibile iscriversi. Se vuoi partecipare devi aspettare l'apertura di una nuova lega.</div>
+    </div>
+
+  </div>
+
+  <!-- F -->
+  <div class="letter-section" id="F">
+    <div class="letter-header">F</div>
+
+    <div class="term" data-term="fantamister manager allenatore">
+      <div class="term-left">
+        <span class="term-name" contenteditable="false">Fantamister</span>
+        <div class="badges"><span class="badge badge-entrambi">Classic · Mantra</span></div>
+      </div>
+      <div class="term-def" contenteditable="false">Il manager della squadra di fantacalcio. Gestisce l'asta, la formazione settimanale, le riparazioni e la strategia per tutta la stagione.</div>
+    </div>
+
+    <div class="term" data-term="fantavoto voto pagella">
+      <div class="term-left">
+        <span class="term-name" contenteditable="false">Fantavoto</span>
+        <div class="badges"><span class="badge badge-entrambi">Classic · Mantra</span></div>
+      </div>
+      <div class="term-def" contenteditable="false">Voto assegnato al giocatore dopo ogni partita. Base <b>6</b>. Viene modificato con bonus e malus per il punteggio finale. Le fonti più usate: Gazzetta, Corriere, Tuttosport.</div>
+    </div>
+
+    <div class="term" data-term="fixer tappabuchi low cost economico">
+      <div class="term-left">
+        <span class="term-name" contenteditable="false">Fixer</span>
+        <div class="badges"><span class="badge badge-slang">Slang</span><span class="badge badge-entrambi">Classic · Mantra</span></div>
+      </div>
+      <div class="term-def" contenteditable="false">Giocatore economico preso per coprire un ruolo carente della rosa. Non è una scelta di qualità: è una necessità. Il contrario del crack, ma serve quanto lui.</div>
+    </div>
+
+    <div class="term" data-term="flop delusione fallimento">
+      <div class="term-left">
+        <span class="term-name" contenteditable="false">Flop</span>
+        <div class="badges"><span class="badge badge-slang">Slang</span><span class="badge badge-entrambi">Classic · Mantra</span></div>
+      </div>
+      <div class="term-def" contenteditable="false">Giocatore che delude completamente le aspettative. Il flop è quello per cui hai speso tanti crediti all'asta e non ha mai reso. Ogni fantamister ne ha almeno uno a stagione.</div>
+    </div>
+
+    <div class="term" data-term="formazione schieramento">
+      <div class="term-left">
+        <span class="term-name" contenteditable="false">Formazione</span>
+        <div class="badges"><span class="badge badge-entrambi">Classic · Mantra</span></div>
+      </div>
+      <div class="term-def" contenteditable="false">Lo schieramento settimanale da presentare prima della giornata. Chi non la invia in tempo riceve la <b>formazione d'ufficio</b> (la peggiore possibile).</div>
+    </div>
+
+    <div class="term" data-term="fuori lista non tesserato">
+      <div class="term-left">
+        <span class="term-name" contenteditable="false">Fuori lista</span>
+        <div class="badges"><span class="badge badge-entrambi">Classic · Mantra</span></div>
+      </div>
+      <div class="term-def" contenteditable="false">Giocatore non iscritto nella lista ufficiale della piattaforma. Non può essere acquistato né schierato. Succede con i giocatori appena arrivati in Serie A a mercato chiuso.</div>
+    </div>
+
+  </div>
+
+  <!-- G -->
+  <div class="letter-section" id="G">
+    <div class="letter-header">G</div>
+
+    <div class="term" data-term="ghost fantasma zero voto assente">
+      <div class="term-left">
+        <span class="term-name" contenteditable="false">Ghost</span>
+        <div class="badges"><span class="badge badge-slang">Slang</span><span class="badge badge-entrambi">Classic · Mantra</span></div>
+      </div>
+      <div class="term-def" contenteditable="false">Giocatore che non riceve mai il voto perché non scende mai in campo. Un fantasma nella tua rosa: prende spazio ma non produce nulla. Da svincolato subito.</div>
+    </div>
+
+    <div class="term" data-term="giornata turno campionato">
+      <div class="term-left">
+        <span class="term-name" contenteditable="false">Giornata</span>
+        <div class="badges"><span class="badge badge-entrambi">Classic · Mantra</span></div>
+      </div>
+      <div class="term-def" contenteditable="false">Turno di campionato di Serie A. Ogni giornata corrisponde a una sfida tra fantamister. La stagione ne conta <b>38</b>. Alcune giornate hanno partite rinviate: attenzione!</div>
+    </div>
+
+    <div class="term" data-term="gol bonus attaccante centrocampista difensore portiere">
+      <div class="term-left">
+        <span class="term-name" contenteditable="false">Gol (bonus)</span>
+        <div class="badges"><span class="badge badge-entrambi">Classic · Mantra</span></div>
+      </div>
+      <div class="term-def" contenteditable="false">Bonus per il gol segnato. In Classic: <b>+3</b> (Att), <b>+4,5</b> (Cen), <b>+6</b> (Dif), <b>+9</b> (Por). I valori esatti dipendono dal regolamento della lega.</div>
+    </div>
+
+    <div class="term" data-term="grind lavoro costante preparazione">
+      <div class="term-left">
+        <span class="term-name" contenteditable="false">Grind</span>
+        <div class="badges"><span class="badge badge-slang">Slang</span></div>
+      </div>
+      <div class="term-def" contenteditable="false">Lavorare costantemente sulla propria rosa: analizzare i calendari, monitorare gli infortuni, ottimizzare le formazioni ogni settimana. Chi fa il grind vince le leghe.</div>
+    </div>
+
+  </div>
+
+  <!-- I -->
+  <div class="letter-section" id="I">
+    <div class="letter-header">I</div>
+
+    <div class="term" data-term="infortunio assenza stop">
+      <div class="term-left">
+        <span class="term-name" contenteditable="false">Infortunio</span>
+        <div class="badges"><span class="badge badge-entrambi">Classic · Mantra</span></div>
+      </div>
+      <div class="term-def" contenteditable="false">Assenza prolungata per motivi fisici. Un giocatore infortunato non riceve voto: scatta la riserva. Il rischio infortuni è una variabile fondamentale nella scelta all'asta.</div>
+    </div>
+
+  </div>
+
+  <!-- J -->
+  <div class="letter-section" id="J">
+    <div class="letter-header">J</div>
+
+    <div class="term" data-term="jolly doppio ruolo versatile">
+      <div class="term-left">
+        <span class="term-name" contenteditable="false">Jolly</span>
+        <div class="badges"><span class="badge badge-slang">Slang</span><span class="badge badge-mantra">Mantra</span></div>
+      </div>
+      <div class="term-def" contenteditable="false">Giocatore con doppio ruolo che può coprire più posizioni. Al Mantra è un valore enorme: ti permette di non restare mai scoperto in un ruolo.</div>
+    </div>
+
+  </div>
+
+  <!-- L -->
+  <div class="letter-section" id="L">
+    <div class="letter-header">L</div>
+
+    <div class="term" data-term="lega partecipanti competizione">
+      <div class="term-left">
+        <span class="term-name" contenteditable="false">Lega</span>
+        <div class="badges"><span class="badge badge-entrambi">Classic · Mantra</span></div>
+      </div>
+      <div class="term-def" contenteditable="false">Il gruppo di fantamister che si sfidano nella stessa competizione per tutta la stagione. Di solito 8-12 partecipanti. La lega è anche una comunità: ci si sfotte, ci si rispetta.</div>
+    </div>
+
+    <div class="term" data-term="lista svincoli mercato giocatori liberi">
+      <div class="term-left">
+        <span class="term-name" contenteditable="false">Lista svincoli</span>
+        <div class="badges"><span class="badge badge-entrambi">Classic · Mantra</span></div>
+      </div>
+      <div class="term-def" contenteditable="false">Elenco dei giocatori non acquistati all'asta o svincolati durante la stagione. Si accede tramite asta o mercato libero a seconda del regolamento della lega.</div>
+    </div>
+
+    <div class="term" data-term="low cost economico sottovalutato">
+      <div class="term-left">
+        <span class="term-name" contenteditable="false">Low cost</span>
+        <div class="badges"><span class="badge badge-slang">Slang</span><span class="badge badge-entrambi">Classic · Mantra</span></div>
+      </div>
+      <div class="term-def" contenteditable="false">Giocatore acquistato a pochi crediti con ottimo rendimento. Trovare i low cost giusti è la vera arte del fantacalcio: ti permette di spendere di più sui crack.</div>
+    </div>
+
+  </div>
+
+  <!-- M -->
+  <div class="letter-section" id="M">
+    <div class="letter-header">M</div>
+
+    <div class="term" data-term="m mediano centrocampista difensivo mantra">
+      <div class="term-left">
+        <span class="term-name" contenteditable="false">M (Mediano)</span>
+        <div class="badges"><span class="badge badge-mantra">Mantra</span></div>
+      </div>
+      <div class="term-def" contenteditable="false">Ruolo Mantra per i centrocampisti difensivi davanti alla difesa. I mediani raramente segnano, ma i più bravi garantiscono assist e voti stabili.</div>
+    </div>
+
+    <div class="term" data-term="malus penalità gol subito ammonizione espulsione">
+      <div class="term-left">
+        <span class="term-name" contenteditable="false">Malus</span>
+        <div class="badges"><span class="badge badge-entrambi">Classic · Mantra</span></div>
+      </div>
+      <div class="term-def" contenteditable="false">Penalità sottratta al voto: <b>gol subito</b> (por/dif), <b>ammonizione</b> (-0,5), <b>espulsione</b> (-1), <b>rigore sbagliato</b> (-3), <b>autorete</b> (-2). Possono azzerare una buona prestazione.</div>
+    </div>
+
+    <div class="term" data-term="mantra 11 ruoli modalità avanzata">
+      <div class="term-left">
+        <span class="term-name" contenteditable="false">Mantra</span>
+        <div class="badges"><span class="badge badge-mantra">Mantra</span></div>
+      </div>
+      <div class="term-def" contenteditable="false">Modalità avanzata del fantacalcio con <b>11 ruoli specifici</b>: P, Dc, Dd, Ds, M, E, C, T, W, A, Pc. Richiede più conoscenza tattica. Per chi vuole davvero sfidare se stesso.</div>
+    </div>
+
+    <div class="term" data-term="media voto continuità affidabilità">
+      <div class="term-left">
+        <span class="term-name" contenteditable="false">Media voto</span>
+        <div class="badges"><span class="badge badge-entrambi">Classic · Mantra</span></div>
+      </div>
+      <div class="term-def" contenteditable="false">La media dei voti ricevuti da un giocatore nel corso della stagione. Indica la costanza nel tempo. Un giocatore con alta media ma pochi bonus fa meno del previsto.</div>
+    </div>
+
+    <div class="term" data-term="mercato riparazione gennaio inverno">
+      <div class="term-left">
+        <span class="term-name" contenteditable="false">Mercato di riparazione</span>
+        <div class="badges"><span class="badge badge-entrambi">Classic · Mantra</span></div>
+      </div>
+      <div class="term-def" contenteditable="false">Finestra di acquisto e vendita a metà stagione (gennaio). Permette di sistemare la rosa cedendo i flop e comprando rinforzi dalla lista svincoli.</div>
+    </div>
+
+    <div class="term" data-term="modificatore ruolo fuori posizione mantra">
+      <div class="term-left">
+        <span class="term-name" contenteditable="false">Modificatore</span>
+        <div class="badges"><span class="badge badge-mantra">Mantra</span></div>
+      </div>
+      <div class="term-def" contenteditable="false">Bonus o malus applicato quando un giocatore è schierato fuori dal suo ruolo naturale. Es: un Dc schierato da M riceve un malus sul voto finale.</div>
+    </div>
+
+    <div class="term" data-term="modulo schema tattico 4-3-3">
+      <div class="term-left">
+        <span class="term-name" contenteditable="false">Modulo</span>
+        <div class="badges"><span class="badge badge-entrambi">Classic · Mantra</span></div>
+      </div>
+      <div class="term-def" contenteditable="false">Schema tattico della squadra (es. 4-3-3, 3-5-2). In Mantra deve rispettare i ruoli esatti dei giocatori. Sbagliare modulo significa perdere punti per i modificatori.</div>
+    </div>
+
+    <div class="term" data-term="monte premi totale premi stagione">
+      <div class="term-left">
+        <span class="term-name" contenteditable="false">Monte premi</span>
+        <div class="badges"><span class="badge badge-entrambi">Classic · Mantra</span></div>
+      </div>
+      <div class="term-def" contenteditable="false">Totale dei premi in palio nella lega. Formato dalle quote di iscrizione di tutti i partecipanti. Viene suddiviso tra i migliori classificati e il vincitore della Coppa.</div>
+    </div>
+
+    <div class="term" data-term="must have imprescindibile da avere">
+      <div class="term-left">
+        <span class="term-name" contenteditable="false">Must have</span>
+        <div class="badges"><span class="badge badge-slang">Slang</span><span class="badge badge-entrambi">Classic · Mantra</span></div>
+      </div>
+      <div class="term-def" contenteditable="false">Giocatore che tutti devono avere in rosa. Il must have è così forte o in forma che non averlo ti mette in svantaggio competitivo rispetto agli avversari.</div>
+    </div>
+
+  </div>
+
+  <!-- P -->
+  <div class="letter-section" id="P">
+    <div class="letter-header">P</div>
+
+    <div class="term" data-term="p portiere ruolo">
+      <div class="term-left">
+        <span class="term-name" contenteditable="false">P (Portiere)</span>
+        <div class="badges"><span class="badge badge-entrambi">Classic · Mantra</span></div>
+      </div>
+      <div class="term-def" contenteditable="false">Ruolo presente in entrambe le modalità. Bonus gol: <b>+9</b>. Malus per gol subiti. Il clean sheet è la sua arma principale. Vale la pena spendere su un portiere di squadra forte.</div>
+    </div>
+
+    <div class="term" data-term="panchina riserva sostituto">
+      <div class="term-left">
+        <span class="term-name" contenteditable="false">Panchina</span>
+        <div class="badges"><span class="badge badge-entrambi">Classic · Mantra</span></div>
+      </div>
+      <div class="term-def" contenteditable="false">I giocatori in riserva che subentrano se un titolare non gioca. L'ordine va impostato ogni giornata. Una panchina lunga e qualitativa ti salva nelle giornate storte.</div>
+    </div>
+
+    <div class="term" data-term="panchinaro panchina sempre titolare fisso">
+      <div class="term-left">
+        <span class="term-name" contenteditable="false">Panchinaro</span>
+        <div class="badges"><span class="badge badge-slang">Slang</span><span class="badge badge-entrambi">Classic · Mantra</span></div>
+      </div>
+      <div class="term-def" contenteditable="false">Giocatore che nella sua squadra reale va spesso in panchina. Da evitare all'asta perché rischi di ritrovarti senza voto ogni domenica. Il peggior investimento possibile.</div>
+    </div>
+
+    <div class="term" data-term="pc prima punta centravanti mantra">
+      <div class="term-left">
+        <span class="term-name" contenteditable="false">Pc (Prima Punta)</span>
+        <div class="badges"><span class="badge badge-mantra">Mantra</span></div>
+      </div>
+      <div class="term-def" contenteditable="false">Ruolo Mantra per il centravanti classico. Di solito il giocatore più centrale e avanzato. Il Pc bomber è l'acquisto più costoso e decisivo al Mantra.</div>
+    </div>
+
+    <div class="term" data-term="punti punteggio giornata totale">
+      <div class="term-left">
+        <span class="term-name" contenteditable="false">Punti</span>
+        <div class="badges"><span class="badge badge-entrambi">Classic · Mantra</span></div>
+      </div>
+      <div class="term-def" contenteditable="false">Il punteggio totale della squadra in una giornata: somma di voti + bonus - malus di tutti i giocatori schierati. Vince la sfida chi fa più punti.</div>
+    </div>
+
+  </div>
+
+  <!-- Q -->
+  <div class="letter-section" id="Q">
+    <div class="letter-header">Q</div>
+
+    <div class="term" data-term="quota iscrizione partecipazione lega">
+      <div class="term-left">
+        <span class="term-name" contenteditable="false">Quota</span>
+        <div class="badges"><span class="badge badge-entrambi">Classic · Mantra</span></div>
+      </div>
+      <div class="term-def" contenteditable="false">Importo pagato da ogni partecipante per iscriversi alla lega. Le quote di tutti formano il monte premi distribuito a fine stagione.</div>
+    </div>
+
+    <div class="term" data-term="quotazione valore prezzo crediti giocatore asta">
+      <div class="term-left">
+        <span class="term-name" contenteditable="false">Quotazione</span>
+        <div class="badges"><span class="badge badge-entrambi">Classic · Mantra</span></div>
+      </div>
+      <div class="term-def" contenteditable="false">Valore in crediti attribuito a ogni giocatore dalla piattaforma. È il prezzo di riferimento, ma non limita le offerte: un crack da 30 crediti può essere aggiudicato a 150.</div>
+    </div>
+
+  </div>
+
+  <!-- R -->
+  <div class="letter-section" id="R">
+    <div class="letter-header">R</div>
+
+    <div class="term" data-term="rigori calciatore specializzato bonus">
+      <div class="term-left">
+        <span class="term-name" contenteditable="false">Rigorista</span>
+        <div class="badges"><span class="badge badge-slang">Slang</span><span class="badge badge-entrambi">Classic · Mantra</span></div>
+      </div>
+      <div class="term-def" contenteditable="false">Il calciatore designato ai rigori nella squadra reale. Avere il rigorista in rosa è un vantaggio enorme: ogni rigore trasformato vale <b>+3 punti bonus</b>.</div>
+    </div>
+
+    <div class="term" data-term="riserva panchina sostituto automatico">
+      <div class="term-left">
+        <span class="term-name" contenteditable="false">Riserva</span>
+        <div class="badges"><span class="badge badge-entrambi">Classic · Mantra</span></div>
+      </div>
+      <div class="term-def" contenteditable="false">Giocatore in panchina che subentra automaticamente se un titolare non gioca. In Mantra deve avere un ruolo compatibile. Una buona riserva ti salva nelle giornate di turnover.</div>
+    </div>
+
+    <div class="term" data-term="rosa giocatori acquistati 25">
+      <div class="term-left">
+        <span class="term-name" contenteditable="false">Rosa</span>
+        <div class="badges"><span class="badge badge-entrambi">Classic · Mantra</span></div>
+      </div>
+      <div class="term-def" contenteditable="false">L'insieme dei giocatori acquistati dal fantamister. Di solito <b>25 giocatori</b>. Costruire una rosa bilanciata tra qualità e copertura dei ruoli è la vera sfida del fantacalcio.</div>
+    </div>
+
+  </div>
+
+  <!-- S -->
+  <div class="letter-section" id="S">
+    <div class="letter-header">S</div>
+
+    <div class="term" data-term="sleep dormiente underrated sottovalutato nascosto">
+      <div class="term-left">
+        <span class="term-name" contenteditable="false">Sleep</span>
+        <div class="badges"><span class="badge badge-slang">Slang</span><span class="badge badge-entrambi">Classic · Mantra</span></div>
+      </div>
+      <div class="term-def" contenteditable="false">Giocatore sottovalutato che nessuno vuole all'asta ma che poi esplode durante la stagione. Trovare i sleep prima degli altri è il sogno di ogni fantamister.</div>
+    </div>
+
+    <div class="term" data-term="slot posizione formazione ruolo">
+      <div class="term-left">
+        <span class="term-name" contenteditable="false">Slot</span>
+        <div class="badges"><span class="badge badge-entrambi">Classic · Mantra</span></div>
+      </div>
+      <div class="term-def" contenteditable="false">Posto disponibile per una posizione in formazione. In Mantra ogni slot corrisponde a un ruolo specifico. Avere troppi giocatori per lo stesso slot crea sbilanciamento nella rosa.</div>
+    </div>
+
+    <div class="term" data-term="sorpresa rivelazione stagionale">
+      <div class="term-left">
+        <span class="term-name" contenteditable="false">Sorpresa / Rivelazione</span>
+        <div class="badges"><span class="badge badge-slang">Slang</span><span class="badge badge-entrambi">Classic · Mantra</span></div>
+      </div>
+      <div class="term-def" contenteditable="false">Giocatore che supera le aspettative durante la stagione, spesso acquistato a pochissimi crediti. La rivelazione fa vincere le leghe a chi l'ha presa prima degli altri.</div>
+    </div>
+
+    <div class="term" data-term="svincolato libero disponibile mercato">
+      <div class="term-left">
+        <span class="term-name" contenteditable="false">Svincolato</span>
+        <div class="badges"><span class="badge badge-entrambi">Classic · Mantra</span></div>
+      </div>
+      <div class="term-def" contenteditable="false">Giocatore non acquistato all'asta da nessuno, disponibile sul mercato stagionale. Gli svincolati migliori vengono scoperti a stagione in corso quando emergono i titolari fissi.</div>
+    </div>
+
+    <div class="term" data-term="svincolo cessione vendita">
+      <div class="term-left">
+        <span class="term-name" contenteditable="false">Svincolo</span>
+        <div class="badges"><span class="badge badge-entrambi">Classic · Mantra</span></div>
+      </div>
+      <div class="term-def" contenteditable="false">La cessione volontaria di un giocatore dalla propria rosa. Il giocatore torna disponibile. A volte implica un rimborso parziale dei crediti spesi, dipende dal regolamento.</div>
+    </div>
+
+  </div>
+
+  <!-- T -->
+  <div class="letter-section" id="T">
+    <div class="letter-header">T</div>
+
+    <div class="term" data-term="t trequartista fantasista mantra">
+      <div class="term-left">
+        <span class="term-name" contenteditable="false">T (Trequartista)</span>
+        <div class="badges"><span class="badge badge-mantra">Mantra</span></div>
+      </div>
+      <div class="term-def" contenteditable="false">Ruolo Mantra per i trequartisti e fantasisti che agiscono dietro le punte. Posizione molto ambita: tanti bonus gol e assist, ma spesso vittima del turnover.</div>
+    </div>
+
+    <div class="term" data-term="titolare fisso sempre campo">
+      <div class="term-left">
+        <span class="term-name" contenteditable="false">Titolare fisso</span>
+        <div class="badges"><span class="badge badge-entrambi">Classic · Mantra</span></div>
+      </div>
+      <div class="term-def" contenteditable="false">Giocatore che gioca quasi sempre dall'inizio nella sua squadra reale. L'affidabilità è fondamentale: un titolare fisso mediocre vale più di un campione con l'alternanza.</div>
+    </div>
+
+    <div class="term" data-term="top player forte assoluto crack">
+      <div class="term-left">
+        <span class="term-name" contenteditable="false">Top / Top player</span>
+        <div class="badges"><span class="badge badge-slang">Slang</span><span class="badge badge-entrambi">Classic · Mantra</span></div>
+      </div>
+      <div class="term-def" contenteditable="false">Il giocatore più forte in assoluto in quel ruolo. I top costano molto all'asta ma garantiscono una base di punti altissima ogni giornata. Averne almeno uno è quasi obbligatorio.</div>
+    </div>
+
+    <div class="term" data-term="turnover rotazione allenatore">
+      <div class="term-left">
+        <span class="term-name" contenteditable="false">Turnover</span>
+        <div class="badges"><span class="badge badge-entrambi">Classic · Mantra</span></div>
+      </div>
+      <div class="term-def" contenteditable="false">Rotazione dei giocatori da parte dell'allenatore reale. Le squadre con molto turnover (coppe, rose ampie) sono rischiose al fantacalcio. Controllare sempre il calendario delle coppe.</div>
+    </div>
+
+  </div>
+
+  <!-- V -->
+  <div class="letter-section" id="V">
+    <div class="letter-header">V</div>
+
+    <div class="term" data-term="voto pagella prestazione 6">
+      <div class="term-left">
+        <span class="term-name" contenteditable="false">Voto</span>
+        <div class="badges"><span class="badge badge-entrambi">Classic · Mantra</span></div>
+      </div>
+      <div class="term-def" contenteditable="false">Valutazione della prestazione reale dopo ogni partita. Base <b>6</b>. Sotto al 6 è negativa, sopra è positiva. Chi non gioca non riceve voto: scatta la riserva in panchina.</div>
+    </div>
+
+  </div>
+
+  <!-- W -->
+  <div class="letter-section" id="W">
+    <div class="letter-header">W</div>
+
+    <div class="term" data-term="w ala offensiva esterno alto mantra">
+      <div class="term-left">
+        <span class="term-name" contenteditable="false">W (Ala)</span>
+        <div class="badges"><span class="badge badge-mantra">Mantra</span></div>
+      </div>
+      <div class="term-def" contenteditable="false">Ruolo Mantra per le ali offensive sulle fasce in posizione avanzata. Diverso da <b>E</b> (esterno a centrocampo). Le ali delle grandi squadre generano molti assist e qualche gol.</div>
+    </div>
+
+  </div>
+
+</div><!-- /page -->
+
+<a class="back-top" href="#" title="Torna su">↑</a>
+
+<script>
+let editing = false;
+
+function attivaModifica(btn) {
+  editing = !editing;
+  document.querySelectorAll('[contenteditable]').forEach(el => el.setAttribute('contenteditable', editing ? 'true' : 'false'));
+  btn.textContent = editing ? '💾 Salva' : '✏️ Modifica';
+}
+
+function filtra(q) {
+  const terms = document.querySelectorAll('.term');
+  const sections = document.querySelectorAll('.letter-section');
+  const noResults = document.getElementById('no-results');
+  const countEl = document.getElementById('search-count');
+  q = q.toLowerCase().trim();
+  let visible = 0;
+
+  terms.forEach(t => {
+    const data = (t.dataset.term || '') + ' ' + t.textContent.toLowerCase();
+    const match = !q || data.includes(q);
+    t.classList.toggle('hidden', !match);
+    if (match) visible++;
+  });
+
+  sections.forEach(s => {
+    const anyVisible = [...s.querySelectorAll('.term')].some(t => !t.classList.contains('hidden'));
+    s.style.display = anyVisible ? '' : 'none';
+  });
+
+  noResults.style.display = (visible === 0 && q) ? 'block' : 'none';
+  countEl.textContent = q ? visible + ' risultat' + (visible === 1 ? 'o' : 'i') : '';
+}
+
+async function esportaGitHub() {
+  const TOKEN = '';
+  const OWNER = 'fabmiscia';
+  const REPO = 'Il-Mister-Fabry';
+  const PATH = 'Academy/glossario-fantacalcio.html';
+
+  if (!TOKEN) { alert('Token GitHub non configurato.'); return; }
+
+  const html = '<!DOCTYPE html>\n' + document.documentElement.outerHTML;
+  const b64 = btoa(unescape(encodeURIComponent(html)));
+
+  let sha = '';
+  try {
+    const r = await fetch(`https://api.github.com/repos/${OWNER}/${REPO}/contents/${PATH}`, {
+      headers: { Authorization: `token ${TOKEN}` }
+    });
+    if (r.ok) { const d = await r.json(); sha = d.sha; }
+  } catch(e) {}
+
+  const body = { message: 'Aggiunge glossario fantacalcio', content: b64 };
+  if (sha) body.sha = sha;
+
+  const res = await fetch(`https://api.github.com/repos/${OWNER}/${REPO}/contents/${PATH}`, {
+    method: 'PUT',
+    headers: { Authorization: `token ${TOKEN}`, 'Content-Type': 'application/json' },
+    body: JSON.stringify(body)
+  });
+
+  if (res.ok) alert('✅ Pubblicato su GitHub!');
+  else alert('❌ Errore: ' + (await res.text()));
+}
+
+// Evidenzia lettera attiva nello scroll
+const sections = document.querySelectorAll('.letter-section');
+const navLinks = document.querySelectorAll('.letter-nav a:not(.empty)');
+window.addEventListener('scroll', () => {
+  let current = '';
+  sections.forEach(s => {
+    if (s.style.display !== 'none' && window.scrollY >= s.offsetTop - 100) current = s.id;
+  });
+  navLinks.forEach(a => a.classList.toggle('active', a.getAttribute('href') === '#' + current));
+});
+</script>
+</body>
+</html>
