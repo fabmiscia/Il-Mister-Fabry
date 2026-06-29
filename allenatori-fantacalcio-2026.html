@@ -2676,8 +2676,14 @@ async function salvaInLocale() {
   ps.id = '_photo_cache_';
   ps.textContent = 'window._COACH_IMGS=' + JSON.stringify(coachImages) + ';window._LOGO_IMGS=' + JSON.stringify(logoImages) + ';';
   document.head.appendChild(ps);
-  const html = '<!DOCTYPE html>\n' + document.documentElement.outerHTML;
+  let html = '<!DOCTYPE html>\n' + document.documentElement.outerHTML;
   ps.remove();
+  // Aggiorna COACHES_DEFAULT con i dati runtime (stelle, dots, note ecc.)
+  const newCoachesJSON = JSON.stringify(coaches, null, 2);
+  html = html.replace(
+    /\/\* <<COACHES_START>> \*\/[\s\S]*?\/\* <<COACHES_END>> \*\//,
+    '/* <<COACHES_START>> */\nconst COACHES_DEFAULT = ' + newCoachesJSON + ';\n/* <<COACHES_END>> */'
+  );
   const blob = new Blob([html], {type: 'text/html'});
   const fname = location.pathname.split('/').pop() || 'file.html';
   try {
