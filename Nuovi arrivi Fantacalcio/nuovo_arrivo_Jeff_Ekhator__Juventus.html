@@ -645,9 +645,9 @@ table.inj-tbl thead th {
 
 
 <div class="nav">
-  <button class="active" onclick="go(1)">📋 Info</button>
+  <button class="" onclick="go(1)">📋 Info</button>
   <button onclick="go(2)">📊 Statistiche</button>
-  <button onclick="go(3)" class="">⭐ Consigli Fantacalcio</button>
+  <button onclick="go(3)" class="active">⭐ Consigli Fantacalcio</button>
 </div>
 
 <!-- Toolbar -->
@@ -655,9 +655,9 @@ table.inj-tbl thead th {
   <button onclick="exportPNG(1)">💾 Slide 1</button>
   <button onclick="exportPNG(2)">💾 Slide 2</button>
   <button onclick="exportPNG(3)">💾 Slide 3</button>
-  <button style="background: rgb(255, 229, 92); color: rgb(0, 0, 0); border-width: medium; border-style: none; border-color: currentcolor; border-image: initial; padding: 7px 18px; border-radius: 6px; cursor: pointer; font-size: 12px; font-weight: 800; letter-spacing: 0.5px; transition: 0.15s;" onmouseover="this.style.background='#ffe55c'" onmouseout="this.style.background='#FFD700'" onclick="salvaEPubblica()">💾🚀 Salva + Pubblica</button>
+  <button style="background: rgb(255, 215, 0); color: rgb(0, 0, 0); border-width: medium; border-style: none; border-color: currentcolor; border-image: initial; padding: 7px 18px; border-radius: 6px; cursor: pointer; font-size: 12px; font-weight: 800; letter-spacing: 0.5px; transition: 0.15s;" onmouseover="this.style.background='#ffe55c'" onmouseout="this.style.background='#FFD700'" onclick="salvaEPubblica()">💾🚀 Salva + Pubblica</button>
   <button class="gh-btn" onclick="pubblicaGitHub()">🚀 Solo GitHub</button>
-  <button id="btn-salva-locale" onclick="salvaInLocale()" style="background: rgb(26, 26, 26); color: rgb(176, 255, 0); border: 1px solid rgb(176, 255, 0); padding: 7px 14px; border-radius: 6px; cursor: pointer; font-size: 12px; font-weight: 700; letter-spacing: 0.5px; transition: 0.15s;" onmouseover="this.style.borderColor='#b0ff00';this.style.color='#b0ff00'" onmouseout="this.style.borderColor='#333';this.style.color='#fff'">💾 Salva in locale</button>
+  <button id="btn-salva-locale" onclick="salvaInLocale()" style="background: rgb(26, 26, 26); color: rgb(255, 255, 255); border: 1px solid rgb(51, 51, 51); padding: 7px 14px; border-radius: 6px; cursor: pointer; font-size: 12px; font-weight: 700; letter-spacing: 0.5px; transition: 0.15s;" onmouseover="this.style.borderColor='#b0ff00';this.style.color='#b0ff00'" onmouseout="this.style.borderColor='#333';this.style.color='#fff'">💾 Salva in locale</button>
   <span class="tip">← → per navigare | Click sulla foto per cambiarla</span>
 </div>
 
@@ -680,7 +680,7 @@ table.inj-tbl thead th {
     <button class="mv-tab" onclick="mvGo(2)">📊 Stats</button>
     <button class="mv-tab" onclick="mvGo(3)">⭐ Consigli</button>
   </div>
-  <div class="mv-slide active" id="mv-s1"><div><div class="mv-stat-row"><span class="mv-stat-icon">💰</span><span class="mv-stat-label">Valore mercato</span><span class="mv-stat-val">18,00 mln €</span></div><div class="mv-stat-row"><span class="mv-stat-icon">🔄</span><span class="mv-stat-label">Transfer</span><span class="mv-stat-val">Acquisto definitivo</span></div><div class="mv-stat-row"><span class="mv-stat-icon"><img src="https://tmssl.akamaized.net//images/flagge/tiny/75.png" style="height:16px;vertical-align:middle;margin-right:5px;border:1px solid #555"></span><span class="mv-stat-label">Nazionalità</span><span class="mv-stat-val hl">ITALIA&nbsp;&nbsp;NIGERIA</span></div><div class="mv-stat-row"><span class="mv-stat-icon">👟</span><span class="mv-stat-label">Piede</span><span class="mv-stat-val">DESTRO</span></div><div class="mv-stat-row"><span class="mv-stat-icon">📏</span><span class="mv-stat-label">Altezza</span><span class="mv-stat-val hl">1,88&nbsp;m</span></div><div class="mv-stat-row"><span class="mv-stat-icon"><img src="https://tmssl.akamaized.net//images/wappen/homepageWappen150x150/252.png" style="height:20px;vertical-align:middle;margin-right:5px"></span><span class="mv-stat-label">Ultimo club</span><span class="mv-stat-val">GENOA</span></div><div class="mv-stat-row"><span class="mv-stat-icon">✅</span><span class="mv-stat-label">Presenze</span><span class="mv-stat-val">0</span></div><div class="mv-stat-row"><span class="mv-stat-icon">⚽</span><span class="mv-stat-label">Gol</span><span class="mv-stat-val">0</span></div><div class="mv-stat-row"><span class="mv-stat-icon">🎯</span><span class="mv-stat-label">Assist</span><span class="mv-stat-val">0</span></div><div class="mv-stat-row"><span class="mv-stat-icon">📝</span><span class="mv-stat-label">Scadenza</span><span class="mv-stat-val">30/06/2029</span></div><div class="mv-stat-row"><span class="mv-stat-icon">🚑</span><span class="mv-stat-label">Infortuni</span><span class="mv-stat-val">3 infortuni registrati</span></div></div><div style="margin-top: 10px; border-radius: 8px; overflow: hidden; background: rgb(242, 242, 242); max-width: 220px; align-self: center; width: 100%;"><div class="role-col" style="width: 100%; margin: 0px; border-radius: 0px; display: flex; flex-direction: column; color: rgb(34, 34, 34);">
+  <div class="mv-slide active" id="mv-s1"><div><div class="mv-stat-row"><span class="mv-stat-icon">💰</span><span class="mv-stat-label">Valore mercato</span><span class="mv-stat-val">18,00 mln €</span></div><div class="mv-stat-row"><span class="mv-stat-icon">🔄</span><span class="mv-stat-label">Transfer</span><span class="mv-stat-val">Acquisto definitivo</span></div><div class="mv-stat-row"><span class="mv-stat-icon"><img src="https://tmssl.akamaized.net//images/flagge/tiny/75.png" style="height:16px;vertical-align:middle;margin-right:5px;border:1px solid #555"></span><span class="mv-stat-label">Nazionalità</span><span class="mv-stat-val hl">ITALIA&nbsp;&nbsp;NIGERIA</span></div><div class="mv-stat-row"><span class="mv-stat-icon">👟</span><span class="mv-stat-label">Piede</span><span class="mv-stat-val">DESTRO</span></div><div class="mv-stat-row"><span class="mv-stat-icon">📏</span><span class="mv-stat-label">Altezza</span><span class="mv-stat-val hl">1,88&nbsp;m</span></div><div class="mv-stat-row"><span class="mv-stat-icon"><img src="https://tmssl.akamaized.net//images/wappen/homepageWappen150x150/252.png" style="height:20px;vertical-align:middle;margin-right:5px"></span><span class="mv-stat-label">Ultimo club</span><span class="mv-stat-val">JUVENTUS</span></div><div class="mv-stat-row"><span class="mv-stat-icon">✅</span><span class="mv-stat-label">Presenze</span><span class="mv-stat-val">0</span></div><div class="mv-stat-row"><span class="mv-stat-icon">⚽</span><span class="mv-stat-label">Gol</span><span class="mv-stat-val">0</span></div><div class="mv-stat-row"><span class="mv-stat-icon">🎯</span><span class="mv-stat-label">Assist</span><span class="mv-stat-val">0</span></div><div class="mv-stat-row"><span class="mv-stat-icon">📝</span><span class="mv-stat-label">Scadenza</span><span class="mv-stat-val">30/06/2029</span></div><div class="mv-stat-row"><span class="mv-stat-icon">🚑</span><span class="mv-stat-label">Infortuni</span><span class="mv-stat-val">3 infortuni registrati</span></div></div><div style="margin-top: 10px; border-radius: 8px; overflow: hidden; background: rgb(242, 242, 242); max-width: 220px; align-self: center; width: 100%;"><div class="role-col" style="width: 100%; margin: 0px; border-radius: 0px; display: flex; flex-direction: column; color: rgb(34, 34, 34);">
     <div class="role-hdr">Ruolo</div>
     <div class="role-field" style="min-height: 160px;">
       <svg viewBox="0 0 100 150" preserveAspectRatio="xMidYMid meet">
@@ -731,7 +731,7 @@ table.inj-tbl thead th {
 <!-- ══════════════════════════════════════════════
      SLIDE 1
 ══════════════════════════════════════════════ -->
-<div id="s1" class="card active" style="transform: scale(1); transform-origin: center top; margin-bottom: 0px;">
+<div id="s1" class="card" style="transform: scale(1); transform-origin: center top; margin-bottom: 0px;">
 
   <!-- Foto cliccabile -->
   <div class="photo-col" onclick="triggerPhotoUpload('all')">
@@ -781,7 +781,7 @@ table.inj-tbl thead th {
       <div class="srow">
         <span class="sic"><img src="https://tmssl.akamaized.net//images/wappen/homepageWappen150x150/252.png" style="height:20px;vertical-align:middle;margin-right:5px"></span>
         <span class="slbl">Ultimo club</span>
-        <span class="sval" contenteditable="true">GENOA</span>
+        <span class="sval" contenteditable="true">JUVENTUS</span>
       </div>
       <div class="srow">
         <span class="sic">✅</span>
@@ -1015,7 +1015,7 @@ table.inj-tbl thead th {
 <!-- ══════════════════════════════════════════════
      SLIDE 3 – Consigli Fantacalcio
 ══════════════════════════════════════════════ -->
-<div id="s3" class="card" style="transform: scale(1); transform-origin: center top; margin-bottom: 0px;">
+<div id="s3" class="card active" style="transform: scale(1); transform-origin: center top; margin-bottom: 0px;">
 
   <div class="s3-photo" onclick="triggerPhotoUpload('all')">
     <img class="photo-all" src="https://img.a.transfermarkt.technology/portrait/big/934878-1757663221.jpg?lm=1" alt="Jeff Ekhator" onerror="this.src='https://img.a.transfermarkt.technology/portrait/big/default.jpg'">
@@ -1062,7 +1062,7 @@ table.inj-tbl thead th {
 
 <!-- Overlay GitHub -->
 <!-- Overlay GitHub -->
-<div id="gh-overlay" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.88);z-index:999;align-items:center;justify-content:center;">
+<div id="gh-overlay" style="display: none; position: fixed; inset: 0px; background: rgba(0, 0, 0, 0.88); z-index: 999; align-items: center; justify-content: center;">
   <div style="background:#1a1a1a;border:1px solid #333;border-radius:12px;padding:28px 32px;max-width:480px;width:90%;text-align:center;font-family:Arial,sans-serif;">
     <div id="gh-view-token" style="display:none">
       <div style="font-size:26px;margin-bottom:10px">🔑</div>
@@ -1080,9 +1080,9 @@ table.inj-tbl thead th {
         Crea il token su GitHub → Settings → Developer settings → Personal access tokens → Contents: Read &amp; Write
       </div>
     </div>
-    <div id="gh-view-progress" style="display:none">
+    <div id="gh-view-progress" style="display: none;">
       <div style="font-size:32px;margin-bottom:12px" id="gh-icon">🚀</div>
-      <div id="gh-status" style="font-size: 14px; margin-bottom: 6px; color: rgb(176, 255, 0);">Salva + Pubblica</div>
+      <div id="gh-status" style="font-size: 14px; margin-bottom: 6px;">Pubblica su GitHub Pages</div>
       <div id="gh-detail" style="font-size:11px;color:#555;margin-bottom:18px"></div>
       <div id="gh-link-wrap" style="display: none; margin-bottom: 14px;">
         <a id="gh-link" href="https://fabmiscia.github.io/Il-Mister-Fabry/Nuovi%20arrivi%20Fantacalcio/nuovo_arrivo_Jeff_Ekhator__Juventus.html" target="_blank" style="color:#b0ff00;font-size:12px;text-decoration:none;border:1px solid #b0ff00;padding:6px 16px;border-radius:16px">
