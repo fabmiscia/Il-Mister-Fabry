@@ -708,6 +708,27 @@ table.inj-tbl thead th {
   .toolbar button { padding: 6px 12px; font-size: 11px; }
   .toolbar .tip { display: none; }
 }
+
+/* ── Tasto indietro (solo GitHub Pages) ── */
+#btn-back {
+  display:none;
+  position:fixed;
+  top:14px; left:14px;
+  background:#b0ff00;
+  color:#000;
+  font-family:'Montserrat',sans-serif;
+  font-size:12px;
+  font-weight:800;
+  letter-spacing:.5px;
+  padding:7px 14px;
+  border-radius:6px;
+  text-decoration:none;
+  z-index:9999;
+  box-shadow:0 2px 12px rgba(0,0,0,.5);
+  transition:background .15s;
+}
+#btn-back:hover { background:#d4ff55; }
+
 </style>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 </head>
@@ -1291,6 +1312,7 @@ Aspetta le prime amichevoli per capire il ruolo definitivo. Profilo da quinto di
     style.textContent = '.toolbar{display:none!important} [contenteditable]{pointer-events:none;cursor:default} .add-row-btn{display:none!important}';
     document.head.appendChild(style);
     document.querySelectorAll('[contenteditable]').forEach(el => el.removeAttribute('contenteditable'));
+    document.getElementById('btn-back').style.display = 'block';
   }
 })();
 
@@ -1314,8 +1336,12 @@ function triggerPhotoUpload() {
 document.getElementById('photo-input').addEventListener('change', function(e) {
   const file = e.target.files[0];
   if (!file) return;
-  const url = URL.createObjectURL(file);
-  document.querySelectorAll('.photo-all').forEach(img => img.src = url);
+  const reader = new FileReader();
+  reader.onload = function(ev) {
+    const url = ev.target.result;
+    document.querySelectorAll('.photo-all').forEach(img => img.src = url);
+  };
+  reader.readAsDataURL(file);
 });
 
 // ── Cambio logo squadra ──────────────────────
@@ -1325,20 +1351,23 @@ function triggerLogoUpload() {
 document.getElementById('logo-input').addEventListener('change', function(e) {
   const file = e.target.files[0];
   if (!file) return;
-  const url = URL.createObjectURL(file);
-  const el = document.getElementById('team-logo-img');
-  if (el.tagName === 'IMG') {
-    el.src = url;
-  } else {
-    // era un placeholder span → sostituisci con img
-    const img = document.createElement('img');
-    img.id = 'team-logo-img';
-    img.src = url;
-    img.onclick = triggerLogoUpload;
-    img.title = 'Click per sostituire il logo';
-    img.style.cssText = 'height:46px;vertical-align:middle;margin-right:12px;cursor:pointer;border-radius:4px';
-    el.replaceWith(img);
-  }
+  const reader = new FileReader();
+  reader.onload = function(ev) {
+    const url = ev.target.result;
+    const el = document.getElementById('team-logo-img');
+    if (el.tagName === 'IMG') {
+      el.src = url;
+    } else {
+      const img = document.createElement('img');
+      img.id = 'team-logo-img';
+      img.src = url;
+      img.onclick = triggerLogoUpload;
+      img.title = 'Click per sostituire il logo';
+      img.style.cssText = 'height:46px;vertical-align:middle;margin-right:12px;cursor:pointer;border-radius:4px';
+      el.replaceWith(img);
+    }
+  };
+  reader.readAsDataURL(file);
 });
 
 // ── Export PNG ──────────────────────────────
@@ -1757,8 +1786,7 @@ async function salvaInLocale() {
 
 </script>
 
-<script>
-if(location.protocol!=='file:'){
+<script>if(location.protocol!=='file:'){
   document.querySelectorAll('button,a').forEach(function(el){
     var t=el.textContent||''; var id=el.id||''; var cl=el.className||''; var oc=el.getAttribute('onclick')||'';
     if(t.toLowerCase().includes('github')||id.toLowerCase().includes('github')||cl.includes('gh-btn')||oc.toLowerCase().includes('github')){
