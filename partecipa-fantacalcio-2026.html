@@ -114,6 +114,59 @@ body{background:#0a0a0a;color:#fff;font-family:'Oswald',Arial,sans-serif;min-hei
 .slide-footer{background:#0a0a0a;border-top:1px solid #1a1a1a;padding:14px 40px;text-align:center}
 .slide-footer p{font-size:10px;color:#444;letter-spacing:2px}
 .slide-footer b{color:#2DB84A}
+
+/* ==================== RESPONSIVE ==================== */
+@media(max-width:768px){
+  .page{padding:0 12px 40px}
+  .toolbar{padding:8px 12px;gap:6px}
+  .toolbar-title{font-size:11px;min-width:0;flex:1}
+  .btn{padding:5px 10px;font-size:10px}
+
+  /* Cover */
+  .s1{padding:40px 24px;min-height:400px}
+  .s1-title{font-size:36px;letter-spacing:3px}
+  .s1-badges{gap:8px}
+
+  /* Leghe: 5 → 2 colonne */
+  .s2{padding:24px 16px}
+  .leghe-grid{grid-template-columns:repeat(2,1fr);gap:10px}
+
+  /* Premi: 4 → 2 colonne */
+  .s3{padding:24px 16px}
+  .premi-grid{grid-template-columns:repeat(2,1fr);gap:10px}
+  .premi-total .tot-num{font-size:48px}
+
+  /* Regolamento: 2 → 1 colonna */
+  .s-reg{padding:24px 16px}
+  .reg-grid{grid-template-columns:1fr;gap:14px}
+
+  /* Come partecipare */
+  .s6{padding:24px 16px}
+
+  .slide-header h2{font-size:22px;letter-spacing:2px}
+  .slide-footer{padding:12px 16px}
+}
+
+@media(max-width:480px){
+  .s1-title{font-size:28px;letter-spacing:2px}
+  .s1-label{font-size:9px;letter-spacing:4px}
+
+  /* Leghe: 2 → 1 colonna su schermi piccoli */
+  .leghe-grid{grid-template-columns:1fr}
+
+  /* Premi: 2 → 1 colonna */
+  .premi-grid{grid-template-columns:1fr}
+  .premi-total .tot-num{font-size:40px}
+
+  .premio-val{font-size:26px}
+  .slide-header h2{font-size:18px}
+  .step6-title{font-size:13px}
+  .step6-text{font-size:12px}
+  .reg-list li{font-size:12px}
+
+  /* Nascondi testo toolbar su mobile molto stretto */
+  .toolbar-title{display:none}
+}
 </style>
 </head>
 <body>
@@ -449,12 +502,16 @@ function esportaPNG() {
 }
 
 async function esportaGitHub() {
-  const TOKEN = '';
+  let TOKEN = localStorage.getItem('gh-token');
+  if (!TOKEN) {
+    TOKEN = prompt('🔑 GitHub Personal Access Token:');
+    if (!TOKEN) return;
+    localStorage.setItem('gh-token', TOKEN.trim());
+    TOKEN = TOKEN.trim();
+  }
   const OWNER = 'fabmiscia';
   const REPO = 'Il-Mister-Fabry';
   const PATH = 'partecipa-fantacalcio-2026.html';
-
-  if (!TOKEN) { alert('Token GitHub non configurato.'); return; }
 
   const html = '<!DOCTYPE html>\n' + document.documentElement.outerHTML;
   const b64 = btoa(unescape(encodeURIComponent(html)));
