@@ -1542,8 +1542,7 @@ async function salvaEPubblica() {
   const ov = document.getElementById('gh-overlay');
   const _d = ov.style.display;
   ov.style.display = 'none';
-  const html = '<!DOCTYPE html>
-' + document.documentElement.outerHTML;
+  const html = '<!DOCTYPE html>\n' + document.documentElement.outerHTML;
   ov.style.display = _d;
 
   // 2. Salva in locale
