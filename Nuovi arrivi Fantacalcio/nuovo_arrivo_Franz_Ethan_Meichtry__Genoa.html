@@ -655,7 +655,8 @@ table.inj-tbl thead th {
   <button onclick="exportPNG(1)">💾 Slide 1</button>
   <button onclick="exportPNG(2)">💾 Slide 2</button>
   <button onclick="exportPNG(3)">💾 Slide 3</button>
-  <button class="gh-btn" onclick="pubblicaGitHub()">🚀 Pubblica su GitHub</button>
+  <button style="background:#FFD700;color:#000;border:none;padding:7px 18px;border-radius:6px;cursor:pointer;font-size:12px;font-weight:800;letter-spacing:.5px;transition:.15s" onmouseover="this.style.background='#ffe55c'" onmouseout="this.style.background='#FFD700'" onclick="salvaEPubblica()">💾🚀 Salva + Pubblica</button>
+  <button class="gh-btn" onclick="pubblicaGitHub()">🚀 Solo GitHub</button>
   <button id="btn-salva-locale" onclick="salvaInLocale()" style="background: rgb(26, 26, 26); color: rgb(176, 255, 0); border: 1px solid rgb(176, 255, 0); padding: 7px 14px; border-radius: 6px; cursor: pointer; font-size: 12px; font-weight: 700; letter-spacing: 0.5px; transition: 0.15s;" onmouseover="this.style.borderColor='#b0ff00';this.style.color='#b0ff00'" onmouseout="this.style.borderColor='#333';this.style.color='#fff'">💾 Salva in locale</button>
   <span class="tip">← → per navigare | Click sulla foto per cambiarla</span>
 </div>
@@ -1535,6 +1536,57 @@ async function salvaInLocale() {
     }
   }
 }
+// ── Salva in locale E pubblica su GitHub ─────────────────────────────────
+async function salvaEPubblica() {
+  // 1. Ottieni HTML corrente (con overlay nascosto)
+  const overlay      = document.getElementById('gh-overlay');
+  const viewProgress = document.getElementById('gh-view-progress');
+  const viewToken    = document.getElementById('gh-view-token');
+  const linkWrap     = document.getElementById('gh-link-wrap');
+  const closeBtn     = document.getElementById('gh-close-btn');
+  const ghIcon       = document.getElementById('gh-icon');
+  const ghStatus     = document.getElementById('gh-status');
+  const ghDetail     = document.getElementById('gh-detail');
+
+  const _od = overlay.style.display;
+  overlay.style.display      = 'none';
+  viewProgress.style.display = 'none';
+  viewToken.style.display    = 'none';
+  linkWrap.style.display     = 'none';
+  closeBtn.style.display     = 'none';
+  ghIcon.textContent         = '🚀';
+  ghStatus.textContent       = 'Salva + Pubblica';
+  ghDetail.textContent       = '';
+
+  const htmlContent = '<!DOCTYPE html>\n' + document.documentElement.outerHTML;
+  overlay.style.display = _od;
+
+  // 2. Salva in locale
+  const blob  = new Blob([htmlContent], {type:'text/html'});
+  const fname = location.pathname.split('/').pop() || 'card.html';
+  try {
+    const fh = await window.showSaveFilePicker({
+      suggestedName: fname,
+      types: [{ description:'HTML', accept:{'text/html':['.html']} }]
+    });
+    const w = await fh.createWritable();
+    await w.write(blob); await w.close();
+  } catch(e) {
+    if (e.name !== 'AbortError') {
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(blob);
+      a.download = fname; a.click();
+    } else {
+      return; // utente ha annullato il salvataggio locale → non pubblicare
+    }
+  }
+
+  // 3. Pubblica su GitHub
+  eseguiPubblicazione(localStorage.getItem('gh_token') || (() => {
+    const t = prompt('Token GitHub:'); if (t) localStorage.setItem('gh_token', t); return t;
+  })());
+}
+
 </script>
 
 </body></html>
