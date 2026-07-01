@@ -48,7 +48,7 @@ body{background:#0a0a0a;color:#fff;font-family:'Oswald',Arial,sans-serif;min-hei
 .slide-header h2{font-size:28px;font-weight:700;letter-spacing:4px}
 .slide-header h2 span{color:#2DB84A}
 
-.leghe-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:14px}
+.leghe-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:14px}
 .lega-card{border-radius:12px;padding:18px 12px;text-align:center;position:relative;overflow:hidden}
 .lega-card.disponibile{background:linear-gradient(135deg,#0d1a0d,#0a120a);border:1.5px solid #2DB84A}
 .lega-card.esaurita{background:#0f0f0f;border:1.5px solid #1a1a1a;opacity:.6}
@@ -69,7 +69,7 @@ body{background:#0a0a0a;color:#fff;font-family:'Oswald',Arial,sans-serif;min-hei
 .premi-total .tot-num{font-size:64px;font-weight:700;color:#ffd700;line-height:1}
 .premi-total .tot-sub{font-size:12px;color:#888;letter-spacing:2px;margin-top:6px}
 
-.premi-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+.premi-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:14px}
 .premio{border-radius:12px;padding:24px 16px;text-align:center}
 .premio:nth-child(1){background:linear-gradient(135deg,#1a1500,#0f0f00);border:1.5px solid #ffd700}
 .premio:nth-child(2){background:linear-gradient(135deg,#141414,#0f0f0f);border:1.5px solid #aaa}
@@ -87,7 +87,7 @@ body{background:#0a0a0a;color:#fff;font-family:'Oswald',Arial,sans-serif;min-hei
 
 /* ==================== SLIDE 4 & 5 — REGOLAMENTO ==================== */
 .s-reg{padding:40px}
-.reg-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-top:28px}
+.reg-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:20px;margin-top:28px}
 .reg-col{background:#0d0d0d;border:1px solid #1a1a1a;border-radius:12px;padding:24px}
 .reg-col-title{font-size:11px;letter-spacing:3px;color:#2DB84A;margin-bottom:16px;display:flex;align-items:center;gap:8px}
 .reg-list{list-style:none;display:flex;flex-direction:column;gap:10px}
@@ -116,56 +116,47 @@ body{background:#0a0a0a;color:#fff;font-family:'Oswald',Arial,sans-serif;min-hei
 .slide-footer b{color:#2DB84A}
 
 /* ==================== RESPONSIVE ==================== */
-@media(max-width:768px){
-  .page{padding:0 12px 40px}
-  .toolbar{padding:8px 12px;gap:6px}
-  .toolbar-title{font-size:11px;min-width:0;flex:1}
-  .btn{padding:5px 10px;font-size:10px}
+/* Le griglie usano auto-fill/minmax e si adattano da sole.
+   Le media query gestiscono solo padding, font e toolbar. */
 
-  /* Cover */
-  .s1{padding:40px 24px;min-height:400px}
-  .s1-title{font-size:36px;letter-spacing:3px}
-  .s1-badges{gap:8px}
+.lega-card,.premio,.reg-col{min-width:0}
 
-  /* Leghe: 5 → 2 colonne */
-  .s2{padding:24px 16px}
-  .leghe-grid{grid-template-columns:repeat(2,1fr);gap:10px}
+@media(max-width:700px){
+  .page{padding:0 8px 40px}
 
-  /* Premi: 4 → 2 colonne */
-  .s3{padding:24px 16px}
-  .premi-grid{grid-template-columns:repeat(2,1fr);gap:10px}
-  .premi-total .tot-num{font-size:48px}
+  .toolbar{padding:6px 10px;gap:5px}
+  .toolbar-title{font-size:10px;letter-spacing:1px}
+  .btn{padding:5px 9px;font-size:10px;letter-spacing:0}
 
-  /* Regolamento: 2 → 1 colonna */
-  .s-reg{padding:24px 16px}
-  .reg-grid{grid-template-columns:1fr;gap:14px}
+  .slide-nav{padding:10px 8px;gap:4px}
+  .slide-tab{padding:5px 10px;font-size:10px}
 
-  /* Come partecipare */
-  .s6{padding:24px 16px}
+  .s1{padding:32px 16px;min-height:360px}
+  .s1-title{font-size:32px;letter-spacing:2px}
+  .s1-label{font-size:9px;letter-spacing:3px}
+  .s1-sub{font-size:12px;letter-spacing:1px}
+  .s1-badges{gap:6px}
+  .s1-badge{font-size:10px;padding:5px 12px}
 
-  .slide-header h2{font-size:22px;letter-spacing:2px}
-  .slide-footer{padding:12px 16px}
-}
+  .s2{padding:20px 12px}
+  .s3{padding:20px 12px}
+  .s-reg{padding:20px 12px}
+  .s6{padding:20px 12px}
 
-@media(max-width:480px){
-  .s1-title{font-size:28px;letter-spacing:2px}
-  .s1-label{font-size:9px;letter-spacing:4px}
-
-  /* Leghe: 2 → 1 colonna su schermi piccoli */
-  .leghe-grid{grid-template-columns:1fr}
-
-  /* Premi: 2 → 1 colonna */
-  .premi-grid{grid-template-columns:1fr}
-  .premi-total .tot-num{font-size:40px}
-
+  .slide-header h2{font-size:20px;letter-spacing:2px}
+  .premi-total{padding:18px}
+  .premi-total .tot-num{font-size:44px}
   .premio-val{font-size:26px}
-  .slide-header h2{font-size:18px}
+  .reg-list li{font-size:12px}
   .step6-title{font-size:13px}
   .step6-text{font-size:12px}
-  .reg-list li{font-size:12px}
+  .slide-footer{padding:10px 12px}
+}
 
-  /* Nascondi testo toolbar su mobile molto stretto */
+@media(max-width:400px){
   .toolbar-title{display:none}
+  .s1-title{font-size:26px}
+  .premi-total .tot-num{font-size:36px}
 }
 </style>
 </head>
