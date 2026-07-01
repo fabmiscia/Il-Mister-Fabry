@@ -1564,31 +1564,16 @@ async function salvaInLocale() {
 }
 // ── Salva in locale E pubblica su GitHub ─────────────────────────────────
 async function salvaEPubblica() {
-  // 1. Ottieni HTML corrente (con overlay nascosto)
-  const overlay      = document.getElementById('gh-overlay');
-  const viewProgress = document.getElementById('gh-view-progress');
-  const viewToken    = document.getElementById('gh-view-token');
-  const linkWrap     = document.getElementById('gh-link-wrap');
-  const closeBtn     = document.getElementById('gh-close-btn');
-  const ghIcon       = document.getElementById('gh-icon');
-  const ghStatus     = document.getElementById('gh-status');
-  const ghDetail     = document.getElementById('gh-detail');
-
-  const _od = overlay.style.display;
-  overlay.style.display      = 'none';
-  viewProgress.style.display = 'none';
-  viewToken.style.display    = 'none';
-  linkWrap.style.display     = 'none';
-  closeBtn.style.display     = 'none';
-  ghIcon.textContent         = '🚀';
-  ghStatus.textContent       = 'Salva + Pubblica';
-  ghDetail.textContent       = '';
-
-  const htmlContent = '<!DOCTYPE html>\n' + document.documentElement.outerHTML;
-  overlay.style.display = _od;
+  // 1. Cattura HTML con overlay nascosto
+  const ov = document.getElementById('gh-overlay');
+  const _d = ov.style.display;
+  ov.style.display = 'none';
+  const html = '<!DOCTYPE html>
+' + document.documentElement.outerHTML;
+  ov.style.display = _d;
 
   // 2. Salva in locale
-  const blob  = new Blob([htmlContent], {type:'text/html'});
+  const blob  = new Blob([html], {type:'text/html'});
   const fname = location.pathname.split('/').pop() || 'card.html';
   try {
     const fh = await window.showSaveFilePicker({
@@ -1598,19 +1583,14 @@ async function salvaEPubblica() {
     const w = await fh.createWritable();
     await w.write(blob); await w.close();
   } catch(e) {
-    if (e.name !== 'AbortError') {
-      const a = document.createElement('a');
-      a.href = URL.createObjectURL(blob);
-      a.download = fname; a.click();
-    } else {
-      return; // utente ha annullato il salvataggio locale → non pubblicare
-    }
+    if (e.name === 'AbortError') return; // annullato → non pubblicare
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = fname; a.click();
   }
 
-  // 3. Pubblica su GitHub
-  eseguiPubblicazione(localStorage.getItem('gh_token') || (() => {
-    const t = prompt('Token GitHub:'); if (t) localStorage.setItem('gh_token', t); return t;
-  })());
+  // 3. Pubblica su GitHub (gestisce token e overlay automaticamente)
+  pubblicaGitHub();
 }
 
 </script>
