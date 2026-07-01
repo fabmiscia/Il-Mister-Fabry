@@ -616,10 +616,33 @@ table.inj-tbl thead th {
   .toolbar button { padding:6px 12px; font-size:11px; }
   .toolbar .tip { display:none; }
 }
+
+/* ── Tasto indietro (solo GitHub Pages) ── */
+#btn-back {
+  display:none;
+  position:fixed;
+  top:14px; left:14px;
+  background:#b0ff00;
+  color:#000;
+  font-family:'Montserrat',sans-serif;
+  font-size:12px;
+  font-weight:800;
+  letter-spacing:.5px;
+  padding:7px 14px;
+  border-radius:6px;
+  text-decoration:none;
+  z-index:9999;
+  box-shadow:0 2px 12px rgba(0,0,0,.5);
+  transition:background .15s;
+}
+#btn-back:hover { background:#d4ff55; }
+
 </style>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 </head>
 <body style="overflow-x: hidden;">
+<a id="btn-back" href="https://fabmiscia.github.io/Il-Mister-Fabry/Nuovi%20arrivi%20Fantacalcio/">← Nuovi Arrivi</a>
+
 
 <div class="nav">
   <button class="" onclick="go(1)">📋 Info</button>
@@ -656,7 +679,7 @@ table.inj-tbl thead th {
     <button class="mv-tab" onclick="mvGo(2)">📊 Stats</button>
     <button class="mv-tab" onclick="mvGo(3)">⭐ Consigli</button>
   </div>
-  <div class="mv-slide active" id="mv-s1"><div><div class="mv-stat-row"><span class="mv-stat-icon">💰</span><span class="mv-stat-label">Valore mercato</span><span class="mv-stat-val">7,00 mln €</span></div><div class="mv-stat-row"><span class="mv-stat-icon">🔄</span><span class="mv-stat-label">Transfer</span><span class="mv-stat-val">Acquisto definitivo</span></div><div class="mv-stat-row"><span class="mv-stat-icon"><img src="https://tmssl.akamaized.net//images/flagge/tiny/50.png" style="height:16px;vertical-align:middle;margin-right:5px;border:1px solid #555"></span><span class="mv-stat-label">Nazionalità</span><span class="mv-stat-val hl">GERMANIA&nbsp;&nbsp;CAMERUN</span></div><div class="mv-stat-row"><span class="mv-stat-icon">👟</span><span class="mv-stat-label">Piede</span><span class="mv-stat-val">DESTRO</span></div><div class="mv-stat-row"><span class="mv-stat-icon">📏</span><span class="mv-stat-label">Altezza</span><span class="mv-stat-val hl">1,90&nbsp;m</span></div><div class="mv-stat-row"><span class="mv-stat-icon"><img src="https://tmssl.akamaized.net//images/wappen/homepageWappen150x150/607.png" style="height:20px;vertical-align:middle;margin-right:5px"></span><span class="mv-stat-label">Ultimo club</span><span class="mv-stat-val">HELLAS VERONA</span></div><div class="mv-stat-row"><span class="mv-stat-icon">✅</span><span class="mv-stat-label">Presenze</span><span class="mv-stat-val">0</span></div><div class="mv-stat-row"><span class="mv-stat-icon">⚽</span><span class="mv-stat-label">Gol</span><span class="mv-stat-val">0</span></div><div class="mv-stat-row"><span class="mv-stat-icon">🎯</span><span class="mv-stat-label">Assist</span><span class="mv-stat-val">0</span></div><div class="mv-stat-row"><span class="mv-stat-icon">📝</span><span class="mv-stat-label">Scadenza</span><span class="mv-stat-val">30/06/2030</span></div><div class="mv-stat-row"><span class="mv-stat-icon">🚑</span><span class="mv-stat-label">Infortuni</span><span class="mv-stat-val">13 infortuni registrati</span></div></div><div style="margin-top: 10px; border-radius: 8px; overflow: hidden; background: rgb(242, 242, 242); max-width: 220px; align-self: center; width: 100%;"><div class="role-col" style="width: 100%; margin: 0px; border-radius: 0px; display: flex; flex-direction: column; color: rgb(34, 34, 34);">
+  <div class="mv-slide active" id="mv-s1"><div><div class="mv-stat-row"><span class="mv-stat-icon">💰</span><span class="mv-stat-label">Valore mercato</span><span class="mv-stat-val">7,00 mln €</span></div><div class="mv-stat-row"><span class="mv-stat-icon">🔄</span><span class="mv-stat-label">Transfer</span><span class="mv-stat-val">Acquisto definitivo</span></div><div class="mv-stat-row"><span class="mv-stat-icon"><img src="https://tmssl.akamaized.net//images/flagge/tiny/50.png" style="height:16px;vertical-align:middle;margin-right:5px;border:1px solid #555"></span><span class="mv-stat-label">Nazionalità</span><span class="mv-stat-val hl">GERMANIA&nbsp;&nbsp;CAMERUN</span></div><div class="mv-stat-row"><span class="mv-stat-icon">👟</span><span class="mv-stat-label">Piede</span><span class="mv-stat-val">DESTRO</span></div><div class="mv-stat-row"><span class="mv-stat-icon">📏</span><span class="mv-stat-label">Altezza</span><span class="mv-stat-val hl">1,90&nbsp;m</span></div><div class="mv-stat-row"><span class="mv-stat-icon"><img src="https://tmssl.akamaized.net//images/wappen/homepageWappen150x150/607.png" style="height:20px;vertical-align:middle;margin-right:5px"></span><span class="mv-stat-label">Ultimo club</span><span class="mv-stat-val">hellas verona</span></div><div class="mv-stat-row"><span class="mv-stat-icon">✅</span><span class="mv-stat-label">Presenze</span><span class="mv-stat-val">0</span></div><div class="mv-stat-row"><span class="mv-stat-icon">⚽</span><span class="mv-stat-label">Gol</span><span class="mv-stat-val">0</span></div><div class="mv-stat-row"><span class="mv-stat-icon">🎯</span><span class="mv-stat-label">Assist</span><span class="mv-stat-val">0</span></div><div class="mv-stat-row"><span class="mv-stat-icon">📝</span><span class="mv-stat-label">Scadenza</span><span class="mv-stat-val">30/06/2030</span></div><div class="mv-stat-row"><span class="mv-stat-icon">🚑</span><span class="mv-stat-label">Infortuni</span><span class="mv-stat-val">13 infortuni registrati</span></div></div><div style="margin-top: 10px; border-radius: 8px; overflow: hidden; background: rgb(242, 242, 242); max-width: 220px; align-self: center; width: 100%;"><div class="role-col" style="width: 100%; margin: 0px; border-radius: 0px; display: flex; flex-direction: column; color: rgb(34, 34, 34);">
     <div class="role-hdr">Ruolo</div>
     <div class="role-field" style="min-height: 160px;">
       <svg viewBox="0 0 100 150" preserveAspectRatio="xMidYMid meet">
@@ -699,7 +722,7 @@ table.inj-tbl thead th {
 
 🟢 PRO: Titolare fisso e punto fermo della difesa veneziana, fisico imponente, pericoloso sui calci piazzati grazie al gioco aereo.
 🔴 CONTRO: Storico infortuni allarmante (13 stop in carriera!), fantamedia 5.75 al Verona è bassa, il Venezia non è difesa top — pochi clean sheet.
-✏️ CONSIGLIO: Difensore di fascia media-bassa. Acquistalo solo se ne hai bisogno e a prezzo contenuto. Lo storico infortuni è un campanello d'allarme serio. Al Mister piace molto, potrebbe essere una bella sorpresa. Da acquistare come low cost</div></div>
+✏️ CONSIGLIO: Difensore di fascia media-bassa. Acquistalo solo se ne hai bisogno e a prezzo contenuto. Lo storico infortuni è un campanello d'allarme serio.</div></div>
 </div>
 
 <!-- ══════════════════════════════════════════════
@@ -755,7 +778,7 @@ table.inj-tbl thead th {
       <div class="srow">
         <span class="sic"><img src="https://tmssl.akamaized.net//images/wappen/homepageWappen150x150/607.png" style="height:20px;vertical-align:middle;margin-right:5px"></span>
         <span class="slbl">Ultimo club</span>
-        <span class="sval" contenteditable="true">HELLAS VERONA</span>
+        <span class="sval" contenteditable="true">hellas verona</span>
       </div>
       <div class="srow">
         <span class="sic">✅</span>
@@ -1159,7 +1182,7 @@ table.inj-tbl thead th {
 
 🟢 PRO: Titolare fisso e punto fermo della difesa veneziana, fisico imponente, pericoloso sui calci piazzati grazie al gioco aereo.
 🔴 CONTRO: Storico infortuni allarmante (13 stop in carriera!), fantamedia 5.75 al Verona è bassa, il Venezia non è difesa top — pochi clean sheet.
-✏️ CONSIGLIO: Difensore di fascia media-bassa. Acquistalo solo se ne hai bisogno e a prezzo contenuto. Lo storico infortuni è un campanello d'allarme serio. Al Mister piace molto, potrebbe essere una bella sorpresa. Da acquistare come low cost</div>
+✏️ CONSIGLIO: Difensore di fascia media-bassa. Acquistalo solo se ne hai bisogno e a prezzo contenuto. Lo storico infortuni è un campanello d'allarme serio.</div>
     </div>
 
   </div>
@@ -1209,6 +1232,7 @@ table.inj-tbl thead th {
     style.textContent = '.toolbar{display:none!important} [contenteditable]{pointer-events:none;cursor:default} .add-row-btn{display:none!important}';
     document.head.appendChild(style);
     document.querySelectorAll('[contenteditable]').forEach(el => el.removeAttribute('contenteditable'));
+    document.getElementById('btn-back').style.display = 'block';
   }
 })();
 
@@ -1232,8 +1256,12 @@ function triggerPhotoUpload() {
 document.getElementById('photo-input').addEventListener('change', function(e) {
   const file = e.target.files[0];
   if (!file) return;
-  const url = URL.createObjectURL(file);
-  document.querySelectorAll('.photo-all').forEach(img => img.src = url);
+  const reader = new FileReader();
+  reader.onload = function(ev) {
+    const url = ev.target.result;
+    document.querySelectorAll('.photo-all').forEach(img => img.src = url);
+  };
+  reader.readAsDataURL(file);
 });
 
 // ── Cambio logo squadra ──────────────────────
@@ -1243,20 +1271,23 @@ function triggerLogoUpload() {
 document.getElementById('logo-input').addEventListener('change', function(e) {
   const file = e.target.files[0];
   if (!file) return;
-  const url = URL.createObjectURL(file);
-  const el = document.getElementById('team-logo-img');
-  if (el.tagName === 'IMG') {
-    el.src = url;
-  } else {
-    // era un placeholder span → sostituisci con img
-    const img = document.createElement('img');
-    img.id = 'team-logo-img';
-    img.src = url;
-    img.onclick = triggerLogoUpload;
-    img.title = 'Click per sostituire il logo';
-    img.style.cssText = 'height:46px;vertical-align:middle;margin-right:12px;cursor:pointer;border-radius:4px';
-    el.replaceWith(img);
-  }
+  const reader = new FileReader();
+  reader.onload = function(ev) {
+    const url = ev.target.result;
+    const el = document.getElementById('team-logo-img');
+    if (el.tagName === 'IMG') {
+      el.src = url;
+    } else {
+      const img = document.createElement('img');
+      img.id = 'team-logo-img';
+      img.src = url;
+      img.onclick = triggerLogoUpload;
+      img.title = 'Click per sostituire il logo';
+      img.style.cssText = 'height:46px;vertical-align:middle;margin-right:12px;cursor:pointer;border-radius:4px';
+      el.replaceWith(img);
+    }
+  };
+  reader.readAsDataURL(file);
 });
 
 // ── Export PNG ──────────────────────────────
