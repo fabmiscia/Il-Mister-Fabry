@@ -7,15 +7,8 @@
 <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@600;700&family=Montserrat:wght@400;600;700;800&display=swap" rel="stylesheet">
 <style>
 *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+body { background:#0a0a0a; font-family:'Montserrat',sans-serif; min-height:100vh; color:#fff; }
 
-body {
-  background:#0a0a0a;
-  font-family:'Montserrat', sans-serif;
-  min-height:100vh;
-  color:#fff;
-}
-
-/* ── Header ── */
 .header {
   background:linear-gradient(180deg,#111 0%,#0a0a0a 100%);
   border-bottom:1px solid #1a1a1a;
@@ -27,170 +20,128 @@ body {
   position:absolute; left:20px; top:50%; transform:translateY(-50%);
   color:#2DB84A; font-size:11px; letter-spacing:2px;
   text-decoration:none; text-transform:uppercase; font-weight:700;
-  transition:color .2s;
 }
 .header-back:hover { color:#fff; }
 .header-title {
-  font-family:'Oswald', sans-serif;
-  font-size:24px; letter-spacing:5px; text-transform:uppercase;
+  font-family:'Oswald',sans-serif;
+  font-size:26px; letter-spacing:5px; text-transform:uppercase;
 }
 .header-title span { color:#2DB84A; }
-.header-sub {
-  color:#444; font-size:10px; letter-spacing:3px;
-  text-transform:uppercase; margin-top:5px;
-}
+.header-sub { color:#444; font-size:10px; letter-spacing:3px; text-transform:uppercase; margin-top:5px; }
 
-/* ── Breadcrumb ── */
 #breadcrumb {
   max-width:1100px; margin:0 auto;
-  padding:16px 24px 0;
+  padding:18px 24px 0;
   display:none; align-items:center; gap:8px;
 }
 #breadcrumb button {
   background:none; border:none; color:#2DB84A;
-  font-family:'Montserrat', sans-serif;
-  font-size:12px; font-weight:700; letter-spacing:1px;
-  cursor:pointer; text-transform:uppercase; padding:0;
-  transition:color .2s;
+  font-family:'Montserrat',sans-serif; font-size:12px; font-weight:700;
+  letter-spacing:1px; cursor:pointer; text-transform:uppercase; padding:0;
 }
 #breadcrumb button:hover { color:#fff; }
-#breadcrumb .sep { color:#333; font-size:12px; }
+#breadcrumb .sep { color:#333; }
 #breadcrumb .current { color:#666; font-size:12px; font-weight:600; text-transform:uppercase; letter-spacing:1px; }
 
-/* ── Contatore ── */
 .count-bar {
   max-width:1100px; margin:0 auto;
   padding:20px 24px 4px;
   color:#333; font-size:10px; letter-spacing:3px; text-transform:uppercase;
 }
 
-/* ── Grid squadre ── */
 .page { max-width:1100px; margin:0 auto; padding:16px 24px 80px; }
 
+/* ── GRID SQUADRE — 3 colonne fisse ── */
 .squadre-grid {
   display:grid;
-  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-  gap:16px;
+  grid-template-columns: repeat(3, 1fr);
+  gap:20px;
 }
 
 .squadra-card {
   background:#111;
-  border:2px solid rgba(255,255,255,.06);
+  border:2px solid rgba(255,255,255,.07);
   border-radius:14px;
-  padding:22px 16px 18px;
+  padding:28px 16px 22px;
   cursor:pointer;
-  display:flex; flex-direction:column; align-items:center; gap:10px;
-  text-decoration:none; color:#fff;
+  display:flex; flex-direction:column; align-items:center; gap:12px;
   transition:border-color .2s, box-shadow .2s, transform .15s;
-  position:relative;
-  overflow:hidden;
-}
-.squadra-card::before {
-  content:'';
-  position:absolute; top:0; left:0; right:0; height:3px;
-  background:var(--team-color, #2DB84A);
-  opacity:0.7;
+  border-top:3px solid var(--tc, #2DB84A);
 }
 .squadra-card:hover {
-  border-color:var(--team-color, #2DB84A);
-  box-shadow:0 0 28px color-mix(in srgb, var(--team-color, #2DB84A) 25%, transparent);
+  border-color:var(--tc, #2DB84A);
+  box-shadow:0 0 30px rgba(0,0,0,.6);
   transform:translateY(-4px);
 }
-.squadra-logo {
-  width:64px; height:64px;
+
+.logo-wrap {
+  width:72px; height:72px;
+  display:flex; align-items:center; justify-content:center;
+}
+.logo-wrap img {
+  width:72px; height:72px;
   object-fit:contain;
   filter:drop-shadow(0 2px 8px rgba(0,0,0,.5));
 }
-.squadra-logo-placeholder {
-  width:64px; height:64px; border-radius:50%;
-  background:var(--team-color, #2DB84A);
-  display:flex; align-items:center; justify-content:center;
-  font-family:'Oswald',sans-serif; font-size:20px; font-weight:700; color:#fff;
-}
+
 .squadra-nome {
-  font-family:'Oswald', sans-serif;
-  font-size:17px; font-weight:700; letter-spacing:2px;
+  font-family:'Oswald',sans-serif;
+  font-size:18px; font-weight:700; letter-spacing:2px;
   text-transform:uppercase; text-align:center;
 }
 .squadra-count {
   background:rgba(255,255,255,.07);
-  border-radius:20px;
-  padding:3px 12px;
+  border-radius:20px; padding:4px 14px;
   font-size:10px; font-weight:700; letter-spacing:1.5px;
-  color:var(--team-color, #2DB84A); text-transform:uppercase;
+  color:var(--tc, #2DB84A); text-transform:uppercase;
 }
 
-/* ── Grid giocatori ── */
+/* ── GRID GIOCATORI ── */
 .giocatori-header {
-  display:flex; align-items:center; gap:16px;
-  margin-bottom:28px;
+  display:flex; align-items:center; gap:18px; margin-bottom:28px;
 }
-.squadra-logo-big {
-  width:56px; height:56px; object-fit:contain;
+.giocatori-header img {
+  width:60px; height:60px; object-fit:contain;
   filter:drop-shadow(0 2px 10px rgba(0,0,0,.6));
 }
-.squadra-logo-big-placeholder {
-  width:56px; height:56px; border-radius:50%;
-  background:var(--team-color, #2DB84A);
-  display:flex; align-items:center; justify-content:center;
-  font-family:'Oswald',sans-serif; font-size:18px; font-weight:700;
-}
 .squadra-title-big {
-  font-family:'Oswald', sans-serif;
-  font-size:26px; letter-spacing:4px; text-transform:uppercase;
+  font-family:'Oswald',sans-serif;
+  font-size:28px; letter-spacing:4px; text-transform:uppercase;
 }
-.squadra-title-big span { color:var(--team-color, #2DB84A); }
+.squadra-title-big span { color:var(--tc, #2DB84A); }
 
 .giocatori-grid {
   display:grid;
-  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  grid-template-columns: repeat(3, 1fr);
   gap:16px;
 }
-
 .giocatore-card {
-  background:#111;
-  border:2px solid rgba(255,255,255,.06);
-  border-radius:12px;
-  padding:20px 16px;
-  cursor:pointer;
+  background:#111; border:2px solid rgba(255,255,255,.07);
+  border-radius:12px; padding:22px 18px;
   display:flex; flex-direction:column; gap:8px;
   text-decoration:none; color:#fff;
   transition:border-color .2s, box-shadow .2s, transform .15s;
+  border-top:3px solid var(--tc, #2DB84A);
 }
 .giocatore-card:hover {
-  border-color:var(--team-color, #2DB84A);
-  box-shadow:0 0 20px color-mix(in srgb, var(--team-color, #2DB84A) 20%, transparent);
+  border-color:var(--tc, #2DB84A);
+  box-shadow:0 0 20px rgba(0,0,0,.5);
   transform:translateY(-3px);
 }
-.giocatore-icon { font-size:24px; }
 .giocatore-nome {
-  font-family:'Oswald', sans-serif;
-  font-size:16px; font-weight:700; letter-spacing:1.5px;
-  text-transform:uppercase; line-height:1.2;
+  font-family:'Oswald',sans-serif;
+  font-size:17px; font-weight:700; letter-spacing:1.5px; text-transform:uppercase;
 }
-.giocatore-sub {
-  font-size:10px; color:#555; font-weight:600; letter-spacing:1.5px; text-transform:uppercase;
-}
-.giocatore-arrow {
-  color:var(--team-color, #2DB84A); font-size:14px; margin-top:4px;
-  font-weight:800;
-}
+.giocatore-sub { font-size:10px; color:#555; font-weight:600; letter-spacing:1px; text-transform:uppercase; }
+.giocatore-arrow { color:var(--tc, #2DB84A); font-size:12px; font-weight:800; margin-top:4px; }
 
-/* ── Empty ── */
-.empty { color:#333; font-size:13px; letter-spacing:2px; padding:40px 0; text-transform:uppercase; }
+.loader { text-align:center; padding:60px 0; color:#333; font-size:11px; letter-spacing:3px; text-transform:uppercase; }
 
-/* ── Loader ── */
-.loader {
-  text-align:center; padding:60px 0; color:#333;
-  font-size:11px; letter-spacing:3px; text-transform:uppercase;
+@media(max-width:700px){
+  .squadre-grid, .giocatori-grid { grid-template-columns: 1fr 1fr; gap:12px; }
 }
-
-/* ── Responsive ── */
-@media(max-width:600px){
-  .squadre-grid { grid-template-columns:1fr 1fr; gap:10px; }
-  .giocatori-grid { grid-template-columns:1fr 1fr; gap:10px; }
-  .header-title { font-size:18px; letter-spacing:3px; }
-  .header-back { display:none; }
+@media(max-width:420px){
+  .squadre-grid, .giocatori-grid { grid-template-columns: 1fr; }
 }
 </style>
 </head>
@@ -215,189 +166,131 @@ body {
 </div>
 
 <script>
-const REPO = 'fabmiscia/Il-Mister-Fabry';
-const FOLDER = 'Nuovi arrivi Fantacalcio';
-const BASE_URL = `https://fabmiscia.github.io/Il-Mister-Fabry/${FOLDER}/`;
+const REPO    = 'fabmiscia/Il-Mister-Fabry';
+const FOLDER  = 'Nuovi arrivi Fantacalcio';
+const BASE_URL = 'https://fabmiscia.github.io/Il-Mister-Fabry/' + FOLDER + '/';
+const LOGHI   = 'https://fabmiscia.github.io/Il-Mister-Fabry/loghi/';
 
-// URL base loghi
-const LOGHI_BASE = 'https://fabmiscia.github.io/Il-Mister-Fabry/loghi/';
-
-function teamLogo(nome) {
-  const k = teamKey(nome);
-  const map = {
-    'atalanta':'atalanta','bologna':'bologna','cagliari':'cagliari',
-    'como':'como','fiorentina':'fiorentina','frosinone':'frosinone',
-    'genoa':'genoa','inter':'inter','internazionale':'inter',
-    'juventus':'juventus','juve':'juventus','lazio':'lazio','lecce':'lecce',
-    'milan':'milan','monza':'monza','napoli':'napoli','parma':'parma',
-    'roma':'roma','sassuolo':'sassuolo','torino':'torino',
-    'udinese':'udinese','venezia':'venezia'
-  };
-  for (const [key, file] of Object.entries(map)) {
-    if (k.includes(key) || key.includes(k)) return LOGHI_BASE + file + '.png';
-  }
-  return null;
-}
-
-// Colori squadre Serie A
-const TEAM_COLORS = {
-  'juventus':    '#e8e8e8',
-  'milan':       '#e8003d',
-  'inter':       '#003399',
-  'napoli':      '#0066cc',
-  'atalanta':    '#1c5ba6',
-  'roma':        '#e30613',
-  'lazio':       '#87ceeb',
-  'fiorentina':  '#6600cc',
-  'bologna':     '#cc0000',
-  'torino':      '#8b0000',
-  'udinese':     '#ffffff',
-  'genoa':       '#cc0000',
-  'cagliari':    '#cc0000',
-  'empoli':      '#003fae',
-  'monza':       '#cc0000',
-  'lecce':       '#ffcc00',
-  'venezia':     '#ff6600',
-  'verona':      '#003399',
-  'parma':       '#ffdd00',
-  'como':        '#0033cc',
-  'sassuolo':    '#00aa44',
-  'frosinone':   '#ffcc00',
-  'salernitana': '#cc0000',
-  'cremonese':   '#cc3300',
-  'pisa':        '#003399',
-  'palermo':     '#ffaaaa',
-  'bari':        '#cc0000',
+const TEAM_INFO = {
+  'atalanta':   { color:'#1c5ba6', logo:'atalanta.png' },
+  'bologna':    { color:'#cc0000', logo:'bologna.png' },
+  'cagliari':   { color:'#cc0000', logo:'cagliari.png' },
+  'como':       { color:'#0033cc', logo:'como.png' },
+  'fiorentina': { color:'#6600cc', logo:'fiorentina.png' },
+  'frosinone':  { color:'#ffcc00', logo:'frosinone.png' },
+  'genoa':      { color:'#cc0000', logo:'genoa.png' },
+  'inter':      { color:'#003399', logo:'inter.png' },
+  'internazionale': { color:'#003399', logo:'inter.png' },
+  'juventus':   { color:'#e0e0e0', logo:'juventus.png' },
+  'lazio':      { color:'#87ceeb', logo:'lazio.png' },
+  'lecce':      { color:'#ffcc00', logo:'lecce.png' },
+  'milan':      { color:'#e8003d', logo:'milan.png' },
+  'monza':      { color:'#cc0000', logo:'monza.png' },
+  'napoli':     { color:'#0066cc', logo:'napoli.png' },
+  'parma':      { color:'#ffdd00', logo:'parma.png' },
+  'roma':       { color:'#e30613', logo:'roma.png' },
+  'sassuolo':   { color:'#00aa44', logo:'sassuolo.png' },
+  'torino':     { color:'#8b0000', logo:'torino.png' },
+  'udinese':    { color:'#cccccc', logo:'udinese.png' },
+  'venezia':    { color:'#ff6600', logo:'venezia.png' },
 };
 
-function teamKey(nome) {
-  return nome.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'').replace(/\s+/g,'');
-}
-
-function teamColor(nome) {
-  const k = teamKey(nome);
-  for (const [key, color] of Object.entries(TEAM_COLORS)) {
-    if (k.includes(key) || key.includes(k)) return color;
+function getTeamInfo(nome) {
+  const k = nome.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'').replace(/\s+/g,'');
+  for (const [key, info] of Object.entries(TEAM_INFO)) {
+    if (k.includes(key) || key.includes(k)) return info;
   }
-  return '#2DB84A';
+  return { color:'#2DB84A', logo:null };
 }
 
-function teamInitials(nome) {
-  return nome.split(' ').map(w => w[0]).join('').toUpperCase().slice(0,3);
-}
-
-function parseFIlename(name) {
-  const base = name.replace('nuovo_arrivo_', '').replace('.html', '');
+function parseName(filename) {
+  const base = filename.replace('nuovo_arrivo_','').replace('.html','');
   const parts = base.split('__');
-  const giocatore = parts[0].replace(/_/g, ' ').trim();
-  const squadra   = parts[1] ? parts[1].replace(/_/g, ' ').trim() : 'Senza squadra';
-  return { giocatore, squadra };
+  return {
+    giocatore: parts[0].replace(/_/g,' ').trim(),
+    squadra:   parts[1] ? parts[1].replace(/_/g,' ').trim() : 'Altro'
+  };
 }
 
-let allFiles = [];
 let squadreMap = {};
 
 async function loadFiles() {
   try {
-    const r = await fetch(`https://api.github.com/repos/${REPO}/contents/${encodeURIComponent(FOLDER)}`);
+    const r = await fetch('https://api.github.com/repos/' + REPO + '/contents/' + encodeURIComponent(FOLDER));
     const files = await r.json();
-    allFiles = files.filter(f => f.name !== 'index.html' && f.name.endsWith('.html'));
-
-    // Raggruppa per squadra
     squadreMap = {};
-    for (const f of allFiles) {
-      const { giocatore, squadra } = parseFIlename(f.name);
+    for (const f of files) {
+      if (f.name === 'index.html' || !f.name.endsWith('.html')) continue;
+      const { giocatore, squadra } = parseName(f.name);
       if (!squadreMap[squadra]) squadreMap[squadra] = [];
       squadreMap[squadra].push({ giocatore, file: f.name });
     }
-
     renderSquadre();
   } catch(e) {
-    document.getElementById('page-content').innerHTML =
-      '<div class="loader">Errore nel caricamento. Riprova.</div>';
+    document.getElementById('page-content').innerHTML = '<div class="loader">Errore caricamento. Riprova.</div>';
   }
 }
 
 function renderSquadre() {
   document.getElementById('breadcrumb').style.display = 'none';
   const squadre = Object.keys(squadreMap).sort();
-  const totGiocatori = allFiles.length;
-
+  const totG = Object.values(squadreMap).reduce((s,a)=>s+a.length,0);
   document.getElementById('count-bar').textContent =
-    `${squadre.length} squadr${squadre.length===1?'a':'e'} · ${totGiocatori} giocator${totGiocatori===1?'e':'i'}`;
+    squadre.length + ' squadr' + (squadre.length===1?'a':'e') + ' · ' + totG + ' giocator' + (totG===1?'e':'i');
 
-  if (squadre.length === 0) {
-    document.getElementById('page-content').innerHTML = '<div class="empty">Nessuna scheda pubblicata</div>';
-    return;
-  }
-
-  const cards = squadre.map(sq => {
-    const giocatori = squadreMap[sq];
-    const color = teamColor(sq);
-    const initials = teamInitials(sq);
-    const logo = teamLogo(sq);
-    const n = giocatori.length;
-    const logoHTML = logo
-      ? `<img class="squadra-logo" src="${logo}" alt="${sq}" onerror="this.outerHTML='<div class=\\"squadra-logo-placeholder\\" style=\\"--team-color:${color}\\">${initials}</div>'">`
-      : `<div class="squadra-logo-placeholder" style="--team-color:${color}">${initials}</div>`;
-    return `
-      <div class="squadra-card" style="--team-color:${color}" onclick="openSquadra('${sq.replace(/'/g,"\\'")}')">
-        ${logoHTML}
-        <div class="squadra-nome">${sq}</div>
-        <div class="squadra-count">${n} giocator${n===1?'e':'i'}</div>
-      </div>`;
+  const html = squadre.map(sq => {
+    const info = getTeamInfo(sq);
+    const n = squadreMap[sq].length;
+    const imgTag = info.logo
+      ? '<img src="' + LOGHI + info.logo + '" alt="' + sq + '" width="72" height="72" style="object-fit:contain">'
+      : '';
+    return '<div class="squadra-card" style="--tc:' + info.color + '" onclick="openSquadra(\'' + sq.replace(/'/g,"\\'") + '\')">'
+      + '<div class="logo-wrap">' + imgTag + '</div>'
+      + '<div class="squadra-nome">' + sq + '</div>'
+      + '<div class="squadra-count">' + n + ' giocator' + (n===1?'e':'i') + '</div>'
+      + '</div>';
   }).join('');
 
-  document.getElementById('page-content').innerHTML =
-    `<div class="squadre-grid">${cards}</div>`;
+  document.getElementById('page-content').innerHTML = '<div class="squadre-grid">' + html + '</div>';
 }
 
 function openSquadra(squadra) {
-  const color = teamColor(squadra);
-  const initials = teamInitials(squadra);
-  const logo = teamLogo(squadra);
+  const info = getTeamInfo(squadra);
   const giocatori = squadreMap[squadra] || [];
 
-  // Breadcrumb
-  const bc = document.getElementById('breadcrumb');
-  bc.style.display = 'flex';
+  document.getElementById('breadcrumb').style.display = 'flex';
   document.getElementById('breadcrumb-nome').textContent = squadra;
-
   document.getElementById('count-bar').textContent =
-    `${giocatori.length} giocator${giocatori.length===1?'e':'i'} arrivat${giocatori.length===1?'o':'i'} al ${squadra}`;
+    giocatori.length + ' giocator' + (giocatori.length===1?'e':'i') + ' arrivat' + (giocatori.length===1?'o':'i') + ' al ' + squadra;
 
-  const logoHeaderHTML = logo
-    ? `<img class="squadra-logo-big" src="${logo}" alt="${squadra}" onerror="this.outerHTML='<div class=\\"squadra-logo-big-placeholder\\" style=\\"--team-color:${color}\\">${initials}</div>'">`
-    : `<div class="squadra-logo-big-placeholder" style="--team-color:${color}">${initials}</div>`;
+  const imgHeader = info.logo
+    ? '<img src="' + LOGHI + info.logo + '" alt="' + squadra + '" width="60" height="60" style="object-fit:contain">'
+    : '';
 
-  const giocatoriHTML = giocatori.map(g => `
-    <a class="giocatore-card" style="--team-color:${color}" href="${BASE_URL}${encodeURIComponent(g.file)}" target="_blank">
-      <div class="giocatore-icon">⚽</div>
-      <div class="giocatore-nome">${g.giocatore}</div>
-      <div class="giocatore-sub">Nuova squadra: ${squadra}</div>
-      <div class="giocatore-arrow">→ Apri scheda</div>
-    </a>`).join('');
+  const words = squadra.toUpperCase().split(' ');
+  const titleHTML = '<span>' + words[0] + '</span>' + (words.length > 1 ? ' ' + words.slice(1).join(' ') : '');
 
-  document.getElementById('page-content').innerHTML = `
-    <div class="giocatori-header">
-      ${logoHeaderHTML}
-      <div class="squadra-title-big" style="--team-color:${color}">${squadra.toUpperCase().split(' ').map((w,i)=>i===0?`<span>${w}</span>`:w).join(' ')}</div>
-    </div>
-    <div class="giocatori-grid">${giocatoriHTML}</div>`;
+  const cards = giocatori.map(g =>
+    '<a class="giocatore-card" style="--tc:' + info.color + '" href="' + BASE_URL + encodeURIComponent(g.file) + '" target="_blank">'
+    + '<div class="giocatore-nome">' + g.giocatore + '</div>'
+    + '<div class="giocatore-sub">→ ' + squadra + '</div>'
+    + '<div class="giocatore-arrow">Apri scheda →</div>'
+    + '</a>'
+  ).join('');
+
+  document.getElementById('page-content').innerHTML =
+    '<div class="giocatori-header" style="--tc:' + info.color + '">'
+    + imgHeader
+    + '<div class="squadra-title-big" style="--tc:' + info.color + '">' + titleHTML + '</div>'
+    + '</div>'
+    + '<div class="giocatori-grid">' + cards + '</div>';
 
   window.scrollTo({top:0, behavior:'smooth'});
 }
 
-function tornaSquadre() {
-  renderSquadre();
-}
+function tornaSquadre() { renderSquadre(); }
 
-// Leggi parametro ?squadra=NomeSquadra nell'URL
-loadFiles().then(() => {
-  const params = new URLSearchParams(window.location.search);
-  const sq = params.get('squadra');
-  if (sq && squadreMap[sq]) openSquadra(sq);
-});
+loadFiles();
 </script>
 </body>
 </html>
