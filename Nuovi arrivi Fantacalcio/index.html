@@ -219,6 +219,26 @@ const REPO = 'fabmiscia/Il-Mister-Fabry';
 const FOLDER = 'Nuovi arrivi Fantacalcio';
 const BASE_URL = `https://fabmiscia.github.io/Il-Mister-Fabry/${FOLDER}/`;
 
+// URL base loghi
+const LOGHI_BASE = 'https://fabmiscia.github.io/Il-Mister-Fabry/loghi/';
+
+function teamLogo(nome) {
+  const k = teamKey(nome);
+  const map = {
+    'atalanta':'atalanta','bologna':'bologna','cagliari':'cagliari',
+    'como':'como','fiorentina':'fiorentina','frosinone':'frosinone',
+    'genoa':'genoa','inter':'inter','internazionale':'inter',
+    'juventus':'juventus','juve':'juventus','lazio':'lazio','lecce':'lecce',
+    'milan':'milan','monza':'monza','napoli':'napoli','parma':'parma',
+    'roma':'roma','sassuolo':'sassuolo','torino':'torino',
+    'udinese':'udinese','venezia':'venezia'
+  };
+  for (const [key, file] of Object.entries(map)) {
+    if (k.includes(key) || key.includes(k)) return LOGHI_BASE + file + '.png';
+  }
+  return null;
+}
+
 // Colori squadre Serie A
 const TEAM_COLORS = {
   'juventus':    '#e8e8e8',
@@ -315,10 +335,14 @@ function renderSquadre() {
     const giocatori = squadreMap[sq];
     const color = teamColor(sq);
     const initials = teamInitials(sq);
+    const logo = teamLogo(sq);
     const n = giocatori.length;
+    const logoHTML = logo
+      ? `<img class="squadra-logo" src="${logo}" alt="${sq}" onerror="this.outerHTML='<div class=\\"squadra-logo-placeholder\\" style=\\"--team-color:${color}\\">${initials}</div>'">`
+      : `<div class="squadra-logo-placeholder" style="--team-color:${color}">${initials}</div>`;
     return `
       <div class="squadra-card" style="--team-color:${color}" onclick="openSquadra('${sq.replace(/'/g,"\\'")}')">
-        <div class="squadra-logo-placeholder" style="--team-color:${color}">${initials}</div>
+        ${logoHTML}
         <div class="squadra-nome">${sq}</div>
         <div class="squadra-count">${n} giocator${n===1?'e':'i'}</div>
       </div>`;
@@ -331,6 +355,7 @@ function renderSquadre() {
 function openSquadra(squadra) {
   const color = teamColor(squadra);
   const initials = teamInitials(squadra);
+  const logo = teamLogo(squadra);
   const giocatori = squadreMap[squadra] || [];
 
   // Breadcrumb
@@ -340,6 +365,10 @@ function openSquadra(squadra) {
 
   document.getElementById('count-bar').textContent =
     `${giocatori.length} giocator${giocatori.length===1?'e':'i'} arrivat${giocatori.length===1?'o':'i'} al ${squadra}`;
+
+  const logoHeaderHTML = logo
+    ? `<img class="squadra-logo-big" src="${logo}" alt="${squadra}" onerror="this.outerHTML='<div class=\\"squadra-logo-big-placeholder\\" style=\\"--team-color:${color}\\">${initials}</div>'">`
+    : `<div class="squadra-logo-big-placeholder" style="--team-color:${color}">${initials}</div>`;
 
   const giocatoriHTML = giocatori.map(g => `
     <a class="giocatore-card" style="--team-color:${color}" href="${BASE_URL}${encodeURIComponent(g.file)}" target="_blank">
@@ -351,7 +380,7 @@ function openSquadra(squadra) {
 
   document.getElementById('page-content').innerHTML = `
     <div class="giocatori-header">
-      <div class="squadra-logo-big-placeholder" style="--team-color:${color}">${initials}</div>
+      ${logoHeaderHTML}
       <div class="squadra-title-big" style="--team-color:${color}">${squadra.toUpperCase().split(' ').map((w,i)=>i===0?`<span>${w}</span>`:w).join(' ')}</div>
     </div>
     <div class="giocatori-grid">${giocatoriHTML}</div>`;
