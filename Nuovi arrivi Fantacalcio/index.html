@@ -216,18 +216,16 @@ let squadreMap = {};
 
 async function loadFiles() {
   try {
-    const r = await fetch('https://api.github.com/repos/' + REPO + '/contents/' + encodeURIComponent(FOLDER));
-    const files = await r.json();
+    const r = await fetch('https://raw.githubusercontent.com/' + REPO + '/main/' + encodeURIComponent(FOLDER) + '/giocatori.json');
+    const giocatori = await r.json();
     squadreMap = {};
-    for (const f of files) {
-      if (f.name === 'index.html' || !f.name.endsWith('.html')) continue;
-      const { giocatore, squadra } = parseName(f.name);
-      if (!squadreMap[squadra]) squadreMap[squadra] = [];
-      squadreMap[squadra].push({ giocatore, file: f.name });
+    for (const g of giocatori) {
+      if (!squadreMap[g.squadra]) squadreMap[g.squadra] = [];
+      squadreMap[g.squadra].push({ giocatore: g.giocatore, file: g.file });
     }
     renderSquadre();
   } catch(e) {
-    document.getElementById('page-content').innerHTML = '<div class="loader">Errore caricamento. Riprova.</div>';
+    document.getElementById('page-content').innerHTML = '<div class="loader">Errore caricamento. Riprova tra qualche minuto.</div>';
   }
 }
 
