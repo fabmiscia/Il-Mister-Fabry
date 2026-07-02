@@ -67,8 +67,8 @@ body { background:#0a0a0a; font-family:'Montserrat',sans-serif; color:#fff; min-
   font-family:'Oswald',sans-serif;
   font-size:22px; letter-spacing:3px; text-transform:uppercase;
 }
-.tappa-date { color:#444; font-size:11px; letter-spacing:1px; }
-.tappa-count { margin-left:auto; color:#333; font-size:10px; letter-spacing:2px; text-transform:uppercase; }
+.tappa-date { color:#fff; font-size:11px; letter-spacing:1px; }
+.tappa-count { margin-left:auto; color:#fff; font-size:10px; letter-spacing:2px; text-transform:uppercase; }
 
 /* ── Video list ── */
 .video-list { display:flex; flex-direction:column; gap:0; }
@@ -77,7 +77,7 @@ body { background:#0a0a0a; font-family:'Montserrat',sans-serif; color:#fff; min-
   padding:10px 0; border-bottom:1px solid #1a1a1a;
 }
 .video-row:last-child { border-bottom:none; }
-.video-date { font-size:11px; color:#444; letter-spacing:1px; min-width:90px; flex-shrink:0; }
+.video-date { font-size:11px; color:#fff; letter-spacing:1px; min-width:90px; flex-shrink:0; }
 .video-link {
   font-size:14px; font-weight:600; color:#fff;
   text-decoration:none; line-height:1.4;
@@ -227,19 +227,7 @@ function renderPage(videos) {
     html += '</div>';
   });
 
-  // Video non categorizzati
-  if (restanti.length > 0) {
-    html += '<div class="tappa-section">';
-    html += '<div class="altri-header">Altri video</div>';
-    html += '<div class="video-list">';
-    restanti.forEach(v => {
-      html += '<div class="video-row">'
-        + '<span class="video-date">' + formatDate(v.pub) + '</span>'
-        + '<a class="video-link" href="' + v.link + '" target="_blank">' + v.title + '</a>'
-        + '</div>';
-    });
-    html += '</div></div>';
-  }
+  // Video fuori dalle tappe: non mostrati
 
   document.getElementById('page-content').innerHTML = html || '<div class="loader">Nessun video trovato.</div>';
 }
