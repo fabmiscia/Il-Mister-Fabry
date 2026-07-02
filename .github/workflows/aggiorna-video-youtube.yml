@@ -1,0 +1,76 @@
+name: Aggiorna video YouTube
+
+on:
+  schedule:
+    - cron: '0 * * * *'   # ogni ora
+  workflow_dispatch:        # trigger manuale dal sito GitHub
+
+permissions:
+  contents: write
+
+jobs:
+  aggiorna:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Fetch video YouTube e aggiorna videos.json
+        run: |
+          python3 - << 'PYEOF'
+          import urllib.request, json, os
+          from xml.etree import ElementTree as ET
+
+          CHANNEL_ID = 'UCuUdaz_njw3-fmeY-Xlv2jw'
+
+          rss_url = f'https://www.youtube.com/feeds/videos.xml?channel_id={CHANNEL_ID}'
+          req = urllib.request.Request(rss_url, headers={'User-Agent': 'Mozilla/5.0'})
+          with urllib.request.urlopen(req) as r:
+              xml_text = r.read()
+
+          root = ET.fromstring(xml_text)
+          ns = {
+              'atom': 'http://www.w3.org/2005/Atom',
+              'yt':   'http://www.youtube.com/xml/schemas/2015',
+          }
+
+          videos = []
+          for entry in root.findall('atom:entry', ns):
+              title   = entry.find('atom:title', ns).text or ''
+              link    = entry.find('atom:link', ns).get('href','')
+              pub     = entry.find('atom:published', ns).text or ''
+              vid_el  = entry.find('yt:videoId', ns)
+              videoId = vid_el.text if vid_el is not None else ''
+              if videoId:
+                  videos.append({'title': title, 'link': link, 'pub': pub[:10], 'videoId': videoId})
+
+          print(f"Trovati {len(videos)} video")
+
+          out_path = "02 Il cammino verso l'asta/videos.json"
+          existing = []
+          if os.path.exists(out_path):
+              with open(out_path) as f:
+                  existing = json.load(f)
+
+          existing_ids = {v['videoId'] for v in existing}
+          new_ids = {v['videoId'] for v in videos}
+
+          if existing_ids == new_ids:
+              print("Nessun nuovo video — nessuna modifica")
+          else:
+              with open(out_path, 'w', encoding='utf-8') as f:
+                  json.dump(videos, f, ensure_ascii=False, indent=2)
+              print("Salvato videos.json aggiornato")
+              env_file = os.environ.get('GITHUB_ENV', '')
+              if env_file:
+                  with open(env_file, 'a') as ef:
+                      ef.write('VIDEOS_CHANGED=true\n')
+          PYEOF
+
+      - name: Commit e push se ci sono nuovi video
+        if: env.VIDEOS_CHANGED == 'true'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add "02 Il cammino verso l'asta/videos.json"
+          git commit -m "Aggiorna video YouTube $(date +'%Y-%m-%d %H:%M')"
+          git push
