@@ -70,33 +70,20 @@ body { background:#0a0a0a; font-family:'Montserrat',sans-serif; color:#fff; min-
 .tappa-date { color:#444; font-size:11px; letter-spacing:1px; }
 .tappa-count { margin-left:auto; color:#333; font-size:10px; letter-spacing:2px; text-transform:uppercase; }
 
-/* ── Video grid ── */
-.video-grid {
-  display:grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap:16px;
+/* ── Video list ── */
+.video-list { display:flex; flex-direction:column; gap:0; }
+.video-row {
+  display:flex; align-items:baseline; gap:14px;
+  padding:10px 0; border-bottom:1px solid #1a1a1a;
 }
-.video-card {
-  background:#111; border-radius:10px; overflow:hidden;
-  border:1px solid #1a1a1a;
-  text-decoration:none; color:#fff;
-  transition:transform .15s, border-color .2s;
-  display:block;
+.video-row:last-child { border-bottom:none; }
+.video-date { font-size:11px; color:#444; letter-spacing:1px; min-width:90px; flex-shrink:0; }
+.video-link {
+  font-size:14px; font-weight:600; color:#fff;
+  text-decoration:none; line-height:1.4;
+  transition:color .15s;
 }
-.video-card:hover { transform:translateY(-3px); border-color:#b0ff00; }
-.video-thumb {
-  width:100%; aspect-ratio:16/9;
-  object-fit:cover; display:block;
-  background:#1a1a1a;
-}
-.video-info { padding:12px 14px 14px; }
-.video-title {
-  font-size:13px; font-weight:700; line-height:1.4;
-  color:#fff; margin-bottom:6px;
-  display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical;
-  overflow:hidden;
-}
-.video-date { font-size:10px; color:#555; letter-spacing:1px; }
+.video-link:hover { color:#b0ff00; }
 
 /* ── Empty ── */
 .tappa-empty {
@@ -228,15 +215,12 @@ function renderPage(videos) {
     if (tappa.videos.length === 0) {
       html += '<div class="tappa-empty">Nessun video ancora — in arrivo!</div>';
     } else {
-      html += '<div class="video-grid">';
+      html += '<div class="video-list">';
       tappa.videos.forEach(v => {
-        const thumb = 'https://img.youtube.com/vi/' + v.videoId + '/mqdefault.jpg';
-        html += '<a class="video-card" href="' + v.link + '" target="_blank">'
-          + '<img class="video-thumb" src="' + thumb + '" alt="' + v.title + '" loading="lazy">'
-          + '<div class="video-info">'
-          + '<div class="video-title">' + v.title + '</div>'
-          + '<div class="video-date">' + formatDate(v.pub) + '</div>'
-          + '</div></a>';
+        html += '<div class="video-row">'
+          + '<span class="video-date">' + formatDate(v.pub) + '</span>'
+          + '<a class="video-link" href="' + v.link + '" target="_blank">' + v.title + '</a>'
+          + '</div>';
       });
       html += '</div>';
     }
@@ -246,16 +230,13 @@ function renderPage(videos) {
   // Video non categorizzati
   if (restanti.length > 0) {
     html += '<div class="tappa-section">';
-    html += '<div class="altri-header">Tutti i video</div>';
-    html += '<div class="video-grid">';
+    html += '<div class="altri-header">Altri video</div>';
+    html += '<div class="video-list">';
     restanti.forEach(v => {
-      const thumb = 'https://img.youtube.com/vi/' + v.videoId + '/mqdefault.jpg';
-      html += '<a class="video-card" href="' + v.link + '" target="_blank">'
-        + '<img class="video-thumb" src="' + thumb + '" alt="' + v.title + '" loading="lazy">'
-        + '<div class="video-info">'
-        + '<div class="video-title">' + v.title + '</div>'
-        + '<div class="video-date">' + formatDate(v.pub) + '</div>'
-        + '</div></a>';
+      html += '<div class="video-row">'
+        + '<span class="video-date">' + formatDate(v.pub) + '</span>'
+        + '<a class="video-link" href="' + v.link + '" target="_blank">' + v.title + '</a>'
+        + '</div>';
     });
     html += '</div></div>';
   }
