@@ -171,32 +171,48 @@ function getVideoId(link) {
   return m2 ? m2[1] : null;
 }
 
-async function loadVideos() {
+async function fetchRSS() {
   const rssUrl = 'https://www.youtube.com/feeds/videos.xml?channel_id=' + CHANNEL_ID;
-  const proxyUrl = 'https://api.allorigins.win/get?url=' + encodeURIComponent(rssUrl);
+  const PROXIES = [
+    u => 'https://corsproxy.io/?' + encodeURIComponent(u),
+    u => 'https://api.allorigins.win/get?url=' + encodeURIComponent(u),
+    u => 'https://api.codetabs.com/v1/proxy?quest=' + encodeURIComponent(u),
+  ];
 
-  let videos = [];
-  try {
-    const r = await fetch(proxyUrl);
-    const data = await r.json();
-    const parser = new DOMParser();
-    const xml = parser.parseFromString(data.contents, 'text/xml');
-    const entries = xml.querySelectorAll('entry');
+  for (const proxy of PROXIES) {
+    try {
+      const r = await fetch(proxy(rssUrl), { signal: AbortSignal.timeout(8000) });
+      if (!r.ok) continue;
+      const text = await r.text();
+      // allorigins restituisce JSON, gli altri restituiscono XML diretto
+      let xmlText = text;
+      try { xmlText = JSON.parse(text).contents; } catch(e) {}
+      if (xmlText && xmlText.includes('<feed')) return xmlText;
+    } catch(e) { continue; }
+  }
+  return null;
+}
 
-    entries.forEach(entry => {
-      const title   = entry.querySelector('title')?.textContent || '';
-      const link    = entry.querySelector('link')?.getAttribute('href') || '';
-      const pub     = entry.querySelector('published')?.textContent || '';
-      const videoId = entry.querySelector('videoId')?.textContent || getVideoId(link);
-      if (videoId) {
-        videos.push({ title, link, pub, videoId });
-      }
-    });
-  } catch(e) {
+async function loadVideos() {
+  const xmlText = await fetchRSS();
+  if (!xmlText) {
     document.getElementById('page-content').innerHTML =
       '<div class="error">Errore nel caricamento dei video. Riprova tra qualche minuto.</div>';
     return;
   }
+
+  const parser = new DOMParser();
+  const xml = parser.parseFromString(xmlText, 'text/xml');
+  const entries = xml.querySelectorAll('entry');
+  const videos = [];
+
+  entries.forEach(entry => {
+    const title   = entry.querySelector('title')?.textContent || '';
+    const link    = entry.querySelector('link')?.getAttribute('href') || '';
+    const pub     = entry.querySelector('published')?.textContent || '';
+    const videoId = entry.querySelector('videoId')?.textContent || getVideoId(link);
+    if (videoId) videos.push({ title, link, pub, videoId });
+  });
 
   renderPage(videos);
 }
