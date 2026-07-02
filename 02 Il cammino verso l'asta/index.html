@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Il Cammino verso l'Asta 2026-27 — Il Mister Fabry</title>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@600;700&family=Montserrat:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+body { background:#0a0a0a; font-family:'Montserrat',sans-serif; color:#fff; min-height:100vh; }
+
+.header {
+  background:linear-gradient(180deg,#111 0%,#0a0a0a 100%);
+  border-bottom:1px solid #1a1a1a;
+  padding:28px 24px 22px;
+  text-align:center;
+  position:relative;
+}
+.header-back {
+  position:absolute; left:20px; top:50%; transform:translateY(-50%);
+  color:#b0ff00; font-size:11px; letter-spacing:2px;
+  text-decoration:none; text-transform:uppercase; font-weight:700;
+}
+.header-back:hover { color:#fff; }
+.header-title {
+  font-family:'Oswald',sans-serif;
+  font-size:24px; letter-spacing:5px; text-transform:uppercase;
+}
+.header-title span { color:#b0ff00; }
+.header-sub { color:#444; font-size:10px; letter-spacing:3px; text-transform:uppercase; margin-top:5px; }
+
+/* ── Tappe nav ── */
+.tappe-nav {
+  max-width:1100px; margin:0 auto;
+  padding:20px 24px 0;
+  display:flex; gap:10px; flex-wrap:wrap;
+}
+.tappa-btn {
+  background:#111; border:1px solid #222;
+  color:#666; font-family:'Montserrat',sans-serif;
+  font-size:10px; font-weight:700; letter-spacing:2px;
+  text-transform:uppercase; padding:7px 16px;
+  border-radius:20px; cursor:pointer;
+  transition:all .2s;
+}
+.tappa-btn:hover, .tappa-btn.active {
+  background:#b0ff00; color:#000; border-color:#b0ff00;
+}
+
+.page { max-width:1100px; margin:0 auto; padding:28px 24px 80px; }
+
+/* ── Tappa section ── */
+.tappa-section { margin-bottom:52px; }
+.tappa-header {
+  display:flex; align-items:center; gap:14px;
+  margin-bottom:20px; padding-bottom:14px;
+  border-bottom:1px solid #1a1a1a;
+}
+.tappa-num {
+  background:#b0ff00; color:#000;
+  font-family:'Oswald',sans-serif;
+  font-size:11px; font-weight:700; letter-spacing:2px;
+  padding:4px 12px; border-radius:4px;
+  text-transform:uppercase;
+}
+.tappa-nome {
+  font-family:'Oswald',sans-serif;
+  font-size:22px; letter-spacing:3px; text-transform:uppercase;
+}
+.tappa-date { color:#444; font-size:11px; letter-spacing:1px; }
+.tappa-count { margin-left:auto; color:#333; font-size:10px; letter-spacing:2px; text-transform:uppercase; }
+
+/* ── Video grid ── */
+.video-grid {
+  display:grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap:16px;
+}
+.video-card {
+  background:#111; border-radius:10px; overflow:hidden;
+  border:1px solid #1a1a1a;
+  text-decoration:none; color:#fff;
+  transition:transform .15s, border-color .2s;
+  display:block;
+}
+.video-card:hover { transform:translateY(-3px); border-color:#b0ff00; }
+.video-thumb {
+  width:100%; aspect-ratio:16/9;
+  object-fit:cover; display:block;
+  background:#1a1a1a;
+}
+.video-info { padding:12px 14px 14px; }
+.video-title {
+  font-size:13px; font-weight:700; line-height:1.4;
+  color:#fff; margin-bottom:6px;
+  display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical;
+  overflow:hidden;
+}
+.video-date { font-size:10px; color:#555; letter-spacing:1px; }
+
+/* ── Empty ── */
+.tappa-empty {
+  color:#333; font-size:11px; letter-spacing:2px;
+  text-transform:uppercase; padding:20px 0;
+}
+
+/* ── Altri video ── */
+.altri-header {
+  font-family:'Oswald',sans-serif;
+  font-size:18px; letter-spacing:3px; text-transform:uppercase;
+  color:#444; margin-bottom:16px; padding-bottom:12px;
+  border-bottom:1px solid #1a1a1a;
+}
+
+.loader { text-align:center; padding:60px 0; color:#444; font-size:11px; letter-spacing:3px; text-transform:uppercase; }
+.error { text-align:center; padding:40px 0; color:#cc4444; font-size:12px; }
+
+@media(max-width:700px){
+  .video-grid { grid-template-columns:1fr 1fr; gap:10px; }
+}
+@media(max-width:420px){
+  .video-grid { grid-template-columns:1fr; }
+}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <a class="header-back" href="../index.html">← Home</a>
+  <div class="header-title">IL CAMMINO VERSO <span>L'ASTA</span></div>
+  <div class="header-sub">Guida ai ritiri estivi Serie A 2026-27</div>
+</div>
+
+<div class="tappe-nav" id="tappe-nav"></div>
+<div class="page" id="page-content">
+  <div class="loader">Caricamento video…</div>
+</div>
+
+<script>
+// ── Configurazione tappe (ordine cronologico) ──────────────────────────────
+const TAPPE = [
+  {
+    nome: 'Pinzolo',
+    keywords: ['pinzolo'],
+    dateRange: ['2026-07-01', '2026-07-26'],
+    squadre: 'Torino, Parma'
+  },
+  {
+    nome: 'Brunico',
+    keywords: ['brunico', 'riscone'],
+    dateRange: ['2026-07-05', '2026-08-05'],
+    squadre: ''
+  },
+  {
+    nome: 'Ronzo di Cador',
+    keywords: ['ronzo', 'cador', 'ronzone'],
+    dateRange: ['2026-07-10', '2026-08-10'],
+    squadre: ''
+  },
+  {
+    nome: 'Altri Ritiri',
+    keywords: ['ritiro', 'precampionato', 'amichevole'],
+    dateRange: ['2026-07-01', '2026-09-01'],
+    squadre: ''
+  }
+];
+
+const CHANNEL_ID = 'UCuUdaz_njw3-fmeY-Xlv2jw';
+
+function formatDate(iso) {
+  const d = new Date(iso);
+  return d.toLocaleDateString('it-IT', { day:'numeric', month:'long', year:'numeric' });
+}
+
+function matchesTappa(title, tappa) {
+  const t = title.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'');
+  return tappa.keywords.some(k => t.includes(k));
+}
+
+function getVideoId(link) {
+  const m = link.match(/v=([^&]+)/);
+  if (m) return m[1];
+  const m2 = link.match(/youtu\.be\/([^?]+)/);
+  return m2 ? m2[1] : null;
+}
+
+async function loadVideos() {
+  const rssUrl = 'https://www.youtube.com/feeds/videos.xml?channel_id=' + CHANNEL_ID;
+  const proxyUrl = 'https://api.allorigins.win/get?url=' + encodeURIComponent(rssUrl);
+
+  let videos = [];
+  try {
+    const r = await fetch(proxyUrl);
+    const data = await r.json();
+    const parser = new DOMParser();
+    const xml = parser.parseFromString(data.contents, 'text/xml');
+    const entries = xml.querySelectorAll('entry');
+
+    entries.forEach(entry => {
+      const title   = entry.querySelector('title')?.textContent || '';
+      const link    = entry.querySelector('link')?.getAttribute('href') || '';
+      const pub     = entry.querySelector('published')?.textContent || '';
+      const videoId = entry.querySelector('videoId')?.textContent || getVideoId(link);
+      if (videoId) {
+        videos.push({ title, link, pub, videoId });
+      }
+    });
+  } catch(e) {
+    document.getElementById('page-content').innerHTML =
+      '<div class="error">Errore nel caricamento dei video. Riprova tra qualche minuto.</div>';
+    return;
+  }
+
+  renderPage(videos);
+}
+
+function renderPage(videos) {
+  // Assegna ogni video alla prima tappa che matcha per keyword
+  // Se non matcha nessuna keyword, va in "Altri"
+  const assigned = new Set();
+  const tappeVideos = TAPPE.map((tappa, ti) => {
+    const vids = videos.filter((v, vi) => {
+      if (assigned.has(vi)) return false;
+      if (matchesTappa(v.title, tappa)) {
+        assigned.add(vi);
+        return true;
+      }
+      return false;
+    });
+    return { ...tappa, videos: vids };
+  });
+
+  // Video non assegnati a nessuna tappa (cronologici)
+  const restanti = videos.filter((_, vi) => !assigned.has(vi));
+
+  // Render nav tappe
+  const navHtml = tappeVideos
+    .filter((t,i) => i < TAPPE.length - 1) // escludi "Altri Ritiri" dal nav
+    .map((t, i) =>
+      '<button class="tappa-btn" onclick="scrollToTappa(' + i + ')" id="nav-' + i + '">'
+      + 'Tappa ' + (i+1) + ' — ' + t.nome + '</button>'
+    ).join('');
+  document.getElementById('tappe-nav').innerHTML = navHtml;
+
+  // Render sezioni
+  let html = '';
+
+  tappeVideos.forEach((tappa, i) => {
+    if (i === TAPPE.length - 1 && tappa.videos.length === 0) return; // skip "Altri" se vuoto
+
+    html += '<div class="tappa-section" id="tappa-' + i + '">';
+    html += '<div class="tappa-header">';
+    html += '<span class="tappa-num">Tappa ' + (i+1) + '</span>';
+    html += '<span class="tappa-nome">' + tappa.nome + '</span>';
+    if (tappa.squadre) html += '<span class="tappa-date">' + tappa.squadre + '</span>';
+    if (tappa.videos.length > 0)
+      html += '<span class="tappa-count">' + tappa.videos.length + ' video</span>';
+    html += '</div>';
+
+    if (tappa.videos.length === 0) {
+      html += '<div class="tappa-empty">Nessun video ancora — in arrivo!</div>';
+    } else {
+      html += '<div class="video-grid">';
+      tappa.videos.forEach(v => {
+        const thumb = 'https://img.youtube.com/vi/' + v.videoId + '/mqdefault.jpg';
+        html += '<a class="video-card" href="' + v.link + '" target="_blank">'
+          + '<img class="video-thumb" src="' + thumb + '" alt="' + v.title + '" loading="lazy">'
+          + '<div class="video-info">'
+          + '<div class="video-title">' + v.title + '</div>'
+          + '<div class="video-date">' + formatDate(v.pub) + '</div>'
+          + '</div></a>';
+      });
+      html += '</div>';
+    }
+    html += '</div>';
+  });
+
+  // Video non categorizzati
+  if (restanti.length > 0) {
+    html += '<div class="tappa-section">';
+    html += '<div class="altri-header">Tutti i video</div>';
+    html += '<div class="video-grid">';
+    restanti.forEach(v => {
+      const thumb = 'https://img.youtube.com/vi/' + v.videoId + '/mqdefault.jpg';
+      html += '<a class="video-card" href="' + v.link + '" target="_blank">'
+        + '<img class="video-thumb" src="' + thumb + '" alt="' + v.title + '" loading="lazy">'
+        + '<div class="video-info">'
+        + '<div class="video-title">' + v.title + '</div>'
+        + '<div class="video-date">' + formatDate(v.pub) + '</div>'
+        + '</div></a>';
+    });
+    html += '</div></div>';
+  }
+
+  document.getElementById('page-content').innerHTML = html || '<div class="loader">Nessun video trovato.</div>';
+}
+
+function scrollToTappa(i) {
+  const el = document.getElementById('tappa-' + i);
+  if (el) el.scrollIntoView({ behavior:'smooth', block:'start' });
+}
+
+loadVideos();
+</script>
+</body>
+</html>
