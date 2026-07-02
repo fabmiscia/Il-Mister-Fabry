@@ -137,6 +137,33 @@ body { background:#0a0a0a; font-family:'Montserrat',sans-serif; min-height:100vh
 
 .loader { text-align:center; padding:60px 0; color:#333; font-size:11px; letter-spacing:3px; text-transform:uppercase; }
 
+/* ── IFRAME VIEW ── */
+#view-iframe {
+  display:none;
+  position:fixed; inset:0; z-index:100;
+  flex-direction:column;
+  background:#0a0a0a;
+}
+#view-iframe .iframe-bar {
+  display:flex; align-items:center; gap:14px;
+  padding:10px 20px;
+  background:#111; border-bottom:1px solid #1a1a1a;
+  flex-shrink:0;
+}
+#view-iframe .iframe-bar button {
+  background:none; border:none; color:#2DB84A;
+  font-family:'Montserrat',sans-serif; font-size:12px; font-weight:700;
+  letter-spacing:1px; cursor:pointer; text-transform:uppercase; padding:0;
+}
+#view-iframe .iframe-bar button:hover { color:#fff; }
+#view-iframe .iframe-bar .iframe-title {
+  color:#555; font-size:12px; font-weight:600;
+  letter-spacing:1px; text-transform:uppercase;
+}
+#scheda-iframe {
+  flex:1; border:none; width:100%; height:100%;
+}
+
 @media(max-width:700px){
   .squadre-grid, .giocatori-grid { grid-template-columns: 1fr 1fr; gap:12px; }
 }
@@ -163,6 +190,15 @@ body { background:#0a0a0a; font-family:'Montserrat',sans-serif; min-height:100vh
 
 <div class="page" id="page-content">
   <div class="loader">Caricamento squadre…</div>
+</div>
+
+<!-- Scheda giocatore inline -->
+<div id="view-iframe">
+  <div class="iframe-bar">
+    <button onclick="chiudiScheda()">← Torna alla lista</button>
+    <span class="iframe-title" id="iframe-title"></span>
+  </div>
+  <iframe id="scheda-iframe" src="about:blank" allowfullscreen></iframe>
 </div>
 
 <script>
@@ -269,11 +305,11 @@ function openSquadra(squadra) {
   const titleHTML = '<span>' + words[0] + '</span>' + (words.length > 1 ? ' ' + words.slice(1).join(' ') : '');
 
   const cards = giocatori.map(g =>
-    '<a class="giocatore-card" style="--tc:' + info.color + '" href="' + BASE_URL + encodeURIComponent(g.file) + '" target="_blank">'
+    '<div class="giocatore-card" style="--tc:' + info.color + '" onclick="apriScheda(\'' + encodeURIComponent(g.file) + '\',\'' + g.giocatore.replace(/'/g,"\\'") + '\')">'
     + '<div class="giocatore-nome">' + g.giocatore + '</div>'
     + '<div class="giocatore-sub">→ ' + squadra + '</div>'
     + '<div class="giocatore-arrow">Apri scheda →</div>'
-    + '</a>'
+    + '</div>'
   ).join('');
 
   document.getElementById('page-content').innerHTML =
@@ -287,6 +323,20 @@ function openSquadra(squadra) {
 }
 
 function tornaSquadre() { renderSquadre(); }
+
+function apriScheda(encodedFile, nomeGiocatore) {
+  const url = BASE_URL + encodedFile;
+  document.getElementById('iframe-title').textContent = nomeGiocatore;
+  document.getElementById('scheda-iframe').src = url;
+  document.getElementById('view-iframe').style.display = 'flex';
+  document.body.style.overflow = 'hidden';
+}
+
+function chiudiScheda() {
+  document.getElementById('view-iframe').style.display = 'none';
+  document.getElementById('scheda-iframe').src = 'about:blank';
+  document.body.style.overflow = '';
+}
 
 loadFiles();
 </script>
