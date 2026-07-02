@@ -138,31 +138,23 @@ body { background:#0a0a0a; font-family:'Montserrat',sans-serif; color:#fff; min-
 
 <script>
 // ── Configurazione tappe (ordine cronologico) ──────────────────────────────
+// dateRange: [dal, al] — i video pubblicati in questo periodo vanno in questa tappa
 const TAPPE = [
   {
     nome: 'Pinzolo',
-    keywords: ['pinzolo'],
-    dateRange: ['2026-07-01', '2026-07-26'],
+    dateRange: ['2026-07-01', '2026-07-10'],
     squadre: 'Torino, Parma'
   },
   {
     nome: 'Brunico',
-    keywords: ['brunico', 'riscone'],
-    dateRange: ['2026-07-05', '2026-08-05'],
+    dateRange: ['2026-07-11', '2026-07-20'],
     squadre: ''
   },
   {
     nome: 'Ronzo di Cador',
-    keywords: ['ronzo', 'cador', 'ronzone'],
-    dateRange: ['2026-07-10', '2026-08-10'],
+    dateRange: ['2026-07-21', '2026-07-31'],
     squadre: ''
   },
-  {
-    nome: 'Altri Ritiri',
-    keywords: ['ritiro', 'precampionato', 'amichevole'],
-    dateRange: ['2026-07-01', '2026-09-01'],
-    squadre: ''
-  }
 ];
 
 const CHANNEL_ID = 'UCuUdaz_njw3-fmeY-Xlv2jw';
@@ -172,9 +164,11 @@ function formatDate(iso) {
   return d.toLocaleDateString('it-IT', { day:'numeric', month:'long', year:'numeric' });
 }
 
-function matchesTappa(title, tappa) {
-  const t = title.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'');
-  return tappa.keywords.some(k => t.includes(k));
+function matchesTappa(pubDate, tappa) {
+  const d    = new Date(pubDate);
+  const from = new Date(tappa.dateRange[0]);
+  const to   = new Date(tappa.dateRange[1] + 'T23:59:59');
+  return d >= from && d <= to;
 }
 
 function getVideoId(link) {
@@ -221,7 +215,7 @@ function renderPage(videos) {
   const tappeVideos = TAPPE.map((tappa, ti) => {
     const vids = videos.filter((v, vi) => {
       if (assigned.has(vi)) return false;
-      if (matchesTappa(v.title, tappa)) {
+      if (matchesTappa(v.pub, tappa)) {
         assigned.add(vi);
         return true;
       }
@@ -235,7 +229,6 @@ function renderPage(videos) {
 
   // Render nav tappe
   const navHtml = tappeVideos
-    .filter((t,i) => i < TAPPE.length - 1) // escludi "Altri Ritiri" dal nav
     .map((t, i) =>
       '<button class="tappa-btn" onclick="scrollToTappa(' + i + ')" id="nav-' + i + '">'
       + 'Tappa ' + (i+1) + ' — ' + t.nome + '</button>'
