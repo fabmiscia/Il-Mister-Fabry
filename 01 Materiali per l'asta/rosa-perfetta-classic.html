@@ -508,65 +508,6 @@ async function esportaPNG() {
   btn.textContent = '📸 Esporta PNG';
 }
 
-// ── Esporta su GitHub ──
-const GH_REPO = 'fabmiscia/Il-Mister-Fabry';
-const GH_FILE = '01 Materiali per l\'asta/rosa-perfetta-classic.html';
-
-async function esportaGitHub() {
-  const btn = document.querySelector('.btn-gh');
-  let token = localStorage.getItem('gh-token');
-  if (!token) {
-    token = prompt('Inserisci il tuo GitHub Personal Access Token:');
-    if (!token) return;
-    localStorage.setItem('gh-token', token);
-  }
-
-  btn.textContent = '⏳ Caricamento…';
-  btn.disabled = true;
-
-  try {
-    const headers = {
-      Authorization: `token ${token}`,
-      'Content-Type': 'application/json',
-    };
-
-    // Sincronizza tutti i valori input nell'attributo HTML prima di esportare
-    document.querySelectorAll('input').forEach(inp => inp.setAttribute('value', inp.value));
-
-    const encodedPath = GH_FILE.split('/').map(s => encodeURIComponent(s)).join('/');
-    const getResp = await fetch(`https://api.github.com/repos/${GH_REPO}/contents/${encodedPath}`, { headers });
-
-    if (!getResp.ok && getResp.status === 401) {
-      localStorage.removeItem('gh-token');
-      throw new Error('Token non valido. Riprova.');
-    }
-
-    let sha = '';
-    if (getResp.ok) {
-      const fileData = await getResp.json();
-      sha = fileData.sha;
-    }
-
-    const source = '<!DOCTYPE html>\n' + document.documentElement.outerHTML;
-    const content = btoa(unescape(encodeURIComponent(source)));
-
-    const body = { message: 'Aggiorna Rosa Ideale Classic', content };
-    if (sha) body.sha = sha;
-
-    const putResp = await fetch(`https://api.github.com/repos/${GH_REPO}/contents/${encodedPath}`, {
-      method: 'PUT', headers, body: JSON.stringify(body),
-    });
-
-    if (!putResp.ok) throw new Error(`Errore ${putResp.status}`);
-    btn.textContent = '✅ Pubblicato!';
-    setTimeout(() => { btn.textContent = '🚀 Pubblica su GitHub'; btn.disabled = false; }, 3000);
-  } catch (e) {
-    alert('Errore: ' + e.message);
-    btn.textContent = '🚀 Pubblica su GitHub';
-    btn.disabled = false;
-  }
-}
-
 // Init
 ricalcola();
 </script>
