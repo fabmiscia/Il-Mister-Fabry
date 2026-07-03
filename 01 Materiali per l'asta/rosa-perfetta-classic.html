@@ -438,6 +438,7 @@ function ricalcola() {
 
 // ── Salva in locale ──
 async function salvaLocale() {
+  document.querySelectorAll('input').forEach(inp => inp.setAttribute('value', inp.value));
   const html = '<!DOCTYPE html>\n' + document.documentElement.outerHTML;
   const blob = new Blob([html], {type:'text/html'});
   const fname = location.pathname.split('/').pop() || 'rosa-perfetta-classic.html';
@@ -496,6 +497,9 @@ async function esportaGitHub() {
       Authorization: `token ${token}`,
       'Content-Type': 'application/json',
     };
+
+    // Sincronizza tutti i valori input nell'attributo HTML prima di esportare
+    document.querySelectorAll('input').forEach(inp => inp.setAttribute('value', inp.value));
 
     const encodedPath = GH_FILE.split('/').map(s => encodeURIComponent(s)).join('/');
     const getResp = await fetch(`https://api.github.com/repos/${GH_REPO}/contents/${encodedPath}`, { headers });
