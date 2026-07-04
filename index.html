@@ -126,7 +126,8 @@ a.card .sub { font-size:11px; font-weight:400; color:#2DB84A; letter-spacing:2px
         <div class="card-wrap"><a class="card" href="01 Materiali per l'asta/fantacalcio-budget-asta.html"><span class="icon">&#x1F4B0;</span><span>Budget Asta</span><span class="sub">Crediti &middot; Calcolo &middot; Strategia</span></a><div class="card-date">aggiornato il 24 giugno 2026</div></div>
         
         <div class="card-wrap"><a class="card" href="01 Materiali per l'asta/rosa-perfetta-classic.html"><span class="icon">&#x1F4CB;</span><span>Rosa Ideale</span><span class="sub">25 slot &middot; Budget % &middot; 10 squadre</span></a><div class="card-date">aggiornato il 3 luglio 2026</div></div>
-        <div class="card-wrap"><a class="card" href="01 Materiali per l'asta/simulazioni-asta.html"><span class="icon">&#x1F3B2;</span><span>Simulazioni Asta</span><span class="sub">Scenari &middot; Esempi pratici</span></a><div class="card-date">aggiornato il 4 luglio 2026</div></div>
+        <div class="card-wrap"><a class="card" href="01 Materiali per l'asta/strategia-asta-guida.html"><span class="icon">&#x1F3AF;</span><span>Strategia d'Asta</span><span class="sub">3 strategie &middot; Tipologie &middot; 10 consigli</span></a><div class="card-date">aggiornato il 4 luglio 2026</div></div>
+        <div class="card-wrap"><a class="card" href="strategia-asta.html"><span class="icon">&#x1F3B2;</span><span>Simulazioni Asta</span><span class="sub">Scenari &middot; Simulazioni pratiche</span></a><div class="card-date">aggiornato il 4 luglio 2026</div></div>
         <div class="card-wrap"><a class="card" href="Strategie asta/index.html"><span class="icon">&#x2694;&#xFE0F;</span><span>Strategie Asta</span><span class="sub">Le mie simulazioni d'asta</span></a><div class="card-date">        </div></div>
       </div>
     </div>
@@ -306,6 +307,19 @@ function aggiornaApp() {
     }
   });
 }
+</script>
+
+<div id="pwa-nav" style="display:none;position:fixed;bottom:72px;left:50%;transform:translateX(-50%);z-index:8000;background:rgba(17,17,17,.92);border:1px solid #2a2a2a;border-radius:40px;padding:6px 10px;display:flex;gap:8px;backdrop-filter:blur(8px)">
+  <button onclick="history.back()" title="Indietro" style="background:none;border:none;color:#fff;font-size:18px;width:40px;height:40px;border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:.15s" onmouseover="this.style.background='#222'" onmouseout="this.style.background='none'">&#x2190;</button>
+  <button onclick="history.forward()" title="Avanti" style="background:none;border:none;color:#fff;font-size:18px;width:40px;height:40px;border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:.15s" onmouseover="this.style.background='#222'" onmouseout="this.style.background='none'">&#x2192;</button>
+</div>
+<script>
+(function(){
+  var nav = document.getElementById('pwa-nav');
+  if(window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone){
+    nav.style.display = 'flex';
+  }
+})();
 </script>
 </body>
 </html>
