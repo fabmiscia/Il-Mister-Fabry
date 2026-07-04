@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Strategia d'Asta al Fantacalcio | Il Mister Fabry</title>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@600;700&family=Montserrat:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+body { background:#0a0a0a; font-family:'Montserrat',sans-serif; color:#fff; min-height:100vh; }
+
+.header {
+  background:linear-gradient(180deg,#111 0%,#0a0a0a 100%);
+  border-bottom:2px solid #b0ff00;
+  padding:24px 32px;
+  display:flex; align-items:center; justify-content:space-between; gap:16px; flex-wrap:wrap;
+}
+.header-left h1 { font-family:'Oswald',sans-serif; font-size:28px; letter-spacing:5px; text-transform:uppercase; }
+.header-left h1 span { color:#b0ff00; }
+.header-left p { font-size:10px; color:#fff; letter-spacing:3px; text-transform:uppercase; margin-top:4px; }
+.btn-png { padding:9px 18px; border:none; border-radius:6px; background:#b0ff00; color:#000;
+  font-family:'Montserrat',sans-serif; font-size:11px; font-weight:700; letter-spacing:1.5px;
+  text-transform:uppercase; cursor:pointer; transition:all .2s; }
+.btn-png:hover { background:#c8ff33; }
+
+.page { max-width:1200px; margin:0 auto; padding:40px 32px 60px; }
+
+.sez-title {
+  font-family:'Oswald',sans-serif; font-size:11px; letter-spacing:4px;
+  text-transform:uppercase; color:#b0ff00;
+  border-bottom:1px solid #1e1e1e; padding-bottom:10px; margin-bottom:28px; margin-top:56px;
+}
+.sez-title:first-child { margin-top:0; }
+
+/* ── STRATEGIE ── */
+.strategie-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:20px; }
+.strat-card {
+  background:#111; border:1px solid #1e1e1e; border-top:3px solid var(--col);
+  border-radius:10px; padding:24px 20px;
+}
+.strat-icon { font-size:32px; margin-bottom:12px; }
+.strat-nome { font-family:'Oswald',sans-serif; font-size:18px; letter-spacing:3px; text-transform:uppercase; color:var(--col); margin-bottom:8px; }
+.strat-desc { font-size:12px; color:#fff; line-height:1.7; margin-bottom:16px; }
+.strat-meta { display:flex; flex-direction:column; gap:8px; }
+.strat-row { display:flex; gap:8px; align-items:flex-start; }
+.strat-badge { flex-shrink:0; font-size:9px; font-weight:800; letter-spacing:1.5px; text-transform:uppercase; padding:3px 8px; border-radius:3px; margin-top:1px; }
+.badge-pro { background:#1a3a1a; color:#2DB84A; border:1px solid #2DB84A; }
+.badge-con { background:#3a1a1a; color:#e8003d; border:1px solid #e8003d; }
+.strat-text { font-size:11px; color:#fff; line-height:1.5; }
+.col-anticipo   { --col:#f08040; }
+.col-attendista { --col:#4a9eff; }
+.col-opportunista { --col:#b0ff00; }
+
+/* ── MATRICE ── */
+.matrix-wrap { overflow-x:auto; }
+.matrix { width:100%; border-collapse:collapse; min-width:600px; }
+.matrix th, .matrix td { padding:14px 18px; text-align:left; border-bottom:1px solid #1a1a1a; }
+.matrix thead tr { background:#111; }
+.matrix thead th { font-family:'Oswald',sans-serif; font-size:12px; letter-spacing:2px; text-transform:uppercase; color:#b0ff00; border-bottom:2px solid #b0ff00; }
+.matrix thead th:first-child { color:#fff; }
+.matrix tbody tr:hover { background:#0d0d0d; }
+.matrix tbody td:first-child { font-family:'Oswald',sans-serif; font-size:14px; letter-spacing:1px; text-transform:uppercase; color:#fff; }
+.matrix tbody td { font-size:11px; color:#fff; line-height:1.5; vertical-align:top; }
+.pill { display:inline-block; padding:3px 10px; border-radius:20px; font-size:9px; font-weight:800; letter-spacing:1px; text-transform:uppercase; margin-bottom:4px; }
+.pill-top { background:#1a3a0a; color:#b0ff00; border:1px solid #b0ff00; }
+.pill-ok  { background:#1a2a3a; color:#4a9eff; border:1px solid #4a9eff; }
+.pill-no  { background:#2a1a1a; color:#e8003d; border:1px solid #e8003d; }
+.pill-mid { background:#2a1f0a; color:#f08040; border:1px solid #f08040; }
+
+/* ── DOMANDA E OFFERTA ── */
+.do-intro { font-size:12px; color:#fff; line-height:1.8; margin-bottom:28px; padding:16px 20px; background:#111; border-left:3px solid #b0ff00; border-radius:0 8px 8px 0; }
+.do-intro strong { color:#b0ff00; }
+
+.do-table-wrap { overflow-x:auto; margin-bottom:28px; }
+.do-table { width:100%; border-collapse:collapse; min-width:700px; }
+.do-table th, .do-table td { padding:12px 16px; text-align:center; border-bottom:1px solid #1a1a1a; }
+.do-table thead tr { background:#111; }
+.do-table thead th { font-family:'Oswald',sans-serif; font-size:11px; letter-spacing:2px; text-transform:uppercase; color:#b0ff00; border-bottom:2px solid #b0ff00; }
+.do-table thead th:first-child { text-align:left; color:#fff; }
+.do-table tbody td:first-child { text-align:left; font-family:'Oswald',sans-serif; font-size:13px; letter-spacing:1px; text-transform:uppercase; }
+.do-table tbody td { font-size:11px; color:#fff; }
+.do-table tbody tr:hover { background:#0d0d0d; }
+
+.scarso     { color:#e8003d; font-weight:700; }
+.equilibrato{ color:#f08040; font-weight:700; }
+.abbondante { color:#2DB84A; font-weight:700; }
+.scarcity-pill { display:inline-block; padding:3px 10px; border-radius:20px; font-size:9px; font-weight:800; letter-spacing:1px; }
+.sp-scarso     { background:#2a1a1a; color:#e8003d; border:1px solid #e8003d; }
+.sp-equilibrato{ background:#2a1f0a; color:#f08040; border:1px solid #f08040; }
+.sp-abbondante { background:#1a3a1a; color:#2DB84A; border:1px solid #2DB84A; }
+
+.strat-pill { display:inline-block; padding:3px 10px; border-radius:20px; font-size:9px; font-weight:800; letter-spacing:1px; margin-top:4px; }
+.sp-anticipo   { background:#2a1a0a; color:#f08040; border:1px solid #f08040; }
+.sp-attendista { background:#1a2a3a; color:#4a9eff; border:1px solid #4a9eff; }
+.sp-opport     { background:#1a3a0a; color:#b0ff00; border:1px solid #b0ff00; }
+
+/* Ancoraggio box */
+.anchor-box {
+  background:#111; border:1px solid #1e1e1e; border-left:3px solid #f08040;
+  border-radius:0 10px 10px 0; padding:20px 24px; margin-bottom:28px;
+}
+.anchor-title { font-family:'Oswald',sans-serif; font-size:14px; letter-spacing:2px; text-transform:uppercase; color:#f08040; margin-bottom:10px; }
+.anchor-text { font-size:12px; color:#fff; line-height:1.8; }
+.anchor-text strong { color:#f08040; }
+
+/* ── TIPS ── */
+.tips-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:20px; }
+.tips-card { background:#111; border:1px solid #1e1e1e; border-radius:10px; overflow:hidden; }
+.tips-header { background:var(--tc); padding:14px 20px; display:flex; align-items:center; gap:10px; }
+.tips-header-icon { font-size:20px; }
+.tips-header-title { font-family:'Oswald',sans-serif; font-size:14px; letter-spacing:2px; text-transform:uppercase; color:#000; }
+.tips-body { padding:16px 20px; }
+.tip-item { display:flex; gap:10px; align-items:flex-start; padding:8px 0; border-bottom:1px solid #1a1a1a; }
+.tip-item:last-child { border-bottom:none; }
+.tip-num {
+  flex-shrink:0; width:20px; height:20px; border-radius:50%;
+  background:var(--tc); color:#000; font-size:9px; font-weight:800;
+  display:flex; align-items:center; justify-content:center; margin-top:1px;
+}
+.tip-text { font-size:11px; color:#fff; line-height:1.5; }
+.tip-text strong { color:var(--tc); }
+
+.tc-chiamata { --tc:#f08040; }
+.tc-random   { --tc:#4a9eff; }
+.tc-draft    { --tc:#b0ff00; }
+
+/* ── BRAND ── */
+.brand { font-size:10px; color:#fff; letter-spacing:2px; text-transform:uppercase; text-align:center; padding:24px 0 12px; }
+
+/* ── RESPONSIVE ── */
+@media (max-width:1024px) {
+  .strategie-grid { grid-template-columns:1fr 1fr; }
+  .tips-grid { grid-template-columns:1fr 1fr; }
+}
+@media (max-width:768px) {
+  .strategie-grid { grid-template-columns:1fr; }
+  .tips-grid { grid-template-columns:1fr; }
+  .page { padding:20px 14px 40px; }
+  .header { padding:14px 16px; flex-direction:column; align-items:flex-start; gap:12px; }
+  .header-left h1 { font-size:16px; letter-spacing:3px; }
+  .header-left p { font-size:9px; }
+  .sez-title { margin-top:36px; font-size:10px; }
+  .strat-card { padding:18px 16px; }
+  .strat-nome { font-size:16px; }
+  .anchor-box { padding:14px 16px; }
+  .anchor-title { font-size:12px; }
+  .anchor-text { font-size:11px; }
+  .do-intro { font-size:11px; padding:12px 14px; }
+  .tips-card .tips-body { padding:12px 14px; }
+  .tip-text { font-size:11px; }
+  .matrix th, .matrix td { padding:10px 12px; font-size:11px; }
+  .do-table th, .do-table td { padding:8px 10px; font-size:10px; }
+}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-left">
+    <h1>STRATEGIA <span>D'ASTA</span> — Fantacalcio</h1>
+    <p>Quale strategia in base al tipo di asta · Domanda e offerta · Il Mister Fabry</p>
+  </div>
+  <button class="btn-png" onclick="esportaPNG()">📸 Esporta PNG</button>
+</div>
+
+<div class="page" id="contenuto">
+
+  <!-- LE 3 STRATEGIE -->
+  <div class="sez-title">● Le 3 strategie d'asta</div>
+  <div class="strategie-grid">
+    <div class="strat-card col-anticipo">
+      <div class="strat-icon">⚔️</div>
+      <div class="strat-nome">Anticipo / Possesso</div>
+      <div class="strat-desc">Vuoi quei giocatori a tutti i costi. Chiami tu, detti il prezzo, ti esponi anche oltre il budget previsto pur di portarli a casa.</div>
+      <div class="strat-meta">
+        <div class="strat-row"><span class="strat-badge badge-pro">Pro</span><span class="strat-text">Porti a casa i tuoi veri obiettivi senza rischiare che li prendano altri</span></div>
+        <div class="strat-row"><span class="strat-badge badge-pro">Pro</span><span class="strat-text">Ideale per i ruoli scarsi: attaccanti e portieri in leghe numerose</span></div>
+        <div class="strat-row"><span class="strat-badge badge-con">Contro</span><span class="strat-text">Rischi di compromettere il budget per il resto dell'asta</span></div>
+        <div class="strat-row"><span class="strat-badge badge-con">Contro</span><span class="strat-text">Gli avversari rilanciano apposta per farti spendere di più</span></div>
+      </div>
+    </div>
+    <div class="strat-card col-attendista">
+      <div class="strat-icon">⏳</div>
+      <div class="strat-nome">Attendista</div>
+      <div class="strat-desc">Stai zitto, accumuli crediti, osservi. Quando gli altri sono a corto di budget, colpisci e prendi giocatori di valore a prezzi bassi.</div>
+      <div class="strat-meta">
+        <div class="strat-row"><span class="strat-badge badge-pro">Pro</span><span class="strat-text">Budget sempre sotto controllo, nessuno spreco</span></div>
+        <div class="strat-row"><span class="strat-badge badge-pro">Pro</span><span class="strat-text">Ideale per i ruoli abbondanti: difensori e centrocampisti in leghe piccole</span></div>
+        <div class="strat-row"><span class="strat-badge badge-con">Contro</span><span class="strat-text">Attenzione: se aspetti troppo su ruoli scarsi, non trovi più nulla di buono</span></div>
+        <div class="strat-row"><span class="strat-badge badge-con">Contro</span><span class="strat-text">In leghe con Mister esperti i prezzi non scendono mai abbastanza</span></div>
+      </div>
+    </div>
+    <div class="strat-card col-opportunista">
+      <div class="strat-icon">🎯</div>
+      <div class="strat-nome">Opportunista</div>
+      <div class="strat-desc">Nessun piano fisso. Leggi l'asta in tempo reale: il giocatore giusto, al momento giusto, al prezzo giusto. La più difficile da eseguire.</div>
+      <div class="strat-meta">
+        <div class="strat-row"><span class="strat-badge badge-pro">Pro</span><span class="strat-text">Massima flessibilità: ti adatti a qualsiasi situazione</span></div>
+        <div class="strat-row"><span class="strat-badge badge-pro">Pro</span><span class="strat-text">Sfrutti gli errori degli avversari in tempo reale</span></div>
+        <div class="strat-row"><span class="strat-badge badge-con">Contro</span><span class="strat-text">Richiede grande esperienza, conoscenza dei prezzi e sangue freddo</span></div>
+        <div class="strat-row"><span class="strat-badge badge-con">Contro</span><span class="strat-text">Senza disciplina diventa improvvisazione pura</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MATRICE -->
+  <div class="sez-title">● Quale strategia per ogni tipo di asta</div>
+  <div class="matrix-wrap">
+    <table class="matrix">
+      <thead>
+        <tr>
+          <th>Tipo di asta</th>
+          <th>⚔️ Anticipo</th>
+          <th>⏳ Attendista</th>
+          <th>🎯 Opportunista</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Classic<br><span style="font-size:10px;color:#fff;font-family:Montserrat,sans-serif;text-transform:none;letter-spacing:0;font-weight:400">Asta a chiamata libera</span></td>
+          <td><span class="pill pill-ok">Funziona</span><br>Chiami tu i giocatori che vuoi. Usa l'anticipo specialmente sui ruoli scarsi in relazione alla dimensione della tua lega.</td>
+          <td><span class="pill pill-ok">Funziona</span><br>Aspetti che gli altri chiamino, osservi i budget e colpisci. Funziona bene sui ruoli abbondanti.</td>
+          <td><span class="pill pill-top">Ideale</span><br>Puoi controllare sia quando chiami sia quando rilanci. La strategia che sfrutta meglio questa formula.</td>
+        </tr>
+        <tr>
+          <td>Classic / Mantra<br><span style="font-size:10px;color:#fff;font-family:Montserrat,sans-serif;text-transform:none;letter-spacing:0;font-weight:400">Asta random</span></td>
+          <td><span class="pill pill-no">Non applicabile</span><br>Non puoi scegliere chi chiamare. L'unica forma di anticipo è rialzare subito quando esce il giocatore che vuoi.</td>
+          <td><span class="pill pill-ok">Funziona</span><br>Definisci un tetto massimo per ogni giocatore prima dell'asta. Ma attenzione: monitora sempre quanti top sono già usciti per ruolo.</td>
+          <td><span class="pill pill-top">Ideale</span><br>Decidi in tempo reale in base ai giocatori rimasti, ai crediti tuoi e degli avversari. Serve preparazione totale.</td>
+        </tr>
+        <tr>
+          <td>Draft<br><span style="font-size:10px;color:#fff;font-family:Montserrat,sans-serif;text-transform:none;letter-spacing:0;font-weight:400">Scelta a turno snake</span></td>
+          <td><span class="pill pill-mid">Adattata</span><br>Diventa: punta al Best Player Available nel tuo turno, senza farti condizionare dai ruoli nei giri alti.</td>
+          <td><span class="pill pill-mid">Adattata</span><br>Lascia che gli altri prendano i top pick nelle prime scelte, poi sfrutta i giocatori sottovalutati nei giri centrali.</td>
+          <td><span class="pill pill-top">Ideale</span><br>Conosci le tendenze degli altri drafter: sai chi prenderanno prima di te e costruisci la tua rosa di conseguenza.</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- DOMANDA E OFFERTA -->
+  <div class="sez-title">● Domanda e offerta: scarsità per ruolo e numero di partecipanti</div>
+
+  <div class="do-intro">
+    Il concetto più sottovalutato al Fantacalcio: <strong>non tutti i ruoli hanno la stessa disponibilità</strong>. In una lega da 12 squadre servono 36 portieri, 96 difensori, 96 centrocampisti e 72 attaccanti. I giocatori di qualità non sono infiniti: capire dove c'è scarsità ti dice <strong>dove usare l'anticipo e dove puoi permetterti di aspettare</strong>.
+  </div>
+
+  <div class="do-table-wrap">
+    <table class="do-table">
+      <thead>
+        <tr>
+          <th>Ruolo</th>
+          <th>Lega da 8</th>
+          <th>Lega da 10</th>
+          <th>Lega da 12</th>
+          <th>Strategia consigliata</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>🧤 Portieri</td>
+          <td>
+            <span class="scarcity-pill sp-abbondante">Abbondante</span><br>
+            <span style="font-size:10px">24 portieri richiesti — grande scelta, puoi aspettare</span>
+          </td>
+          <td>
+            <span class="scarcity-pill sp-equilibrato">Equilibrato</span><br>
+            <span style="font-size:10px">30 portieri — i top costano, ma si trova alternativa</span>
+          </td>
+          <td>
+            <span class="scarcity-pill sp-scarso">Scarso</span><br>
+            <span style="font-size:10px">36 portieri — i titolari delle big finiscono subito</span>
+          </td>
+          <td>
+            <span class="strat-pill sp-attendista">Attendista</span> a 8<br>
+            <span class="strat-pill sp-anticipo">Anticipo</span> a 12
+          </td>
+        </tr>
+        <tr>
+          <td>🛡️ Difensori</td>
+          <td>
+            <span class="scarcity-pill sp-abbondante">Abbondante</span><br>
+            <span style="font-size:10px">64 difensori — ampia scelta, molti profili disponibili</span>
+          </td>
+          <td>
+            <span class="scarcity-pill sp-equilibrato">Equilibrato</span><br>
+            <span style="font-size:10px">80 difensori — i bonus-man scarseggiano</span>
+          </td>
+          <td>
+            <span class="scarcity-pill sp-equilibrato">Equilibrato</span><br>
+            <span style="font-size:10px">96 difensori — i top da assist/gol diventano ambiti</span>
+          </td>
+          <td>
+            <span class="strat-pill sp-attendista">Attendista</span> a 8-10<br>
+            <span class="strat-pill sp-opport">Opportunista</span> a 12
+          </td>
+        </tr>
+        <tr>
+          <td>⚙️ Centrocampisti</td>
+          <td>
+            <span class="scarcity-pill sp-abbondante">Abbondante</span><br>
+            <span style="font-size:10px">64 centrocampisti — il ruolo più abbondante in Serie A</span>
+          </td>
+          <td>
+            <span class="scarcity-pill sp-abbondante">Abbondante</span><br>
+            <span style="font-size:10px">80 centrocampisti — ancora ampia scelta di qualità</span>
+          </td>
+          <td>
+            <span class="scarcity-pill sp-equilibrato">Equilibrato</span><br>
+            <span style="font-size:10px">96 centrocampisti — i top da gol diventano contesi</span>
+          </td>
+          <td>
+            <span class="strat-pill sp-attendista">Attendista</span> a 8-10<br>
+            <span class="strat-pill sp-opport">Opportunista</span> a 12
+          </td>
+        </tr>
+        <tr>
+          <td>⚡ Attaccanti</td>
+          <td>
+            <span class="scarcity-pill sp-equilibrato">Equilibrato</span><br>
+            <span style="font-size:10px">48 attaccanti — i rigoristi e i top si pagano sempre</span>
+          </td>
+          <td>
+            <span class="scarcity-pill sp-scarso">Scarso</span><br>
+            <span style="font-size:10px">60 attaccanti — pochi bomber di qualità, guerra sui prezzi</span>
+          </td>
+          <td>
+            <span class="scarcity-pill sp-scarso">Scarso</span><br>
+            <span style="font-size:10px">72 attaccanti — ruolo sempre critico, i top finiscono presto</span>
+          </td>
+          <td>
+            <span class="strat-pill sp-anticipo">Anticipo</span> per i top<br>
+            <span class="strat-pill sp-attendista">Attendista</span> per gli altri<br>
+            <span style="font-size:10px;color:#fff">l'anticipo vale solo per i nomi irrinunciabili</span>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- ANCORAGGIO -->
+  <div class="anchor-box">
+    <div class="anchor-title">⚓ Il Prezzo di Ancoraggio</div>
+    <div class="anchor-text">
+      Il <strong>primo giocatore chiamato per ruolo</strong> fissa inconsciamente il prezzo di riferimento per tutto il tavolo. Se il primo attaccante esce a 150 crediti, il secondo — anche se vale oggettivamente meno — difficilmente andrà sotto quella cifra. Anzi, spesso i prezzi continuano a salire perché tutti vogliono recuperare il top che hanno perso. Questo è il <strong>bias dell'ancora</strong>.<br><br>
+      Come sfruttarlo: <strong>chiama tu per primo</strong> un attaccante top al prezzo che ritieni giusto — prima che qualcun altro ancori il tavolo su una cifra più alta. Se sei attendista, aspetta che altri fissino l'ancora su un ruolo abbondante (difensori, centrocampisti) e poi compra sotto quel livello. Sugli attaccanti, invece, difficilmente l'ancora scende: meglio non aspettare troppo.
+    </div>
+  </div>
+
+  <!-- 10 TIPS PER TIPOLOGIA -->
+  <div class="sez-title">● 10 consigli pratici per ogni tipo di asta</div>
+  <div class="tips-grid">
+
+    <!-- CHIAMATA -->
+    <div class="tips-card tc-chiamata">
+      <div class="tips-header" style="background:#f08040">
+        <span class="tips-header-icon">🔔</span>
+        <span class="tips-header-title">Asta a chiamata libera</span>
+      </div>
+      <div class="tips-body">
+        <div class="tip-item"><div class="tip-num">1</div><div class="tip-text">Segna in tempo reale il budget rimanente di ogni avversario: è la tua arma più potente</div></div>
+        <div class="tip-item"><div class="tip-num">2</div><div class="tip-text">Chiama giocatori esca (che non vuoi) per far spendere gli avversari — ma <strong>solo all'inizio</strong>, quando tutti hanno ancora crediti e rilanceranno sicuramente. A fine asta rischi di tenerteli tu</div></div>
+        <div class="tip-item"><div class="tip-num">3</div><div class="tip-text">Non rivelare mai quale giocatore vuoi davvero — aspetta che lo chiami qualcun altro e poi rilancia</div></div>
+        <div class="tip-item"><div class="tip-num">4</div><div class="tip-text">In leghe da 10-12 i top player costano di più: c'è più concorrenza per gli stessi nomi</div></div>
+        <div class="tip-item"><div class="tip-num">5</div><div class="tip-text">Usa l'anticipo sui ruoli scarsi (attaccanti in lega da 12): il primo nome al prezzo base è spesso il migliore affare</div></div>
+        <div class="tip-item"><div class="tip-num">6</div><div class="tip-text">Tieni traccia dei giocatori già acquistati per ruolo: sapere quanti top mancano ancora ti dice quando accelerare</div></div>
+        <div class="tip-item"><div class="tip-num">7</div><div class="tip-text">Il primo giocatore chiamato per ruolo <strong>fissa il prezzo di ancoraggio</strong> del tavolo: decidilo tu se puoi</div></div>
+        <div class="tip-item"><div class="tip-num">8</div><div class="tip-text">Rilancia su giocatori degli altri per svuotare il loro budget — ma fallo <strong>solo all'inizio</strong>, quando sai che la gara è aperta. Tardi, il rischio di tenerti il giocatore è reale</div></div>
+        <div class="tip-item"><div class="tip-num">9</div><div class="tip-text">Tieni sempre un fondo di riserva per l'ultima parte dell'asta: le occasioni migliori spesso arrivano quando gli altri sono a secco</div></div>
+        <div class="tip-item"><div class="tip-num">10</div><div class="tip-text">Il range di spesa è una <strong>guida, non una legge</strong>: se un tuo obiettivo supera il tetto di qualche credito, puoi spingerti e recuperare risparmiando su un altro slot. Rinunciare a un top per 2 crediti di troppo è spesso l'errore più costoso dell'asta</div></div>
+      </div>
+    </div>
+
+    <!-- RANDOM -->
+    <div class="tips-card tc-random">
+      <div class="tips-header" style="background:#4a9eff">
+        <span class="tips-header-icon">🎲</span>
+        <span class="tips-header-title">Asta random</span>
+      </div>
+      <div class="tips-body">
+        <div class="tip-item"><div class="tip-num">1</div><div class="tip-text">Prepara prima dell'asta un <strong>range di spesa per ogni giocatore</strong>: un valore ideale e un tetto massimo. Il tetto è una guida: su un obiettivo vero puoi spingerti qualche credito oltre e recuperare su un altro slot</div></div>
+        <div class="tip-item"><div class="tip-num">2</div><div class="tip-text">Tieni un foglio o app per monitorare <strong>quanti top sono già usciti per ruolo</strong>: se i grandi attaccanti sono quasi finiti, è il momento di alzare il budget sul prossimo</div></div>
+        <div class="tip-item"><div class="tip-num">3</div><div class="tip-text">Osserva i crediti rimanenti di ogni avversario in tempo reale: chi ha ancora tanto budget è il tuo vero concorrente</div></div>
+        <div class="tip-item"><div class="tip-num">4</div><div class="tip-text">Sincronizza sempre tre dati: <strong>giocatori rimasti per ruolo × tuoi crediti rimasti × crediti avversari rimasti</strong>. Questa è la vera asta</div></div>
+        <div class="tip-item"><div class="tip-num">5</div><div class="tip-text">Se sei in ritardo su un ruolo e i giocatori buoni stanno finendo, cambia strategia e rilancia anche oltre il tetto: è meglio pagare 5 crediti in più che restare senza</div></div>
+        <div class="tip-item"><div class="tip-num">6</div><div class="tip-text">Non farti prendere dall'ansia quando il prezzo sale: valuta se è un tuo obiettivo vero — in quel caso puoi superare il tetto e recuperare altrove. Se invece è un'alternativa, lascialo andare senza rimpianti</div></div>
+        <div class="tip-item"><div class="tip-num">7</div><div class="tip-text">Tieni sempre un <strong>fondo di riserva</strong> per i giocatori che escono nell'ultima mezz'ora: l'asta random può riservare sorprese fino alla fine</div></div>
+        <div class="tip-item"><div class="tip-num">8</div><div class="tip-text">Nel Mantra: i ruoli rari (Pc, W, E) si pagano sempre di più — metti in budget questa maggiorazione fin dall'inizio</div></div>
+        <div class="tip-item"><div class="tip-num">9</div><div class="tip-text">Se un avversario ha poco budget rimasto e un ruolo ancora scoperto, può essere costretto ad alzare: sfruttalo rilancendo su quel ruolo</div></div>
+        <div class="tip-item"><div class="tip-num">10</div><div class="tip-text">Non aspettare l'attendista puro su ruoli scarsi: se escono gli ultimi 2-3 attaccanti decenti e hai ancora crediti, prendili anche sopra il limite previsto</div></div>
+      </div>
+    </div>
+
+    <!-- DRAFT -->
+    <div class="tips-card tc-draft">
+      <div class="tips-header" style="background:#b0ff00">
+        <span class="tips-header-icon">📋</span>
+        <span class="tips-header-title">Draft snake</span>
+      </div>
+      <div class="tips-body">
+        <div class="tip-item"><div class="tip-num">1</div><div class="tip-text">Ai primi giri prendi sempre il <strong>Best Player Available</strong>: non pensare ai ruoli, pensa alla qualità</div></div>
+        <div class="tip-item"><div class="tip-num">2</div><div class="tip-text">Studia le tendenze degli altri drafter prima del giorno dell'asta: sai già cosa prenderanno e puoi anticiparti</div></div>
+        <div class="tip-item"><div class="tip-num">3</div><div class="tip-text">I portieri si prendono tardi — non sprecare mai un pick alto per un portiere, nemmeno il migliore</div></div>
+        <div class="tip-item"><div class="tip-num">4</div><div class="tip-text">Con il pick di ritorno (snake) punta il secondo miglior giocatore disponibile nel ruolo dove sei più carente</div></div>
+        <div class="tip-item"><div class="tip-num">5</div><div class="tip-text">Conosci la scarsità per posizione: gli attaccanti di qualità finiscono prima nei giri centrali</div></div>
+        <div class="tip-item"><div class="tip-num">6</div><div class="tip-text">Tieni traccia di quali ruoli stanno prendendo gli avversari: se tutti prendono centrocampisti, aspetta e prendi attaccanti</div></div>
+        <div class="tip-item"><div class="tip-num">7</div><div class="tip-text">Anticipa la carenza: se vedi che in lega mancano ancora tanti difensori da pick, aspetta che calino prima di prenderli</div></div>
+        <div class="tip-item"><div class="tip-num">8</div><div class="tip-text">Nei giri centrali punta su giocatori con alto upside: chi può esplodere vale più di chi è sicuro ma limitato</div></div>
+        <div class="tip-item"><div class="tip-num">9</div><div class="tip-text">Non farti condizionare dai nomi famosi nei giri bassi: un giocatore giovane con titolarità fissa batte un campione a fine carriera</div></div>
+        <div class="tip-item"><div class="tip-num">10</div><div class="tip-text">L'ultimo giro è spesso il più importante: prendi un giocatore con potenziale di sorpresa, non una riserva sicura</div></div>
+      </div>
+    </div>
+
+  </div>
+
+</div>
+
+<div class="brand">IL MISTER FABRY · ilmisterfabry.it</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script>
+async function esportaPNG() {
+  const btn = document.querySelector('.btn-png');
+  btn.textContent = '⏳ Elaborazione…';
+  try {
+    const canvas = await html2canvas(document.getElementById('contenuto'), {
+      backgroundColor:'#0a0a0a', scale:2, useCORS:true
+    });
+    const a = document.createElement('a');
+    a.href = canvas.toDataURL('image/png');
+    a.download = 'strategia-asta-fantacalcio.png'; a.click();
+  } catch(e) { alert('Prova uno screenshot.'); }
+  btn.textContent = '📸 Esporta PNG';
+}
+</script>
+</body>
+</html>
