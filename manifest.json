@@ -2,7 +2,7 @@
   "name": "Lo Spogliatoio — Il Mister Fabry",
   "short_name": "Lo Spogliatoio",
   "description": "Area esclusiva Fantacalcio — Il Mister Fabry",
-  "start_url": "./index.html",
+  "start_url": "./",
   "scope": "./",
   "display": "standalone",
   "background_color": "#0a0a0a",
