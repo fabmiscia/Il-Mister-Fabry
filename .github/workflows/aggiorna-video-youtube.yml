@@ -41,7 +41,7 @@ jobs:
               vid_el  = entry.find('yt:videoId', ns)
               videoId = vid_el.text if vid_el is not None else ''
               if videoId:
-                  videos.append({'title': title, 'link': link, 'pub': pub[:10], 'videoId': videoId})
+                  videos.append({'title': title, 'link': link, 'published': pub[:10], 'videoId': videoId})
 
           print(f"Trovati {len(videos)} video")
 
