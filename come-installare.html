@@ -1,0 +1,456 @@
+<title>Come installare Lo Spogliatoio</title>
+<style>
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --bg:      #0a0a0a;
+  --surface: #111111;
+  --surface2: #161616;
+  --border:  #1e1e1e;
+  --accent:  #b0ff00;
+  --accent-dim: rgba(176,255,0,.12);
+  --text:    #ffffff;
+  --muted:   #888888;
+  --step-bg: #b0ff00;
+  --step-fg: #000000;
+  --warn-bg: #1a1500;
+  --warn-border: #f08040;
+  --warn-text: #f08040;
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, 'Segoe UI', sans-serif;
+  min-height: 100vh;
+  padding: 0 0 60px;
+}
+
+/* ── HEADER ── */
+.header {
+  border-bottom: 2px solid var(--accent);
+  padding: 28px 40px 24px;
+  background: var(--surface);
+}
+.header-inner {
+  max-width: 860px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  gap: 18px;
+}
+.logo {
+  font-family: Impact, 'Arial Narrow', 'Oswald', sans-serif;
+  font-size: 13px;
+  letter-spacing: 5px;
+  text-transform: uppercase;
+  color: var(--accent);
+  white-space: nowrap;
+}
+.header-divider {
+  width: 1px;
+  height: 28px;
+  background: var(--border);
+  flex-shrink: 0;
+}
+.header-title {
+  font-size: 13px;
+  color: var(--muted);
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+}
+
+/* ── HERO ── */
+.hero {
+  max-width: 860px;
+  margin: 0 auto;
+  padding: 48px 40px 36px;
+  text-align: center;
+}
+.hero-icon {
+  font-size: 48px;
+  display: block;
+  margin-bottom: 16px;
+}
+.hero h1 {
+  font-family: Impact, 'Arial Narrow', 'Oswald', sans-serif;
+  font-size: clamp(28px, 5vw, 44px);
+  font-weight: 900;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  line-height: 1.1;
+  text-wrap: balance;
+  margin-bottom: 14px;
+}
+.hero h1 span { color: var(--accent); }
+.hero-sub {
+  font-size: 14px;
+  color: var(--muted);
+  letter-spacing: 1px;
+  line-height: 1.7;
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+/* ── SECTION LABEL ── */
+.page { max-width: 860px; margin: 0 auto; padding: 0 40px; }
+
+.section-label {
+  font-family: Impact, 'Arial Narrow', 'Oswald', sans-serif;
+  font-size: 10px;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  color: var(--accent);
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 10px;
+  margin-bottom: 24px;
+  margin-top: 48px;
+}
+.section-label:first-child { margin-top: 0; }
+
+/* ── PLATFORM GRID ── */
+.platform-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+.platform-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.platform-header {
+  padding: 18px 20px 16px;
+  border-bottom: 1px solid var(--border);
+  background: var(--surface2);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.platform-icon { font-size: 24px; }
+
+.platform-name {
+  font-family: Impact, 'Arial Narrow', 'Oswald', sans-serif;
+  font-size: 16px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--text);
+}
+.platform-browser {
+  font-size: 10px;
+  color: var(--muted);
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  margin-top: 3px;
+}
+
+.steps { padding: 20px; display: flex; flex-direction: column; gap: 14px; }
+
+.step {
+  display: flex;
+  gap: 14px;
+  align-items: flex-start;
+}
+
+.step-num {
+  flex-shrink: 0;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: var(--step-bg);
+  color: var(--step-fg);
+  font-size: 11px;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 1px;
+}
+
+.step-text {
+  font-size: 13px;
+  color: var(--text);
+  line-height: 1.55;
+}
+.step-text strong { color: var(--accent); font-weight: 700; }
+.step-text em {
+  display: inline-block;
+  background: var(--accent-dim);
+  border: 1px solid rgba(176,255,0,.25);
+  border-radius: 4px;
+  padding: 1px 7px;
+  font-style: normal;
+  font-size: 11px;
+  color: var(--accent);
+  letter-spacing: .5px;
+  margin: 0 1px;
+}
+
+/* ── WARN BOX ── */
+.warn-box {
+  background: var(--warn-bg);
+  border: 1px solid var(--warn-border);
+  border-radius: 8px;
+  padding: 14px 18px;
+  font-size: 12px;
+  color: var(--warn-text);
+  line-height: 1.6;
+  margin-top: 20px;
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+}
+.warn-icon { flex-shrink: 0; font-size: 16px; margin-top: 1px; }
+
+/* ── NOTE BOX ── */
+.note-box {
+  background: var(--accent-dim);
+  border: 1px solid rgba(176,255,0,.2);
+  border-radius: 8px;
+  padding: 14px 18px;
+  font-size: 12px;
+  color: #ccc;
+  line-height: 1.6;
+  margin-top: 20px;
+}
+.note-box strong { color: var(--accent); }
+
+/* ── URL BOX ── */
+.url-section { margin-top: 48px; }
+.url-box {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 20px 24px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+.url-label {
+  font-size: 10px;
+  color: var(--muted);
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+.url-value {
+  font-family: 'SF Mono', 'Fira Code', 'Courier New', monospace;
+  font-size: 13px;
+  color: var(--accent);
+  word-break: break-all;
+}
+
+/* ── FOOTER ── */
+.footer {
+  text-align: center;
+  margin-top: 56px;
+  font-size: 10px;
+  color: var(--border);
+  letter-spacing: 3px;
+  text-transform: uppercase;
+}
+
+/* ── RESPONSIVE ── */
+@media (max-width: 860px) {
+  .header { padding: 18px 24px; }
+  .hero { padding: 36px 24px 28px; }
+  .page { padding: 0 24px; }
+}
+@media (max-width: 640px) {
+  .header { padding: 14px 16px; }
+  .header-divider { display: none; }
+  .header-title { display: none; }
+  .hero { padding: 28px 16px 20px; }
+  .hero-icon { font-size: 36px; margin-bottom: 12px; }
+  .page { padding: 0 16px; }
+  .platform-grid { grid-template-columns: 1fr; }
+  .section-label { margin-top: 36px; }
+  .url-box { flex-direction: column; gap: 8px; }
+  .platform-header { padding: 14px 16px; }
+  .steps { padding: 16px; gap: 12px; }
+  .step-text { font-size: 12px; }
+  .warn-box { font-size: 12px; padding: 12px 14px; }
+  .note-box { font-size: 12px; padding: 12px 14px; }
+  .url-value { font-size: 11px; }
+  .footer { margin-top: 40px; }
+}
+</style>
+
+<div class="header">
+  <div class="header-inner">
+    <div class="logo">Il Mister Fabry</div>
+    <div class="header-divider"></div>
+    <div class="header-title">Guida all'installazione · Lo Spogliatoio</div>
+  </div>
+</div>
+
+<div class="hero">
+  <span class="hero-icon">📲</span>
+  <h1>Installa <span>Lo Spogliatoio</span><br>come un'app</h1>
+  <p class="hero-sub">In pochi secondi puoi aggiungere Lo Spogliatoio alla schermata home del telefono o al desktop del computer — senza scaricare nulla dagli store.</p>
+</div>
+
+<div class="page">
+
+  <!-- MOBILE -->
+  <div class="section-label">● Sul telefono</div>
+  <div class="platform-grid">
+
+    <!-- iPhone -->
+    <div class="platform-card">
+      <div class="platform-header">
+        <span class="platform-icon">🍎</span>
+        <div>
+          <div class="platform-name">iPhone</div>
+          <div class="platform-browser">Solo con Safari</div>
+        </div>
+      </div>
+      <div class="steps">
+        <div class="step">
+          <div class="step-num">1</div>
+          <div class="step-text">Apri <strong>Safari</strong> — Chrome e Firefox su iOS non permettono l'installazione</div>
+        </div>
+        <div class="step">
+          <div class="step-num">2</div>
+          <div class="step-text">Vai all'indirizzo dello Spogliatoio e fai il <strong>login</strong> con la password</div>
+        </div>
+        <div class="step">
+          <div class="step-num">3</div>
+          <div class="step-text">Tocca l'icona <strong>Condividi</strong> in basso al centro — il quadrato con la freccia su <em>⎙</em></div>
+        </div>
+        <div class="step">
+          <div class="step-num">4</div>
+          <div class="step-text">Scorri la lista verso il basso e tocca <em>Aggiungi alla schermata Home</em></div>
+        </div>
+        <div class="step">
+          <div class="step-num">5</div>
+          <div class="step-text">Tocca <strong>Aggiungi</strong> in alto a destra — l'icona appare subito nella home</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Android -->
+    <div class="platform-card">
+      <div class="platform-header">
+        <span class="platform-icon">🤖</span>
+        <div>
+          <div class="platform-name">Android</div>
+          <div class="platform-browser">Con Chrome</div>
+        </div>
+      </div>
+      <div class="steps">
+        <div class="step">
+          <div class="step-num">1</div>
+          <div class="step-text">Apri <strong>Chrome</strong> e vai all'indirizzo dello Spogliatoio</div>
+        </div>
+        <div class="step">
+          <div class="step-num">2</div>
+          <div class="step-text">Fai il <strong>login</strong> con la password prima di installare</div>
+        </div>
+        <div class="step">
+          <div class="step-num">3</div>
+          <div class="step-text">Se appare in basso il banner <em>Aggiungi alla schermata Home</em>, toccalo direttamente</div>
+        </div>
+        <div class="step">
+          <div class="step-num">4</div>
+          <div class="step-text">Se il banner non appare: tocca i <strong>tre puntini</strong> in alto a destra e scegli <em>Aggiungi alla schermata Home</em></div>
+        </div>
+        <div class="step">
+          <div class="step-num">5</div>
+          <div class="step-text">Conferma — l'icona appare nella home del telefono</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="warn-box">
+    <span class="warn-icon">⚠️</span>
+    <span>Fai sempre il <strong>login prima di installare</strong>. Il token di accesso viene salvato nel telefono — così quando riapri l'app non ti chiede la password ogni volta.</span>
+  </div>
+
+  <!-- DESKTOP -->
+  <div class="section-label">● Sul computer</div>
+  <div class="platform-grid">
+
+    <!-- Chrome -->
+    <div class="platform-card">
+      <div class="platform-header">
+        <span class="platform-icon">🖥️</span>
+        <div>
+          <div class="platform-name">Chrome</div>
+          <div class="platform-browser">Windows e Mac</div>
+        </div>
+      </div>
+      <div class="steps">
+        <div class="step">
+          <div class="step-num">1</div>
+          <div class="step-text">Vai all'indirizzo dello Spogliatoio e fai il <strong>login</strong></div>
+        </div>
+        <div class="step">
+          <div class="step-num">2</div>
+          <div class="step-text">Guarda la barra dell'indirizzo in alto a destra: compare un'icona <em>⊕</em> o un monitor con una freccia</div>
+        </div>
+        <div class="step">
+          <div class="step-num">3</div>
+          <div class="step-text">Clicca quell'icona e poi <strong>Installa</strong> nel popup che appare</div>
+        </div>
+        <div class="step">
+          <div class="step-num">4</div>
+          <div class="step-text">Se l'icona non compare: clicca i <strong>tre puntini</strong> → <em>Salva e Condividi</em> → <em>Crea scorciatoia</em> → spunta <em>Apri come finestra</em></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Edge -->
+    <div class="platform-card">
+      <div class="platform-header">
+        <span class="platform-icon">🌐</span>
+        <div>
+          <div class="platform-name">Edge</div>
+          <div class="platform-browser">Windows e Mac</div>
+        </div>
+      </div>
+      <div class="steps">
+        <div class="step">
+          <div class="step-num">1</div>
+          <div class="step-text">Vai all'indirizzo dello Spogliatoio e fai il <strong>login</strong></div>
+        </div>
+        <div class="step">
+          <div class="step-num">2</div>
+          <div class="step-text">Clicca i <strong>tre puntini</strong> in alto a destra</div>
+        </div>
+        <div class="step">
+          <div class="step-num">3</div>
+          <div class="step-text">Seleziona <em>App</em> → <em>Installa questo sito come app</em></div>
+        </div>
+        <div class="step">
+          <div class="step-num">4</div>
+          <div class="step-text">Conferma — l'app si apre come finestra separata e appare nel menu Start o nel Dock</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="note-box">
+    <strong>Safari su Mac non supporta l'installazione PWA.</strong> Se usi Mac, usa Chrome o Edge per installare Lo Spogliatoio come app desktop.
+  </div>
+
+  <!-- URL -->
+  <div class="url-section">
+    <div class="section-label">● Indirizzo da aprire</div>
+    <div class="url-box">
+      <span class="url-label">URL</span>
+      <span class="url-value">https://fabmiscia.github.io/Il-Mister-Fabry/index.html</span>
+    </div>
+  </div>
+
+</div>
+
+<div class="footer">Il Mister Fabry · Lo Spogliatoio · Fantacalcio 2026-27</div>
