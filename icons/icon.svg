@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <rect width="512" height="512" rx="80" fill="#0a0a0a"/>
+  <rect x="20" y="20" width="472" height="472" rx="64" fill="#111"/>
+  <rect x="20" y="20" width="472" height="6" rx="3" fill="#b0ff00"/>
+  <rect x="20" y="486" width="472" height="6" rx="3" fill="#b0ff00"/>
+  <text x="256" y="220" font-family="Arial Black,Arial" font-weight="900" font-size="180" fill="#b0ff00" text-anchor="middle" dominant-baseline="middle" letter-spacing="-8">MF</text>
+  <text x="256" y="360" font-family="Arial,sans-serif" font-weight="700" font-size="52" fill="#ffffff" text-anchor="middle" letter-spacing="8">SPOGLIATOIO</text>
+  <text x="256" y="420" font-family="Arial,sans-serif" font-weight="400" font-size="34" fill="#666" text-anchor="middle" letter-spacing="4">FANTACALCIO</text>
+</svg>
