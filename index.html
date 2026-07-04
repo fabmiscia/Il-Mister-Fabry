@@ -1,7 +1,10 @@
 <!DOCTYPE html>
 <html lang="it">
 <head>
-<meta charset="UTF-8">
+<link rel="manifest" href="manifest.json">
+  <link rel="apple-touch-icon" href="apple-touch-icon.png">
+  <meta name="theme-color" content="#b0ff00">
+  <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Fantacalcio 2026-27 — MisterFabry</title>
 <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@600;700&display=swap" rel="stylesheet">
@@ -270,5 +273,29 @@ document.getElementById('pwd-input').addEventListener('keydown', e => {
 });
 </script>
 
+
+<div id="pwa-update-bar" style="display:none;position:fixed;bottom:0;left:0;right:0;z-index:9999;background:#b0ff00;color:#000;padding:12px 20px;display:flex;align-items:center;justify-content:space-between;font-family:Montserrat,Arial,sans-serif;font-size:13px;font-weight:700;box-shadow:0 -2px 12px rgba(0,0,0,.4)">
+  <span>Nuova versione disponibile</span>
+  <button onclick="location.reload()" style="background:#000;color:#b0ff00;border:none;padding:7px 16px;border-radius:6px;cursor:pointer;font-weight:700;font-size:12px;letter-spacing:1px">AGGIORNA</button>
+</div>
+<script>
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('./sw.js').then(reg => {
+    reg.addEventListener('updatefound', () => {
+      const nw = reg.installing;
+      nw.addEventListener('statechange', () => {
+        if (nw.state === 'installed' && navigator.serviceWorker.controller) {
+          document.getElementById('pwa-update-bar').style.display = 'flex';
+        }
+      });
+    });
+  });
+  navigator.serviceWorker.addEventListener('message', e => {
+    if (e.data && e.data.type === 'SW_UPDATED') {
+      document.getElementById('pwa-update-bar').style.display = 'flex';
+    }
+  });
+}
+</script>
 </body>
 </html>
