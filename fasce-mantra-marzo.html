@@ -119,7 +119,6 @@ td[contenteditable="true"]:focus{outline:2px solid #2DB84A;background:#141414}
 
 </style>
 
-
 </head>
 <body>
 <div class="toolbar">
@@ -127,7 +126,7 @@ td[contenteditable="true"]:focus{outline:2px solid #2DB84A;background:#141414}
   <span class="mese-badge">MARZO 2026</span>
   <input class="search" type="text" id="search" placeholder="Cerca giocatore..." oninput="render()">
   <button class="btn btn-counter" onclick="toggleObjOnly()">⭐ OBIETTIVI <span id="obj-count-badge" class="obj-count">0</span></button>
-  <button class="btn btn-github" id="btn-github">📤 Su GitHub</button>
+  
   <button id="btn-salva-locale" onclick="salvaInLocale()" style="background:#1a1a1a;color:#fff;border:1px solid #333;padding:7px 14px;border-radius:6px;cursor:pointer;font-size:12px;font-weight:700;letter-spacing:.5px;transition:.15s" onmouseover="this.style.borderColor='#b0ff00';this.style.color='#b0ff00'" onmouseout="this.style.borderColor='#333';this.style.color='#fff'">&#x1F4BE; Salva in locale</button>
   <button class="btn btn-csv" onclick="exportCSV()">&#x1F4CA; ESPORTA CSV</button>
   <button class="btn btn-pdf" onclick="exportPDF()">&#x1F4C4; ESPORTA PDF</button>
@@ -252,8 +251,6 @@ function exportCSV() {
 function exportPDF() {
   window.print();
 }
-
-
 
 // ── Salva in locale ──────────────────────────
 async function salvaInLocale() {
