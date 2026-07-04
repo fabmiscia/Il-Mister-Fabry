@@ -1,0 +1,692 @@
+<!DOCTYPE html>
+<html lang="it"><head>
+<script>
+(function(){
+  if(location.protocol==='file:') return;
+  var HASH='57a910719dbe1def6e5e374e21698568a6d2725ed80248b21661df6e48eac9f5';
+  var KEY='spogliatoio_token';
+  if(localStorage.getItem(KEY)!==HASH){
+    window.location.replace('spogliatoio.html');
+  }
+})();
+</script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Strategia Asta – Il Mister Fabry</title>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;600;700&amp;family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+
+body {
+  background: radial-gradient(ellipse at top left, #1e0a5e 0%, #0d0628 60%, #060318 100%);
+  min-height: 100vh;
+  font-family: 'Inter', sans-serif;
+  color: #fff;
+  padding-bottom: 40px;
+}
+
+/* ── TOOLBAR ── */
+.toolbar {
+  display: flex; align-items: center; gap: 10px; flex-wrap: wrap;
+  padding: 10px 20px; background: rgba(0,0,0,.4);
+  border-bottom: 1px solid rgba(255,255,255,.08); position: sticky; top:0; z-index:100;
+}
+.toolbar-title { color: #b0ff00; font-family:'Oswald',sans-serif; font-size:13px; letter-spacing:3px; flex:1; }
+.tb-btn {
+  background: rgba(255,255,255,.08); color:#fff; border:1px solid rgba(255,255,255,.15);
+  padding: 6px 14px; border-radius: 6px; cursor:pointer; font-size:11px; font-weight:600;
+  letter-spacing:.5px; transition:.15s;
+}
+.tb-btn:hover { background:rgba(255,255,255,.15); }
+.tb-btn.gh { background:rgba(176,255,0,.12); border-color:rgba(176,255,0,.4); color:#b0ff00; }
+.tb-btn.gh:hover { background:rgba(176,255,0,.25); }
+
+/* ── LAYOUT ── */
+.page { max-width: 1400px; margin: 0 auto; padding: 20px 16px; display: flex; flex-direction: column; gap: 20px; }
+
+/* ── TOP ROW ── */
+.top-row { display: flex; gap: 20px; flex-wrap: wrap; }
+
+/* ── PANELS ── */
+.panel {
+  background: rgba(255,255,255,.05);
+  border: 1px solid rgba(255,255,255,.1);
+  border-radius: 16px;
+  padding: 20px 22px;
+  backdrop-filter: blur(8px);
+}
+.panel-title {
+  font-family:'Oswald',sans-serif; font-size:14px; font-weight:700;
+  letter-spacing: 2.5px; text-transform:uppercase; color:#fff; margin-bottom:16px;
+}
+
+/* ── BUDGET PANEL ── */
+.budget-panel { flex: 0 0 420px; }
+.budget-content { display:flex; gap:20px; align-items:center; }
+#pie-wrap { flex-shrink:0; width:160px; height:160px; position:relative; }
+#pie-svg { width:100%; height:100%; }
+.pie-center { position:absolute; inset:0; display:flex; flex-direction:column; align-items:center; justify-content:center; }
+.pie-total-lbl { font-size:9px; letter-spacing:2px; color:rgba(255,255,255,.5); text-transform:uppercase; }
+.pie-total-val { font-family:'Oswald',sans-serif; font-size:22px; font-weight:700; color:#fff; }
+.budget-rows { flex:1; display:flex; flex-direction:column; gap:8px; }
+.role-row { display:flex; align-items:center; gap:6px; }
+.role-dot { width:22px; height:22px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:9px; font-weight:800; letter-spacing:.5px; flex-shrink:0; }
+.role-bar-wrap { flex:1; height:6px; background:rgba(255,255,255,.1); border-radius:3px; overflow:hidden; }
+.role-bar { height:100%; border-radius:3px; transition:width .3s; }
+.role-btn { width:22px; height:22px; border-radius:50%; border:none; cursor:pointer; font-size:14px; font-weight:700; color:#fff; display:flex; align-items:center; justify-content:center; transition:.15s; flex-shrink:0; }
+.role-btn:hover { opacity:.8; }
+.role-pct { font-family:'Oswald',sans-serif; font-size:16px; font-weight:700; min-width:38px; text-align:center; }
+.total-row { display:flex; align-items:center; gap:6px; margin-top:4px; border-top:1px solid rgba(255,255,255,.1); padding-top:8px; }
+.total-lbl { font-size:11px; color:rgba(255,255,255,.5); flex:1; }
+.total-credits { font-family:'Oswald',sans-serif; font-size:13px; font-weight:700; color:rgba(255,255,255,.7); }
+.budget-input-row { display:flex; align-items:center; gap:8px; margin-top:10px; }
+.budget-input-lbl { font-size:10px; letter-spacing:1.5px; color:rgba(255,255,255,.5); text-transform:uppercase; }
+.budget-input { background:rgba(255,255,255,.08); border:1px solid rgba(255,255,255,.15); border-radius:6px; color:#fff; font-family:'Oswald',sans-serif; font-size:18px; font-weight:700; width:80px; padding:4px 8px; text-align:center; outline:none; }
+
+/* ── RATING PANEL ── */
+.rating-panel { flex:1; min-width:340px; }
+.auto-btn {
+  width:100%; background:linear-gradient(135deg,#e91e8c,#c2185b); color:#fff;
+  border:none; padding:10px; border-radius:8px; font-family:'Oswald',sans-serif;
+  font-size:12px; font-weight:700; letter-spacing:2.5px; cursor:pointer; margin-bottom:16px;
+  transition:.15s;
+}
+.auto-btn:hover { opacity:.88; }
+.rating-header { display:flex; align-items:center; justify-content:space-between; margin-bottom:14px; }
+.global-stars { display:flex; gap:4px; }
+.rating-table { width:100%; border-collapse:collapse; }
+.rating-table td { padding:6px 4px; vertical-align:middle; }
+.rating-table tr:not(:last-child) td { border-bottom:1px solid rgba(255,255,255,.06); }
+.pos-lbl { font-size:12px; color:rgba(255,255,255,.7); white-space:nowrap; padding-right:8px !important; }
+.cat-lbl { font-size:10px; color:rgba(255,255,255,.45); letter-spacing:1px; white-space:nowrap; padding-left:8px !important; text-align:right; }
+.stars-cell { white-space:nowrap; }
+
+/* ── STAR WIDGET (mezze stelle) ── */
+.sw { display:inline-flex; gap:3px; }
+.sw .sw-st { position:relative; display:inline-block; font-size:20px; line-height:1; cursor:pointer; user-select:none; transition:transform .1s; }
+.sw .sw-st:hover { transform:scale(1.15); }
+.sw .sw-bg { display:block; color:rgba(255,210,0,.18); }
+.sw .sw-fg { position:absolute; top:0; left:0; overflow:hidden; width:0%; display:block; color:#ffd700; text-shadow:0 0 8px rgba(255,210,0,.6); white-space:nowrap; pointer-events:none; }
+.global-stars .sw .sw-st { font-size:26px; }
+
+/* ── PLAYER GRID ── */
+.grid-title { font-family:'Oswald',sans-serif; font-size:13px; letter-spacing:2px; color:rgba(255,255,255,.5); margin-bottom:12px; }
+.player-columns { display:grid; grid-template-columns:repeat(4,1fr); gap:16px; }
+
+/* ── POSITION COLUMN ── */
+.pos-col { display:flex; flex-direction:column; gap:10px; }
+.pos-header {
+  display:flex; align-items:center; gap:8px;
+  padding:10px 14px; border-radius:10px; font-family:'Oswald',sans-serif;
+  font-size:13px; font-weight:700; letter-spacing:2px;
+}
+.pos-header .pos-icon { width:28px; height:28px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:11px; font-weight:800; }
+.pos-header .pos-count { margin-left:auto; font-size:11px; opacity:.6; }
+
+/* ── PLAYER SLOT ── */
+.slot {
+  background:rgba(255,255,255,.06); border:1px solid rgba(255,255,255,.1);
+  border-radius:12px; padding:10px 12px; display:flex; align-items:center; gap:8px; position:relative;
+}
+.slot-photo { width:38px; height:38px; border-radius:50%; object-fit:cover; flex-shrink:0; border:2px solid rgba(255,255,255,.15); background:#1a1a3e; }
+.slot-info { flex:1; min-width:0; }
+.slot-name { font-size:13px; font-weight:600; color:#fff; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; outline:none; cursor:text; }
+.slot-tier { display:inline-block; margin-top:3px; font-size:9px; font-weight:700; letter-spacing:.8px; padding:2px 7px; border-radius:4px; cursor:pointer; }
+.slot-right { display:flex; flex-direction:column; align-items:flex-end; gap:3px; flex-shrink:0; }
+.slot-credits { width:32px; height:32px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-family:'Oswald',sans-serif; font-size:13px; font-weight:700; cursor:text; outline:none; text-align:center; }
+.slot-pct { font-size:10px; color:rgba(255,255,255,.5); }
+.slot-del { position:absolute; top:5px; right:6px; background:none; border:none; color:rgba(255,255,255,.25); cursor:pointer; font-size:14px; line-height:1; transition:.15s; }
+.slot-del:hover { color:#ff4444; }
+
+/* Tier colors */
+.tier-top    { background:rgba(234,179,8,.2); color:#fbbf24; border:1px solid rgba(234,179,8,.3); }
+.tier-semi   { background:rgba(168,85,247,.2); color:#c084fc; border:1px solid rgba(168,85,247,.3); }
+.tier-ott    { background:rgba(34,197,94,.18); color:#4ade80; border:1px solid rgba(34,197,94,.3); }
+.tier-jolly  { background:rgba(59,130,246,.18); color:#60a5fa; border:1px solid rgba(59,130,246,.3); }
+.tier-low    { background:rgba(156,163,175,.12); color:#9ca3af; border:1px solid rgba(156,163,175,.25); }
+
+.add-slot-btn {
+  background:rgba(255,255,255,.05); border:1.5px dashed rgba(255,255,255,.2);
+  border-radius:12px; padding:10px; color:rgba(255,255,255,.45); font-size:12px;
+  font-weight:600; cursor:pointer; text-align:center; transition:.15s; letter-spacing:.5px;
+}
+.add-slot-btn:hover { border-color:rgba(255,255,255,.5); color:rgba(255,255,255,.8); background:rgba(255,255,255,.08); }
+
+/* Role colors */
+.por-col .pos-header  { background:rgba(147,51,234,.2); border:1px solid rgba(147,51,234,.35); }
+.por-col .pos-icon    { background:#9333ea; color:#fff; }
+.dif-col .pos-header  { background:rgba(34,197,94,.15); border:1px solid rgba(34,197,94,.3); }
+.dif-col .pos-icon    { background:#22c55e; color:#fff; }
+.cen-col .pos-header  { background:rgba(245,158,11,.15); border:1px solid rgba(245,158,11,.3); }
+.cen-col .pos-icon    { background:#f59e0b; color:#fff; }
+.att-col .pos-header  { background:rgba(239,68,68,.15); border:1px solid rgba(239,68,68,.3); }
+.att-col .pos-icon    { background:#ef4444; color:#fff; }
+
+.por-col .slot-credits { background:#9333ea; color:#fff; }
+.dif-col .slot-credits { background:#22c55e; color:#fff; }
+.cen-col .slot-credits { background:#f59e0b; color:#000; }
+.att-col .slot-credits { background:#ef4444; color:#fff; }
+
+/* ── RESPONSIVE ── */
+@media(max-width:1100px) {
+  .player-columns { grid-template-columns:repeat(2,1fr); }
+}
+@media(max-width:768px) {
+  body { overflow-x:hidden; }
+  .toolbar { gap:6px; padding:8px 12px; }
+  .toolbar-title { font-size:11px; letter-spacing:1.5px; }
+  .tb-btn { padding:5px 10px; font-size:10px; }
+  .top-row { flex-direction:column; }
+  .budget-panel { flex:unset; width:100% !important; min-width:unset; }
+  .rating-panel { min-width:unset !important; width:100% !important; }
+  .budget-content { flex-direction:column; align-items:center; }
+  .budget-rows { width:100%; }
+  .player-columns { grid-template-columns:repeat(2,1fr); }
+  .global-stars .sw .sw-st { font-size:20px; }
+}
+@media(max-width:480px) {
+  body { overflow-x:hidden; }
+  .toolbar { gap:4px; padding:6px 10px; }
+  .toolbar-title { font-size:10px; letter-spacing:1px; }
+  .tb-btn { padding:4px 8px; font-size:9px; }
+  .page { padding:10px 8px; gap:12px; }
+  .budget-input { width:70px; font-size:15px; }
+  .panel { padding:14px 12px; }
+  .player-columns { grid-template-columns:1fr; }
+  .rating-table .cat-lbl { display:none; }
+  .global-stars .sw .sw-st { font-size:18px; }
+  .sw .sw-st { font-size:16px; }
+  .pos-header { padding:8px 10px; }
+  .auto-btn { font-size:11px; padding:8px; }
+  .slot { padding:8px 10px; gap:6px; }
+  .slot-photo { width:32px; height:32px; }
+  .slot-credits { width:28px; height:28px; font-size:11px; }
+}
+
+/* ── TIER PICKER ── */
+.tier-picker {
+  position:absolute; z-index:200; background:#1a0a4e; border:1px solid rgba(255,255,255,.2);
+  border-radius:10px; padding:6px; display:flex; flex-direction:column; gap:4px;
+  box-shadow:0 8px 32px rgba(0,0,0,.6);
+}
+.tier-opt { padding:6px 12px; border-radius:6px; cursor:pointer; font-size:11px; font-weight:700; letter-spacing:.5px; transition:.12s; }
+.tier-opt:hover { opacity:.8; transform:translateX(2px); }
+</style>
+</head>
+<body>
+
+<div class="toolbar">
+  <span class="toolbar-title">⚽ STRATEGIA ASTA FANTACALCIO</span>
+  <button class="tb-btn" onclick="exportPNG()">📸 Esporta PNG</button>
+  <button id="btn-salva-locale" class="tb-btn" onclick="salvaInLocale()">💾 Salva in locale</button>
+  <button id="btn-pubblica-github" class="tb-btn gh" onclick="pubblicaGitHub()">🚀 Pubblica su GitHub</button>
+</div>
+
+<div class="page">
+
+  <!-- TOP ROW -->
+  <div class="top-row">
+
+    <!-- GESTIONE BUDGET -->
+    <div class="panel budget-panel">
+      <div class="panel-title">Gestione Budget</div>
+      <div class="budget-input-row">
+        <span class="budget-input-lbl">Budget totale:</span>
+        <input class="budget-input" id="budget-total" type="number" value="500" min="100" max="5000" oninput="updateAll()">
+        <span style="font-size:11px;color:rgba(255,255,255,.4)">crediti</span>
+      </div>
+      <div class="budget-content" style="margin-top:16px">
+        <div id="pie-wrap">
+          <svg id="pie-svg" viewBox="0 0 200 200"><path d="M100,10A90,90,0,0,1,143.3578306691544,21.13239879605227L127.94171309789948,49.17421255745591A58,58,0,0,0,100,42Z" fill="#9333ea" opacity="0.85"></path><path d="M143.3578306691544,21.13239879605227A90,90,0,0,1,181.43443472194176,138.32013624085653L152.47996904302914,124.69519891077421A58,58,0,0,0,127.94171309789948,49.17421255745591Z" fill="#22c55e" opacity="0.85"></path><path d="M181.43443472194176,138.32013624085653A90,90,0,0,1,72.18847050625473,185.59508646656383L82.07701432625305,155.1612779451189A58,58,0,0,0,152.47996904302914,124.69519891077421Z" fill="#f59e0b" opacity="0.85"></path><path d="M72.18847050625473,185.59508646656383A90,90,0,0,1,99.99999999999999,10L99.99999999999999,42A58,58,0,0,0,82.07701432625305,155.1612779451189Z" fill="#ef4444" opacity="0.85"></path><circle cx="100" cy="100" r="56" fill="rgba(10,3,35,0.95)"></circle></svg>
+          <div class="pie-center">
+            <span class="pie-total-lbl">Budget</span>
+            <span class="pie-total-val" id="pie-total-display">500</span>
+          </div>
+        </div>
+        <div class="budget-rows">
+          <!-- POR -->
+          <div class="role-row" data-role="POR">
+            <div class="role-dot" style="background:#9333ea">P</div>
+            <div class="role-bar-wrap"><div class="role-bar" id="bar-POR" style="background:#9333ea;width:8%"></div></div>
+            <button class="role-btn" style="background:#9333ea" onclick="adjustRole('POR',-1)">−</button>
+            <span class="role-pct" id="pct-POR" style="color:#c084fc">8%</span>
+            <button class="role-btn" style="background:#9333ea" onclick="adjustRole('POR',1)">+</button>
+          </div>
+          <!-- DIF -->
+          <div class="role-row" data-role="DIF">
+            <div class="role-dot" style="background:#22c55e">D</div>
+            <div class="role-bar-wrap"><div class="role-bar" id="bar-DIF" style="background:#22c55e;width:24%"></div></div>
+            <button class="role-btn" style="background:#22c55e" onclick="adjustRole('DIF',-1)">−</button>
+            <span class="role-pct" id="pct-DIF" style="color:#4ade80">24%</span>
+            <button class="role-btn" style="background:#22c55e" onclick="adjustRole('DIF',1)">+</button>
+          </div>
+          <!-- CEN -->
+          <div class="role-row" data-role="CEN">
+            <div class="role-dot" style="background:#f59e0b">C</div>
+            <div class="role-bar-wrap"><div class="role-bar" id="bar-CEN" style="background:#f59e0b;width:23%"></div></div>
+            <button class="role-btn" style="background:#f59e0b" onclick="adjustRole('CEN',-1)">−</button>
+            <span class="role-pct" id="pct-CEN" style="color:#fbbf24">23%</span>
+            <button class="role-btn" style="background:#f59e0b" onclick="adjustRole('CEN',1)">+</button>
+          </div>
+          <!-- ATT -->
+          <div class="role-row" data-role="ATT">
+            <div class="role-dot" style="background:#ef4444">A</div>
+            <div class="role-bar-wrap"><div class="role-bar" id="bar-ATT" style="background:#ef4444;width:45%"></div></div>
+            <button class="role-btn" style="background:#ef4444" onclick="adjustRole('ATT',-1)">−</button>
+            <span class="role-pct" id="pct-ATT" style="color:#f87171">45%</span>
+            <button class="role-btn" style="background:#ef4444" onclick="adjustRole('ATT',1)">+</button>
+          </div>
+          <!-- TOTALE -->
+          <div class="total-row">
+            <span class="total-lbl">Totale allocato</span>
+            <span class="total-credits" id="total-credits">500 cr (100%)</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- VALUTAZIONE ROSA -->
+    <div class="panel rating-panel">
+      <button class="auto-btn" onclick="autoCompleta()">⟳ COMPLETAMENTO AUTOMATICO</button>
+      <div class="rating-header">
+        <div class="panel-title" style="margin:0">Valutazione Rosa</div>
+        <div class="global-stars">
+          <div class="sw" id="sw-global" data-val="4"><span class="sw-st" data-pos="1"><span class="sw-bg">★</span><span class="sw-fg" style="width: 100%;">★</span></span><span class="sw-st" data-pos="2"><span class="sw-bg">★</span><span class="sw-fg" style="width: 100%;">★</span></span><span class="sw-st" data-pos="3"><span class="sw-bg">★</span><span class="sw-fg" style="width: 100%;">★</span></span><span class="sw-st" data-pos="4"><span class="sw-bg">★</span><span class="sw-fg" style="width: 100%;">★</span></span><span class="sw-st" data-pos="5"><span class="sw-bg">★</span><span class="sw-fg" style="width: 0%;">★</span></span></div>
+        </div>
+      </div>
+      <table class="rating-table">
+        <tbody>
+          <tr>
+            <td class="pos-lbl">Portieri</td>
+            <td class="stars-cell"><div class="sw" id="sw-por-1" data-val="4"><span class="sw-st" data-pos="1"><span class="sw-bg">★</span><span class="sw-fg" style="width: 100%;">★</span></span><span class="sw-st" data-pos="2"><span class="sw-bg">★</span><span class="sw-fg" style="width: 100%;">★</span></span><span class="sw-st" data-pos="3"><span class="sw-bg">★</span><span class="sw-fg" style="width: 100%;">★</span></span><span class="sw-st" data-pos="4"><span class="sw-bg">★</span><span class="sw-fg" style="width: 100%;">★</span></span><span class="sw-st" data-pos="5"><span class="sw-bg">★</span><span class="sw-fg" style="width: 0%;">★</span></span></div></td>
+            <td class="stars-cell"><div class="sw" id="sw-por-2" data-val="4.5"><span class="sw-st" data-pos="1"><span class="sw-bg">★</span><span class="sw-fg" style="width: 100%;">★</span></span><span class="sw-st" data-pos="2"><span class="sw-bg">★</span><span class="sw-fg" style="width: 100%;">★</span></span><span class="sw-st" data-pos="3"><span class="sw-bg">★</span><span class="sw-fg" style="width: 100%;">★</span></span><span class="sw-st" data-pos="4"><span class="sw-bg">★</span><span class="sw-fg" style="width: 100%;">★</span></span><span class="sw-st" data-pos="5"><span class="sw-bg">★</span><span class="sw-fg" style="width: 50%;">★</span></span></div></td>
+            <td class="cat-lbl">Titolari</td>
+          </tr>
+          <tr>
+            <td class="pos-lbl">Difesa</td>
+            <td class="stars-cell"><div class="sw" id="sw-dif-1" data-val="4.5"><span class="sw-st" data-pos="1"><span class="sw-bg">★</span><span class="sw-fg" style="width: 100%;">★</span></span><span class="sw-st" data-pos="2"><span class="sw-bg">★</span><span class="sw-fg" style="width: 100%;">★</span></span><span class="sw-st" data-pos="3"><span class="sw-bg">★</span><span class="sw-fg" style="width: 100%;">★</span></span><span class="sw-st" data-pos="4"><span class="sw-bg">★</span><span class="sw-fg" style="width: 100%;">★</span></span><span class="sw-st" data-pos="5"><span class="sw-bg">★</span><span class="sw-fg" style="width: 50%;">★</span></span></div></td>
+            <td class="stars-cell"><div class="sw" id="sw-dif-2" data-val="4"><span class="sw-st" data-pos="1"><span class="sw-bg">★</span><span class="sw-fg" style="width: 100%;">★</span></span><span class="sw-st" data-pos="2"><span class="sw-bg">★</span><span class="sw-fg" style="width: 100%;">★</span></span><span class="sw-st" data-pos="3"><span class="sw-bg">★</span><span class="sw-fg" style="width: 100%;">★</span></span><span class="sw-st" data-pos="4"><span class="sw-bg">★</span><span class="sw-fg" style="width: 100%;">★</span></span><span class="sw-st" data-pos="5"><span class="sw-bg">★</span><span class="sw-fg" style="width: 0%;">★</span></span></div></td>
+            <td class="cat-lbl">Affidabilità</td>
+          </tr>
+          <tr>
+            <td class="pos-lbl">Centrocampisti</td>
+            <td class="stars-cell"><div class="sw" id="sw-cen-1" data-val="4.5"><span class="sw-st" data-pos="1"><span class="sw-bg">★</span><span class="sw-fg" style="width: 100%;">★</span></span><span class="sw-st" data-pos="2"><span class="sw-bg">★</span><span class="sw-fg" style="width: 100%;">★</span></span><span class="sw-st" data-pos="3"><span class="sw-bg">★</span><span class="sw-fg" style="width: 100%;">★</span></span><span class="sw-st" data-pos="4"><span class="sw-bg">★</span><span class="sw-fg" style="width: 100%;">★</span></span><span class="sw-st" data-pos="5"><span class="sw-bg">★</span><span class="sw-fg" style="width: 50%;">★</span></span></div></td>
+            <td class="stars-cell"><div class="sw" id="sw-cen-2" data-val="2.5"><span class="sw-st" data-pos="1"><span class="sw-bg">★</span><span class="sw-fg" style="width: 100%;">★</span></span><span class="sw-st" data-pos="2"><span class="sw-bg">★</span><span class="sw-fg" style="width: 100%;">★</span></span><span class="sw-st" data-pos="3"><span class="sw-bg">★</span><span class="sw-fg" style="width: 50%;">★</span></span><span class="sw-st" data-pos="4"><span class="sw-bg">★</span><span class="sw-fg" style="width: 0%;">★</span></span><span class="sw-st" data-pos="5"><span class="sw-bg">★</span><span class="sw-fg" style="width: 0%;">★</span></span></div></td>
+            <td class="cat-lbl">Integrità Fis.</td>
+          </tr>
+          <tr>
+            <td class="pos-lbl">Attacco</td>
+            <td class="stars-cell"><div class="sw" id="sw-att-1" data-val="3.5"><span class="sw-st" data-pos="1"><span class="sw-bg">★</span><span class="sw-fg" style="width: 100%;">★</span></span><span class="sw-st" data-pos="2"><span class="sw-bg">★</span><span class="sw-fg" style="width: 100%;">★</span></span><span class="sw-st" data-pos="3"><span class="sw-bg">★</span><span class="sw-fg" style="width: 100%;">★</span></span><span class="sw-st" data-pos="4"><span class="sw-bg">★</span><span class="sw-fg" style="width: 50%;">★</span></span><span class="sw-st" data-pos="5"><span class="sw-bg">★</span><span class="sw-fg" style="width: 0%;">★</span></span></div></td>
+            <td class="stars-cell"><div class="sw" id="sw-att-2" data-val="5"><span class="sw-st" data-pos="1"><span class="sw-bg">★</span><span class="sw-fg" style="width: 100%;">★</span></span><span class="sw-st" data-pos="2"><span class="sw-bg">★</span><span class="sw-fg" style="width: 100%;">★</span></span><span class="sw-st" data-pos="3"><span class="sw-bg">★</span><span class="sw-fg" style="width: 100%;">★</span></span><span class="sw-st" data-pos="4"><span class="sw-bg">★</span><span class="sw-fg" style="width: 100%;">★</span></span><span class="sw-st" data-pos="5"><span class="sw-bg">★</span><span class="sw-fg" style="width: 100%;">★</span></span></div></td>
+            <td class="cat-lbl">Bonus</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+  </div>
+
+  <!-- PLAYER GRID -->
+  <div>
+    <div class="grid-title">ROSA SIMULATA</div>
+    <div class="player-columns">
+      <div class="pos-col por-col" id="col-POR">
+        <div class="pos-header">
+          <div class="pos-icon">P</div>
+          <span>PORTIERI</span>
+          <span class="pos-count" id="cnt-POR">3 slot</span>
+        </div>
+      <button class="add-slot-btn">+ Aggiungi slot</button></div>
+      <div class="pos-col dif-col" id="col-DIF">
+        <div class="pos-header">
+          <div class="pos-icon">D</div>
+          <span>DIFENSORI</span>
+          <span class="pos-count" id="cnt-DIF">5 slot</span>
+        </div>
+      <button class="add-slot-btn">+ Aggiungi slot</button></div>
+      <div class="pos-col cen-col" id="col-CEN">
+        <div class="pos-header">
+          <div class="pos-icon">C</div>
+          <span>CENTROCAMPISTI</span>
+          <span class="pos-count" id="cnt-CEN">4 slot</span>
+        </div>
+      <button class="add-slot-btn">+ Aggiungi slot</button></div>
+      <div class="pos-col att-col" id="col-ATT">
+        <div class="pos-header">
+          <div class="pos-icon">A</div>
+          <span>ATTACCANTI</span>
+          <span class="pos-count" id="cnt-ATT">4 slot</span>
+        </div>
+      <button class="add-slot-btn">+ Aggiungi slot</button></div>
+    </div>
+  </div>
+
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script>
+// ── CONFIGURAZIONE ────────────────────────────
+const TIERS = [
+  {key:'top',   label:'Top',              cls:'tier-top'},
+  {key:'semi',  label:'Semitop',          cls:'tier-semi'},
+  {key:'ott',   label:'Ottimi titolari',  cls:'tier-ott'},
+  {key:'jolly', label:'Jolly / Big Buoni',cls:'tier-jolly'},
+  {key:'low',   label:'Titolari Low Cost',cls:'tier-low'},
+];
+
+const ROLE_COLORS = {POR:'#9333ea', DIF:'#22c55e', CEN:'#f59e0b', ATT:'#ef4444'};
+const ROLE_NAMES  = {POR:'Portieri', DIF:'Difensori', CEN:'Centrocampisti', ATT:'Attaccanti'};
+
+let rolePct = {POR:8, DIF:24, CEN:23, ATT:45};
+
+// ── BUDGET ───────────────────────────────────
+function getTotal() { return parseInt(document.getElementById('budget-total').value) || 500; }
+
+function adjustRole(role, delta) {
+  rolePct[role] = Math.max(0, Math.min(100, rolePct[role] + delta));
+  updateAll();
+}
+
+function updateAll() {
+  const total = getTotal();
+  document.getElementById('pie-total-display').textContent = total;
+  const sum = Object.values(rolePct).reduce((a,b)=>a+b,0);
+  ['POR','DIF','CEN','ATT'].forEach(r => {
+    document.getElementById('pct-' + r).textContent = rolePct[r] + '%';
+    document.getElementById('bar-' + r).style.width = rolePct[r] + '%';
+  });
+  document.getElementById('total-credits').textContent = Math.round(total * sum / 100) + ' cr (' + sum + '%)';
+  drawPie();
+  updateSlotPcts();
+}
+
+function drawPie() {
+  const total = getTotal();
+  const roles = ['POR','DIF','CEN','ATT'];
+  const vals  = roles.map(r => rolePct[r]);
+  const sum   = vals.reduce((a,b)=>a+b,0) || 1;
+  const cx=100, cy=100, r=90, ir=58;
+  let angle = -Math.PI/2;
+  let paths = '';
+  roles.forEach((role,i) => {
+    const ratio = vals[i]/sum;
+    const a1=angle, a2=angle+ratio*2*Math.PI;
+    angle=a2;
+    if(ratio===0) return;
+    const x1=cx+r*Math.cos(a1), y1=cy+r*Math.sin(a1);
+    const x2=cx+r*Math.cos(a2), y2=cy+r*Math.sin(a2);
+    const ix1=cx+ir*Math.cos(a1), iy1=cy+ir*Math.sin(a1);
+    const ix2=cx+ir*Math.cos(a2), iy2=cy+ir*Math.sin(a2);
+    const large=ratio>0.5?1:0;
+    paths+=`<path d="M${x1},${y1}A${r},${r},0,${large},1,${x2},${y2}L${ix2},${iy2}A${ir},${ir},0,${large},0,${ix1},${iy1}Z" fill="${ROLE_COLORS[role]}" opacity="0.85"/>`;
+  });
+  paths+=`<circle cx="${cx}" cy="${cy}" r="${ir-2}" fill="rgba(10,3,35,0.95)"/>`;
+  document.getElementById('pie-svg').innerHTML=paths;
+}
+
+// ── STELLE ───────────────────────────────────
+function buildSW(container, nStars) {
+  container.innerHTML='';
+  for(let i=1;i<=nStars;i++){
+    const sp=document.createElement('span');
+    sp.className='sw-st';
+    sp.dataset.pos=i;
+    sp.innerHTML='<span class="sw-bg">★</span><span class="sw-fg">★</span>';
+    container.appendChild(sp);
+  }
+  container.addEventListener('click',e=>{
+    const st=e.target.closest('.sw-st');
+    if(!st) return;
+    const pos=parseInt(st.dataset.pos);
+    const rect=st.getBoundingClientRect();
+    const half=(e.clientX-rect.left)<rect.width/2;
+    setSW(container, half?pos-0.5:pos);
+  });
+}
+
+function setSW(container, val, skipGlobal) {
+  container.dataset.val=val;
+  container.querySelectorAll('.sw-st').forEach((st,i)=>{
+    const fg=st.querySelector('.sw-fg');
+    const p=i+1;
+    fg.style.width=val>=p?'100%':val>=p-0.5?'50%':'0%';
+  });
+  if(!skipGlobal && container.id!=='sw-global') updateGlobalStars();
+}
+
+function updateGlobalStars() {
+  const ids=['sw-por-1','sw-por-2','sw-dif-1','sw-dif-2','sw-cen-1','sw-cen-2','sw-att-1','sw-att-2'];
+  const avg=ids.reduce((s,id)=>s+parseFloat(document.getElementById(id).dataset.val||0),0)/ids.length;
+  setSW(document.getElementById('sw-global'), Math.round(avg*2)/2, true);
+}
+
+function initAllSW() {
+  ['sw-global','sw-por-1','sw-por-2','sw-dif-1','sw-dif-2','sw-cen-1','sw-cen-2','sw-att-1','sw-att-2'].forEach(id=>{
+    const el=document.getElementById(id);
+    const val=parseFloat(el.dataset.val||0);
+    const n=id==='sw-global'?5:5;
+    buildSW(el,n);
+    setSW(el,val);
+  });
+}
+
+// ── SLOT GIOCATORI ───────────────────────────
+let slotId=0;
+
+function addSlot(role, data={}) {
+  const col=document.getElementById('col-'+role);
+  const btn=col.querySelector('.add-slot-btn');
+  const slot=document.createElement('div');
+  slot.className='slot';
+  slot.dataset.role=role;
+  slot.dataset.id=++slotId;
+  const id=slotId;
+  const tier=data.tier||'ott';
+  const tierObj=TIERS.find(t=>t.key===tier)||TIERS[2];
+  const credits=data.credits||1;
+  const ph=data.photo||`data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='38' height='38' viewBox='0 0 38 38'%3E%3Crect width='38' height='38' rx='19' fill='%231a1a3e'/%3E%3Ccircle cx='19' cy='15' r='7' fill='%23555'/%3E%3Cellipse cx='19' cy='30' rx='12' ry='8' fill='%23555'/%3E%3C/svg%3E`;
+  slot.innerHTML=`
+    <img class="slot-photo" src="${ph}" onerror="this.style.opacity='.3'" onclick="changePhoto(this)">
+    <div class="slot-info">
+      <div class="slot-name" contenteditable="true" oninput="updateSlotPcts()">${data.name||'Giocatore'}</div>
+      <span class="slot-tier ${tierObj.cls}" onclick="openTierPicker(this,${id})">${tierObj.label}</span>
+    </div>
+    <div class="slot-right">
+      <div class="slot-credits" contenteditable="true" oninput="updateSlotPcts()">${credits}</div>
+      <div class="slot-pct" id="spct-${id}">0%</div>
+    </div>
+    <button class="slot-del" onclick="removeSlot(this)" title="Rimuovi">×</button>
+  `;
+  if(btn) col.insertBefore(slot,btn); else col.appendChild(slot);
+  updateCounters();
+  updateSlotPcts();
+}
+
+function removeSlot(btn) {
+  btn.closest('.slot').remove();
+  updateCounters();
+  updateSlotPcts();
+}
+
+function updateCounters() {
+  ['POR','DIF','CEN','ATT'].forEach(r=>{
+    const n=document.querySelectorAll(`#col-${r} .slot`).length;
+    document.getElementById('cnt-'+r).textContent=n+' slot';
+  });
+}
+
+function updateSlotPcts() {
+  const total=getTotal();
+  document.querySelectorAll('.slot').forEach(s=>{
+    const id=s.dataset.id;
+    const cr=parseInt(s.querySelector('.slot-credits')?.textContent)||0;
+    const pct=total>0?(cr/total*100).toFixed(1)+'%':'0%';
+    const el=document.getElementById('spct-'+id);
+    if(el) el.textContent='Budget '+pct;
+  });
+}
+
+// Tier picker
+let activePicker=null;
+function openTierPicker(btn,id) {
+  if(activePicker){ activePicker.remove(); activePicker=null; }
+  const picker=document.createElement('div');
+  picker.className='tier-picker';
+  TIERS.forEach(t=>{
+    const opt=document.createElement('div');
+    opt.className='tier-opt '+t.cls;
+    opt.textContent=t.label;
+    opt.onclick=()=>{
+      btn.className='slot-tier '+t.cls;
+      btn.textContent=t.label;
+      picker.remove(); activePicker=null;
+    };
+    picker.appendChild(opt);
+  });
+  btn.parentElement.style.position='relative';
+  btn.parentElement.appendChild(picker);
+  activePicker=picker;
+  setTimeout(()=>document.addEventListener('click',function h(e){if(!picker.contains(e.target)){picker.remove();activePicker=null;document.removeEventListener('click',h);}},100));
+}
+
+// Cambio foto (click sulla foto)
+function changePhoto(img) {
+  const input=document.createElement('input');
+  input.type='file'; input.accept='image/*';
+  input.onchange=e=>{
+    const file=e.target.files[0];
+    if(!file) return;
+    const reader=new FileReader();
+    reader.onload=ev=>{ img.src=ev.target.result; };
+    reader.readAsDataURL(file);
+  };
+  input.click();
+}
+
+function initAddBtns() {
+  ['POR','DIF','CEN','ATT'].forEach(role=>{
+    const col=document.getElementById('col-'+role);
+    const btn=document.createElement('button');
+    btn.className='add-slot-btn';
+    btn.textContent='+ Aggiungi slot';
+    btn.onclick=()=>addSlot(role);
+    col.appendChild(btn);
+  });
+}
+
+// ── COMPLETAMENTO AUTOMATICO ─────────────────
+function autoCompleta() {
+  const total=getTotal();
+  ['POR','DIF','CEN','ATT'].forEach(role=>{
+    const slots=document.querySelectorAll(`#col-${role} .slot`);
+    if(!slots.length) return;
+    const budget=Math.round(total*rolePct[role]/100);
+    const per=Math.floor(budget/slots.length);
+    let rem=budget-per*slots.length;
+    slots.forEach((s,i)=>{
+      const cr=s.querySelector('.slot-credits');
+      if(cr){ cr.textContent=per+(i===0?rem:0); }
+    });
+  });
+  updateSlotPcts();
+}
+
+// ── EXPORT PNG ───────────────────────────────
+function exportPNG() {
+  html2canvas(document.querySelector('.page'),{scale:2,useCORS:true,backgroundColor:'#0d0628'}).then(c=>{
+    const a=document.createElement('a');
+    a.href=c.toDataURL('image/png');
+    a.download='strategia-asta.png';
+    a.click();
+  });
+}
+
+// ── SALVA IN LOCALE ──────────────────────────
+async function salvaInLocale() {
+  const html='<!DOCTYPE html>\n'+document.documentElement.outerHTML;
+  const blob=new Blob([html],{type:'text/html'});
+  try {
+    if(window.showSaveFilePicker){
+      const h=await window.showSaveFilePicker({suggestedName:'strategia-asta.html',types:[{description:'HTML',accept:{'text/html':['.html']}}]});
+      const w=await h.createWritable();
+      await w.write(blob);
+      await w.close();
+      const btn=document.getElementById('btn-salva-locale');
+      if(btn){const o=btn.textContent;btn.textContent='✅ Salvato!';setTimeout(()=>btn.textContent=o,2000);}
+    } else throw new Error();
+  } catch(e){ const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='strategia-asta.html';a.click(); }
+}
+
+// ── PUBBLICA SU GITHUB ───────────────────────
+const GH_REPO='fabmiscia/Il-Mister-Fabry';
+const GH_FILE="01 Materiali per l'asta/strategia-asta.html";
+const GH_PAGES='https://fabmiscia.github.io/Il-Mister-Fabry/01%20Materiali%20per%20l%27asta/strategia-asta.html';
+
+async function pubblicaGitHub() {
+  const token=localStorage.getItem('gh_token')||prompt('GitHub Token (ghp_...):');
+  if(!token) return;
+  localStorage.setItem('gh_token',token);
+  const html='<!DOCTYPE html>\n'+document.documentElement.outerHTML;
+  const b64=await new Promise((resolve,reject)=>{
+    const blob=new Blob([html],{type:'text/plain'});
+    const reader=new FileReader();
+    reader.onloadend=()=>resolve(reader.result.split(',')[1]);
+    reader.onerror=reject;
+    reader.readAsDataURL(blob);
+  });
+  const hdrs={'Authorization':'token '+token,'Accept':'application/vnd.github+json','Content-Type':'application/json'};
+  const apiUrl=`https://api.github.com/repos/${GH_REPO}/contents/${GH_FILE}`;
+  const check=await fetch(apiUrl,{headers:hdrs});
+  const sha=check.ok?(await check.json()).sha:null;
+  const body={message:'feat: aggiorna strategia-asta',content:b64};
+  if(sha) body.sha=sha;
+  const res=await fetch(apiUrl,{method:'PUT',headers:hdrs,body:JSON.stringify(body)});
+  if(res.ok){ alert('✅ Pubblicato!\n'+GH_PAGES); } else { alert('❌ Errore: '+(await res.json()).message); localStorage.removeItem('gh_token'); }
+}
+
+// ── INIT ─────────────────────────────────────
+initAllSW();
+initAddBtns();
+drawPie();
+updateAll();
+
+// Dati di esempio — solo al primo caricamento
+if(!document.querySelector('.slot')){
+  addSlot('POR',{name:'Skorupski',tier:'semi',credits:30,photo:'img/asta/skorupski.png'});
+  addSlot('POR',{name:'Semper',tier:'low',credits:5,photo:'img/asta/semper.png'});
+  addSlot('POR',{name:'Ravaglia F.',tier:'low',credits:5,photo:'img/asta/ravaglia_f.png'});
+  addSlot('DIF',{name:'Kalulu',tier:'top',credits:25,photo:'img/asta/kalulu.png'});
+  addSlot('DIF',{name:'Baschirotto',tier:'ott',credits:15,photo:'img/asta/baschirotto.png'});
+  addSlot('DIF',{name:'Dodò',tier:'ott',credits:17});
+  addSlot('DIF',{name:'Miranda J.',tier:'jolly',credits:9,photo:'img/asta/miranda_j.png'});
+  addSlot('DIF',{name:'Kristensen T.',tier:'low',credits:2,photo:'img/asta/kristensen_t.png'});
+  addSlot('DIF',{name:'Pellegrini Lu.',tier:'low',credits:2,photo:'img/asta/pellegrini_lu.png'});
+  addSlot('DIF',{name:'Ismajli',tier:'low',credits:2,photo:'img/asta/ismajli.png'});
+  addSlot('DIF',{name:'Terracciano F.',tier:'low',credits:2,photo:'img/asta/terracciano_f.png'});
+  addSlot('CEN',{name:'Rabiot',tier:'top',credits:50,photo:'img/asta/rabiot.png'});
+  addSlot('CEN',{name:'Thuram K.',tier:'ott',credits:20,photo:'img/asta/thuram_k.png'});
+  addSlot('CEN',{name:'Taylor K.',tier:'ott',credits:26});
+  addSlot('CEN',{name:'Fofana Y.',tier:'jolly',credits:4,photo:'img/asta/fofana_y.png'});
+  addSlot('CEN',{name:'Bernardeschi',tier:'jolly',credits:5,photo:'img/asta/bernardeschi.png'});
+  addSlot('CEN',{name:'Koopmeiners',tier:'jolly',credits:4,photo:'img/asta/koopmeiners.png'});
+  addSlot('CEN',{name:'Basic',tier:'low',credits:2});
+  addSlot('CEN',{name:'Matic',tier:'low',credits:2,photo:'img/asta/matic.png'});
+  addSlot('ATT',{name:'Malen',tier:'top',credits:150,photo:'img/asta/malen.png'});
+  addSlot('ATT',{name:'Scamacca',tier:'semi',credits:90,photo:'img/asta/scamacca.png'});
+  addSlot('ATT',{name:'Esposito Se.',tier:'jolly',credits:27,photo:'img/asta/esposito_se.png'});
+  addSlot('ATT',{name:'Ekuban',tier:'jolly',credits:2,photo:'img/asta/ekuban.png'});
+  addSlot('ATT',{name:'Borrelli',tier:'low',credits:3,photo:'img/asta/borrelli.png'});
+  addSlot('ATT',{name:'Nzola',tier:'low',credits:2});
+}
+
+// Nascondi bottoni locali su GitHub Pages
+</script>
+<script>if(location.protocol!=='file:'){
+  ['btn-salva-locale','btn-pubblica-github'].forEach(function(id){
+    var b=document.getElementById(id); if(b) b.style.display='none';
+  });
+}
+</script>
+
+
+</body></html>
