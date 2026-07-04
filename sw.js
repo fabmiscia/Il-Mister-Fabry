@@ -1,17 +1,22 @@
-const CACHE = 'spogliatoio-v1';
+const CACHE = 'spogliatoio-v2';
 const PRECACHE = ['./index.html', './'];
 
 self.addEventListener('install', e => {
   e.waitUntil(caches.open(CACHE).then(c => c.addAll(PRECACHE)));
-  self.skipWaiting();
+  // NON chiamiamo skipWaiting qui: l'utente decide quando aggiornare
 });
 
 self.addEventListener('activate', e => {
   e.waitUntil(
-    caches.keys().then(keys =>
-      Promise.all(keys.filter(k => k !== CACHE).map(k => caches.delete(k)))
-    ).then(() => self.clients.claim())
+    caches.keys()
+      .then(keys => Promise.all(keys.filter(k => k !== CACHE).map(k => caches.delete(k))))
+      .then(() => self.clients.claim())
   );
+});
+
+// Quando il client dice "aggiorna ora", prendiamo il controllo
+self.addEventListener('message', e => {
+  if (e.data && e.data.type === 'SKIP_WAITING') self.skipWaiting();
 });
 
 self.addEventListener('fetch', e => {
@@ -25,20 +30,7 @@ self.addEventListener('fetch', e => {
         if (res && res.ok) cache.put(e.request, res.clone());
         return res;
       }).catch(() => null);
-
-      // Stale-while-revalidate: mostra subito la cache, aggiorna in background
-      if (cached) {
-        fetchPromise.then(res => {
-          if (res) notifyClients();
-        });
-        return cached;
-      }
-      return fetchPromise;
+      return cached || fetchPromise;
     })
   );
 });
-
-async function notifyClients() {
-  const clients = await self.clients.matchAll({ type: 'window' });
-  clients.forEach(c => c.postMessage({ type: 'SW_UPDATED' }));
-}
