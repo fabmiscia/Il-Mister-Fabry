@@ -68,5 +68,23 @@
     "file": "nuovo_arrivo_Viery__Fiorentina.html",
     "giocatore": "Viery",
     "squadra": "Fiorentina"
+  },
+  {
+    "giocatore": "Demi Akarakiri",
+    "squadra": "Cagliari",
+    "ruolo": "C",
+    "file": "nuovo_arrivo_Demi_Akarakiri__Cagliari.html"
+  },
+  {
+    "giocatore": "Franco Carboni",
+    "squadra": "Parma",
+    "ruolo": "D",
+    "file": "nuovo_arrivo_Franco_Carboni__Parma.html"
+  },
+  {
+    "giocatore": "David Puczka",
+    "squadra": "Genoa",
+    "ruolo": "D",
+    "file": "nuovo_arrivo_David_Puczka__Genoa.html"
   }
 ]
