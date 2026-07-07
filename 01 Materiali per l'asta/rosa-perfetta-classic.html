@@ -264,7 +264,7 @@ body { background:#0a0a0a; font-family:'Montserrat',sans-serif; color:#fff; min-
     <p>Modello 3 · 8 · 8 · 6 &nbsp;·&nbsp; 25 giocatori &nbsp;·&nbsp; Il Mister Fabry</p>
   </div>
   <div class="header-actions">
-    <button class="btn btn-save" onclick="salvaLocale()">💾 Salva in locale</button>
+    <button class="btn btn-save" onclick="scaricaHTML()">💾 Salva in locale</button>
     <button class="btn btn-png" onclick="esportaPNG()">📸 Esporta PNG</button>
     <button class="btn btn-gh" onclick="esportaGitHub()" disabled="">⏳ Caricamento…</button>
   </div>
@@ -457,30 +457,6 @@ function ricalcola() {
     const bar = document.getElementById(`rep-bar-${rep}`);
     if (bar) bar.style.width = riempito + '%';
   });
-}
-
-// ── Scarica HTML ──
-function scaricaHTML() {
-  document.querySelectorAll('input').forEach(inp => inp.setAttribute('value', inp.value));
-  const html = '<!DOCTYPE html>\n' + document.documentElement.outerHTML;
-  const blob = new Blob([html], {type:'text/html'});
-  const a = document.createElement('a'); a.href = URL.createObjectURL(blob);
-  a.download = 'rosa-ideale-classic.html'; a.click();
-}
-
-// ── Esporta PNG ──
-async function esportaPNG() {
-  const btn = document.querySelector('.btn-png');
-  btn.textContent = '⏳ Elaborazione…';
-  try {
-    const canvas = await html2canvas(document.getElementById('rosa'), {
-      backgroundColor:'#0a0a0a', scale:2, useCORS:true
-    });
-    const a = document.createElement('a');
-    a.href = canvas.toDataURL('image/png');
-    a.download = 'rosa-perfetta-classic.png'; a.click();
-  } catch(e) { alert('Prova a fare uno screenshot.'); }
-  btn.textContent = '📸 Esporta PNG';
 }
 
 // ── Scarica HTML ──
