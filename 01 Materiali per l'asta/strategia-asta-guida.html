@@ -40,6 +40,7 @@ body { background:#0a0a0a; font-family:'Montserrat',sans-serif; color:#fff; min-
 }
 .strat-icon { font-size:32px; margin-bottom:12px; }
 .strat-nome { font-family:'Oswald',sans-serif; font-size:18px; letter-spacing:3px; text-transform:uppercase; color:var(--col); margin-bottom:8px; }
+.strat-tipo { font-size:10px; font-weight:800; letter-spacing:3px; text-transform:uppercase; color:var(--col); margin-bottom:10px; }
 .strat-desc { font-size:12px; color:#fff; line-height:1.7; margin-bottom:16px; }
 .strat-meta { display:flex; flex-direction:column; gap:8px; }
 .strat-row { display:flex; gap:8px; align-items:flex-start; }
@@ -47,9 +48,9 @@ body { background:#0a0a0a; font-family:'Montserrat',sans-serif; color:#fff; min-
 .badge-pro { background:#1a3a1a; color:#2DB84A; border:1px solid #2DB84A; }
 .badge-con { background:#3a1a1a; color:#e8003d; border:1px solid #e8003d; }
 .strat-text { font-size:11px; color:#fff; line-height:1.5; }
-.col-anticipo   { --col:#f08040; }
-.col-attendista { --col:#4a9eff; }
-.col-opportunista { --col:#b0ff00; }
+.col-squalo      { --col:#ef4444; }
+.col-coccodrillo { --col:#4a9eff; }
+.col-condor      { --col:#b0ff00; }
 
 /* ── MATRICE ── */
 .matrix-wrap { overflow-x:auto; }
@@ -90,8 +91,8 @@ body { background:#0a0a0a; font-family:'Montserrat',sans-serif; color:#fff; min-
 .sp-abbondante { background:#1a3a1a; color:#2DB84A; border:1px solid #2DB84A; }
 
 .strat-pill { display:inline-block; padding:3px 10px; border-radius:20px; font-size:9px; font-weight:800; letter-spacing:1px; margin-top:4px; }
-.sp-anticipo   { background:#2a1a0a; color:#f08040; border:1px solid #f08040; }
-.sp-attendista { background:#1a2a3a; color:#4a9eff; border:1px solid #4a9eff; }
+.sp-squalo   { background:#2a0a0a; color:#ef4444; border:1px solid #ef4444; }
+.sp-coccodrillo { background:#0a1a2a; color:#4a9eff; border:1px solid #4a9eff; }
 .sp-opport     { background:#1a3a0a; color:#b0ff00; border:1px solid #b0ff00; }
 
 /* Ancoraggio box */
@@ -168,35 +169,38 @@ body { background:#0a0a0a; font-family:'Montserrat',sans-serif; color:#fff; min-
   <!-- LE 3 STRATEGIE -->
   <div class="sez-title">● Le 3 strategie d'asta</div>
   <div class="strategie-grid">
-    <div class="strat-card col-anticipo">
-      <div class="strat-icon">⚔️</div>
-      <div class="strat-nome">Anticipo / Possesso</div>
-      <div class="strat-desc">Vuoi quei giocatori a tutti i costi. Chiami tu, detti il prezzo, ti esponi anche oltre il budget previsto pur di portarli a casa.</div>
+    <div class="strat-card col-squalo">
+      <div class="strat-icon" style="font-size:48px">🦈</div>
+      <div class="strat-nome">Squalo</div>
+      <div class="strat-tipo">Aggressivo</div>
+      <div class="strat-desc">Attacca subito, prende i big, non lascia respiro agli avversari. Sa esattamente cosa vuole e lo prende — ma rischia di saziarsi troppo presto e finire il budget prima della fine dell'asta.</div>
       <div class="strat-meta">
         <div class="strat-row"><span class="strat-badge badge-pro">Pro</span><span class="strat-text">Porti a casa i tuoi veri obiettivi senza rischiare che li prendano altri</span></div>
         <div class="strat-row"><span class="strat-badge badge-pro">Pro</span><span class="strat-text">Ideale per i ruoli scarsi: attaccanti e portieri in leghe numerose</span></div>
-        <div class="strat-row"><span class="strat-badge badge-con">Contro</span><span class="strat-text">Rischi di compromettere il budget per il resto dell'asta</span></div>
+        <div class="strat-row"><span class="strat-badge badge-con">Contro</span><span class="strat-text">Rischi di esaurire il budget a metà asta e restare senza munizioni</span></div>
         <div class="strat-row"><span class="strat-badge badge-con">Contro</span><span class="strat-text">Gli avversari rilanciano apposta per farti spendere di più</span></div>
       </div>
     </div>
-    <div class="strat-card col-attendista">
-      <div class="strat-icon">⏳</div>
-      <div class="strat-nome">Attendista</div>
-      <div class="strat-desc">Stai zitto, accumuli crediti, osservi. Quando gli altri sono a corto di budget, colpisci e prendi giocatori di valore a prezzi bassi.</div>
+    <div class="strat-card col-coccodrillo">
+      <div class="strat-icon" style="font-size:48px">🐊</div>
+      <div class="strat-nome">Coccodrillo</div>
+      <div class="strat-tipo">Attendista</div>
+      <div class="strat-desc">Aspetta fermo e di solito porta a casa la preda — in natura vince quasi sempre. Budget sempre sotto controllo, pazienza infinita. Ma la sua ingenuità ogni tanto gli costa cara: aspetta troppo e certi giocatori non li trova più.</div>
       <div class="strat-meta">
         <div class="strat-row"><span class="strat-badge badge-pro">Pro</span><span class="strat-text">Budget sempre sotto controllo, nessuno spreco</span></div>
         <div class="strat-row"><span class="strat-badge badge-pro">Pro</span><span class="strat-text">Ideale per i ruoli abbondanti: difensori e centrocampisti in leghe piccole</span></div>
-        <div class="strat-row"><span class="strat-badge badge-con">Contro</span><span class="strat-text">Attenzione: se aspetti troppo su ruoli scarsi, non trovi più nulla di buono</span></div>
+        <div class="strat-row"><span class="strat-badge badge-con">Contro</span><span class="strat-text">Se aspetti troppo sui ruoli scarsi, non trovi più nulla di buono</span></div>
         <div class="strat-row"><span class="strat-badge badge-con">Contro</span><span class="strat-text">In leghe con Mister esperti i prezzi non scendono mai abbastanza</span></div>
       </div>
     </div>
-    <div class="strat-card col-opportunista">
-      <div class="strat-icon">🎯</div>
-      <div class="strat-nome">Opportunista</div>
-      <div class="strat-desc">Nessun piano fisso. Leggi l'asta in tempo reale: il giocatore giusto, al momento giusto, al prezzo giusto. La più difficile da eseguire.</div>
+    <div class="strat-card col-condor">
+      <div class="strat-icon" style="font-size:48px">🦅</div>
+      <div class="strat-nome">Condor</div>
+      <div class="strat-tipo">Opportunista</div>
+      <div class="strat-desc">Il più furbo dei tre. Vola alto, legge tutta l'asta dall'alto e scende al momento giusto. Lascia che gli altri si battano sui big, poi raccoglie il meglio rimasto a prezzi ribassati.</div>
       <div class="strat-meta">
-        <div class="strat-row"><span class="strat-badge badge-pro">Pro</span><span class="strat-text">Massima flessibilità: ti adatti a qualsiasi situazione</span></div>
-        <div class="strat-row"><span class="strat-badge badge-pro">Pro</span><span class="strat-text">Sfrutti gli errori degli avversari in tempo reale</span></div>
+        <div class="strat-row"><span class="strat-badge badge-pro">Pro</span><span class="strat-text">Massima flessibilità: si adatta a qualsiasi situazione</span></div>
+        <div class="strat-row"><span class="strat-badge badge-pro">Pro</span><span class="strat-text">Sfrutta gli errori degli avversari e i prezzi ribassati a fine asta</span></div>
         <div class="strat-row"><span class="strat-badge badge-con">Contro</span><span class="strat-text">Richiede grande esperienza, conoscenza dei prezzi e sangue freddo</span></div>
         <div class="strat-row"><span class="strat-badge badge-con">Contro</span><span class="strat-text">Senza disciplina diventa improvvisazione pura</span></div>
       </div>
@@ -210,9 +214,9 @@ body { background:#0a0a0a; font-family:'Montserrat',sans-serif; color:#fff; min-
       <thead>
         <tr>
           <th>Tipo di asta</th>
-          <th>⚔️ Anticipo</th>
-          <th>⏳ Attendista</th>
-          <th>🎯 Opportunista</th>
+          <th>🦈 Squalo</th>
+          <th>🐊 Coccodrillo</th>
+          <th>🦅 Condor</th>
         </tr>
       </thead>
       <tbody>
