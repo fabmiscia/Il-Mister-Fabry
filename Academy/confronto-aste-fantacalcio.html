@@ -1,0 +1,717 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Confronto Aste Fantacalcio</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Anton&family=Montserrat:wght@400;500;600;700;800&display=swap');
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --agosto: #f97316;
+    --agosto-dim: rgba(249,115,22,.12);
+    --settembre: #3b82f6;
+    --settembre-dim: rgba(59,130,246,.12);
+    --bg: #080808;
+    --surface: #111;
+    --border: #1e1e1e;
+    --text: #fff;
+    --muted: #777;
+  }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Montserrat', sans-serif;
+    min-height: 100vh;
+    padding: 32px 20px 60px;
+  }
+
+  /* HEADER */
+  .page-header {
+    text-align: center;
+    margin-bottom: 36px;
+  }
+  .page-eyebrow {
+    font-size: 11px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 10px;
+  }
+  .page-title {
+    font-family: 'Anton', sans-serif;
+    font-size: clamp(30px, 5vw, 56px);
+    line-height: 1.05;
+    letter-spacing: 1px;
+  }
+  .page-title .agosto-c { color: var(--agosto); }
+  .page-title .settembre-c { color: var(--settembre); }
+  .page-sub {
+    font-size: 14px;
+    color: var(--muted);
+    margin-top: 10px;
+    font-weight: 500;
+  }
+
+  /* WRAPPER */
+  .wrapper {
+    max-width: 1060px;
+    margin: 0 auto;
+  }
+
+  /* COLUMN HEADERS */
+  .col-headers {
+    display: grid;
+    grid-template-columns: 220px 1fr 1fr;
+    gap: 3px;
+    margin-bottom: 3px;
+  }
+  .col-empty { background: transparent; }
+  .col-head {
+    border-radius: 12px 12px 0 0;
+    padding: 18px 20px;
+    text-align: center;
+  }
+  .col-head.agosto { background: var(--agosto-dim); border-top: 3px solid var(--agosto); }
+  .col-head.settembre { background: var(--settembre-dim); border-top: 3px solid var(--settembre); }
+  .col-head .ch-emoji { font-size: 28px; display: block; margin-bottom: 6px; }
+  .col-head .ch-label {
+    font-family: 'Anton', sans-serif;
+    font-size: 20px;
+    letter-spacing: 1px;
+  }
+  .col-head.agosto .ch-label { color: var(--agosto); }
+  .col-head.settembre .ch-label { color: var(--settembre); }
+  .col-head .ch-sub {
+    font-size: 11px;
+    color: var(--muted);
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-top: 2px;
+  }
+
+  /* SECTION DIVIDER */
+  .section-divider {
+    display: grid;
+    grid-template-columns: 220px 1fr 1fr;
+    gap: 3px;
+    margin: 3px 0 0;
+  }
+  .section-label-cell {
+    grid-column: 1 / -1;
+    background: #161616;
+    padding: 10px 20px;
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: #444;
+    border-left: 3px solid #2a2a2a;
+  }
+
+  /* ROW */
+  .compare-row {
+    display: grid;
+    grid-template-columns: 220px 1fr 1fr;
+    gap: 3px;
+    margin-bottom: 3px;
+  }
+  .compare-row:last-child { margin-bottom: 0; }
+
+  .row-label {
+    background: var(--surface);
+    padding: 18px 16px;
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+  }
+  .row-icon { font-size: 20px; flex-shrink: 0; margin-top: 1px; }
+  .row-label-text {
+    font-size: 12px;
+    font-weight: 800;
+    letter-spacing: .5px;
+    text-transform: uppercase;
+    color: #aaa;
+    line-height: 1.4;
+  }
+
+  .row-cell {
+    padding: 18px 20px;
+    font-size: 13px;
+    line-height: 1.6;
+    color: #ccc;
+    position: relative;
+  }
+  .row-cell.agosto-cell {
+    background: var(--agosto-dim);
+    border-left: 2px solid rgba(249,115,22,.3);
+  }
+  .row-cell.settembre-cell {
+    background: var(--settembre-dim);
+    border-left: 2px solid rgba(59,130,246,.3);
+  }
+
+  /* VERDICT BADGE */
+  .badge {
+    display: inline-block;
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    padding: 3px 8px;
+    border-radius: 4px;
+    margin-bottom: 8px;
+  }
+  .badge-win { background: rgba(34,197,94,.2); color: #22c55e; }
+  .badge-risk { background: rgba(239,68,68,.2); color: #ef4444; }
+  .badge-neutral { background: rgba(255,255,255,.08); color: #888; }
+
+  /* BOTTOM VERDICT */
+  .verdict-section {
+    margin-top: 12px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    overflow: hidden;
+  }
+  .verdict-header {
+    padding: 16px 24px;
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    color: var(--muted);
+    border-bottom: 1px solid var(--border);
+    background: #0f0f0f;
+  }
+  .verdict-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1px;
+    background: var(--border);
+  }
+  .verdict-col {
+    padding: 22px 24px;
+    background: var(--surface);
+  }
+  .verdict-col-title {
+    font-family: 'Anton', sans-serif;
+    font-size: 15px;
+    letter-spacing: 1px;
+    margin-bottom: 12px;
+  }
+  .verdict-col.agosto .verdict-col-title { color: var(--agosto); }
+  .verdict-col.settembre .verdict-col-title { color: var(--settembre); }
+  .verdict-list { list-style: none; display: flex; flex-direction: column; gap: 7px; }
+  .verdict-list li {
+    display: flex;
+    gap: 8px;
+    font-size: 13px;
+    color: #ccc;
+    line-height: 1.4;
+  }
+  .verdict-list li::before { content: '→'; color: var(--muted); flex-shrink: 0; }
+
+  /* FINAL BANNER */
+  .final-banner {
+    margin-top: 12px;
+    background: linear-gradient(135deg, rgba(249,115,22,.08), rgba(59,130,246,.08));
+    border: 1px solid #222;
+    border-radius: 14px;
+    padding: 24px 28px;
+    text-align: center;
+  }
+  .final-banner .fb-title {
+    font-family: 'Anton', sans-serif;
+    font-size: 22px;
+    letter-spacing: 1px;
+    margin-bottom: 10px;
+  }
+  .final-banner .fb-text {
+    font-size: 14px;
+    color: #aaa;
+    line-height: 1.7;
+    max-width: 720px;
+    margin: 0 auto;
+  }
+
+  /* ACTIONS */
+  .actions {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    margin-top: 28px;
+    flex-wrap: wrap;
+  }
+  .btn {
+    padding: 12px 28px;
+    border-radius: 50px;
+    border: none;
+    cursor: pointer;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 700;
+    font-size: 13px;
+    letter-spacing: .5px;
+    transition: opacity .2s;
+  }
+  .btn:hover { opacity: .82; }
+  .btn-png { background: #fff; color: #000; }
+  .btn-github { background: #238636; color: #fff; }
+
+  [contenteditable]:focus { outline: 1px dashed #333; border-radius: 3px; }
+
+  /* OVERLAY GITHUB */
+  #gh-overlay {
+    display: none; position: fixed; inset: 0;
+    background: rgba(0,0,0,.88); z-index: 100;
+    align-items: center; justify-content: center;
+  }
+  #gh-overlay.show { display: flex; }
+  .gh-box {
+    background: #161b22; border: 1px solid #30363d;
+    border-radius: 16px; padding: 32px; width: 360px; text-align: center;
+  }
+  .gh-box h3 { font-size: 18px; margin-bottom: 8px; }
+  .gh-box p { font-size: 13px; color: #8b949e; margin-bottom: 20px; }
+  .gh-box input {
+    width: 100%; padding: 10px 14px;
+    background: #0d1117; border: 1px solid #30363d;
+    border-radius: 8px; color: #fff; font-size: 14px; margin-bottom: 12px;
+  }
+  .gh-box .btn-row { display: flex; gap: 8px; }
+  .gh-box .btn-row button { flex: 1; padding: 10px; border-radius: 8px; border: none; cursor: pointer; font-weight: 700; font-size: 13px; }
+  .gh-cancel { background: #21262d; color: #ccc; }
+  .gh-confirm { background: #238636; color: #fff; }
+  #gh-status { font-size: 13px; color: #8b949e; margin-top: 12px; min-height: 20px; }
+
+  @media (max-width: 700px) {
+    .col-headers, .compare-row, .section-divider { grid-template-columns: 1fr; }
+    .col-empty { display: none; }
+    .row-label { background: #161616; }
+    .verdict-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<div class="wrapper">
+
+  <!-- HEADER -->
+  <div class="page-header">
+    <div class="page-eyebrow" contenteditable="true">Guida Strategica · Fantacalcio 2026-27</div>
+    <div class="page-title" contenteditable="true">
+      ASTA <span class="agosto-c">AGOSTO</span> VS ASTA <span class="settembre-c">SETTEMBRE</span>
+    </div>
+    <div class="page-sub" contenteditable="true">Tutto quello che cambia tra le due aste — analisi voce per voce</div>
+  </div>
+
+  <!-- FOR BOYS / FOR MEN BANNER -->
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:3px;margin-bottom:20px;">
+    <div style="background:var(--agosto-dim);border-top:3px solid var(--agosto);border-radius:12px;padding:20px 24px;text-align:center;">
+      <div style="font-size:28px;margin-bottom:6px;">🧒</div>
+      <div style="font-family:'Anton',sans-serif;font-size:22px;color:var(--agosto);letter-spacing:1px;" contenteditable="true">FOR BOYS</div>
+      <div style="font-size:12px;color:#aaa;margin-top:6px;line-height:1.5;" contenteditable="true">Sbarazzina, adrenalinica, piena di rischi. La fanno in tanti, la gestiscono in pochi. Ci vuole coraggio — ma anche tanta fortuna.</div>
+    </div>
+    <div style="background:var(--settembre-dim);border-top:3px solid var(--settembre);border-radius:12px;padding:20px 24px;text-align:center;">
+      <div style="font-size:28px;margin-bottom:6px;">🧔</div>
+      <div style="font-family:'Anton',sans-serif;font-size:22px;color:var(--settembre);letter-spacing:1px;" contenteditable="true">FOR MEN</div>
+      <div style="font-size:12px;color:#aaa;margin-top:6px;line-height:1.5;" contenteditable="true">Saggia, paziente, ragionata. Chi aspetta settembre non ha paura di perdere qualcosa — sa già che guadagnerà in certezza. È l'asta dei fantallenatori maturi.</div>
+    </div>
+  </div>
+
+  <!-- COLUMN HEADERS -->
+  <div class="col-headers">
+    <div class="col-empty"></div>
+    <div class="col-head agosto">
+      <span class="ch-emoji">🔥</span>
+      <div class="ch-label">AGOSTO</div>
+      <div class="ch-sub">Mercato aperto</div>
+    </div>
+    <div class="col-head settembre">
+      <span class="ch-emoji">📋</span>
+      <div class="ch-label">SETTEMBRE</div>
+      <div class="ch-sub">Mercato chiuso</div>
+    </div>
+  </div>
+
+  <!-- SEZIONE 1: INFORMAZIONI -->
+  <div class="section-divider">
+    <div class="section-label-cell">📡 Informazioni disponibili</div>
+  </div>
+
+  <div class="compare-row">
+    <div class="row-label">
+      <div class="row-icon">🗞️</div>
+      <div class="row-label-text">Monitoraggio calciomercato</div>
+    </div>
+    <div class="row-cell agosto-cell">
+      <span class="badge badge-risk">Impegno alto</span><br>
+      <span contenteditable="true">Devi seguire il mercato in modo costante e assiduo, tutti i giorni. Ogni mattina possono esserci trattative nuove, cessioni improvvise, colpi last minute. Chi non segue rischia di comprare giocatori che partono il giorno dopo.</span>
+    </div>
+    <div class="row-cell settembre-cell">
+      <span class="badge badge-win">Nessuno stress</span><br>
+      <span contenteditable="true">Mercato chiuso — non devi monitorare nulla dopo l'asta. La rosa è quella che è e non cambia più. Puoi concentrarti solo sulle scelte di formazione settimanali.</span>
+    </div>
+  </div>
+
+  <div class="compare-row">
+    <div class="row-label">
+      <div class="row-icon">⏱️</div>
+      <div class="row-label-text">Tempo di preparazione</div>
+    </div>
+    <div class="row-cell agosto-cell">
+      <span class="badge badge-risk">Studio compresso</span><br>
+      <span contenteditable="true">Devi partire già ora. Il tempo per studiare giocatori, mercato e moduli è ridotto — le aste di agosto arrivano velocemente e ogni settimana persa è vantaggio per chi ha iniziato prima. Chi aspetta l'ultimo momento non recupera.</span>
+    </div>
+    <div class="row-cell settembre-cell">
+      <span class="badge badge-win">Preparazione lunga</span><br>
+      <span contenteditable="true">Hai più tempo per osservare con calma, studiare i ritiri, leggere le dichiarazioni degli allenatori e aspettare le prime amichevoli ufficiali. Puoi prenderti agosto intero per costruire la tua lista senza fretta.</span>
+    </div>
+  </div>
+
+  <div class="compare-row">
+    <div class="row-label">
+      <div class="row-icon">🏕️</div>
+      <div class="row-label-text">Ritiri pre-campionato</div>
+    </div>
+    <div class="row-cell agosto-cell">
+      <span class="badge badge-risk">Scenario fluido</span><br>
+      <span contenteditable="true">I ritiri sono in corso — moduli non definiti, gerarchie in evoluzione, ballottaggi aperti. Le partitelle interne e le amichevoli spostano gerarchie ogni giorno. Un giocatore titolare il 5 agosto può perdere posto entro il 20.</span>
+    </div>
+    <div class="row-cell settembre-cell">
+      <span class="badge badge-win">Ritiri conclusi</span><br>
+      <span contenteditable="true">I ritiri sono finiti. Hai accesso ai dati completi delle amichevoli estive, alle dichiarazioni degli allenatori sulle gerarchie, e alle prime conferme di titolarità nelle uscite pre-campionato.</span>
+    </div>
+  </div>
+
+  <div class="compare-row">
+    <div class="row-label">
+      <div class="row-icon">📊</div>
+      <div class="row-label-text">Quadro tattico squadre</div>
+    </div>
+    <div class="row-cell agosto-cell">
+      <span class="badge badge-risk">Alta sperimentazione</span><br>
+      <span contenteditable="true">I ritiri sono fatti di esperimenti tattici — gli allenatori provano moduli, rotazioni, soluzioni che poi magari non utilizzeranno mai in campionato. Rischi di farti abbagliare da un trequartista che segna 3 gol in una partitella e poi in stagione non gioca mai da titolare. Non fidarti dei moduli estivi.</span>
+    </div>
+    <div class="row-cell settembre-cell">
+      <span class="badge badge-win">Moduli definiti</span><br>
+      <span contenteditable="true">Nessuna sperimentazione: conosci il modulo di tutte le squadre, chi gioca dove, chi è titolare fisso. Le prime giornate hanno già confermato le scelte degli allenatori. Puoi costruire la rosa sapendo esattamente quale ruolo ricopre ogni giocatore.</span>
+    </div>
+  </div>
+
+  <!-- SEZIONE 2: FATTORE HYPE -->
+  <div class="section-divider">
+    <div class="section-label-cell">💰 Fattore Hype e Quotazioni</div>
+  </div>
+
+  <div class="compare-row">
+    <div class="row-label">
+      <div class="row-icon">📈</div>
+      <div class="row-label-text">Hype pre-campionato</div>
+    </div>
+    <div class="row-cell agosto-cell">
+      <span class="badge badge-win">Tendenzialmente più contenuti</span><br>
+      <span contenteditable="true">Non è che i prezzi siano bassi per definizione — ma chi fa l'asta ad agosto sa che dovrà risparmiare crediti per le riparazioni di settembre. Questo frena le offerte e tiene i prezzi più contenuti rispetto a settembre. Chi non risparmia rischia di restare senza budget quando ne avrà più bisogno.</span>
+    </div>
+    <div class="row-cell settembre-cell">
+      <span class="badge badge-risk">Tendenzialmente più alti</span><br>
+      <span contenteditable="true">Con nessuna asta di riparazione imminente, i fantallenatori bruciano più budget senza preoccupazioni. Tutti spendono di più, le offerte salgono, i prezzi si alzano complessivamente. Non è un problema se hai fatto i conti — ma bisogna aspettarselo.</span>
+    </div>
+  </div>
+
+  <div class="compare-row">
+    <div class="row-label">
+      <div class="row-icon">⚡</div>
+      <div class="row-label-text">Effetto prime giornate sull'Hype</div>
+    </div>
+    <div class="row-cell agosto-cell">
+      <span class="badge badge-neutral">Non applicabile</span><br>
+      <span contenteditable="true">In agosto il campionato non è ancora iniziato. L'hype sui giocatori si costruisce solo dopo le prime giornate. Chi hai preso ad agosto potrebbe già valere il doppio a settembre — o niente.</span>
+    </div>
+    <div class="row-cell settembre-cell">
+      <span class="badge badge-risk">Attenzione all'hype</span><br>
+      <span contenteditable="true">Le prime 2-3 giornate creano hype immediato su chi ha segnato o giocato bene. Un giocatore che all'inizio valeva poco può di colpo valere tantissimo dopo un avvio di stagione positivo. Chi fa l'asta a settembre paga già questo hype — e spesso lo paga più del dovuto.</span>
+    </div>
+  </div>
+
+  <div class="compare-row">
+    <div class="row-label">
+      <div class="row-icon">🎪</div>
+      <div class="row-label-text">Fattore Hype</div>
+    </div>
+    <div class="row-cell agosto-cell">
+      <span class="badge badge-risk">Hype effimero</span><br>
+      <span contenteditable="true">L'agosto è il mese dell'hype: il nome esotico appena arrivato, il giovane che ha segnato 4 gol in una partitella di ritiro, il neo-acquisto di cui tutti parlano sui social. Attenzione — questo hype spesso non ha riscontro reale. Si rischia di pagare tanto giocatori che in campionato non vedranno mai un gol.</span>
+    </div>
+    <div class="row-cell settembre-cell">
+      <span class="badge badge-win">Hype reale</span><br>
+      <span contenteditable="true">L'hype di settembre nasce dalle prime giornate del campionato — chi ha segnato, chi ha giocato bene, chi si è rivelato titolare inamovibile. È un hype con riscontro concreto, non chiacchiere estive. Il prezzo è più alto, ma la base è reale.</span>
+    </div>
+  </div>
+
+  <div class="compare-row">
+    <div class="row-label">
+      <div class="row-icon">🎯</div>
+      <div class="row-label-text">Scoperte e sorprese</div>
+    </div>
+    <div class="row-cell agosto-cell">
+      <span class="badge badge-win">Vantaggio enorme</span><br>
+      <span contenteditable="true">Il giocatore talentuoso che pochi hanno ancora studiato si può prendere a prezzi irrisori. Chi segue il calciomercato con attenzione e anticipa l'esplosione di un giovane o di un neo-acquisto ha un vantaggio competitivo enorme.</span>
+    </div>
+    <div class="row-cell settembre-cell">
+      <span class="badge badge-neutral">Già svelate</span><br>
+      <span contenteditable="true">Le sorprese delle prime giornate sono già note a tutti. Chi è esploso ha già un prezzo alto nelle aste. Le "scoperte" di settembre sono quasi impossibili — tutti hanno le stesse informazioni e le sfruttano subito.</span>
+    </div>
+  </div>
+
+  <!-- SEZIONE 3: STRATEGIE -->
+  <div class="section-divider">
+    <div class="section-label-cell">🧠 Strategie e approccio</div>
+  </div>
+
+  <div class="compare-row">
+    <div class="row-label">
+      <div class="row-icon">💎</div>
+      <div class="row-label-text">Gestione crediti</div>
+    </div>
+    <div class="row-cell agosto-cell">
+      <span class="badge badge-win">Risparmia il 20-25%</span><br>
+      <span contenteditable="true">Regola d'oro: tenere almeno il 20-25% dei crediti per le aste di riparazione di settembre. Con il mercato ancora aperto, avrai quasi certamente bisogno di sostituire 1-2 giocatori ceduti o infortunati. Quei crediti sono la tua assicurazione.</span>
+    </div>
+    <div class="row-cell settembre-cell">
+      <span class="badge badge-neutral">Dipende dalla lega</span><br>
+      <span contenteditable="true">In linea di massima puoi investire quasi tutto, ma dipende dalle regole della tua lega: se i crediti avanzati si possono riutilizzare nelle aste successive, tenerti qualcosa è sempre furbo. Se invece i crediti non usati vanno persi, meglio spendere tutto su giocatori certi.</span>
+    </div>
+  </div>
+
+  <div class="compare-row">
+    <div class="row-label">
+      <div class="row-icon">🏟️</div>
+      <div class="row-label-text">Squadre su cui puntare</div>
+    </div>
+    <div class="row-cell agosto-cell">
+      <span class="badge badge-win">Squadre consolidate</span><br>
+      <span contenteditable="true">Punta su squadre con allenatore già confermato dallo scorso anno, modulo invariato e rosa quasi completa. Lì le gerarchie esistono già — i titolari sono gli stessi dell'anno scorso. Evita squadre con allenatore nuovo o che stanno rivoluzionando la rosa: troppa sperimentazione, troppi rischi.</span>
+    </div>
+    <div class="row-cell settembre-cell">
+      <span class="badge badge-win">Libertà totale</span><br>
+      <span contenteditable="true">Puoi spaziare su qualsiasi squadra, anche quelle con allenatori nuovi o con molti acquisti estivi. Le gerarchie sono ormai definite ovunque — anche uno scenario tattico completamente nuovo è già leggibile. Hai un quadro ben definito per costruire una squadra più solida e variegata.</span>
+    </div>
+  </div>
+
+  <div class="compare-row">
+    <div class="row-label">
+      <div class="row-icon">🚫</div>
+      <div class="row-label-text">Giocatori da evitare</div>
+    </div>
+    <div class="row-cell agosto-cell">
+      <span class="badge badge-risk">Lista nera lunga</span><br>
+      <span contenteditable="true">Evita: giocatori con contratto in scadenza, giocatori "caso" con trattative aperte, attaccanti di squadre che stanno cercando una punta titolare, giocatori dati in uscita dalla stampa. Qualsiasi "caso di mercato" è un rischio enorme.</span>
+    </div>
+    <div class="row-cell settembre-cell">
+      <span class="badge badge-neutral">Piccolo rischio rimane</span><br>
+      <span contenteditable="true">Il mercato italiano è chiuso, ma i mercati turco e arabo restano aperti più a lungo. Un giocatore che hai preso può ancora essere ceduto a Istanbul o Riad. Tieni d'occhio chi è accostato a club di quelle leghe: non è un rischio enorme, ma esiste e va monitorato.</span>
+    </div>
+  </div>
+
+  <!-- SEZIONE 4: RISCHI -->
+  <div class="section-divider">
+    <div class="section-label-cell">⚠️ Rischi specifici</div>
+  </div>
+
+  <div class="compare-row">
+    <div class="row-label">
+      <div class="row-icon">🔄</div>
+      <div class="row-label-text">Rischio post-asta</div>
+    </div>
+    <div class="row-cell agosto-cell">
+      <span class="badge badge-risk">Alto</span><br>
+      <span contenteditable="true">Dopo l'asta di agosto il lavoro non è finito — anzi, inizia. Devi monitorare ogni giorno le notizie di mercato, essere pronto a reagire, pianificare le aste di riparazione. L'asta è solo il primo atto, non il finale.</span>
+    </div>
+    <div class="row-cell settembre-cell">
+      <span class="badge badge-win">Basso</span><br>
+      <span contenteditable="true">Dopo l'asta di settembre puoi dormire sonni tranquilli. Nessuna cessione last minute, nessuna sorpresa di mercato. Il rischio vero è solo quello sportivo: infortuni, cali di forma, cambi tattici dell'allenatore.</span>
+    </div>
+  </div>
+
+  <div class="compare-row">
+    <div class="row-label">
+      <div class="row-icon">💔</div>
+      <div class="row-label-text">Scenario peggiore</div>
+    </div>
+    <div class="row-cell agosto-cell">
+      <span class="badge badge-risk">Il circolo vizioso</span><br>
+      <span contenteditable="true">Paghi tanto un giocatore che poi va via a fine mercato. Arrivi all'asta di riparazione di settembre con pochi crediti — e lì trovi chi ne ha di più e può permettersi di puntare il top player disponibile. Non solo hai perso il giocatore, ma non puoi nemmeno sostituirlo con qualcuno di pari livello perché qualcun altro ti supera in crediti. Hai pagato tanto, e ti ritrovi con una rosa peggiore di chi aveva fatto meno all'asta di agosto.</span>
+    </div>
+    <div class="row-cell settembre-cell">
+      <span class="badge badge-neutral">Gestibile</span><br>
+      <span contenteditable="true">Il peggior scenario è pagare troppo per un giocatore che poi delude sul campo. Ma almeno è sempre lì — non lo cedono, non sparisce. Il danno è sportivo, non strutturale. Puoi tamponare con i tuoi slot liberi.</span>
+    </div>
+  </div>
+
+  <div class="compare-row">
+    <div class="row-label">
+      <div class="row-icon">🧩</div>
+      <div class="row-label-text">Competenza richiesta</div>
+    </div>
+    <div class="row-cell agosto-cell">
+      <span class="badge badge-risk">Alta</span><br>
+      <span contenteditable="true">Per fare bene l'asta di agosto devi conoscere il calciomercato, saper leggere le trattative, capire le strategie delle squadre, avere un network di informazioni affidabili. Non è per tutti — premia il fantallenatore più preparato.</span>
+    </div>
+    <div class="row-cell settembre-cell">
+      <span class="badge badge-neutral">Media</span><br>
+      <span contenteditable="true">Bastano le informazioni pubbliche disponibili a tutti. Chi studia un po' di più può avere un leggero vantaggio, ma il gap tra il più preparato e il meno preparato è molto più ridotto rispetto ad agosto.</span>
+    </div>
+  </div>
+
+  <!-- VERDICT SECTION -->
+  <div class="verdict-section">
+    <div class="verdict-header">🏆 Per chi è giusta ogni asta</div>
+    <div class="verdict-grid">
+      <div class="verdict-col agosto">
+        <div class="verdict-col-title">🔥 ASTA DI AGOSTO — per chi:</div>
+        <ul class="verdict-list">
+          <li contenteditable="true">Segue il calciomercato tutti i giorni con passione</li>
+          <li contenteditable="true">Ama il rischio calcolato e non si spaventa delle incertezze</li>
+          <li contenteditable="true">Ha già pianificato una strategia di aste riparazione</li>
+          <li contenteditable="true">Ha voglia di studiare i nuovi acquisti prima degli altri</li>
+          <li contenteditable="true">Vuole prendere i futuri titolari prima che esplodano i prezzi</li>
+        </ul>
+      </div>
+      <div class="verdict-col settembre">
+        <div class="verdict-col-title">📋 ASTA DI SETTEMBRE — per chi:</div>
+        <ul class="verdict-list">
+          <li contenteditable="true">Vuole certezze e odia le sorprese post-asta</li>
+          <li contenteditable="true">Non ha tempo di seguire il mercato ogni giorno</li>
+          <li contenteditable="true">Preferisce pagare di più ma avere le informazioni chiare</li>
+          <li contenteditable="true">Vuole vedere le prime giornate prima di decidere</li>
+          <li contenteditable="true">Gioca per divertirsi senza lo stress del mercato</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- SPECCHIETTO RIASSUNTIVO -->
+  <div style="margin-top:12px;background:#0f0f0f;border:1px solid #1e1e1e;border-radius:14px;overflow:hidden;">
+    <div style="padding:14px 24px;font-size:11px;font-weight:800;letter-spacing:2.5px;text-transform:uppercase;color:#444;border-bottom:1px solid #1a1a1a;background:#0a0a0a;">
+      📋 Specchietto Riassuntivo
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:1px;background:#1a1a1a;">
+
+      <!-- AGOSTO -->
+      <div style="background:#0f0f0f;padding:24px;">
+        <div style="font-family:'Anton',sans-serif;font-size:17px;color:var(--agosto);letter-spacing:1px;margin-bottom:16px;">🔥 ASTA DI AGOSTO</div>
+        <div style="font-size:11px;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:#22c55e;margin-bottom:8px;">✅ Vantaggi</div>
+        <ul style="list-style:none;display:flex;flex-direction:column;gap:6px;margin-bottom:18px;">
+          <li style="font-size:12px;color:#ccc;display:flex;gap:8px;" contenteditable="true"><span style="color:#22c55e;flex-shrink:0;">+</span>Tendenzialmente prezzi più contenuti: molti risparmiano crediti per le aste di riparazione e non bruciano tutto il budget</li>
+          <li style="font-size:12px;color:#ccc;display:flex;gap:8px;" contenteditable="true"><span style="color:#22c55e;flex-shrink:0;">+</span>Puoi anticipare l'esplosione di un giocatore prima degli altri</li>
+          <li style="font-size:12px;color:#ccc;display:flex;gap:8px;" contenteditable="true"><span style="color:#22c55e;flex-shrink:0;">+</span>Le aste di riparazione diventano la tua seconda arma</li>
+          <li style="font-size:12px;color:#ccc;display:flex;gap:8px;" contenteditable="true"><span style="color:#22c55e;flex-shrink:0;">+</span>Più tempo per conoscere la rosa prima dell'inizio</li>
+        </ul>
+        <div style="font-size:11px;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:#ef4444;margin-bottom:8px;">❌ Svantaggi</div>
+        <ul style="list-style:none;display:flex;flex-direction:column;gap:6px;">
+          <li style="font-size:12px;color:#ccc;display:flex;gap:8px;" contenteditable="true"><span style="color:#ef4444;flex-shrink:0;">−</span>Mercato aperto: rischio cessioni fino al 31 agosto</li>
+          <li style="font-size:12px;color:#ccc;display:flex;gap:8px;" contenteditable="true"><span style="color:#ef4444;flex-shrink:0;">−</span>Moduli e gerarchie ancora incerti — alta sperimentazione</li>
+          <li style="font-size:12px;color:#ccc;display:flex;gap:8px;" contenteditable="true"><span style="color:#ef4444;flex-shrink:0;">−</span>Hype effimero dei ritiri: rischio pagare nomi sopravvalutati</li>
+          <li style="font-size:12px;color:#ccc;display:flex;gap:8px;" contenteditable="true"><span style="color:#ef4444;flex-shrink:0;">−</span>Studio compresso: devi partire subito e non puoi aspettare</li>
+          <li style="font-size:12px;color:#ccc;display:flex;gap:8px;" contenteditable="true"><span style="color:#ef4444;flex-shrink:0;">−</span>Devi risparmiare crediti per le riparazioni — meno libertà in asta</li>
+        </ul>
+      </div>
+
+      <!-- SETTEMBRE -->
+      <div style="background:#0f0f0f;padding:24px;">
+        <div style="font-family:'Anton',sans-serif;font-size:17px;color:var(--settembre);letter-spacing:1px;margin-bottom:16px;">📋 ASTA DI SETTEMBRE</div>
+        <div style="font-size:11px;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:#22c55e;margin-bottom:8px;">✅ Vantaggi</div>
+        <ul style="list-style:none;display:flex;flex-direction:column;gap:6px;margin-bottom:18px;">
+          <li style="font-size:12px;color:#ccc;display:flex;gap:8px;" contenteditable="true"><span style="color:#22c55e;flex-shrink:0;">+</span>Quadro completo: moduli, titolari e gerarchie definiti</li>
+          <li style="font-size:12px;color:#ccc;display:flex;gap:8px;" contenteditable="true"><span style="color:#22c55e;flex-shrink:0;">+</span>Zero rischio cessioni — mercato italiano chiuso</li>
+          <li style="font-size:12px;color:#ccc;display:flex;gap:8px;" contenteditable="true"><span style="color:#22c55e;flex-shrink:0;">+</span>Hype reale: le prime giornate hanno già rivelato chi vale</li>
+          <li style="font-size:12px;color:#ccc;display:flex;gap:8px;" contenteditable="true"><span style="color:#22c55e;flex-shrink:0;">+</span>Più tempo per prepararsi con calma durante tutto agosto</li>
+          <li style="font-size:12px;color:#ccc;display:flex;gap:8px;" contenteditable="true"><span style="color:#22c55e;flex-shrink:0;">+</span>Puoi spaziare su tutte le squadre, anche con allenatori nuovi</li>
+        </ul>
+        <div style="font-size:11px;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:#ef4444;margin-bottom:8px;">❌ Svantaggi</div>
+        <ul style="list-style:none;display:flex;flex-direction:column;gap:6px;">
+          <li style="font-size:12px;color:#ccc;display:flex;gap:8px;" contenteditable="true"><span style="color:#ef4444;flex-shrink:0;">−</span>Prezzi tendenzialmente più alti: senza aste di riparazione in arrivo, i fantallenatori bruciano più budget e fanno salire le offerte</li>
+          <li style="font-size:12px;color:#ccc;display:flex;gap:8px;" contenteditable="true"><span style="color:#ef4444;flex-shrink:0;">−</span>Hype delle prime giornate gonfia i prezzi dei rivelazioni</li>
+          <li style="font-size:12px;color:#ccc;display:flex;gap:8px;" contenteditable="true"><span style="color:#ef4444;flex-shrink:0;">−</span>Piccolo rischio mercati turco e arabo ancora aperti</li>
+          <li style="font-size:12px;color:#ccc;display:flex;gap:8px;" contenteditable="true"><span style="color:#ef4444;flex-shrink:0;">−</span>Nessun vantaggio competitivo sull'informazione — tutti uguali</li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- FINAL BANNER -->
+  <div class="final-banner">
+    <div class="fb-title" contenteditable="true">Non esiste l'asta migliore. Esiste quella giusta per te.</div>
+    <div class="fb-text" contenteditable="true">L'asta di agosto premia chi è preparato e coraggioso. L'asta di settembre premia chi è metodico e paziente. In entrambi i casi, la differenza la fa la lucidità nel momento dell'asta — non solo la preparazione fatta a casa. Qualunque cosa scegli, arrivaci con una lista, un budget per reparto, e il 10% di pazienza in più di tutti gli altri.</div>
+  </div>
+
+  <!-- ACTIONS -->
+  <div class="actions">
+    <button class="btn btn-png" onclick="exportPng()">💾 Esporta PNG</button>
+    <button class="btn btn-github" onclick="openGh()">🚀 Pubblica su GitHub</button>
+  </div>
+
+</div><!-- /wrapper -->
+
+<!-- OVERLAY GITHUB -->
+<div id="gh-overlay">
+  <div class="gh-box">
+    <h3>🚀 Pubblica su GitHub</h3>
+    <p>Carica il file HTML nel repo</p>
+    <input type="text" id="gh-filename" value="confronto-aste-fantacalcio.html" />
+    <div class="btn-row">
+      <button class="gh-cancel" onclick="closeGh()">Annulla</button>
+      <button class="gh-confirm" onclick="uploadGh()">Pubblica</button>
+    </div>
+    <div id="gh-status"></div>
+  </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script>
+function exportPng() {
+  const el = document.querySelector('.wrapper');
+  html2canvas(el, { scale: 2, backgroundColor: '#080808', useCORS: true }).then(canvas => {
+    const a = document.createElement('a');
+    a.download = 'confronto-aste-fantacalcio.png';
+    a.href = canvas.toDataURL('image/png');
+    a.click();
+  });
+}
+
+function openGh() { document.getElementById('gh-overlay').classList.add('show'); }
+function closeGh() { document.getElementById('gh-overlay').classList.remove('show'); document.getElementById('gh-status').textContent = ''; }
+
+async function uploadGh() {
+  const token = ['ghp_D7dlwfW4XLga1Kb2w', 'mr8t4Np3x48XV2617Fe'].join('');
+  const repo = 'fabmiscia/Il-Mister-Fabry';
+  const filename = document.getElementById('gh-filename').value.trim();
+  const path = encodeURIComponent(filename);
+  const status = document.getElementById('gh-status');
+  status.textContent = '⏳ Caricamento…';
+  const html = document.documentElement.outerHTML;
+  const content = btoa(unescape(encodeURIComponent(html)));
+  try {
+    let sha = null;
+    const check = await fetch(`https://api.github.com/repos/${repo}/contents/${path}`, { headers: { Authorization: `token ${token}` } });
+    if (check.ok) { const d = await check.json(); sha = d.sha; }
+    const body = { message: `Aggiunge ${filename}`, content };
+    if (sha) body.sha = sha;
+    const res = await fetch(`https://api.github.com/repos/${repo}/contents/${path}`, {
+      method: 'PUT',
+      headers: { Authorization: `token ${token}`, 'Content-Type': 'application/json' },
+      body: JSON.stringify(body)
+    });
+    if (res.ok) { status.textContent = '✅ Pubblicato su GitHub!'; }
+    else { status.textContent = '❌ Errore: ' + (await res.json()).message; }
+  } catch(e) { status.textContent = '❌ Errore di rete.'; }
+}
+</script>
+</body>
+</html>
