@@ -127,7 +127,7 @@ body{background:var(--bg);color:var(--text);font-family:Arial,'Helvetica Neue',s
 <div class="big-pitch-wrap visible" id="big-pitch-wrap">
   <div class="big-pitch-box">
     <div class="big-pitch-label" id="big-pitch-label">Modulo selezionato: 3-5-2</div>
-    <img id="big-pitch-img" style="display: block; width: 220px; height: auto; border-radius: 8px;" alt="" src="https://fabmiscia.github.io/Il-Mister-Fabry/MODULI-MANTRA/Screenshot%202026-07-09%20alle%2015.56.41.png">
+    <img id="big-pitch-img" style="display: block; width: 260px; height: auto; border-radius: 8px;" alt="" src="https://fabmiscia.github.io/Il-Mister-Fabry/MODULI-MANTRA/resized/Screenshot%202026-07-09%20alle%2015.56.41.png">
     <svg id="big-pitch-svg" viewBox="0 0 220 310" width="220" height="310" style="display: none;"></svg>
   </div>
 </div>
@@ -470,7 +470,7 @@ function selectFormation(key){
   const bigImg=document.getElementById('big-pitch-img');
   const bigSvg=document.getElementById('big-pitch-svg');
   if(f.preview){
-    bigImg.src=f.preview.replace('/resized/','/');
+    bigImg.src=f.preview;
     bigImg.style.display='block';
     bigSvg.style.display='none';
   } else {
