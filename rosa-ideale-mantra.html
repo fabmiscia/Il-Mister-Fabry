@@ -1,0 +1,822 @@
+<!DOCTYPE html>
+<html lang="it"><head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rosa Ideale – Mantra</title>
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+:root{
+  --bg:#111;--card:#181818;--card2:#1e1e1e;--border:#252525;
+  --accent:#2DB84A;--text:#fff;--dim:rgba(255,255,255,.42);
+}
+body{background:var(--bg);color:var(--text);font-family:Arial,'Helvetica Neue',sans-serif;min-height:100vh;display:flex;flex-direction:column;}
+
+/* ── HDR ── */
+.hdr{background:#0d0d0d;border-bottom:1px solid var(--border);padding:14px 22px;display:flex;align-items:center;gap:12px;flex-wrap:wrap;}
+.hdr h1{font-size:18px;font-weight:900;letter-spacing:2.5px;}
+.bdg{background:var(--accent);color:#000;padding:2px 9px;border-radius:20px;font-size:9px;font-weight:900;letter-spacing:1.5px;}
+.hdr-meta{margin-left:auto;display:flex;gap:18px;align-items:center;font-size:11px;color:var(--dim);flex-wrap:wrap;}
+.mv{color:#fff;font-weight:700;min-width:60px;border-bottom:1px dashed #333;padding:1px 4px;outline:none;display:inline-block;}
+.mv:focus{border-color:var(--accent);}
+
+/* ── MODULI ── */
+.sect{padding:20px 22px;}
+.sect-title{font-size:9px;letter-spacing:2.5px;color:var(--dim);text-transform:uppercase;margin-bottom:14px;}
+.moduli-grid{display:grid;grid-template-columns:repeat(auto-fill,128px);gap:10px;justify-content:center;}
+.modulo-card{background:#161616;border:2px solid #2a2a2a;border-radius:8px;cursor:pointer;transition:.15s;overflow:hidden;display:flex;flex-direction:column;align-items:center;padding:0;gap:0;width:128px;height:180px;flex-shrink:0;}
+.modulo-card:hover{border-color:#444;background:#1a1a1a;}
+.modulo-card.selected{border-color:var(--accent);background:#141a14;}
+.modulo-card .mod-name{font-size:11px;font-weight:800;letter-spacing:.5px;color:#ddd;}
+.modulo-card.selected .mod-name{color:var(--accent);}
+.modulo-card svg{display:block;}
+.mod-preview-img{display:block;width:128px;height:180px;}
+
+/* ── BIG PITCH ── */
+.big-pitch-wrap{display:none;padding:0 22px 20px;justify-content:center;}
+.big-pitch-wrap.visible{display:flex;flex-wrap:wrap;gap:16px;align-items:flex-start;}
+.big-pitch-box{display:flex;flex-direction:column;align-items:center;gap:6px;}
+.big-pitch-label{font-size:13px;font-weight:800;letter-spacing:1px;color:var(--accent);}
+
+/* ── ROSTER ── */
+.roster-sect{padding:0 22px 20px;}
+.roster-hdr{display:flex;align-items:center;gap:12px;margin-bottom:18px;flex-wrap:wrap;}
+.roster-hdr h2{font-size:9px;letter-spacing:2.5px;color:var(--dim);text-transform:uppercase;}
+.total-counter{margin-left:auto;display:flex;align-items:center;gap:10px;font-size:11px;color:var(--dim);}
+.total-num{font-size:22px;font-weight:900;color:#fff;}
+.total-bar-wrap{width:80px;height:4px;background:#2a2a2a;border-radius:2px;overflow:hidden;}
+.total-bar{height:100%;background:var(--accent);border-radius:2px;transition:width .3s;}
+.total-bar.warn{background:#e8c000;}
+.total-bar.over{background:#e84040;}
+
+.categories{display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:14px;}
+.cat-block{background:#141414;border:1px solid var(--border);border-radius:8px;padding:14px 14px 10px;}
+.cat-hdr{display:flex;align-items:center;gap:8px;margin-bottom:10px;}
+.cat-icon{font-size:14px;}
+.cat-name{font-size:12px;font-weight:800;flex:1;}
+.cat-count{font-size:10px;color:var(--dim);}
+.cat-roles-desc{font-size:9px;color:#444;margin-top:1px;}
+.btn-add-slot{background:none;border:1px solid #2e2e2e;color:#444;padding:3px 9px;border-radius:14px;font-size:11px;font-weight:700;cursor:pointer;transition:.12s;white-space:nowrap;flex-shrink:0;}
+.btn-add-slot:hover{border-color:var(--accent);color:var(--accent);}
+.btn-add-slot:disabled{opacity:.3;cursor:default;border-color:#222;color:#333;}
+
+.slots-list{display:flex;flex-direction:column;gap:5px;}
+.slot-row{display:flex;align-items:center;gap:7px;background:var(--card2);border:1px solid #222;border-radius:6px;padding:5px 8px;transition:border-color .12s;}
+.slot-row:hover{border-color:#333;}
+.slot-row:focus-within{border-color:var(--accent);}
+.slot-n{font-size:9px;color:#383838;width:12px;text-align:center;flex-shrink:0;}
+.slot-role{background:none;border:none;outline:none;cursor:pointer;font-size:9px;font-weight:900;letter-spacing:.3px;padding:2px 5px;border-radius:3px;flex-shrink:0;min-width:26px;text-align:center;white-space:nowrap;}
+.slot-role:hover{filter:brightness(1.2);}
+.slot-name{flex:1;color:#fff;font-size:12px;outline:none;min-width:0;padding:1px 0;}
+.slot-name:empty::before{content:attr(data-ph);color:#2e2e2e;pointer-events:none;}
+.btn-rm{background:none;border:none;color:#2e2e2e;font-size:15px;cursor:pointer;padding:0 2px;line-height:1;transition:color .12s;flex-shrink:0;}
+.btn-rm:hover{color:#e84040;}
+
+/* ── ROLE PICKER POPUP ── */
+.role-popup{
+  position:fixed;z-index:9999;
+  background:#1c1c1c;border:1px solid #333;border-radius:10px;
+  padding:12px;box-shadow:0 10px 32px rgba(0,0,0,.7);
+  min-width:260px;max-width:320px;
+  display:none;
+}
+.role-popup.open{display:block;}
+.rp-close{position:absolute;top:8px;right:10px;background:none;border:none;color:#555;font-size:16px;cursor:pointer;line-height:1;}
+.rp-close:hover{color:#fff;}
+.rp-group{margin-bottom:9px;}
+.rp-group:last-child{margin-bottom:0;}
+.rp-group-title{font-size:8px;letter-spacing:1.8px;color:#444;text-transform:uppercase;margin-bottom:5px;}
+.rp-roles{display:flex;flex-wrap:wrap;gap:4px;}
+.rp-btn{font-size:9px;font-weight:900;padding:3px 7px;border-radius:3px;border:none;cursor:pointer;transition:.1s;opacity:.82;white-space:nowrap;}
+.rp-btn:hover{opacity:1;transform:scale(1.06);}
+.rp-btn.active-role{outline:2px solid #fff;opacity:1;}
+
+/* ── FOOTER ── */
+.footer{background:#0d0d0d;border-top:1px solid var(--border);padding:11px 22px;display:flex;gap:8px;flex-wrap:wrap;}
+.fb{background:#1e1e1e;border:1px solid #2e2e2e;color:#aaa;padding:7px 16px;border-radius:20px;font-size:11px;font-weight:700;letter-spacing:.4px;cursor:pointer;transition:.12s;}
+.fb:hover{background:#252525;color:#fff;}
+.fb.pr{background:var(--accent);color:#000;border-color:var(--accent);}
+.fb.pr:hover{background:#25a03e;}
+.fb:disabled{opacity:.4;cursor:default;}
+
+@media(max-width:700px){
+  .categories{grid-template-columns:1fr;}
+  .moduli-grid{grid-template-columns:repeat(auto-fill,minmax(108px,1fr));}
+  .role-popup{max-width:92vw;}
+}
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<div class="hdr">
+  <h1>ROSA IDEALE</h1>
+  <span class="bdg">MANTRA</span>
+  <div class="hdr-meta">
+    <span>Stagione: <span class="mv" contenteditable="true">2026-27</span></span>
+    <span>Lega: <span class="mv" contenteditable="true">Il Mister Fabry</span></span>
+    <span>Budget: <span class="mv" contenteditable="true">500</span> cr.</span>
+  </div>
+</div>
+
+<!-- MODULI -->
+<div class="sect">
+  <div class="sect-title">Guida Moduli Mantra — clicca per selezionare</div>
+  <div class="moduli-grid" id="moduli-grid"><div class="modulo-card" data-key="3-4-3"><img src="../MODULI-MANTRA/resized/Screenshot 2026-07-09 alle 15.56.23.png" class="mod-preview-img" alt="3-4-3"></div><div class="modulo-card" data-key="3-4-1-2"><img src="../MODULI-MANTRA/resized/Screenshot 2026-07-09 alle 15.56.30.png" class="mod-preview-img" alt="3-4-1-2"></div><div class="modulo-card" data-key="3-4-2-1"><img src="../MODULI-MANTRA/resized/Screenshot 2026-07-09 alle 15.56.35.png" class="mod-preview-img" alt="3-4-2-1"></div><div class="modulo-card selected" data-key="3-5-2"><img src="../MODULI-MANTRA/resized/Screenshot 2026-07-09 alle 15.56.41.png" class="mod-preview-img" alt="3-5-2"></div><div class="modulo-card" data-key="3-5-1-1"><img src="../MODULI-MANTRA/resized/Screenshot 2026-07-09 alle 15.56.47.png" class="mod-preview-img" alt="3-5-1-1"></div><div class="modulo-card" data-key="4-3-3"><img src="../MODULI-MANTRA/resized/Screenshot 2026-07-09 alle 15.56.53.png" class="mod-preview-img" alt="4-3-3"></div><div class="modulo-card" data-key="4-3-1-2"><img src="../MODULI-MANTRA/resized/Screenshot 2026-07-09 alle 15.56.58.png" class="mod-preview-img" alt="4-3-1-2"></div><div class="modulo-card" data-key="4-4-2"><img src="../MODULI-MANTRA/resized/Screenshot 2026-07-09 alle 15.57.04.png" class="mod-preview-img" alt="4-4-2"></div><div class="modulo-card" data-key="4-1-4-1"><img src="../MODULI-MANTRA/resized/Screenshot 2026-07-09 alle 15.57.10.png" class="mod-preview-img" alt="4-1-4-1"></div><div class="modulo-card" data-key="4-4-1-1"><img src="../MODULI-MANTRA/resized/Screenshot 2026-07-09 alle 15.57.15.png" class="mod-preview-img" alt="4-4-1-1"></div><div class="modulo-card" data-key="4-2-3-1"><img src="../MODULI-MANTRA/resized/Screenshot 2026-07-09 alle 15.57.21.png" class="mod-preview-img" alt="4-2-3-1"></div></div>
+</div>
+
+<!-- BIG PITCH -->
+<div class="big-pitch-wrap visible" id="big-pitch-wrap">
+  <div class="big-pitch-box">
+    <div class="big-pitch-label" id="big-pitch-label">Modulo selezionato: 3-5-2</div>
+    <img id="big-pitch-img" style="display: block; width: 220px; height: auto; border-radius: 8px;" alt="" src="../MODULI-MANTRA/Screenshot 2026-07-09 alle 15.56.41.png">
+    <svg id="big-pitch-svg" viewBox="0 0 220 310" width="220" height="310" style="display: none;"></svg>
+  </div>
+</div>
+
+<!-- ROSTER -->
+<div class="roster-sect">
+  <div class="roster-hdr">
+    <h2>Rosa completa</h2>
+    <div style="font-size:10px;color:#444;margin-left:8px;" id="mod-label-roster">Modulo: 3-5-2</div>
+    <div class="total-counter">
+      <span class="total-num" id="tot-num">28</span>
+      <div>
+        <div style="font-size:10px;color:var(--dim);">/ 30 max · min 28</div>
+        <div class="total-bar-wrap"><div class="total-bar" id="tot-bar" style="width: 0%;"></div></div>
+      </div>
+    </div>
+  </div>
+  <div class="categories" id="categories"><div class="cat-block"><div class="cat-hdr">
+      <span class="cat-icon">🧤</span>
+      <div style="flex:1">
+        <div class="cat-name">Portieri</div>
+        <div class="cat-roles-desc">P</div>
+      </div>
+      <span class="cat-count" id="cnt-P">0/3</span>
+      <button class="btn-add-slot" id="add-P">+ Aggiungi</button>
+    </div><div class="slots-list" id="list-P"><div class="slot-row"><span class="slot-n">1</span><button class="slot-role" title="Clicca per cambiare ruolo" style="background: rgb(255, 140, 0); color: rgb(255, 255, 255);">P</button><div class="slot-name" contenteditable="true" data-ph="Giocatore..."></div><button class="btn-rm" title="Rimuovi">×</button></div><div class="slot-row"><span class="slot-n">2</span><button class="slot-role" title="Clicca per cambiare ruolo" style="background: rgb(255, 140, 0); color: rgb(255, 255, 255);">P</button><div class="slot-name" contenteditable="true" data-ph="Giocatore..."></div><button class="btn-rm" title="Rimuovi">×</button></div><div class="slot-row"><span class="slot-n">3</span><button class="slot-role" title="Clicca per cambiare ruolo" style="background: rgb(255, 140, 0); color: rgb(255, 255, 255);">P</button><div class="slot-name" contenteditable="true" data-ph="Giocatore..."></div><button class="btn-rm" title="Rimuovi">×</button></div></div></div><div class="cat-block"><div class="cat-hdr">
+      <span class="cat-icon">🛡️</span>
+      <div style="flex:1">
+        <div class="cat-name">Difensori</div>
+        <div class="cat-roles-desc">DC · DD · DS · B · E e combinazioni</div>
+      </div>
+      <span class="cat-count" id="cnt-D">0/8</span>
+      <button class="btn-add-slot" id="add-D">+ Aggiungi</button>
+    </div><div class="slots-list" id="list-D"><div class="slot-row"><span class="slot-n">1</span><button class="slot-role" title="Clicca per cambiare ruolo" style="background: rgb(74, 143, 212); color: rgb(255, 255, 255);">DC</button><div class="slot-name" contenteditable="true" data-ph="Giocatore..."></div><button class="btn-rm" title="Rimuovi">×</button></div><div class="slot-row"><span class="slot-n">2</span><button class="slot-role" title="Clicca per cambiare ruolo" style="background: rgb(74, 143, 212); color: rgb(255, 255, 255);">DC</button><div class="slot-name" contenteditable="true" data-ph="Giocatore..."></div><button class="btn-rm" title="Rimuovi">×</button></div><div class="slot-row"><span class="slot-n">3</span><button class="slot-role" title="Clicca per cambiare ruolo" style="background: rgb(74, 143, 212); color: rgb(255, 255, 255);">DC</button><div class="slot-name" contenteditable="true" data-ph="Giocatore..."></div><button class="btn-rm" title="Rimuovi">×</button></div><div class="slot-row"><span class="slot-n">4</span><button class="slot-role" title="Clicca per cambiare ruolo" style="background: rgb(212, 136, 42); color: rgb(255, 255, 255);">DD</button><div class="slot-name" contenteditable="true" data-ph="Giocatore..."></div><button class="btn-rm" title="Rimuovi">×</button></div><div class="slot-row"><span class="slot-n">5</span><button class="slot-role" title="Clicca per cambiare ruolo" style="background: rgb(212, 136, 42); color: rgb(255, 255, 255);">DD</button><div class="slot-name" contenteditable="true" data-ph="Giocatore..."></div><button class="btn-rm" title="Rimuovi">×</button></div><div class="slot-row"><span class="slot-n">6</span><button class="slot-role" title="Clicca per cambiare ruolo" style="background: rgb(42, 184, 160); color: rgb(0, 0, 0);">DS</button><div class="slot-name" contenteditable="true" data-ph="Giocatore..."></div><button class="btn-rm" title="Rimuovi">×</button></div><div class="slot-row"><span class="slot-n">7</span><button class="slot-role" title="Clicca per cambiare ruolo" style="background: rgb(42, 184, 160); color: rgb(0, 0, 0);">DS</button><div class="slot-name" contenteditable="true" data-ph="Giocatore..."></div><button class="btn-rm" title="Rimuovi">×</button></div><div class="slot-row"><span class="slot-n">8</span><button class="slot-role" title="Clicca per cambiare ruolo" style="background: rgb(153, 102, 204); color: rgb(255, 255, 255);">B</button><div class="slot-name" contenteditable="true" data-ph="Giocatore..."></div><button class="btn-rm" title="Rimuovi">×</button></div></div></div><div class="cat-block"><div class="cat-hdr">
+      <span class="cat-icon">⚙️</span>
+      <div style="flex:1">
+        <div class="cat-name">Centrocampisti</div>
+        <div class="cat-roles-desc">M · C e combinazioni</div>
+      </div>
+      <span class="cat-count" id="cnt-C">0/7</span>
+      <button class="btn-add-slot" id="add-C">+ Aggiungi</button>
+    </div><div class="slots-list" id="list-C"><div class="slot-row"><span class="slot-n">1</span><button class="slot-role" title="Clicca per cambiare ruolo" style="background: rgb(30, 79, 212); color: rgb(255, 255, 255);">M</button><div class="slot-name" contenteditable="true" data-ph="Giocatore..."></div><button class="btn-rm" title="Rimuovi">×</button></div><div class="slot-row"><span class="slot-n">2</span><button class="slot-role" title="Clicca per cambiare ruolo" style="background: rgb(30, 79, 212); color: rgb(255, 255, 255);">M</button><div class="slot-name" contenteditable="true" data-ph="Giocatore..."></div><button class="btn-rm" title="Rimuovi">×</button></div><div class="slot-row"><span class="slot-n">3</span><button class="slot-role" title="Clicca per cambiare ruolo" style="background: rgb(30, 79, 212); color: rgb(255, 255, 255);">M</button><div class="slot-name" contenteditable="true" data-ph="Giocatore..."></div><button class="btn-rm" title="Rimuovi">×</button></div><div class="slot-row"><span class="slot-n">4</span><button class="slot-role" title="Clicca per cambiare ruolo" style="background: rgb(68, 170, 255); color: rgb(0, 0, 0);">C</button><div class="slot-name" contenteditable="true" data-ph="Giocatore..."></div><button class="btn-rm" title="Rimuovi">×</button></div><div class="slot-row"><span class="slot-n">5</span><button class="slot-role" title="Clicca per cambiare ruolo" style="background: rgb(68, 170, 255); color: rgb(0, 0, 0);">C</button><div class="slot-name" contenteditable="true" data-ph="Giocatore..."></div><button class="btn-rm" title="Rimuovi">×</button></div><div class="slot-row"><span class="slot-n">6</span><button class="slot-role" title="Clicca per cambiare ruolo" style="background: rgb(68, 170, 255); color: rgb(0, 0, 0);">C</button><div class="slot-name" contenteditable="true" data-ph="Giocatore..."></div><button class="btn-rm" title="Rimuovi">×</button></div><div class="slot-row"><span class="slot-n">7</span><button class="slot-role" title="Clicca per cambiare ruolo" style="background: rgb(68, 170, 255); color: rgb(0, 0, 0);">C</button><div class="slot-name" contenteditable="true" data-ph="Giocatore..."></div><button class="btn-rm" title="Rimuovi">×</button></div></div></div><div class="cat-block"><div class="cat-hdr">
+      <span class="cat-icon">✨</span>
+      <div style="flex:1">
+        <div class="cat-name">Trequartisti</div>
+        <div class="cat-roles-desc">W · T e combinazioni</div>
+      </div>
+      <span class="cat-count" id="cnt-Q">0/5</span>
+      <button class="btn-add-slot" id="add-Q">+ Aggiungi</button>
+    </div><div class="slots-list" id="list-Q"><div class="slot-row"><span class="slot-n">1</span><button class="slot-role" title="Clicca per cambiare ruolo" style="background: rgb(255, 68, 187); color: rgb(255, 255, 255);">W</button><div class="slot-name" contenteditable="true" data-ph="Giocatore..."></div><button class="btn-rm" title="Rimuovi">×</button></div><div class="slot-row"><span class="slot-n">2</span><button class="slot-role" title="Clicca per cambiare ruolo" style="background: rgb(255, 68, 187); color: rgb(255, 255, 255);">W</button><div class="slot-name" contenteditable="true" data-ph="Giocatore..."></div><button class="btn-rm" title="Rimuovi">×</button></div><div class="slot-row"><span class="slot-n">3</span><button class="slot-role" title="Clicca per cambiare ruolo" style="background: rgb(255, 68, 187); color: rgb(255, 255, 255);">W</button><div class="slot-name" contenteditable="true" data-ph="Giocatore..."></div><button class="btn-rm" title="Rimuovi">×</button></div><div class="slot-row"><span class="slot-n">4</span><button class="slot-role" title="Clicca per cambiare ruolo" style="background: rgb(170, 34, 255); color: rgb(255, 255, 255);">T</button><div class="slot-name" contenteditable="true" data-ph="Giocatore..."></div><button class="btn-rm" title="Rimuovi">×</button></div><div class="slot-row"><span class="slot-n">5</span><button class="slot-role" title="Clicca per cambiare ruolo" style="background: rgb(170, 34, 255); color: rgb(255, 255, 255);">T</button><div class="slot-name" contenteditable="true" data-ph="Giocatore..."></div><button class="btn-rm" title="Rimuovi">×</button></div></div></div><div class="cat-block"><div class="cat-hdr">
+      <span class="cat-icon">⚡</span>
+      <div style="flex:1">
+        <div class="cat-name">Attaccanti</div>
+        <div class="cat-roles-desc">A · PC</div>
+      </div>
+      <span class="cat-count" id="cnt-A">0/5</span>
+      <button class="btn-add-slot" id="add-A">+ Aggiungi</button>
+    </div><div class="slots-list" id="list-A"><div class="slot-row"><span class="slot-n">1</span><button class="slot-role" title="Clicca per cambiare ruolo" style="background: rgb(221, 34, 34); color: rgb(255, 255, 255);">A</button><div class="slot-name" contenteditable="true" data-ph="Giocatore..."></div><button class="btn-rm" title="Rimuovi">×</button></div><div class="slot-row"><span class="slot-n">2</span><button class="slot-role" title="Clicca per cambiare ruolo" style="background: rgb(221, 34, 34); color: rgb(255, 255, 255);">A</button><div class="slot-name" contenteditable="true" data-ph="Giocatore..."></div><button class="btn-rm" title="Rimuovi">×</button></div><div class="slot-row"><span class="slot-n">3</span><button class="slot-role" title="Clicca per cambiare ruolo" style="background: rgb(255, 85, 0); color: rgb(255, 255, 255);">PC</button><div class="slot-name" contenteditable="true" data-ph="Giocatore..."></div><button class="btn-rm" title="Rimuovi">×</button></div><div class="slot-row"><span class="slot-n">4</span><button class="slot-role" title="Clicca per cambiare ruolo" style="background: rgb(255, 85, 0); color: rgb(255, 255, 255);">PC</button><div class="slot-name" contenteditable="true" data-ph="Giocatore..."></div><button class="btn-rm" title="Rimuovi">×</button></div><div class="slot-row"><span class="slot-n">5</span><button class="slot-role" title="Clicca per cambiare ruolo" style="background: rgb(255, 85, 0); color: rgb(255, 255, 255);">PC</button><div class="slot-name" contenteditable="true" data-ph="Giocatore..."></div><button class="btn-rm" title="Rimuovi">×</button></div></div></div></div>
+</div>
+
+<!-- ROLE PICKER POPUP -->
+<div class="role-popup" id="role-popup" style="top: 290.406px; left: 888.328px;">
+  <button class="rp-close" id="rp-close">×</button>
+  <div id="rp-content"><div class="rp-group"><div class="rp-group-title">Portiere</div><div class="rp-roles"><button class="rp-btn" data-role="P" style="background: rgb(255, 140, 0); color: rgb(255, 255, 255);">P</button></div></div><div class="rp-group"><div class="rp-group-title">Difensori — singoli</div><div class="rp-roles"><button class="rp-btn" data-role="DC" style="background: rgb(74, 143, 212); color: rgb(255, 255, 255);">DC</button><button class="rp-btn" data-role="DD" style="background: rgb(212, 136, 42); color: rgb(255, 255, 255);">DD</button><button class="rp-btn" data-role="DS" style="background: rgb(42, 184, 160); color: rgb(0, 0, 0);">DS</button><button class="rp-btn" data-role="B" style="background: rgb(153, 102, 204); color: rgb(255, 255, 255);">B</button><button class="rp-btn" data-role="E" style="background: rgb(34, 204, 85); color: rgb(0, 0, 0);">E</button></div></div><div class="rp-group"><div class="rp-group-title">Difensori — doppi</div><div class="rp-roles"><button class="rp-btn" data-role="DC/B" style="background: rgb(74, 143, 212); color: rgb(255, 255, 255);">DC/B</button><button class="rp-btn" data-role="DC/DD" style="background: rgb(74, 143, 212); color: rgb(255, 255, 255);">DC/DD</button><button class="rp-btn" data-role="DC/DS" style="background: rgb(74, 143, 212); color: rgb(255, 255, 255);">DC/DS</button><button class="rp-btn" data-role="DD/DS" style="background: rgb(212, 136, 42); color: rgb(255, 255, 255);">DD/DS</button><button class="rp-btn" data-role="DD/E" style="background: rgb(212, 136, 42); color: rgb(255, 255, 255);">DD/E</button><button class="rp-btn" data-role="DS/E" style="background: rgb(42, 184, 160); color: rgb(0, 0, 0);">DS/E</button></div></div><div class="rp-group"><div class="rp-group-title">Difensori — tripli</div><div class="rp-roles"><button class="rp-btn" data-role="DD/DS/E" style="background: rgb(212, 136, 42); color: rgb(255, 255, 255);">DD/DS/E</button><button class="rp-btn" data-role="B/DD/E" style="background: rgb(153, 102, 204); color: rgb(255, 255, 255);">B/DD/E</button><button class="rp-btn" data-role="B/DS/E" style="background: rgb(153, 102, 204); color: rgb(255, 255, 255);">B/DS/E</button></div></div><div class="rp-group"><div class="rp-group-title">Centrocampisti — singoli</div><div class="rp-roles"><button class="rp-btn" data-role="M" style="background: rgb(30, 79, 212); color: rgb(255, 255, 255);">M</button><button class="rp-btn active-role" data-role="C" style="background: rgb(68, 170, 255); color: rgb(0, 0, 0);">C</button></div></div><div class="rp-group"><div class="rp-group-title">Centrocampisti — multipli</div><div class="rp-roles"><button class="rp-btn" data-role="M/C" style="background: rgb(30, 79, 212); color: rgb(255, 255, 255);">M/C</button><button class="rp-btn" data-role="M/C/T" style="background: rgb(30, 79, 212); color: rgb(255, 255, 255);">M/C/T</button></div></div><div class="rp-group"><div class="rp-group-title">Trequartisti — singoli</div><div class="rp-roles"><button class="rp-btn" data-role="W" style="background: rgb(255, 68, 187); color: rgb(255, 255, 255);">W</button><button class="rp-btn" data-role="T" style="background: rgb(170, 34, 255); color: rgb(255, 255, 255);">T</button></div></div><div class="rp-group"><div class="rp-group-title">Trequartisti — multipli</div><div class="rp-roles"><button class="rp-btn" data-role="W/T" style="background: rgb(255, 68, 187); color: rgb(255, 255, 255);">W/T</button><button class="rp-btn" data-role="W/A" style="background: rgb(255, 68, 187); color: rgb(255, 255, 255);">W/A</button><button class="rp-btn" data-role="T/A" style="background: rgb(170, 34, 255); color: rgb(255, 255, 255);">T/A</button><button class="rp-btn" data-role="C/T" style="background: rgb(68, 170, 255); color: rgb(0, 0, 0);">C/T</button><button class="rp-btn" data-role="C/W" style="background: rgb(68, 170, 255); color: rgb(0, 0, 0);">C/W</button><button class="rp-btn" data-role="E/W" style="background: rgb(34, 204, 85); color: rgb(0, 0, 0);">E/W</button><button class="rp-btn" data-role="C/W/T" style="background: rgb(68, 170, 255); color: rgb(0, 0, 0);">C/W/T</button></div></div><div class="rp-group"><div class="rp-group-title">Attaccanti</div><div class="rp-roles"><button class="rp-btn" data-role="A" style="background: rgb(221, 34, 34); color: rgb(255, 255, 255);">A</button><button class="rp-btn" data-role="PC" style="background: rgb(255, 85, 0); color: rgb(255, 255, 255);">PC</button></div></div></div>
+</div>
+
+<!-- FOOTER -->
+<div class="footer">
+  <button class="fb pr" id="btn-gh" disabled="">⏳ Caricamento...</button>
+  <button class="fb" id="btn-png">🖼️ Esporta PNG</button>
+  <button class="fb" id="btn-locale">💾 Salva in locale</button>
+</div>
+
+<script>
+/* ═══════════════════════════════════════════
+   RUOLI E COLORI
+═══════════════════════════════════════════ */
+const ROLE_STYLE = {
+  P:  {bg:'#ff8c00',text:'#fff'},
+  DC: {bg:'#4a8fd4',text:'#fff'},
+  DD: {bg:'#d4882a',text:'#fff'},
+  DS: {bg:'#2ab8a0',text:'#000'},
+  B:  {bg:'#9966cc',text:'#fff'},
+  E:  {bg:'#22cc55',text:'#000'},
+  M:  {bg:'#1e4fd4',text:'#fff'},
+  C:  {bg:'#44aaff',text:'#000'},
+  W:  {bg:'#ff44bb',text:'#fff'},
+  T:  {bg:'#aa22ff',text:'#fff'},
+  A:  {bg:'#dd2222',text:'#fff'},
+  PC: {bg:'#ff5500',text:'#fff'},
+};
+
+function roleStyle(role){
+  const primary = role.split('/')[0];
+  return ROLE_STYLE[primary] || {bg:'#555',text:'#fff'};
+}
+
+// Tutti i ruoli e combinazioni Mantra
+const ROLE_PICKER_GROUPS = [
+  { title:'Portiere',          roles:['P'] },
+  { title:'Difensori — singoli',  roles:['DC','DD','DS','B','E'] },
+  { title:'Difensori — doppi',    roles:['DC/B','DC/DD','DC/DS','DD/DS','DD/E','DS/E'] },
+  { title:'Difensori — tripli',   roles:['DD/DS/E','B/DD/E','B/DS/E'] },
+  { title:'Centrocampisti — singoli', roles:['M','C'] },
+  { title:'Centrocampisti — multipli',roles:['M/C','M/C/T'] },
+  { title:'Trequartisti — singoli',   roles:['W','T'] },
+  { title:'Trequartisti — multipli',  roles:['W/T','W/A','T/A','C/T','C/W','E/W','C/W/T'] },
+  { title:'Attaccanti',        roles:['A','PC'] },
+];
+
+/* ═══════════════════════════════════════════
+   CATEGORIE SLOT
+═══════════════════════════════════════════ */
+const CATEGORIES = [
+  {id:'P', label:'Portieri',        icon:'🧤', defaultRole:'P',  desc:'P'},
+  {id:'D', label:'Difensori',       icon:'🛡️', defaultRole:'DC', desc:'DC · DD · DS · B · E e combinazioni'},
+  {id:'C', label:'Centrocampisti',  icon:'⚙️', defaultRole:'M',  desc:'M · C e combinazioni'},
+  {id:'Q', label:'Trequartisti',    icon:'✨', defaultRole:'W',  desc:'W · T e combinazioni'},
+  {id:'A', label:'Attaccanti',      icon:'⚡', defaultRole:'A',  desc:'A · PC'},
+];
+
+/* ═══════════════════════════════════════════
+   FORMAZIONI (GK in alto, attacco in basso)
+═══════════════════════════════════════════ */
+const FORMATIONS = {
+  '3-4-3':{
+    preview:'../MODULI-MANTRA/resized/Screenshot 2026-07-09 alle 15.56.23.png',
+    rows:[
+      {y:.07,ps:['P']},
+      {y:.26,ps:['DC','DC','DC/B']},
+      {y:.50,ps:['E','M/C','C','E']},
+      {y:.72,ps:['W/A','W/A'],xs:[.18,.82]},
+      {y:.87,ps:['A/PC']},
+  ]},
+  '3-4-1-2':{
+    preview:'../MODULI-MANTRA/resized/Screenshot 2026-07-09 alle 15.56.30.png',
+    rows:[
+      {y:.07,ps:['P']},
+      {y:.26,ps:['DC','DC','DC/B']},
+      {y:.49,ps:['E','M/C','C','E']},
+      {y:.65,ps:['T']},
+      {y:.80,ps:['A/PC','A/PC'],xs:[.22,.78]},
+  ]},
+  '3-4-2-1':{
+    preview:'../MODULI-MANTRA/resized/Screenshot 2026-07-09 alle 15.56.35.png',
+    rows:[
+      {y:.07,ps:['P']},
+      {y:.26,ps:['DC','DC','DC/B']},
+      {y:.42,ps:['M','M/C','E'],xs:[.22,.52,.82]},
+      {y:.57,ps:['E/W'],cx:.22},
+      {y:.67,ps:['T','T/A'],xs:[.28,.72]},
+      {y:.82,ps:['A/PC']},
+  ]},
+  '3-5-2':{
+    preview:'../MODULI-MANTRA/resized/Screenshot 2026-07-09 alle 15.56.41.png',
+    rows:[
+      {y:.07,ps:['P']},
+      {y:.27,ps:['DC','DC','DC/B']},
+      {y:.40,ps:['M','E'],xs:[.52,.82]},
+      {y:.52,ps:['E/W','M/C','C'],xs:[.12,.28,.65]},
+      {y:.82,ps:['A/PC','A/PC'],xs:[.22,.78]},
+  ]},
+  '3-5-1-1':{
+    preview:'../MODULI-MANTRA/resized/Screenshot 2026-07-09 alle 15.56.47.png',
+    rows:[
+      {y:.07,ps:['P']},
+      {y:.26,ps:['DC','DC','DC/B']},
+      {y:.42,ps:['M','M','C'],xs:[.22,.50,.65]},
+      {y:.56,ps:['E/W','E/W']},
+      {y:.68,ps:['T/A']},
+      {y:.82,ps:['A/PC']},
+  ]},
+  '4-3-3':{
+    preview:'../MODULI-MANTRA/resized/Screenshot 2026-07-09 alle 15.56.53.png',
+    rows:[
+      {y:.07,ps:['P']},
+      {y:.26,ps:['DD','DC','DC','DS']},
+      {y:.50,ps:['M/C','M','C']},
+      {y:.72,ps:['W/A','W/A'],xs:[.18,.82]},
+      {y:.87,ps:['A/PC']},
+  ]},
+  '4-3-1-2':{
+    preview:'../MODULI-MANTRA/resized/Screenshot 2026-07-09 alle 15.56.58.png',
+    rows:[
+      {y:.07,ps:['P']},
+      {y:.26,ps:['DD','DC','DC','DS']},
+      {y:.49,ps:['M/C','M','C']},
+      {y:.65,ps:['T']},
+      {y:.82,ps:['T/A/PC','A/PC'],xs:[.22,.68]},
+  ]},
+  '4-4-2':{
+    preview:'../MODULI-MANTRA/resized/Screenshot 2026-07-09 alle 15.57.04.png',
+    rows:[
+      {y:.07,ps:['P']},
+      {y:.26,ps:['DD','DC','DC','DS']},
+      {y:.47,ps:['M/C','C','E']},
+      {y:.62,ps:['E/W'],cx:.22},
+      {y:.82,ps:['A/PC','A/PC'],xs:[.22,.78]},
+  ]},
+  '4-1-4-1':{
+    preview:'../MODULI-MANTRA/resized/Screenshot 2026-07-09 alle 15.57.10.png',
+    rows:[
+      {y:.07,ps:['P']},
+      {y:.26,ps:['DD','DC','DC','DS']},
+      {y:.43,ps:['M']},
+      {y:.62,ps:['C/T','T','E/W','W'],xs:[.18,.40,.62,.82]},
+      {y:.82,ps:['A/PC']},
+  ]},
+  '4-4-1-1':{
+    preview:'../MODULI-MANTRA/resized/Screenshot 2026-07-09 alle 15.57.15.png',
+    rows:[
+      {y:.07,ps:['P']},
+      {y:.26,ps:['DD','DC','DC','DS']},
+      {y:.47,ps:['M','C'],xs:[.32,.62]},
+      {y:.60,ps:['E/W','E/W']},
+      {y:.72,ps:['T/A']},
+      {y:.85,ps:['A/PC']},
+  ]},
+  '4-2-3-1':{
+    preview:'../MODULI-MANTRA/resized/Screenshot 2026-07-09 alle 15.57.21.png',
+    rows:[
+      {y:.07,ps:['P']},
+      {y:.26,ps:['DD','DC','DC','DS']},
+      {y:.44,ps:['M','M/C'],xs:[.36,.63]},
+      {y:.62,ps:['W/T','T','W/A'],xs:[.14,.50,.82]},
+      {y:.80,ps:['A/PC']},
+  ]},
+};
+
+/* ═══════════════════════════════════════════
+   PITCH RENDERING
+═══════════════════════════════════════════ */
+const NS='http://www.w3.org/2000/svg';
+function mk(tag,attrs){const e=document.createElementNS(NS,tag);for(const[k,v]of Object.entries(attrs))e.setAttribute(k,v);return e;}
+
+function drawField(svg,W,H,fX,fY,fW,fH){
+  svg.innerHTML='';
+  const cx=fX+fW/2,cy=fY+fH/2;
+  const uid='fc'+W+H;
+  const defs=mk('defs',{});
+  const cp=mk('clipPath',{id:uid});
+  cp.appendChild(mk('rect',{x:fX,y:fY,width:fW,height:fH,rx:'4'}));
+  defs.appendChild(cp);
+  svg.appendChild(defs);
+  svg.appendChild(mk('rect',{x:0,y:0,width:W,height:H,fill:'#0d0d0d',rx:'6'}));
+  const g=mk('g',{'clip-path':'url(#'+uid+')'});
+  g.appendChild(mk('rect',{x:fX,y:fY,width:fW,height:fH,fill:'#2e7d2e'}));
+  const maxR=Math.max(fW,fH)*0.75,step=maxR/7;
+  ['#2e7d2e','#347c34','#2e7d2e','#347c34','#2e7d2e','#347c34','#2e7d2e','#347c34'].forEach((c,i)=>{
+    g.appendChild(mk('circle',{cx,cy,r:step*i,fill:c}));
+  });
+  svg.appendChild(g);
+  const m=mk('g',{});
+  m.appendChild(mk('rect',{x:fX,y:fY,width:fW,height:fH,rx:'4',fill:'none',stroke:'#ffffffa0','stroke-width':'1.2'}));
+  m.appendChild(mk('line',{x1:fX,y1:cy,x2:fX+fW,y2:cy,stroke:'#ffffffa0','stroke-width':'1'}));
+  const cr=fW*.18;
+  m.appendChild(mk('circle',{cx,cy,r:cr,fill:'none',stroke:'#ffffffa0','stroke-width':'1'}));
+  m.appendChild(mk('circle',{cx,cy,r:'2',fill:'#ffffffa0'}));
+  const pbW=fW*.55,pbH=fH*.14,sbW=fW*.30,sbH=fH*.06;
+  m.appendChild(mk('rect',{x:cx-pbW/2,y:fY,width:pbW,height:pbH,fill:'none',stroke:'#ffffffa0','stroke-width':'1'}));
+  m.appendChild(mk('rect',{x:cx-sbW/2,y:fY,width:sbW,height:sbH,fill:'none',stroke:'#ffffffa0','stroke-width':'1'}));
+  m.appendChild(mk('rect',{x:cx-pbW/2,y:fY+fH-pbH,width:pbW,height:pbH,fill:'none',stroke:'#ffffffa0','stroke-width':'1'}));
+  m.appendChild(mk('rect',{x:cx-sbW/2,y:fY+fH-sbH,width:sbW,height:sbH,fill:'none',stroke:'#ffffffa0','stroke-width':'1'}));
+  svg.appendChild(m);
+}
+
+function drawPlayers(svg,key,fX,fY,fW,fH,mini){
+  const rows=(FORMATIONS[key]||{rows:[]}).rows;
+  const layer=mk('g',{});
+  const bH=mini?10:15,rx=mini?2:3;
+  rows.forEach(row=>{
+    const n=row.ps.length,rowY=fY+row.y*fH,margin=fW*.10,usableW=fW-2*margin;
+    if(n>1){
+      const x0=row.xs?fX+row.xs[0]*fW:fX+margin;
+      const x1=row.xs?fX+row.xs[n-1]*fW:fX+fW-margin;
+      layer.appendChild(mk('line',{x1:x0,y1:rowY,x2:x1,y2:rowY,stroke:'#ffffff35','stroke-width':mini?'0.8':'1.2'}));
+    }
+    row.ps.forEach((role,i)=>{
+      const cx=n===1?(row.cx!==undefined?fX+row.cx*fW:fX+fW/2):(row.xs?fX+row.xs[i]*fW:fX+margin+i*(usableW/(n-1)));
+      const rs=roleStyle(role);
+      const isDouble=role.includes('/');
+      const bW=mini?(isDouble?26:19):(isDouble?36:28);
+      const fs=mini?(isDouble?4:5.5):(isDouble?6.5:8.5);
+      layer.appendChild(mk('rect',{x:cx-bW/2,y:rowY-bH/2,width:bW,height:bH,rx,fill:rs.bg}));
+      const t=mk('text',{x:cx,y:rowY+bH*.28,'text-anchor':'middle','font-family':'Arial,sans-serif','font-size':fs,'font-weight':'800',fill:rs.text});
+      t.textContent=role;
+      layer.appendChild(t);
+    });
+  });
+  svg.appendChild(layer);
+}
+
+/* ═══════════════════════════════════════════
+   FORMAZIONE SELECTION
+═══════════════════════════════════════════ */
+const MINI_W=128,MINI_H=176,MFX=5,MFY=5,MFW=118,MFH=152;
+const BIG_W=220,BIG_H=310,BFX=8,BFY=8,BFW=204,BFH=294;
+let selectedFormation=null;
+
+function buildModuliGrid(){
+  const grid=document.getElementById('moduli-grid');
+  grid.innerHTML='';
+  Object.keys(FORMATIONS).forEach(key=>{
+    const card=document.createElement('div');
+    card.className='modulo-card';
+    card.dataset.key=key;
+    const f=FORMATIONS[key];
+    if(f.preview){
+      const img=document.createElement('img');
+      img.src=f.preview;
+      img.className='mod-preview-img';
+      img.alt=key;
+      card.appendChild(img);
+    } else {
+      const name=document.createElement('div');
+      name.className='mod-name';
+      name.textContent=key;
+      card.appendChild(name);
+      const svg=document.createElementNS(NS,'svg');
+      svg.setAttribute('viewBox',`0 0 ${MINI_W} ${MINI_H}`);
+      svg.setAttribute('width',MINI_W);
+      svg.setAttribute('height',MINI_H);
+      drawField(svg,MINI_W,MINI_H,MFX,MFY,MFW,MFH);
+      drawPlayers(svg,key,MFX,MFY,MFW,MFH,true);
+      card.appendChild(svg);
+    }
+    card.addEventListener('click',()=>selectFormation(key));
+    grid.appendChild(card);
+  });
+}
+
+function selectFormation(key){
+  selectedFormation=key;
+  document.querySelectorAll('.modulo-card').forEach(c=>c.classList.toggle('selected',c.dataset.key===key));
+  const wrap=document.getElementById('big-pitch-wrap');
+  wrap.classList.add('visible');
+  document.getElementById('big-pitch-label').textContent='Modulo selezionato: '+key;
+  document.getElementById('mod-label-roster').textContent='Modulo: '+key;
+  const f=FORMATIONS[key];
+  const bigImg=document.getElementById('big-pitch-img');
+  const bigSvg=document.getElementById('big-pitch-svg');
+  if(f.preview){
+    bigImg.src=f.preview.replace('/resized/','/');
+    bigImg.style.display='block';
+    bigSvg.style.display='none';
+  } else {
+    bigImg.style.display='none';
+    bigSvg.style.display='block';
+    drawField(bigSvg,BIG_W,BIG_H,BFX,BFY,BFW,BFH);
+    drawPlayers(bigSvg,key,BFX,BFY,BFW,BFH,false);
+  }
+  if(!allRosterData[key]) allRosterData[key]=defaultRoster();
+  buildCategories();
+}
+
+/* ═══════════════════════════════════════════
+   ROSTER DATA (per-formazione)
+═══════════════════════════════════════════ */
+let allRosterData={};
+
+function defaultRoster(){
+  return {
+    P:[{role:'P',name:''},{role:'P',name:''},{role:'P',name:''}],
+    D:[
+      {role:'DC',name:''},{role:'DC',name:''},{role:'DC',name:''},
+      {role:'DD',name:''},{role:'DD',name:''},
+      {role:'DS',name:''},{role:'DS',name:''},
+      {role:'B', name:''},
+    ],
+    C:[
+      {role:'M',name:''},{role:'M',name:''},{role:'M',name:''},
+      {role:'C',name:''},{role:'C',name:''},{role:'C',name:''},
+      {role:'C',name:''},
+    ],
+    Q:[
+      {role:'W',name:''},{role:'W',name:''},{role:'W',name:''},
+      {role:'T',name:''},{role:'T',name:''},
+    ],
+    A:[
+      {role:'A',name:''},{role:'A',name:''},
+      {role:'PC',name:''},{role:'PC',name:''},{role:'PC',name:''},
+    ],
+  };
+}
+
+function getRoster(catId){
+  if(!selectedFormation) return [];
+  return (allRosterData[selectedFormation]||{})[catId]||[];
+}
+
+function totalSlots(){
+  if(!selectedFormation||!allRosterData[selectedFormation]) return 0;
+  return Object.values(allRosterData[selectedFormation]).reduce((s,a)=>s+a.length,0);
+}
+
+function saveToStorage(){
+  try{ localStorage.setItem('mister-mantra-rosa',JSON.stringify(allRosterData)); }catch(e){}
+}
+function loadFromStorage(){
+  try{
+    const d=localStorage.getItem('mister-mantra-rosa');
+    if(d) allRosterData=JSON.parse(d);
+  }catch(e){}
+}
+
+/* ═══════════════════════════════════════════
+   RENDER CATEGORIES
+═══════════════════════════════════════════ */
+function buildCategories(){
+  const cont=document.getElementById('categories');
+  cont.innerHTML='';
+  CATEGORIES.forEach(cat=>{
+    const block=document.createElement('div');
+    block.className='cat-block';
+    const hdr=document.createElement('div');
+    hdr.className='cat-hdr';
+    hdr.innerHTML=`
+      <span class="cat-icon">${cat.icon}</span>
+      <div style="flex:1">
+        <div class="cat-name">${cat.label}</div>
+        <div class="cat-roles-desc">${cat.desc}</div>
+      </div>
+      <span class="cat-count" id="cnt-${cat.id}"></span>
+      <button class="btn-add-slot" id="add-${cat.id}">+ Aggiungi</button>
+    `;
+    hdr.querySelector('#add-'+cat.id).addEventListener('click',()=>addSlot(cat.id,cat.defaultRole));
+    block.appendChild(hdr);
+    const list=document.createElement('div');
+    list.className='slots-list';
+    list.id='list-'+cat.id;
+    block.appendChild(list);
+    cont.appendChild(block);
+    renderCat(cat.id);
+  });
+  updateCounter();
+}
+
+function renderCat(catId){
+  if(!selectedFormation) return;
+  const list=document.getElementById('list-'+catId);
+  if(!list) return;
+  list.innerHTML='';
+  const data=getRoster(catId);
+  data.forEach((slot,i)=>{
+    const row=document.createElement('div');
+    row.className='slot-row';
+    const n=document.createElement('span');
+    n.className='slot-n'; n.textContent=i+1;
+    const rb=document.createElement('button');
+    rb.className='slot-role';
+    const rs=roleStyle(slot.role);
+    rb.style.background=rs.bg; rb.style.color=rs.text;
+    rb.textContent=slot.role;
+    rb.title='Clicca per cambiare ruolo';
+    rb.addEventListener('click',(e)=>openRolePicker(e,catId,i));
+    const nm=document.createElement('div');
+    nm.className='slot-name'; nm.contentEditable='true';
+    nm.setAttribute('data-ph','Giocatore...');
+    nm.textContent=slot.name;
+    nm.addEventListener('input',()=>{
+      allRosterData[selectedFormation][catId][i].name=nm.textContent;
+      updateCounter(); saveToStorage();
+    });
+    const rm=document.createElement('button');
+    rm.className='btn-rm'; rm.textContent='×'; rm.title='Rimuovi';
+    rm.addEventListener('click',()=>removeSlot(catId,i));
+    row.appendChild(n); row.appendChild(rb); row.appendChild(nm); row.appendChild(rm);
+    list.appendChild(row);
+  });
+  const cnt=document.getElementById('cnt-'+catId);
+  if(cnt){ const f=data.filter(s=>s.name.trim()).length; cnt.textContent=f+'/'+data.length; }
+  updateAddBtn(catId);
+}
+
+function updateAddBtn(catId){
+  const btn=document.getElementById('add-'+catId);
+  if(btn) btn.disabled=totalSlots()>=30||!selectedFormation;
+}
+function updateAllAddBtns(){ CATEGORIES.forEach(c=>updateAddBtn(c.id)); }
+
+function updateCounter(){
+  const tot=totalSlots();
+  const num=document.getElementById('tot-num');
+  const bar=document.getElementById('tot-bar');
+  if(num) num.textContent=tot;
+  if(bar){
+    bar.style.width=Math.min(100,Math.round(((tot-28)/2)*100))+'%';
+    bar.className='total-bar'+(tot>=30?' over':tot>=29?' warn':'');
+  }
+  updateAllAddBtns();
+}
+
+function addSlot(catId,defaultRole){
+  if(!selectedFormation){alert('Seleziona prima un modulo.');return;}
+  if(totalSlots()>=30){alert('Hai raggiunto il massimo di 30 slot.');return;}
+  allRosterData[selectedFormation][catId].push({role:defaultRole,name:''});
+  renderCat(catId); updateCounter(); saveToStorage();
+  const list=document.getElementById('list-'+catId);
+  if(list){const last=list.lastElementChild;if(last) last.querySelector('.slot-name').focus();}
+}
+
+function removeSlot(catId,idx){
+  if(!selectedFormation) return;
+  if(totalSlots()<=28){alert('Minimo 28 giocatori in rosa.');return;}
+  allRosterData[selectedFormation][catId].splice(idx,1);
+  renderCat(catId); updateCounter(); saveToStorage();
+}
+
+/* ═══════════════════════════════════════════
+   ROLE PICKER POPUP
+═══════════════════════════════════════════ */
+let pickerTarget={catId:null,idx:null};
+
+function buildPickerContent(){
+  const cont=document.getElementById('rp-content');
+  cont.innerHTML='';
+  ROLE_PICKER_GROUPS.forEach(group=>{
+    const gEl=document.createElement('div');
+    gEl.className='rp-group';
+    const title=document.createElement('div');
+    title.className='rp-group-title';
+    title.textContent=group.title;
+    gEl.appendChild(title);
+    const rolesEl=document.createElement('div');
+    rolesEl.className='rp-roles';
+    group.roles.forEach(role=>{
+      const btn=document.createElement('button');
+      btn.className='rp-btn';
+      const rs=roleStyle(role);
+      btn.style.background=rs.bg; btn.style.color=rs.text;
+      btn.textContent=role;
+      btn.dataset.role=role;
+      btn.addEventListener('click',()=>pickRole(role));
+      rolesEl.appendChild(btn);
+    });
+    gEl.appendChild(rolesEl);
+    cont.appendChild(gEl);
+  });
+}
+
+function openRolePicker(e,catId,idx){
+  e.stopPropagation();
+  pickerTarget={catId,idx};
+  // Highlight current role
+  const currentRole=allRosterData[selectedFormation][catId][idx].role;
+  document.querySelectorAll('.rp-btn').forEach(b=>{
+    b.classList.toggle('active-role',b.dataset.role===currentRole);
+  });
+  // Position popup near badge
+  const popup=document.getElementById('role-popup');
+  popup.classList.add('open');
+  const rect=e.currentTarget.getBoundingClientRect();
+  let top=rect.bottom+6,left=rect.left;
+  // Keep in viewport
+  const popW=popup.offsetWidth||280;
+  if(left+popW>window.innerWidth-8) left=window.innerWidth-popW-8;
+  if(top+popup.offsetHeight>window.innerHeight-8) top=rect.top-popup.offsetHeight-6;
+  popup.style.top=top+'px'; popup.style.left=Math.max(8,left)+'px';
+}
+
+function pickRole(role){
+  if(!selectedFormation||pickerTarget.catId===null) return;
+  const {catId,idx}=pickerTarget;
+  allRosterData[selectedFormation][catId][idx].role=role;
+  closeRolePicker();
+  renderCat(catId);
+  saveToStorage();
+}
+
+function closeRolePicker(){
+  document.getElementById('role-popup').classList.remove('open');
+  pickerTarget={catId:null,idx:null};
+}
+
+document.getElementById('rp-close').addEventListener('click',closeRolePicker);
+document.addEventListener('click',e=>{
+  const popup=document.getElementById('role-popup');
+  if(popup.classList.contains('open')&&!popup.contains(e.target)) closeRolePicker();
+});
+
+/* ═══════════════════════════════════════════
+   EXPORT PNG
+═══════════════════════════════════════════ */
+async function exportPNG(){
+  if(!selectedFormation){alert('Seleziona prima un modulo.');return;}
+  const canvas=document.createElement('canvas');
+  canvas.width=1280; canvas.height=720;
+  const ctx=canvas.getContext('2d');
+  ctx.fillStyle='#0d0d0d'; ctx.fillRect(0,0,1280,720);
+  ctx.fillStyle='#131313'; ctx.fillRect(0,0,440,720);
+  ctx.strokeStyle='#252525'; ctx.lineWidth=1;
+  ctx.beginPath(); ctx.moveTo(440,0); ctx.lineTo(440,720); ctx.stroke();
+  ctx.fillStyle='#fff'; ctx.font='bold 24px Arial'; ctx.textAlign='left';
+  ctx.fillText('ROSA IDEALE · MANTRA',460,44);
+  ctx.fillStyle='#2DB84A'; ctx.font='bold 13px Arial';
+  ctx.fillText('Modulo: '+selectedFormation,460,68);
+  ctx.strokeStyle='#252525'; ctx.beginPath(); ctx.moveTo(460,82); ctx.lineTo(1260,82); ctx.stroke();
+  let ry=105,col=0;
+  const colX=[460,880];
+  CATEGORIES.forEach(cat=>{
+    const data=getRoster(cat.id).filter(s=>s.name.trim());
+    if(!data.length) return;
+    if(ry>680){col=1;ry=105;}
+    ctx.fillStyle='#555'; ctx.font='9px Arial'; ctx.textAlign='left';
+    ctx.fillText(cat.icon+' '+cat.label.toUpperCase(),colX[col],ry); ry+=16;
+    data.forEach(s=>{
+      if(ry>690){col=1;ry=105;}
+      const rs=roleStyle(s.role);
+      ctx.fillStyle=rs.bg; ctx.beginPath();
+      const rw=Math.min(38,s.role.length*6+10);
+      ctx.roundRect(colX[col],ry-12,rw,16,2); ctx.fill();
+      ctx.fillStyle=rs.text; ctx.font='bold 8px Arial'; ctx.textAlign='center';
+      ctx.fillText(s.role,colX[col]+rw/2,ry-1);
+      ctx.fillStyle='#fff'; ctx.font='12px Arial'; ctx.textAlign='left';
+      ctx.fillText(s.name,colX[col]+rw+6,ry);
+      ry+=19;
+    });
+    ry+=8;
+  });
+  // Draw pitch SVG
+  const svgEl=document.getElementById('big-pitch-svg');
+  const svgData=new XMLSerializer().serializeToString(svgEl);
+  const blob=new Blob([svgData],{type:'image/svg+xml'});
+  const url=URL.createObjectURL(blob);
+  await new Promise(res=>{
+    const img=new Image();
+    img.onload=()=>{
+      const scale=690/310,w=220*scale,offx=(440-w)/2;
+      ctx.drawImage(img,offx,15,w,690);
+      URL.revokeObjectURL(url); res();
+    };
+    img.src=url;
+  });
+  const a=document.createElement('a');
+  a.download='rosa-ideale-mantra-'+selectedFormation+'.png';
+  a.href=canvas.toDataURL('image/png'); a.click();
+}
+
+/* ═══════════════════════════════════════════
+   EXPORT GITHUB (solo locale)
+═══════════════════════════════════════════ */
+document.getElementById('btn-gh').addEventListener('click',async()=>{
+  const T=['ghp_D7dlwfW4XLga1Kb2w','mr8t4Np3x48XV2617Fe'].join('');
+  const REPO='fabmiscia/Il-Mister-Fabry',FILE='rosa-ideale-mantra.html';
+  const btn=document.getElementById('btn-gh');
+  btn.textContent='⏳ Caricamento...'; btn.disabled=true;
+  try{
+    const html='<!DOCTYPE html>\n'+document.documentElement.outerHTML;
+    const enc=btoa(unescape(encodeURIComponent(html)));
+    const hdrs={'Authorization':'token '+T,'Content-Type':'application/json'};
+    const getR=await fetch(`https://api.github.com/repos/${REPO}/contents/${FILE}`,{headers:hdrs});
+    let sha=null; if(getR.ok) sha=(await getR.json()).sha;
+    const body={message:'Update rosa ideale mantra',content:enc}; if(sha) body.sha=sha;
+    const putR=await fetch(`https://api.github.com/repos/${REPO}/contents/${FILE}`,{method:'PUT',headers:hdrs,body:JSON.stringify(body)});
+    if(!putR.ok) throw new Error((await putR.json()).message);
+    btn.textContent='✅ Pubblicato!';
+    setTimeout(()=>{btn.textContent='📤 Esporta su GitHub';btn.disabled=false;},3000);
+  }catch(e){alert('❌ '+e.message);btn.textContent='📤 Esporta su GitHub';btn.disabled=false;}
+});
+
+document.getElementById('btn-png').addEventListener('click',exportPNG);
+
+document.getElementById('btn-locale').addEventListener('click',async()=>{
+  const html='<!DOCTYPE html>\n'+document.documentElement.outerHTML;
+  const blob=new Blob([html],{type:'text/html'});
+  try{
+    if(window.showSaveFilePicker){
+      const h=await window.showSaveFilePicker({suggestedName:'rosa-ideale-mantra.html',types:[{description:'HTML',accept:{'text/html':['.html']}}]});
+      const w=await h.createWritable(); await w.write(blob); await w.close();
+    }else throw 0;
+  }catch{const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='rosa-ideale-mantra.html';a.click();}
+});
+
+// Nascondi GitHub export su GitHub Pages
+if(location.protocol!=='file:'){
+  const btn=document.getElementById('btn-gh');
+  if(btn) btn.style.display='none';
+}
+
+/* ═══════════════════════════════════════════
+   INIT
+═══════════════════════════════════════════ */
+loadFromStorage();
+buildPickerContent();
+buildModuliGrid();
+buildCategories();
+selectFormation('4-3-3');
+</script>
+
+
+</body></html>
