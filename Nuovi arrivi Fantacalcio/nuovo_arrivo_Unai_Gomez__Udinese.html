@@ -643,9 +643,9 @@ table.inj-tbl thead th {
 <body style="overflow-x: hidden;">
 
 <div class="nav">
-  <button class="active" onclick="go(1)">📋 Info</button>
-  <button onclick="go(2)" class="">📊 Statistiche</button>
-  <button onclick="go(3)" class="">⭐ Consigli Fantacalcio</button>
+  <button class="" onclick="go(1)">📋 Info</button>
+  <button onclick="go(2)">📊 Statistiche</button>
+  <button onclick="go(3)" class="active">⭐ Consigli Fantacalcio</button>
 </div>
 
 <!-- Toolbar -->
@@ -653,7 +653,7 @@ table.inj-tbl thead th {
   <button onclick="exportPNG(1)">💾 Slide 1</button>
   <button onclick="exportPNG(2)">💾 Slide 2</button>
   <button onclick="exportPNG(3)">💾 Slide 3</button>
-  <button style="background: rgb(255, 215, 0); color: rgb(0, 0, 0); border-width: medium; border-style: none; border-color: currentcolor; border-image: initial; padding: 7px 18px; border-radius: 6px; cursor: pointer; font-size: 12px; font-weight: 800; letter-spacing: 0.5px; transition: 0.15s;" onmouseover="this.style.background='#ffe55c'" onmouseout="this.style.background='#FFD700'" onclick="salvaEPubblica()">💾🚀 Salva + Pubblica</button>
+  <button style="background:#FFD700;color:#000;border:none;padding:7px 18px;border-radius:6px;cursor:pointer;font-size:12px;font-weight:800;letter-spacing:.5px;transition:.15s" onmouseover="this.style.background='#ffe55c'" onmouseout="this.style.background='#FFD700'" onclick="salvaEPubblica()">💾🚀 Salva + Pubblica</button>
   <button class="gh-btn" onclick="pubblicaGitHub()">🚀 Solo GitHub</button>
   <button id="btn-salva-locale" onclick="salvaInLocale()" style="background: rgb(26, 26, 26); color: rgb(255, 255, 255); border: 1px solid rgb(51, 51, 51); padding: 7px 14px; border-radius: 6px; cursor: pointer; font-size: 12px; font-weight: 700; letter-spacing: 0.5px; transition: 0.15s;" onmouseover="this.style.borderColor='#b0ff00';this.style.color='#b0ff00'" onmouseout="this.style.borderColor='#333';this.style.color='#fff'">💾 Salva in locale</button>
   <span class="tip">← → per navigare | Click sulla foto per cambiarla</span>
@@ -714,7 +714,7 @@ table.inj-tbl thead th {
 <div class="mv-tbl-wrap"><table class="mv-tbl">
 <thead><tr><th>Stagione</th><th>Infortunio</th><th class="c">Gg</th></tr></thead><tbody><tr><td class="hl">23/24</td><td class="hl2">Infortunio alla caviglia</td><td class="c">4 giorni</td></tr><tr><td class="hl">23/24</td><td class="hl2">Infortunio all'anca</td><td class="c">7 giorni</td></tr></tbody></table></div></div>
   <div class="mv-slide" id="mv-s3">
-<div class="mv-section-title">Appetibilità al Fantacalcio</div><div class="mv-stars"><span class="mv-star-f">★</span><span class="mv-star-f">★</span><span class="mv-star-f">★</span><span class="mv-star-e">★</span><span class="mv-star-e">★</span></div>
+<div class="mv-section-title">Appetibilità al Fantacalcio</div><div class="mv-stars"><span class="mv-star-f">★</span><span class="mv-star-f">★</span><span style="background:linear-gradient(90deg,#FFD700 50%,#333 50%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;font-size:28px">★</span><span class="mv-star-e">★</span><span class="mv-star-e">★</span></div>
 <div class="mv-section-title">Consiglio di spesa del Mister</div>
 <div class="mv-card-text">Scommessa low-cost da monitorare: trequartista tecnico con esperienza in Liga, ma adattamento alla Serie A tutto da verificare nelle prime giornate</div>
 <div class="mv-section-title">Appunti del Mister</div>
@@ -728,7 +728,7 @@ table.inj-tbl thead th {
 <!-- ══════════════════════════════════════════════
      SLIDE 1
 ══════════════════════════════════════════════ -->
-<div id="s1" class="card active" style="transform: scale(1); transform-origin: center top; margin-bottom: 0px;">
+<div id="s1" class="card" style="transform: scale(1); transform-origin: center top; margin-bottom: 0px;">
 
   <!-- Foto cliccabile -->
   <div class="photo-col" onclick="triggerPhotoUpload('all')">
@@ -989,7 +989,7 @@ table.inj-tbl thead th {
 <!-- ══════════════════════════════════════════════
      SLIDE 3 – Consigli Fantacalcio
 ══════════════════════════════════════════════ -->
-<div id="s3" class="card" style="transform: scale(1); transform-origin: center top; margin-bottom: 0px;">
+<div id="s3" class="card active" style="transform: scale(1); transform-origin: center top; margin-bottom: 0px;">
 
   <div class="s3-photo" onclick="triggerPhotoUpload('all')">
     <img class="photo-all" src="https://img.a.transfermarkt.technology/portrait/big/834752-1709676122.png?lm=1" alt="Unai Gómez" onerror="this.src='https://img.a.transfermarkt.technology/portrait/big/default.jpg'">
@@ -1006,10 +1006,10 @@ table.inj-tbl thead th {
     <!-- Appetibilità -->
     <div class="s3-section">
       <div class="s3-label">APPETIBILITÀ AL FANTACALCIO</div>
-      <div class="stars-widget" id="stars-widget" data-value="3">
+      <div class="stars-widget" id="stars-widget" data-value="2.5">
         <span class="star-wrap" data-v="1"><span class="star-bg">★</span><span class="star-fg" style="width:100%">★</span></span>
         <span class="star-wrap" data-v="2"><span class="star-bg">★</span><span class="star-fg" style="width:100%">★</span></span>
-        <span class="star-wrap" data-v="3"><span class="star-bg">★</span><span class="star-fg" style="width: 100%;">★</span></span>
+        <span class="star-wrap" data-v="3"><span class="star-bg">★</span><span class="star-fg" style="width: 50%;">★</span></span>
         <span class="star-wrap" data-v="4"><span class="star-bg">★</span><span class="star-fg" style="width: 0%;">★</span></span>
         <span class="star-wrap" data-v="5"><span class="star-bg">★</span><span class="star-fg" style="width: 0%;">★</span></span>
       </div>
