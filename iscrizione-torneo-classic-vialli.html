@@ -124,8 +124,8 @@ body.edit-mode .add-row { display:flex; }
   <a class="btn btn-back" href="index.html">← Home</a>
   <span class="toolbar-title">🏆 TORNEO CLASSIC VIALLI</span>
   <div class="spacer"></div>
-  
-  <button class="btn btn-github" id="btn-github" disabled="">⏳ Caricando...</button>
+  <button class="btn btn-edit" id="btn-edit" onclick="toggleEdit()">✏ Modifica</button>
+  <button class="btn btn-github" id="btn-github">📤 Su GitHub</button>
   <button id="btn-salva-locale" onclick="salvaInLocale()" style="background:#1a1a1a;color:#fff;border:1px solid #333;padding:7px 14px;border-radius:6px;cursor:pointer;font-size:12px;font-weight:700;letter-spacing:.5px;transition:.15s" onmouseover="this.style.borderColor='#b0ff00';this.style.color='#b0ff00'" onmouseout="this.style.borderColor='#333';this.style.color='#fff'">&#x1F4BE; Salva in locale</button>
 </div>
 
@@ -174,7 +174,7 @@ body.edit-mode .add-row { display:flex; }
           <button class="btn-copia-iban" onclick="copiaIban()">📋 Copia IBAN</button>
         </div>
         <div class="causale-hint">
-          Causale: <strong style="color:#fff" contenteditable="false">Iscrizione (Classic Vialli)</strong>
+          Causale: <strong style="color:#fff" contenteditable="true">Iscrizione (Classic Vialli)</strong>
         </div>
       </div>
 
@@ -360,6 +360,8 @@ async function salvaInLocale() {
 
 </script>
 
+
+
 <script>if(location.protocol!=='file:'){var b=document.getElementById('btn-salva-locale');if(b)b.style.display='none';}</script>
 
 <script>if(location.protocol!=='file:'){
@@ -370,6 +372,4 @@ async function salvaInLocale() {
     }
   });
 }</script>
-
-<div id="_pwa_nav" style="position:fixed;bottom:20px;right:16px;z-index:99999;display:flex;flex-direction:column;gap:8px"><button onclick="history.back()" aria-label="Indietro" title="Indietro" style="width:46px;height:46px;border-radius:50%;background:rgba(17,17,17,.92);border:1px solid #2a2a2a;color:#fff;font-size:22px;cursor:pointer;backdrop-filter:blur(8px);box-shadow:0 2px 12px rgba(0,0,0,.5)">&#x2190;</button><button onclick="history.forward()" aria-label="Avanti" title="Avanti" style="width:46px;height:46px;border-radius:50%;background:rgba(17,17,17,.92);border:1px solid #2a2a2a;color:#fff;font-size:22px;cursor:pointer;backdrop-filter:blur(8px);box-shadow:0 2px 12px rgba(0,0,0,.5)">&#x2192;</button></div>
 </body></html>
