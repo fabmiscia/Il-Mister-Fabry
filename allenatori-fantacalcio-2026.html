@@ -289,7 +289,7 @@ body {
 (function(){
   if(window.location.hostname.includes('github.io')||window.location.hostname.includes('fabmiscia')){
     document.addEventListener('DOMContentLoaded',function(){
-      ['edit-toggle','btn-github','edit-hint'].forEach(function(id){
+      ['edit-toggle','edit-hint'].forEach(function(id){
         var el=document.getElementById(id);if(el)el.style.display='none';
       });
     });
