@@ -606,6 +606,7 @@ function buildCategories(){
         <span class="cat-budget-label">Budget</span>
         <input class="cat-budget-pct" id="rpct-${cat.id}" type="number" min="0" max="100" step="0.5" placeholder="0" value="${repartoBudget[cat.id]||''}">
         <span class="cat-budget-sym">%</span>
+        <span class="cat-budget-cr" id="bcat-${cat.id}"></span>
       </div>
       <span class="cat-count" id="cnt-${cat.id}"></span>
       <button class="btn-add-slot" id="add-${cat.id}">+ Aggiungi</button>
@@ -663,11 +664,13 @@ function renderCat(catId){
     ci.title='% budget per questo slot';
     const cs=document.createElement('span');
     cs.className='slot-pct-sym'; cs.textContent='%';
+    const cc=document.createElement('span');
+    cc.className='slot-cr-calc'; cc.id='scr-'+catId+'-'+i;
     ci.addEventListener('input',()=>{
       allRosterData[selectedFormation][catId][i].pct=parseFloat(ci.value)||0;
       saveToStorage(); updateBudget();
     });
-    cw.appendChild(ci); cw.appendChild(cs);
+    cw.appendChild(ci); cw.appendChild(cs); cw.appendChild(cc);
     row.appendChild(n); row.appendChild(rb); row.appendChild(nm); row.appendChild(cw); row.appendChild(rm);
     list.appendChild(row);
   });
@@ -701,8 +704,24 @@ function updateBudget(){
   let allocatoPct=0;
   CATEGORIES.forEach(cat=>{
     const slots=getRoster(cat.id);
+    // aggiorna crediti per ogni slot
+    slots.forEach((sl,i)=>{
+      const pct=parseFloat(sl.pct)||0;
+      const cr=Math.round(budgetTot*pct/100);
+      const el=document.getElementById('scr-'+cat.id+'-'+i);
+      if(el) el.textContent=pct>0?'= '+cr+' cr':'';
+    });
     const catPct=slots.reduce((s,sl)=>s+(parseFloat(sl.pct)||0),0);
     allocatoPct+=catPct;
+    // aggiorna crediti reparto da % slot
+    const catCr=Math.round(budgetTot*catPct/100);
+    const elCat=document.getElementById('bcat-'+cat.id);
+    if(elCat){
+      const rPct=repartoBudget[cat.id]||0;
+      const rCr=Math.round(budgetTot*rPct/100);
+      if(rPct>0) elCat.textContent='= '+rCr+' cr';
+      else elCat.textContent=catPct>0?'(slot: '+catCr+' cr)':'';
+    }
   });
   const allocatoCr=Math.round(budgetTot*allocatoPct/100);
   const rimanente=budgetTot-allocatoCr;
