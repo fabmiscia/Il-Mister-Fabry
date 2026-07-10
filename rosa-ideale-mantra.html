@@ -90,6 +90,28 @@ body{background:var(--bg);color:var(--text);font-family:Arial,'Helvetica Neue',s
 .rp-btn:hover{opacity:1;transform:scale(1.06);}
 .rp-btn.active-role{outline:2px solid #fff;opacity:1;}
 
+/* ── BUDGET BAR ── */
+.budget-bar{background:#0a0a0a;border-bottom:1px solid #1a1a1a;padding:10px 22px;display:flex;align-items:center;gap:24px;flex-wrap:wrap;}
+.budget-tot-wrap{display:flex;align-items:center;gap:8px;}
+.budget-tot-label{font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--dim);}
+.budget-tot-input{background:#1a1a1a;border:1px solid #2e2e2e;border-radius:5px;color:#fff;font-size:14px;font-weight:900;width:72px;text-align:center;padding:3px 6px;outline:none;}
+.budget-tot-input:focus{border-color:var(--accent);}
+.budget-cr{font-size:10px;color:var(--dim);}
+.bstat{display:flex;flex-direction:column;align-items:center;}
+.bstat-val{font-size:20px;font-weight:900;line-height:1;}
+.bstat-label{font-size:8px;letter-spacing:2px;text-transform:uppercase;color:var(--dim);margin-top:2px;}
+.bstat.allocato .bstat-val{color:#fff;}
+.bstat.rimanente .bstat-val{color:var(--accent);}
+.bstat.rimanente.negativo .bstat-val{color:#e84040;}
+.budget-divider{width:1px;height:32px;background:#1e1e1e;}
+/* budget per reparto */
+.cat-budget{font-size:10px;font-weight:800;color:var(--accent);white-space:nowrap;}
+/* budget per slot */
+.slot-cost-wrap{display:flex;align-items:center;gap:3px;flex-shrink:0;}
+.slot-cost{width:46px;background:#111;border:1px solid #222;border-radius:4px;color:#fff;font-size:11px;font-weight:700;text-align:right;padding:2px 5px;outline:none;}
+.slot-cost:focus{border-color:var(--accent);}
+.slot-cost-cr{font-size:9px;color:#444;}
+
 /* ── FOOTER ── */
 .footer{background:#0d0d0d;border-top:1px solid var(--border);padding:11px 22px;display:flex;gap:8px;flex-wrap:wrap;}
 .fb{background:#1e1e1e;border:1px solid #2e2e2e;color:#aaa;padding:7px 16px;border-radius:20px;font-size:11px;font-weight:700;letter-spacing:.4px;cursor:pointer;transition:.12s;}
@@ -114,6 +136,24 @@ body{background:var(--bg);color:var(--text);font-family:Arial,'Helvetica Neue',s
     <span>Stagione: <span class="mv" contenteditable="true">2026-27</span></span>
     <span>Lega: <span class="mv" contenteditable="true">Il Mister Fabry</span></span>
     <span>Budget: <span class="mv" contenteditable="true">500</span> cr.</span>
+  </div>
+</div>
+
+<!-- BUDGET BAR -->
+<div class="budget-bar">
+  <div class="budget-tot-wrap">
+    <span class="budget-tot-label">Budget asta</span>
+    <input class="budget-tot-input" id="budget-tot" type="number" value="500" min="1" oninput="updateBudget()">
+    <span class="budget-cr">cr.</span>
+  </div>
+  <div class="budget-divider"></div>
+  <div class="bstat allocato">
+    <span class="bstat-val" id="bstat-allocato">0</span>
+    <span class="bstat-label">Allocato</span>
+  </div>
+  <div class="bstat rimanente" id="bstat-rimanente-wrap">
+    <span class="bstat-val" id="bstat-rimanente">500</span>
+    <span class="bstat-label">Rimanente</span>
   </div>
 </div>
 
@@ -242,11 +282,11 @@ const ROLE_PICKER_GROUPS = [
    CATEGORIE SLOT
 ═══════════════════════════════════════════ */
 const CATEGORIES = [
-  {id:'P', label:'Portieri',        icon:'🧤', defaultRole:'P',  desc:'P'},
-  {id:'D', label:'Difensori',       icon:'🛡️', defaultRole:'DC', desc:'DC · DD · DS · B · E e combinazioni'},
-  {id:'C', label:'Centrocampisti',  icon:'⚙️', defaultRole:'M',  desc:'M · C e combinazioni'},
-  {id:'Q', label:'Trequartisti',    icon:'✨', defaultRole:'W',  desc:'W · T e combinazioni'},
-  {id:'A', label:'Attaccanti',      icon:'⚡', defaultRole:'A',  desc:'A · PC'},
+  {id:'P', label:'Portieri',            icon:'🧤', defaultRole:'P',  desc:'P'},
+  {id:'D', label:'Linea di difesa',     icon:'🛡️', defaultRole:'DC', desc:'DC · DD · DS · B · E e combinazioni'},
+  {id:'C', label:'Linea di centrocampo',icon:'⚙️', defaultRole:'M',  desc:'M · C e combinazioni'},
+  {id:'Q', label:'Linea di tre quarti', icon:'✨', defaultRole:'W',  desc:'W · T e combinazioni'},
+  {id:'A', label:'Linea d\'attacco',    icon:'⚡', defaultRole:'A',  desc:'A · PC'},
 ];
 
 /* ═══════════════════════════════════════════
@@ -550,6 +590,7 @@ function buildCategories(){
         <div class="cat-name">${cat.label}</div>
         <div class="cat-roles-desc">${cat.desc}</div>
       </div>
+      <span class="cat-budget" id="bcat-${cat.id}">0 cr.</span>
       <span class="cat-count" id="cnt-${cat.id}"></span>
       <button class="btn-add-slot" id="add-${cat.id}">+ Aggiungi</button>
     `;
@@ -594,7 +635,20 @@ function renderCat(catId){
     const rm=document.createElement('button');
     rm.className='btn-rm'; rm.textContent='×'; rm.title='Rimuovi';
     rm.addEventListener('click',()=>removeSlot(catId,i));
-    row.appendChild(n); row.appendChild(rb); row.appendChild(nm); row.appendChild(rm);
+    const cw=document.createElement('div');
+    cw.className='slot-cost-wrap';
+    const ci=document.createElement('input');
+    ci.className='slot-cost'; ci.type='number'; ci.min='0'; ci.max='500';
+    ci.placeholder='0'; ci.value=slot.cost||'';
+    ci.title='Crediti allocati';
+    ci.addEventListener('input',()=>{
+      allRosterData[selectedFormation][catId][i].cost=parseInt(ci.value)||0;
+      saveToStorage(); updateBudget();
+    });
+    const cl=document.createElement('span');
+    cl.className='slot-cost-cr'; cl.textContent='cr';
+    cw.appendChild(ci); cw.appendChild(cl);
+    row.appendChild(n); row.appendChild(rb); row.appendChild(nm); row.appendChild(cw); row.appendChild(rm);
     list.appendChild(row);
   });
   const cnt=document.getElementById('cnt-'+catId);
@@ -618,6 +672,27 @@ function updateCounter(){
     bar.className='total-bar'+(tot>=30?' over':tot>=29?' warn':'');
   }
   updateAllAddBtns();
+  updateBudget();
+}
+
+function updateBudget(){
+  const totInput=document.getElementById('budget-tot');
+  const budgetTot=totInput?parseInt(totInput.value)||0:0;
+  let allocato=0;
+  CATEGORIES.forEach(cat=>{
+    const slots=getRoster(cat.id);
+    const catSum=slots.reduce((s,sl)=>s+(parseInt(sl.cost)||0),0);
+    allocato+=catSum;
+    const el=document.getElementById('bcat-'+cat.id);
+    if(el) el.textContent=catSum+' cr.';
+  });
+  const rimanente=budgetTot-allocato;
+  const elA=document.getElementById('bstat-allocato');
+  const elR=document.getElementById('bstat-rimanente');
+  const wrapR=document.getElementById('bstat-rimanente-wrap');
+  if(elA) elA.textContent=allocato;
+  if(elR) elR.textContent=rimanente;
+  if(wrapR) wrapR.className='bstat rimanente'+(rimanente<0?' negativo':'');
 }
 
 function addSlot(catId,defaultRole){
