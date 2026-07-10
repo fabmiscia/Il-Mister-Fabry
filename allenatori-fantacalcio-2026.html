@@ -2665,6 +2665,14 @@ document.getElementById('btn-github').addEventListener('click', async () => {
   // 2. Sovrapponi dati locali del browser (modifiche fatte dopo l'ultimo export)
   loadFromStorage();
 
+  // Fix forzato: assicura valori corretti per Abate (Torino)
+  const abateIdx = coaches.findIndex(c => c.team === 'Torino' && c.coach === 'Abate');
+  if (abateIdx >= 0) {
+    coaches[abateIdx].modulo = '3-4-2-1';
+    coaches[abateIdx].stabStars = 3;
+    coaches[abateIdx].appStars = 3;
+  }
+
   loadCoach(0);
 })();
 
