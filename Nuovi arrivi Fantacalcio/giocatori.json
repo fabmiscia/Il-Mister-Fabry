@@ -1,5 +1,10 @@
 [
   {
+    "file": "nuovo_arrivo_Albion_Rrahmani__Venezia.html",
+    "giocatore": "Albion Rrahmani",
+    "squadra": "Venezia"
+  },
+  {
     "file": "nuovo_arrivo_Alessandro_Romano__Cagliari.html",
     "giocatore": "Alessandro Romano",
     "squadra": "Cagliari"
@@ -10,9 +15,47 @@
     "squadra": "Lazio"
   },
   {
+    "file": "nuovo_arrivo_Anan_Khalaili__Inter.html",
+    "giocatore": "Anan Khalaili",
+    "squadra": "Inter"
+  },
+  {
     "file": "nuovo_arrivo_Andres_Cuenca__Como.html",
     "giocatore": "Andres Cuenca",
     "squadra": "Como"
+  },
+  {
+    "file": "nuovo_arrivo_Armel_Bella_Kotchap__Venezia.html",
+    "giocatore": "Armel Bella Kotchap",
+    "squadra": "Venezia"
+  },
+  {
+    "file": "nuovo_arrivo_Arthur_Atta__Fiorentina.html",
+    "giocatore": "Arthur Atta",
+    "squadra": "Fiorentina"
+  },
+  {
+    "giocatore": "David Puczka",
+    "squadra": "Genoa",
+    "ruolo": "D",
+    "file": "nuovo_arrivo_David_Puczka__Genoa.html"
+  },
+  {
+    "giocatore": "Demi Akarakiri",
+    "squadra": "Cagliari",
+    "ruolo": "C",
+    "file": "nuovo_arrivo_Demi_Akarakiri__Cagliari.html"
+  },
+  {
+    "giocatore": "Eddy Kouadio",
+    "squadra": "Monza",
+    "ruolo": "D",
+    "file": "nuovo_arrivo_Eddy_Kouadio__Monza.html"
+  },
+  {
+    "file": "nuovo_arrivo_Elias_Havel__Genoa.html",
+    "giocatore": "Elias Havel",
+    "squadra": "Genoa"
   },
   {
     "file": "nuovo_arrivo_Foe_Ondoa__Monza.html",
@@ -25,6 +68,22 @@
     "squadra": "Genoa"
   },
   {
+    "file": "nuovo_arrivo_Gaetano_Oristanio__Torino.html",
+    "giocatore": "Gaetano Oristanio",
+    "squadra": "Torino"
+  },
+  {
+    "file": "nuovo_arrivo_Gianluca_Gaetano__Atalanta.html",
+    "giocatore": "Gianluca Gaetano",
+    "squadra": "Atalanta"
+  },
+  {
+    "giocatore": "Giorgi Chakvetadze",
+    "squadra": "Udinese",
+    "ruolo": "T",
+    "file": "nuovo_arrivo_Giorgi_Chakvetadze__Udinese.html"
+  },
+  {
     "file": "nuovo_arrivo_Giovanni_Daffara__Parma.html",
     "giocatore": "Giovanni Daffara",
     "squadra": "Parma"
@@ -33,6 +92,11 @@
     "file": "nuovo_arrivo_Goncalo_Ramos__Milan.html",
     "giocatore": "Goncalo Ramos",
     "squadra": "Milan"
+  },
+  {
+    "file": "nuovo_arrivo_Ivan_Provedel__Inter.html",
+    "giocatore": "Ivan Provedel",
+    "squadra": "Inter"
   },
   {
     "file": "nuovo_arrivo_Jeff_Ekhator__Juventus.html",
@@ -60,38 +124,9 @@
     "squadra": "Como"
   },
   {
-    "file": "nuovo_arrivo_Thierry_Correia__Venezia.html",
-    "giocatore": "Thierry Correia",
-    "squadra": "Venezia"
-  },
-  {
-    "file": "nuovo_arrivo_Viery__Fiorentina.html",
-    "giocatore": "Viery",
-    "squadra": "Fiorentina"
-  },
-  {
-    "giocatore": "Demi Akarakiri",
-    "squadra": "Cagliari",
-    "ruolo": "C",
-    "file": "nuovo_arrivo_Demi_Akarakiri__Cagliari.html"
-  },
-  {
-    "giocatore": "David Puczka",
-    "squadra": "Genoa",
-    "ruolo": "D",
-    "file": "nuovo_arrivo_David_Puczka__Genoa.html"
-  },
-  {
-    "giocatore": "Giorgi Chakvetadze",
-    "squadra": "Udinese",
-    "ruolo": "T",
-    "file": "nuovo_arrivo_Giorgi_Chakvetadze__Udinese.html"
-  },
-  {
-    "giocatore": "Eddy Kouadio",
-    "squadra": "Monza",
-    "ruolo": "D",
-    "file": "nuovo_arrivo_Eddy_Kouadio__Monza.html"
+    "file": "nuovo_arrivo_Mario_Gila__Milan.html",
+    "giocatore": "Mario Gila",
+    "squadra": "Milan"
   },
   {
     "giocatore": "Radu Dragusin",
@@ -100,9 +135,29 @@
     "file": "nuovo_arrivo_Radu_Dragusin__Fiorentina.html"
   },
   {
+    "file": "nuovo_arrivo_Samuel_Wiafe__Genoa.html",
+    "giocatore": "Samuel Wiafe",
+    "squadra": "Genoa"
+  },
+  {
+    "file": "nuovo_arrivo_Thierry_Correia__Venezia.html",
+    "giocatore": "Thierry Correia",
+    "squadra": "Venezia"
+  },
+  {
+    "file": "nuovo_arrivo_Toma_Basic__Venezia.html",
+    "giocatore": "Toma Basic",
+    "squadra": "Venezia"
+  },
+  {
     "giocatore": "Unai Gomez",
     "squadra": "Udinese",
     "ruolo": "T",
     "file": "nuovo_arrivo_Unai_Gomez__Udinese.html"
+  },
+  {
+    "file": "nuovo_arrivo_Viery__Fiorentina.html",
+    "giocatore": "Viery",
+    "squadra": "Fiorentina"
   }
 ]
