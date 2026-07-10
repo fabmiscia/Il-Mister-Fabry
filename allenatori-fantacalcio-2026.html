@@ -2599,6 +2599,8 @@ document.getElementById('btn-github').addEventListener('click', async () => {
 
     btn.textContent = '⏳ Codifica HTML...';
     let html = '<!DOCTYPE html>\n' + document.documentElement.outerHTML;
+    // Ripristina pulsante nel file salvato (era catturato in stato disabled)
+    html = html.replace(/<button[^>]*id="btn-github"[^>]*>.*?<\/button>/, '<button class="btn btn-github" id="btn-github">📤 Su GitHub<\/button>');
     cache.remove();
     // Aggiorna COACHES_DEFAULT con dati runtime (dots, posizioni, note ecc.)
     const newCoachesJSON = JSON.stringify(coaches, null, 2);
