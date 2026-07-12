@@ -1,6 +1,5 @@
 <!DOCTYPE html>
-<html lang="it">
-<head>
+<html lang="it"><head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Gianluca Gaetano – Card Fantacalcio</title>
@@ -641,12 +640,12 @@ table.inj-tbl thead th {
 </style>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 </head>
-<body>
+<body style="overflow-x: hidden;">
 
 <div class="nav">
-  <button class="active" onclick="go(1)">📋 Info</button>
+  <button class="" onclick="go(1)">📋 Info</button>
   <button onclick="go(2)">📊 Statistiche</button>
-  <button onclick="go(3)">⭐ Consigli Fantacalcio</button>
+  <button onclick="go(3)" class="active">⭐ Consigli Fantacalcio</button>
 </div>
 
 <!-- Toolbar -->
@@ -656,13 +655,13 @@ table.inj-tbl thead th {
   <button onclick="exportPNG(3)">💾 Slide 3</button>
   <button style="background:#FFD700;color:#000;border:none;padding:7px 18px;border-radius:6px;cursor:pointer;font-size:12px;font-weight:800;letter-spacing:.5px;transition:.15s" onmouseover="this.style.background='#ffe55c'" onmouseout="this.style.background='#FFD700'" onclick="salvaEPubblica()">💾🚀 Salva + Pubblica</button>
   <button class="gh-btn" onclick="pubblicaGitHub()">🚀 Solo GitHub</button>
-  <button id="btn-salva-locale" onclick="salvaInLocale()" style="background:#1a1a1a;color:#fff;border:1px solid #333;padding:7px 14px;border-radius:6px;cursor:pointer;font-size:12px;font-weight:700;letter-spacing:.5px;transition:.15s" onmouseover="this.style.borderColor='#b0ff00';this.style.color='#b0ff00'" onmouseout="this.style.borderColor='#333';this.style.color='#fff'">💾 Salva in locale</button>
+  <button id="btn-salva-locale" onclick="salvaInLocale()" style="background: rgb(26, 26, 26); color: rgb(255, 255, 255); border: 1px solid rgb(51, 51, 51); padding: 7px 14px; border-radius: 6px; cursor: pointer; font-size: 12px; font-weight: 700; letter-spacing: 0.5px; transition: 0.15s;" onmouseover="this.style.borderColor='#b0ff00';this.style.color='#b0ff00'" onmouseout="this.style.borderColor='#333';this.style.color='#fff'">💾 Salva in locale</button>
   <span class="tip">← → per navigare | Click sulla foto per cambiarla</span>
 </div>
 
 <!-- Input nascosti per upload -->
 <input type="file" id="photo-input" accept="image/*" style="display:none">
-<input type="file" id="logo-input"  accept="image/*" style="display:none">
+<input type="file" id="logo-input" accept="image/*" style="display:none">
 
 <!-- ══ MOBILE VIEW (visibile solo su ≤900px) ══════════════════════════════ -->
 <div class="mobile-view" id="mobile-view">
@@ -671,7 +670,7 @@ table.inj-tbl thead th {
     <div class="mv-badge">NUOVO ARRIVO</div>
     <div class="mv-hero-overlay">
       <div class="mv-name" id="mv-name">Gianluca Gaetano</div>
-      <div class="mv-meta-line" id="mv-meta"></div>
+      <div class="mv-meta-line" id="mv-meta">ETÀ: 26 ANNI | RUOLO: MDC | SQUADRA: ATALANTA</div>
     </div>
   </div>
   <div class="mv-tabs">
@@ -679,20 +678,61 @@ table.inj-tbl thead th {
     <button class="mv-tab" onclick="mvGo(2)">📊 Stats</button>
     <button class="mv-tab" onclick="mvGo(3)">⭐ Consigli</button>
   </div>
-  <div class="mv-slide active" id="mv-s1"></div>
-  <div class="mv-slide" id="mv-s2"></div>
-  <div class="mv-slide" id="mv-s3"></div>
+  <div class="mv-slide active" id="mv-s1"><div><div class="mv-stat-row"><span class="mv-stat-icon">💰</span><span class="mv-stat-label">Valore mercato</span><span class="mv-stat-val">6,50 mln €</span></div><div class="mv-stat-row"><span class="mv-stat-icon">🔄</span><span class="mv-stat-label">Transfer</span><span class="mv-stat-val">Acquisto definitivo</span></div><div class="mv-stat-row"><span class="mv-stat-icon"><img src="https://tmssl.akamaized.net//images/flagge/tiny/75.png" style="height:16px;vertical-align:middle;margin-right:5px;border:1px solid #555"></span><span class="mv-stat-label">Nazionalità</span><span class="mv-stat-val hl">ITALIA</span></div><div class="mv-stat-row"><span class="mv-stat-icon">👟</span><span class="mv-stat-label">Piede</span><span class="mv-stat-val">DESTRO</span></div><div class="mv-stat-row"><span class="mv-stat-icon">📏</span><span class="mv-stat-label">Altezza</span><span class="mv-stat-val hl">1,83&nbsp;m</span></div><div class="mv-stat-row"><span class="mv-stat-icon"><img src="https://tmssl.akamaized.net//images/wappen/profil/2239.png?lm=1501770762" style="height:20px;vertical-align:middle;margin-right:5px"></span><span class="mv-stat-label">Ultimo club</span><span class="mv-stat-val">US CREMONESE</span></div><div class="mv-stat-row"><span class="mv-stat-icon">✅</span><span class="mv-stat-label">Presenze</span><span class="mv-stat-val">0</span></div><div class="mv-stat-row"><span class="mv-stat-icon">⚽</span><span class="mv-stat-label">Gol</span><span class="mv-stat-val">0</span></div><div class="mv-stat-row"><span class="mv-stat-icon">🎯</span><span class="mv-stat-label">Assist</span><span class="mv-stat-val">0</span></div><div class="mv-stat-row"><span class="mv-stat-icon">📝</span><span class="mv-stat-label">Scadenza</span><span class="mv-stat-val">30/06/2031</span></div><div class="mv-stat-row"><span class="mv-stat-icon">🚑</span><span class="mv-stat-label">Infortuni</span><span class="mv-stat-val">10 infortuni registrati</span></div></div><div style="margin-top: 10px; border-radius: 8px; overflow: hidden; background: rgb(242, 242, 242); max-width: 220px; align-self: center; width: 100%;"><div class="role-col" style="width: 100%; margin: 0px; border-radius: 0px; display: flex; flex-direction: column; color: rgb(34, 34, 34);">
+    <div class="role-hdr">Ruolo</div>
+    <div class="role-field" style="min-height: 160px;">
+      <svg viewBox="0 0 100 150" preserveAspectRatio="xMidYMid meet">
+        <rect x="0" y="0" width="100" height="150" fill="#1e4d8c"></rect>
+        <rect x="6" y="5" width="88" height="140" rx="2" fill="none" stroke="rgba(255,255,255,.6)" stroke-width="1"></rect>
+        <line x1="6" y1="75" x2="94" y2="75" stroke="rgba(255,255,255,.4)" stroke-width=".8"></line>
+        <circle cx="50" cy="75" r="13" fill="none" stroke="rgba(255,255,255,.4)" stroke-width=".8"></circle>
+        <circle cx="50" cy="75" r="1.5" fill="rgba(255,255,255,.4)"></circle>
+        <rect x="22" y="117" width="56" height="23" rx="1" fill="none" stroke="rgba(255,255,255,.6)" stroke-width=".9"></rect>
+        <rect x="36" y="130" width="28" height="10" rx="1" fill="none" stroke="rgba(255,255,255,.5)" stroke-width=".7"></rect>
+        <rect x="22" y="10" width="56" height="23" rx="1" fill="none" stroke="rgba(255,255,255,.6)" stroke-width=".9"></rect>
+        <rect x="36" y="10" width="28" height="10" rx="1" fill="none" stroke="rgba(255,255,255,.5)" stroke-width=".7"></rect>
+        <circle cx="50%" cy="58%" r="7" fill="white" stroke="#22c55e" stroke-width="2.5"></circle><circle cx="50%" cy="58%" r="3.5" fill="#22c55e"></circle>
+        <circle cx="50%" cy="33%" r="5.5" fill="#b0ff00" stroke="white" stroke-width="1.5" opacity=".85"></circle><circle cx="50%" cy="33%" r="2" fill="white" opacity=".9"></circle>
+        <circle cx="50%" cy="46%" r="5.5" fill="#22c55e" stroke="white" stroke-width="1.5" opacity=".85"></circle><circle cx="50%" cy="46%" r="2" fill="white" opacity=".9"></circle>
+      </svg>
+    </div>
+    <div class="role-meta">
+      <div class="rl">Ruolo naturale:</div>
+      <div class="rv" contenteditable="true">Mediano Difensivo</div>
+      <div class="rl" style="margin-top:4px">Ruoli secondari:</div>
+      <div class="rv" contenteditable="true">Trequartista, Centrocampista</div>
+    </div>
+    <div class="role-legend">
+      <div class="legend-dot"><span class="dot" style="background:white;border-color:#888"></span> Primario</div>
+      <div class="legend-dot"><span class="dot" style="background:#b0ff00"></span> Offensivo</div>
+      <div class="legend-dot"><span class="dot" style="background:#22c55e"></span> Centrocampo</div>
+      <div class="legend-dot"><span class="dot" style="background:#3b82f6"></span> Difensivo</div>
+    </div>
+  </div></div></div>
+  <div class="mv-slide" id="mv-s2"><div class="mv-section-title">Rendimento per stagione</div>
+<div class="mv-tbl-wrap"><table class="mv-tbl">
+<thead><tr><th>Anno</th><th>Squadra</th><th class="c">G</th><th class="c">⚽</th><th class="c">🎯</th></tr></thead><tbody><tr><td class="hl">25/26</td><td>Cagliari Calcio</td><td class="c">41</td><td class="c hl">3</td><td class="c hl">4</td></tr><tr><td class="hl">24/25</td><td>Cagliari Calcio</td><td class="c">38</td><td class="c hl">2</td><td class="c hl">4</td></tr><tr><td class="hl">24/25</td><td>SSC Napoli</td><td class="c">3</td><td class="c hl">—</td><td class="c hl">—</td></tr><tr><td class="hl">23/24</td><td>Cagliari Calcio</td><td class="c">16</td><td class="c hl">4</td><td class="c hl">1</td></tr><tr><td class="hl">23/24</td><td>SSC Napoli</td><td class="c">30</td><td class="c hl">1</td><td class="c hl">—</td></tr></tbody></table></div><div class="mv-section-title">Storico infortuni</div>
+<div class="mv-tbl-wrap"><table class="mv-tbl">
+<thead><tr><th>Stagione</th><th>Infortunio</th><th class="c">Gg</th></tr></thead><tbody><tr><td class="hl">25/26</td><td class="hl2">Problema agli adduttori</td><td class="c">26 giorni</td></tr><tr><td class="hl">25/26</td><td class="hl2">Problemi alla coscia</td><td class="c">16 giorni</td></tr><tr><td class="hl">24/25</td><td class="hl2">Operazione al ginocchio</td><td class="c">83 giorni</td></tr><tr><td class="hl">24/25</td><td class="hl2">Contusione al ginocchio</td><td class="c">7 giorni</td></tr><tr><td class="hl">23/24</td><td class="hl2">Problema agli adduttori</td><td class="c">22 giorni</td></tr><tr><td class="hl">23/24</td><td class="hl2">Ritardo di condizione</td><td class="c">9 giorni</td></tr><tr><td class="hl">22/23</td><td class="hl2">Frattura del metatarso</td><td class="c">71 giorni</td></tr><tr><td class="hl">22/23</td><td class="hl2">Tonsillite</td><td class="c">5 giorni</td></tr><tr><td class="hl">22/23</td><td class="hl2">Gastroenterite</td><td class="c">3 giorni</td></tr><tr><td class="hl">22/23</td><td class="hl2">Infezione influenzale</td><td class="c">4 giorni</td></tr></tbody></table></div></div>
+  <div class="mv-slide" id="mv-s3">
+<div class="mv-section-title">Appetibilità al Fantacalcio</div><div class="mv-stars"><span class="mv-star-f">★</span><span class="mv-star-f">★</span><span class="mv-star-f">★</span><span class="mv-star-e">★</span><span class="mv-star-e">★</span></div>
+<div class="mv-section-title">Consiglio di spesa del Mister</div>
+<div class="mv-card-text">Possibile regista titolare, potrebbe essere un battitore di calci piazzati.</div>
+<div class="mv-section-title">Appunti del Mister</div>
+<div class="mv-notes">Trequartista/centrocampista regista, 26 anni. Arriva dal Cagliari per 12M+2M bonus, contratto fino al 2031. Nell'ultima stagione: 32 presenze, 2 gol, 4 assist, fantamedia 6.31 con il Cagliari. Possibile regista titolare.
+
+🟢 PRO: Sistema offensivo dell'Atalanta tra i migliori d'Italia, qualità tecnica elevata, 93 presenze in Serie A alle spalle.
+🔴 CONTRO: Da regista perde appetibilità, non mi aspetto molti bonus pesanti, può portare invece diversi bonus leggeri✏️ CONSIGLIO: 5-6 Slot del vostro centrocampo senza spendere grosse cifre. Se preso a buon prezzo può portare una discreta FMV</div></div>
 </div>
 
 <!-- ══════════════════════════════════════════════
      SLIDE 1
 ══════════════════════════════════════════════ -->
-<div id="s1" class="card active">
+<div id="s1" class="card" style="transform: scale(1); transform-origin: center top; margin-bottom: 0px;">
 
   <!-- Foto cliccabile -->
   <div class="photo-col" onclick="triggerPhotoUpload('all')">
-    <img class="player-img photo-all" src="https://img.a.transfermarkt.technology/portrait/big/358008-1757604842.jpg?lm=1" alt="Gianluca Gaetano"
-         onerror="this.src='https://img.a.transfermarkt.technology/portrait/big/default.jpg'">
+    <img class="player-img photo-all" src="https://img.a.transfermarkt.technology/portrait/big/358008-1757604842.jpg?lm=1" alt="Gianluca Gaetano" onerror="this.src='https://img.a.transfermarkt.technology/portrait/big/default.jpg'">
     <div class="photo-upload-hint">📷 Click per cambiare foto</div>
   </div>
 
@@ -733,7 +773,7 @@ table.inj-tbl thead th {
       <div class="srow">
         <span class="sic">📏</span>
         <span class="slbl">Altezza</span>
-        <span class="sval bold-xl" contenteditable="true">1,83 m</span>
+        <span class="sval bold-xl" contenteditable="true">1,83&nbsp;m</span>
       </div>
       <div class="srow">
         <span class="sic"><img src="https://tmssl.akamaized.net//images/wappen/profil/2239.png?lm=1501770762" style="height:20px;vertical-align:middle;margin-right:5px"></span>
@@ -773,18 +813,18 @@ table.inj-tbl thead th {
     <div class="role-hdr">Ruolo</div>
     <div class="role-field">
       <svg viewBox="0 0 100 150" preserveAspectRatio="xMidYMid meet">
-        <rect x="0" y="0" width="100" height="150" fill="#1e4d8c"/>
-        <rect x="6" y="5" width="88" height="140" rx="2" fill="none" stroke="rgba(255,255,255,.6)" stroke-width="1"/>
-        <line x1="6" y1="75" x2="94" y2="75" stroke="rgba(255,255,255,.4)" stroke-width=".8"/>
-        <circle cx="50" cy="75" r="13" fill="none" stroke="rgba(255,255,255,.4)" stroke-width=".8"/>
-        <circle cx="50" cy="75" r="1.5" fill="rgba(255,255,255,.4)"/>
-        <rect x="22" y="117" width="56" height="23" rx="1" fill="none" stroke="rgba(255,255,255,.6)" stroke-width=".9"/>
-        <rect x="36" y="130" width="28" height="10" rx="1" fill="none" stroke="rgba(255,255,255,.5)" stroke-width=".7"/>
-        <rect x="22" y="10" width="56" height="23" rx="1" fill="none" stroke="rgba(255,255,255,.6)" stroke-width=".9"/>
-        <rect x="36" y="10" width="28" height="10" rx="1" fill="none" stroke="rgba(255,255,255,.5)" stroke-width=".7"/>
-        <circle cx="50%" cy="58%" r="7" fill="white" stroke="#22c55e" stroke-width="2.5"/><circle cx="50%" cy="58%" r="3.5" fill="#22c55e"/>
-        <circle cx="50%" cy="33%" r="5.5" fill="#b0ff00" stroke="white" stroke-width="1.5" opacity=".85"/><circle cx="50%" cy="33%" r="2" fill="white" opacity=".9"/>
-        <circle cx="50%" cy="46%" r="5.5" fill="#22c55e" stroke="white" stroke-width="1.5" opacity=".85"/><circle cx="50%" cy="46%" r="2" fill="white" opacity=".9"/>
+        <rect x="0" y="0" width="100" height="150" fill="#1e4d8c"></rect>
+        <rect x="6" y="5" width="88" height="140" rx="2" fill="none" stroke="rgba(255,255,255,.6)" stroke-width="1"></rect>
+        <line x1="6" y1="75" x2="94" y2="75" stroke="rgba(255,255,255,.4)" stroke-width=".8"></line>
+        <circle cx="50" cy="75" r="13" fill="none" stroke="rgba(255,255,255,.4)" stroke-width=".8"></circle>
+        <circle cx="50" cy="75" r="1.5" fill="rgba(255,255,255,.4)"></circle>
+        <rect x="22" y="117" width="56" height="23" rx="1" fill="none" stroke="rgba(255,255,255,.6)" stroke-width=".9"></rect>
+        <rect x="36" y="130" width="28" height="10" rx="1" fill="none" stroke="rgba(255,255,255,.5)" stroke-width=".7"></rect>
+        <rect x="22" y="10" width="56" height="23" rx="1" fill="none" stroke="rgba(255,255,255,.6)" stroke-width=".9"></rect>
+        <rect x="36" y="10" width="28" height="10" rx="1" fill="none" stroke="rgba(255,255,255,.5)" stroke-width=".7"></rect>
+        <circle cx="50%" cy="58%" r="7" fill="white" stroke="#22c55e" stroke-width="2.5"></circle><circle cx="50%" cy="58%" r="3.5" fill="#22c55e"></circle>
+        <circle cx="50%" cy="33%" r="5.5" fill="#b0ff00" stroke="white" stroke-width="1.5" opacity=".85"></circle><circle cx="50%" cy="33%" r="2" fill="white" opacity=".9"></circle>
+        <circle cx="50%" cy="46%" r="5.5" fill="#22c55e" stroke="white" stroke-width="1.5" opacity=".85"></circle><circle cx="50%" cy="46%" r="2" fill="white" opacity=".9"></circle>
       </svg>
     </div>
     <div class="role-meta">
@@ -806,11 +846,10 @@ table.inj-tbl thead th {
 <!-- ══════════════════════════════════════════════
      SLIDE 2 – Statistiche
 ══════════════════════════════════════════════ -->
-<div id="s2" class="card">
+<div id="s2" class="card" style="transform: scale(1); transform-origin: center top; margin-bottom: 0px;">
 
   <div class="s2-photo" onclick="triggerPhotoUpload('all')">
-    <img class="photo-all" src="https://img.a.transfermarkt.technology/portrait/big/358008-1757604842.jpg?lm=1" alt="Gianluca Gaetano"
-         onerror="this.src='https://img.a.transfermarkt.technology/portrait/big/default.jpg'">
+    <img class="photo-all" src="https://img.a.transfermarkt.technology/portrait/big/358008-1757604842.jpg?lm=1" alt="Gianluca Gaetano" onerror="this.src='https://img.a.transfermarkt.technology/portrait/big/default.jpg'">
   </div>
 
   <div class="s2-body">
@@ -1068,11 +1107,10 @@ table.inj-tbl thead th {
 <!-- ══════════════════════════════════════════════
      SLIDE 3 – Consigli Fantacalcio
 ══════════════════════════════════════════════ -->
-<div id="s3" class="card">
+<div id="s3" class="card active" style="transform: scale(1); transform-origin: center top; margin-bottom: 0px;">
 
   <div class="s3-photo" onclick="triggerPhotoUpload('all')">
-    <img class="photo-all" src="https://img.a.transfermarkt.technology/portrait/big/358008-1757604842.jpg?lm=1" alt="Gianluca Gaetano"
-         onerror="this.src='https://img.a.transfermarkt.technology/portrait/big/default.jpg'">
+    <img class="photo-all" src="https://img.a.transfermarkt.technology/portrait/big/358008-1757604842.jpg?lm=1" alt="Gianluca Gaetano" onerror="this.src='https://img.a.transfermarkt.technology/portrait/big/default.jpg'">
   </div>
 
   <div class="s3-body">
@@ -1086,29 +1124,28 @@ table.inj-tbl thead th {
     <!-- Appetibilità -->
     <div class="s3-section">
       <div class="s3-label">APPETIBILITÀ AL FANTACALCIO</div>
-      <div class="stars-widget" id="stars-widget" data-value="3.0">
-        <span class="star-wrap" data-v="1"><span class="star-bg">★</span><span class="star-fg">★</span></span>
-        <span class="star-wrap" data-v="2"><span class="star-bg">★</span><span class="star-fg">★</span></span>
-        <span class="star-wrap" data-v="3"><span class="star-bg">★</span><span class="star-fg">★</span></span>
-        <span class="star-wrap" data-v="4"><span class="star-bg">★</span><span class="star-fg">★</span></span>
-        <span class="star-wrap" data-v="5"><span class="star-bg">★</span><span class="star-fg">★</span></span>
+      <div class="stars-widget" id="stars-widget" data-value="3">
+        <span class="star-wrap" data-v="1"><span class="star-bg">★</span><span class="star-fg" style="width: 100%;">★</span></span>
+        <span class="star-wrap" data-v="2"><span class="star-bg">★</span><span class="star-fg" style="width: 100%;">★</span></span>
+        <span class="star-wrap" data-v="3"><span class="star-bg">★</span><span class="star-fg" style="width: 100%;">★</span></span>
+        <span class="star-wrap" data-v="4"><span class="star-bg">★</span><span class="star-fg" style="width: 0%;">★</span></span>
+        <span class="star-wrap" data-v="5"><span class="star-bg">★</span><span class="star-fg" style="width: 0%;">★</span></span>
       </div>
     </div>
 
     <!-- Consiglio di spesa -->
     <div class="s3-section">
       <div class="s3-label">CONSIGLIO DI SPESA DEL MISTER</div>
-      <div class="s3-spesa" contenteditable="true">Rincalzo offensivo nell'Atalanta, acquisto da ultime slot</div>
+      <div class="s3-spesa" contenteditable="true">Possibile regista titolare, potrebbe essere un battitore di calci piazzati.</div>
     </div>
 
     <!-- Appunti -->
     <div class="s3-section s3-grow">
       <div class="s3-label">APPUNTI DEL MISTER</div>
-      <div class="s3-notes" contenteditable="true">Trequartista/centrocampista offensivo, 26 anni. Arriva dal Cagliari per 12M+2M bonus, contratto fino al 2031. Nell'ultima stagione: 32 presenze, 2 gol, 4 assist, fantamedia 6.31 con il Cagliari. Gasperini lo inserisce come opzione alternativa a Pasalic e Samardzic.
+      <div class="s3-notes" contenteditable="true">Trequartista/centrocampista regista, 26 anni. Arriva dal Cagliari per 12M+2M bonus, contratto fino al 2031. Nell'ultima stagione: 32 presenze, 2 gol, 4 assist, fantamedia 6.31 con il Cagliari. Possibile regista titolare.
 
 🟢 PRO: Sistema offensivo dell'Atalanta tra i migliori d'Italia, qualità tecnica elevata, 93 presenze in Serie A alle spalle.
-🔴 CONTRO: Non sarà titolare fisso, alta concorrenza nel centrocampo atalantino. Difficile garantirsi il minutaggio.
-✏️ CONSIGLIO: Solo nelle leghe a 10-12 come ultima scelta di centrocampo. Occhio se Pasalic o Samardzic si infortunano: lì diventa interessante.</div>
+🔴 CONTRO: Da regista perde appetibilità, non mi aspetto molti bonus pesanti, può portare invece diversi bonus leggeri✏️ CONSIGLIO: 5-6 Slot del vostro centrocampo senza spendere grosse cifre. Se preso a buon prezzo può portare una discreta FMV</div>
     </div>
 
   </div>
@@ -1116,7 +1153,7 @@ table.inj-tbl thead th {
 
 <!-- Overlay GitHub -->
 <!-- Overlay GitHub -->
-<div id="gh-overlay" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.88);z-index:999;align-items:center;justify-content:center;">
+<div id="gh-overlay" style="display: none; position: fixed; inset: 0px; background: rgba(0, 0, 0, 0.88); z-index: 999; align-items: center; justify-content: center;">
   <div style="background:#1a1a1a;border:1px solid #333;border-radius:12px;padding:28px 32px;max-width:480px;width:90%;text-align:center;font-family:Arial,sans-serif;">
     <div id="gh-view-token" style="display:none">
       <div style="font-size:26px;margin-bottom:10px">🔑</div>
@@ -1125,8 +1162,7 @@ table.inj-tbl thead th {
         Inserisci il tuo <strong style="color:#ccc">Personal Access Token</strong> GitHub.<br>
         Sarà salvato solo su questo browser.
       </div>
-      <input id="gh-token-input" type="password" placeholder="ghp_xxxxxxxxxxxxxxxx"
-        style="width:100%;background:#0d0d0d;border:1px solid #333;border-radius:6px;padding:10px 12px;color:#fff;font-size:13px;font-family:monospace;margin-bottom:14px;outline:none">
+      <input id="gh-token-input" type="password" placeholder="ghp_xxxxxxxxxxxxxxxx" style="width:100%;background:#0d0d0d;border:1px solid #333;border-radius:6px;padding:10px 12px;color:#fff;font-size:13px;font-family:monospace;margin-bottom:14px;outline:none">
       <div style="display:flex;gap:10px;justify-content:center;">
         <button onclick="salvaSalvaPubblica()" style="background:#b0ff00;color:#000;border:none;padding:9px 24px;border-radius:20px;cursor:pointer;font-weight:800;font-size:12px">Salva e pubblica</button>
         <button onclick="chiudiOverlay()" style="background:#222;color:#aaa;border:1px solid #333;padding:9px 20px;border-radius:20px;cursor:pointer;font-size:12px">Annulla</button>
@@ -1135,13 +1171,12 @@ table.inj-tbl thead th {
         Crea il token su GitHub → Settings → Developer settings → Personal access tokens → Contents: Read &amp; Write
       </div>
     </div>
-    <div id="gh-view-progress" style="display:none">
-      <div style="font-size:32px;margin-bottom:12px" id="gh-icon">⏳</div>
-      <div id="gh-status" style="font-size:14px;color:#ccc;margin-bottom:6px">Pubblicazione in corso…</div>
+    <div id="gh-view-progress" style="display: none;">
+      <div style="font-size:32px;margin-bottom:12px" id="gh-icon">🚀</div>
+      <div id="gh-status" style="font-size: 14px; margin-bottom: 6px;">Pubblica su GitHub Pages</div>
       <div id="gh-detail" style="font-size:11px;color:#555;margin-bottom:18px"></div>
       <div id="gh-link-wrap" style="display:none;margin-bottom:14px">
-        <a id="gh-link" href="#" target="_blank"
-           style="color:#b0ff00;font-size:12px;text-decoration:none;border:1px solid #b0ff00;padding:6px 16px;border-radius:16px">
+        <a id="gh-link" href="#" target="_blank" style="color:#b0ff00;font-size:12px;text-decoration:none;border:1px solid #b0ff00;padding:6px 16px;border-radius:16px">
           🌐 Apri su GitHub Pages
         </a>
       </div>
@@ -1608,5 +1643,5 @@ async function salvaInLocale() {
   }
 }
 </script>
-</body>
-</html>
+
+</body></html>
