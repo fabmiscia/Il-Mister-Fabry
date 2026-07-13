@@ -251,7 +251,7 @@ const GH_FILE = 'iscrizione-torneo-classic-mihajlovic.html';
 const STORE_KEY = 'iscritti-mihajlovic';
 
 // ── DATI ──
-let data = {classico:[]};
+let data = {classico:[]}; // __DATA_EMBED__
 function saveData(){localStorage.setItem(STORE_KEY, JSON.stringify(data));}
 function loadData(){
   try{ const d=JSON.parse(localStorage.getItem(STORE_KEY)||'null'); if(d)data=d; }catch(e){}
@@ -333,6 +333,7 @@ document.getElementById('btn-github').addEventListener('click', async function()
   btn.textContent = '⏳ Caricando...'; btn.disabled = true;
   try{
     let source = '<!DOCTYPE html>\n' + document.documentElement.outerHTML;
+    source = source.replace(/let data = .*; \/\/ __DATA_EMBED__/, 'let data = ' + JSON.stringify(data) + '; // __DATA_EMBED__');
     const headers = {'Authorization':'token '+token,'Content-Type':'application/json'};
     const getResp = await fetch('https://api.github.com/repos/'+GH_REPO+'/contents/'+GH_FILE,{headers});
     if(!getResp.ok && getResp.status!==404){ if(getResp.status===401){localStorage.removeItem('gh-token');throw new Error('Token non valido.');} throw new Error('Errore '+getResp.status); }
