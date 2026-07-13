@@ -125,7 +125,7 @@ body.edit-mode .add-row { display:flex; }
   <span class="toolbar-title">🏆 TORNEO CLASSIC MAZZONE</span>
   <div class="spacer"></div>
   <button class="btn btn-edit" id="btn-edit" onclick="toggleEdit()">✏ Modifica</button>
-  <button class="btn btn-github" id="btn-github">📤 Su GitHub</button>
+  <button class="btn btn-github" id="btn-github" disabled="">⏳ Caricando...</button>
   <button id="btn-salva-locale" onclick="salvaInLocale()" style="background: rgb(26, 26, 26); color: rgb(176, 255, 0); border: 1px solid rgb(176, 255, 0); padding: 7px 14px; border-radius: 6px; cursor: pointer; font-size: 12px; font-weight: 700; letter-spacing: 0.5px; transition: 0.15s;" onmouseover="this.style.borderColor='#b0ff00';this.style.color='#b0ff00'" onmouseout="this.style.borderColor='#333';this.style.color='#fff'">💾 Salva in locale</button>
 </div>
 
@@ -206,7 +206,7 @@ body.edit-mode .add-row { display:flex; }
     <div>
       <div class="section-title">
         Iscritti confermati
-        <span class="cnt" id="cnt-classico">3</span>
+        <span class="cnt" id="cnt-classico">4</span>
       </div>
       <table class="iscritti-table">
         <thead>
@@ -220,7 +220,7 @@ body.edit-mode .add-row { display:flex; }
           </tr>
         </thead>
         <tbody id="tbody-classico">
-          <tr class="data-row"><td><span class="num-circle">1</span></td><td>Federico</td><td>Polmonari</td><td>9 Luglio</td><td><span class="badge-pagato">✅ Pagato</span></td><td class="edit-only"><button class="btn-del" onclick="delIscritto('classico',0)">✕</button></td></tr><tr class="data-row"><td><span class="num-circle">2</span></td><td>Fabrizio</td><td>Miscia</td><td>9 Luglio</td><td><span class="badge-pagato">✅ Pagato</span></td><td class="edit-only"><button class="btn-del" onclick="delIscritto('classico',1)">✕</button></td></tr><tr class="data-row"><td><span class="num-circle">3</span></td><td>Giuseppe</td><td>Castiglia</td><td>8 luglio</td><td><span class="badge-pagato">✅ Pagato</span></td><td class="edit-only"><button class="btn-del" onclick="delIscritto('classico',2)">✕</button></td></tr><tr id="empty-classico" style="display: none;">
+          <tr class="data-row"><td><span class="num-circle">1</span></td><td>Paolo</td><td>Di Capua</td><td>13 Luglio</td><td><span class="badge-pagato">✅ Pagato</span></td><td class="edit-only"><button class="btn-del" onclick="delIscritto('classico',0)">✕</button></td></tr><tr class="data-row"><td><span class="num-circle">2</span></td><td>Fabrizio</td><td>Miscia</td><td>13 luglio</td><td><span class="badge-pagato">✅ Pagato</span></td><td class="edit-only"><button class="btn-del" onclick="delIscritto('classico',1)">✕</button></td></tr><tr class="data-row"><td><span class="num-circle">3</span></td><td>Giuseppe</td><td>Castiglia</td><td>13 luglio</td><td><span class="badge-pagato">✅ Pagato</span></td><td class="edit-only"><button class="btn-del" onclick="delIscritto('classico',2)">✕</button></td></tr><tr class="data-row"><td><span class="num-circle">4</span></td><td>Federico</td><td>Polmonari</td><td>13 luglio</td><td><span class="badge-pagato">✅ Pagato</span></td><td class="edit-only"><button class="btn-del" onclick="delIscritto('classico',3)">✕</button></td></tr><tr id="empty-classico" style="display: none;">
             <td colspan="6" style="text-align:center;color:#333;font-size:12px;letter-spacing:2px;padding:32px">
               Nessun iscritto ancora
             </td>
@@ -251,7 +251,7 @@ const GH_FILE = 'iscrizione-torneo-classic-mazzone.html';
 const STORE_KEY = 'iscritti-mazzone';
 
 // ── DATI ──
-let data = {classico:[]}; // __DATA_EMBED__
+let data = {"classico":[{"nome":"Paolo","cogn":"Di Capua","data":"13 Luglio","stato":"pagato"},{"nome":"Fabrizio","cogn":"Miscia","data":"13 luglio","stato":"pagato"},{"nome":"Giuseppe","cogn":"Castiglia","data":"13 luglio","stato":"pagato"},{"nome":"Federico","cogn":"Polmonari","data":"13 luglio","stato":"pagato"}]}; // __DATA_EMBED__
 function saveData(){localStorage.setItem(STORE_KEY, JSON.stringify(data));}
 function loadData(){
   try{ const d=JSON.parse(localStorage.getItem(STORE_KEY)||'null'); if(d)data=d; }catch(e){}
