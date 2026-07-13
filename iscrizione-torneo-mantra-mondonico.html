@@ -125,8 +125,8 @@ body.edit-mode .add-row { display:flex; }
   <span class="toolbar-title">🏆 TORNEO MANTRA MONDONICO</span>
   <div class="spacer"></div>
   <button class="btn btn-edit active" id="btn-edit" onclick="toggleEdit()">✓ Fine modifica</button>
-  <button class="btn btn-github" id="btn-github" disabled="">⏳ Caricando...</button>
-  <button id="btn-salva-locale" onclick="salvaInLocale()" style="background: rgb(26, 26, 26); color: rgb(255, 255, 255); border: 1px solid rgb(51, 51, 51); padding: 7px 14px; border-radius: 6px; cursor: pointer; font-size: 12px; font-weight: 700; letter-spacing: 0.5px; transition: 0.15s;" onmouseover="this.style.borderColor='#b0ff00';this.style.color='#b0ff00'" onmouseout="this.style.borderColor='#333';this.style.color='#fff'">💾 Salva in locale</button>
+  <button class="btn btn-github" id="btn-github">📤 Su GitHub</button>
+  <button id="btn-salva-locale" onclick="salvaInLocale()" style="background: rgb(26, 26, 26); color: rgb(176, 255, 0); border: 1px solid rgb(176, 255, 0); padding: 7px 14px; border-radius: 6px; cursor: pointer; font-size: 12px; font-weight: 700; letter-spacing: 0.5px; transition: 0.15s;" onmouseover="this.style.borderColor='#b0ff00';this.style.color='#b0ff00'" onmouseout="this.style.borderColor='#333';this.style.color='#fff'">💾 Salva in locale</button>
 </div>
 
 <div class="page">
@@ -243,7 +243,7 @@ const GH_REPO = 'fabmiscia/Il-Mister-Fabry';
 const GH_FILE = 'iscrizione-torneo-mantra-mondonico.html';
 const STORE_KEY = 'iscritti-mondonico';
 
-let data = {mondonico:[]};
+let data = {mondonico:[]}; // __DATA_EMBED__
 function saveData(){localStorage.setItem(STORE_KEY, JSON.stringify(data));}
 function loadData(){
   try{ const d=JSON.parse(localStorage.getItem(STORE_KEY)||'null'); if(d)data=d; }catch(e){}
@@ -319,6 +319,7 @@ document.getElementById('btn-github').addEventListener('click', async function()
   btn.textContent = '⏳ Caricando...'; btn.disabled = true;
   try{
     let source = '<!DOCTYPE html>\n' + document.documentElement.outerHTML;
+    source = source.replace(/let data = .*; \/\/ __DATA_EMBED__/, 'let data = ' + JSON.stringify(data) + '; // __DATA_EMBED__');
     const headers = {'Authorization':'token '+token,'Content-Type':'application/json'};
     const getResp = await fetch('https://api.github.com/repos/'+GH_REPO+'/contents/'+GH_FILE,{headers});
     if(!getResp.ok && getResp.status!==404){ if(getResp.status===401){localStorage.removeItem('gh-token');throw new Error('Token non valido.');} throw new Error('Errore '+getResp.status); }
