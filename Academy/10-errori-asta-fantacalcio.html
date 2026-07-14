@@ -1,10 +1,9 @@
 <!DOCTYPE html>
-<html lang="it">
-<head>
+<html lang="it"><head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>10 Errori da Non Fare all'Asta del Fantacalcio</title>
-<link href="https://fonts.googleapis.com/css2?family=Anton&family=Montserrat:wght@700;900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Anton&amp;family=Montserrat:wght@700;900&amp;display=swap" rel="stylesheet">
 <style>
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -244,7 +243,7 @@ body {
 <!-- ── Toolbar ──────────────────────── -->
 <div class="toolbar">
   <span class="label">✏️ CLICCA SUI TESTI PER MODIFICARLI</span>
-  <button class="btn gh" onclick="esportaGitHub()">🚀 Su GitHub</button>
+  <button class="btn gh" onclick="esportaGitHub()" disabled="">⏳ Caricamento...</button>
   <button class="btn" onclick="esportaPNG()">📸 Esporta PNG</button>
 </div>
 
@@ -252,7 +251,7 @@ body {
 <div class="stage">
 
   <!-- SLIDE 1 -->
-  <div class="slide active" id="s1">
+  <div class="slide" id="s1">
     <div class="slide-inner">
       <div class="s-eyebrow" contenteditable="true">Guida all'asta • Fantacalcio 2026-27</div>
       <div class="s-counter" contenteditable="true">01 / 10</div>
@@ -322,7 +321,7 @@ body {
   </div>
 
   <!-- SLIDE 6 -->
-  <div class="slide" id="s6">
+  <div class="slide active" id="s6">
     <div class="slide-inner">
       <div class="s-eyebrow" contenteditable="true">Guida all'asta • Fantacalcio 2026-27</div>
       <div class="s-counter" contenteditable="true">06 / 10</div>
@@ -398,13 +397,13 @@ body {
   <div class="nav-arrows">
     <button onclick="navStep(-1)">◀</button>
   </div>
-  <button onclick="go(1)"  class="active">1</button>
-  <button onclick="go(2)">2</button>
+  <button onclick="go(1)" class="">1</button>
+  <button onclick="go(2)" class="">2</button>
   <button onclick="go(3)">3</button>
-  <button onclick="go(4)">4</button>
+  <button onclick="go(4)" class="">4</button>
   <button onclick="go(5)">5</button>
-  <button onclick="go(6)">6</button>
-  <button onclick="go(7)">7</button>
+  <button onclick="go(6)" class="active">6</button>
+  <button onclick="go(7)" class="">7</button>
   <button onclick="go(8)">8</button>
   <button onclick="go(9)">9</button>
   <button onclick="go(10)">10</button>
@@ -498,5 +497,7 @@ async function esportaGitHub() {
   }
 }
 </script>
-</body>
-</html>
+<div id="_pwa_nav" style="position:fixed;bottom:20px;right:16px;z-index:99999;display:flex;flex-direction:column;gap:8px"><button onclick="history.back()" aria-label="Indietro" title="Indietro" style="width:46px;height:46px;border-radius:50%;background:rgba(17,17,17,.92);border:1px solid #2a2a2a;color:#fff;font-size:22px;cursor:pointer;backdrop-filter:blur(8px);box-shadow:0 2px 12px rgba(0,0,0,.5)">←</button><button onclick="history.forward()" aria-label="Avanti" title="Avanti" style="width:46px;height:46px;border-radius:50%;background:rgba(17,17,17,.92);border:1px solid #2a2a2a;color:#fff;font-size:22px;cursor:pointer;backdrop-filter:blur(8px);box-shadow:0 2px 12px rgba(0,0,0,.5)">→</button></div>
+
+
+</body></html>
