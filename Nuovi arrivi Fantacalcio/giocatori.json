@@ -160,5 +160,20 @@
     "squadra": "Venezia",
     "ruolo": "A",
     "file": "nuovo_arrivo_Akor_Adams__Venezia.html"
+  },
+  {
+    "file": "nuovo_arrivo_Jacopo_Fazzini__Cagliari.html",
+    "giocatore": "Jacopo Fazzini",
+    "squadra": "Cagliari"
+  },
+  {
+    "file": "nuovo_arrivo_Anouar_El_Azzouzi__Frosinone.html",
+    "giocatore": "Anouar El Azzouzi",
+    "squadra": "Frosinone"
+  },
+  {
+    "file": "nuovo_arrivo_Alex_Jimenez__Fiorentina.html",
+    "giocatore": "Álex Jiménez",
+    "squadra": "Fiorentina"
   }
 ]
