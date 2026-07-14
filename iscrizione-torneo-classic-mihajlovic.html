@@ -106,7 +106,7 @@ body.edit-mode .add-row { display:flex; }
 }
 </style>
 </head>
-<body class="edit-mode">
+<body class="">
 
 <script>
 (function(){
@@ -124,9 +124,9 @@ body.edit-mode .add-row { display:flex; }
   <a class="btn btn-back" href="index.html">← Home</a>
   <span class="toolbar-title">🏆 TORNEO CLASSIC MIHAJLOVIC</span>
   <div class="spacer"></div>
-  <button class="btn btn-edit active" id="btn-edit" onclick="toggleEdit()">✓ Fine modifica</button>
-  <button class="btn btn-github" id="btn-github">📤 Su GitHub</button>
-  <button id="btn-salva-locale" onclick="salvaInLocale()" style="background: rgb(26, 26, 26); color: rgb(176, 255, 0); border: 1px solid rgb(176, 255, 0); padding: 7px 14px; border-radius: 6px; cursor: pointer; font-size: 12px; font-weight: 700; letter-spacing: 0.5px; transition: 0.15s;" onmouseover="this.style.borderColor='#b0ff00';this.style.color='#b0ff00'" onmouseout="this.style.borderColor='#333';this.style.color='#fff'">💾 Salva in locale</button>
+  <button class="btn btn-edit" id="btn-edit" onclick="toggleEdit()">✏ Modifica</button>
+  <button class="btn btn-github" id="btn-github" disabled="">⏳ Caricando...</button>
+  <button id="btn-salva-locale" onclick="salvaInLocale()" style="background: rgb(26, 26, 26); color: rgb(255, 255, 255); border: 1px solid rgb(51, 51, 51); padding: 7px 14px; border-radius: 6px; cursor: pointer; font-size: 12px; font-weight: 700; letter-spacing: 0.5px; transition: 0.15s;" onmouseover="this.style.borderColor='#b0ff00';this.style.color='#b0ff00'" onmouseout="this.style.borderColor='#333';this.style.color='#fff'">💾 Salva in locale</button>
 </div>
 
 <div class="page">
@@ -135,24 +135,24 @@ body.edit-mode .add-row { display:flex; }
   <div class="torneo-section" id="torneo-classico">
 
     <div class="torneo-header">
-      <div class="torneo-badge" contenteditable="true">Torneo Classic</div>
-      <div class="torneo-title" contenteditable="true">TORNEO CLASSIC <span contenteditable="true">MIHAJLOVIC</span></div>
-      <div class="torneo-sub" contenteditable="true">Fantacalcio 2026-27 • MisterFabry Community</div>
+      <div class="torneo-badge" contenteditable="false">Torneo Classic</div>
+      <div class="torneo-title" contenteditable="false">TORNEO CLASSIC <span contenteditable="false">MIHAJLOVIC</span></div>
+      <div class="torneo-sub" contenteditable="false">Fantacalcio 2026-27 • MisterFabry Community</div>
     </div>
 
     <br>
     <div class="info-grid">
       <div class="info-card">
         <div class="info-label">Quota iscrizione</div>
-        <div class="info-value green" contenteditable="true">€70</div>
+        <div class="info-value green" contenteditable="false">€70</div>
       </div>
       <div class="info-card">
         <div class="info-label">Posti disponibili</div>
-        <div class="info-value" contenteditable="true">0</div>
+        <div class="info-value" contenteditable="false">0</div>
       </div>
       <div class="info-card">
         <div class="info-label">Scadenza iscrizioni</div>
-        <div class="info-value" contenteditable="true">31 LUGLIO</div>
+        <div class="info-value" contenteditable="false">31 LUGLIO</div>
       </div>
     </div>
 
@@ -177,7 +177,7 @@ body.edit-mode .add-row { display:flex; }
           <button class="btn-copia-iban" onclick="copiaIban()">📋 Copia IBAN</button>
         </div>
         <div class="causale-hint">
-          Causale: <strong style="color:#fff" contenteditable="true">Iscrizione FANTACALCIO (Classic Mihajlovic)</strong>
+          Causale: <strong style="color:#fff" contenteditable="false">Iscrizione FANTACALCIO (Classic Mihajlovic)</strong>
         </div>
       </div>
 
@@ -185,7 +185,7 @@ body.edit-mode .add-row { display:flex; }
       <div class="pagamento-box whatsapp">
         <div class="pag-title">2️⃣ Conferma pagamento</div>
         <div class="pag-icon">💬</div>
-        <div class="wa-group-name" contenteditable="true" id="wa-group-name">CLASSIC MIHAJLOVIC</div>
+        <div class="wa-group-name" contenteditable="false" id="wa-group-name">CLASSIC MIHAJLOVIC</div>
         <div class="pag-desc">
           Dopo aver pagato, manda uno<br>
           screenshot della ricevuta nel gruppo
@@ -206,7 +206,7 @@ body.edit-mode .add-row { display:flex; }
     <div>
       <div class="section-title">
         Iscritti confermati
-        <span class="cnt" id="cnt-classico">2</span>
+        <span class="cnt" id="cnt-classico">3</span>
       </div>
       <table class="iscritti-table">
         <thead>
@@ -220,7 +220,7 @@ body.edit-mode .add-row { display:flex; }
           </tr>
         </thead>
         <tbody id="tbody-classico">
-          <tr class="data-row"><td><span class="num-circle">1</span></td><td>Giuseppe</td><td>Castiglia</td><td>9 luglio</td><td><span class="badge-pagato">✅ Pagato</span></td><td class="edit-only"><button class="btn-del" onclick="delIscritto('classico',0)">✕</button></td></tr><tr class="data-row"><td><span class="num-circle">2</span></td><td>Fabrizio</td><td>Miscia</td><td>9 luglio</td><td><span class="badge-pagato">✅ Pagato</span></td><td class="edit-only"><button class="btn-del" onclick="delIscritto('classico',1)">✕</button></td></tr><tr id="empty-classico" style="display: none;">
+          <tr class="data-row"><td><span class="num-circle">1</span></td><td>Oreste</td><td>Iacopino</td><td>14 luglio</td><td><span class="badge-pagato">✅ Pagato</span></td><td class="edit-only"><button class="btn-del" onclick="delIscritto('classico',0)">✕</button></td></tr><tr class="data-row"><td><span class="num-circle">2</span></td><td>Giuseppe</td><td>Castiglia</td><td>13 luglio</td><td><span class="badge-pagato">✅ Pagato</span></td><td class="edit-only"><button class="btn-del" onclick="delIscritto('classico',1)">✕</button></td></tr><tr class="data-row"><td><span class="num-circle">3</span></td><td>Fabrizio</td><td>Miscia</td><td>13 liglio</td><td><span class="badge-pagato">✅ Pagato</span></td><td class="edit-only"><button class="btn-del" onclick="delIscritto('classico',2)">✕</button></td></tr><tr id="empty-classico" style="display: none;">
             <td colspan="6" style="text-align:center;color:#333;font-size:12px;letter-spacing:2px;padding:32px">
               Nessun iscritto ancora
             </td>
@@ -251,7 +251,7 @@ const GH_FILE = 'iscrizione-torneo-classic-mihajlovic.html';
 const STORE_KEY = 'iscritti-mihajlovic';
 
 // ── DATI ──
-let data = {classico:[]}; // __DATA_EMBED__
+let data = {"classico":[{"nome":"Oreste","cogn":"Iacopino","data":"14 luglio","stato":"pagato"},{"nome":"Giuseppe","cogn":"Castiglia","data":"13 luglio","stato":"pagato"},{"nome":"Fabrizio","cogn":"Miscia","data":"13 liglio","stato":"pagato"}]}; // __DATA_EMBED__
 function saveData(){localStorage.setItem(STORE_KEY, JSON.stringify(data));}
 function loadData(){
   try{ const d=JSON.parse(localStorage.getItem(STORE_KEY)||'null'); if(d)data=d; }catch(e){}
