@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>11 Errori da Non Fare all'Asta del Fantacalcio</title>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Montserrat:wght@700;900&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  background: #111;
+  font-family: 'Montserrat', Arial, sans-serif;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 100vh;
+}
+
+/* ── Toolbar ─────────────────────────── */
+.toolbar {
+  width: 100%;
+  background: #0a0a0a;
+  border-bottom: 2px solid #C4FF00;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 20px;
+  flex-wrap: wrap;
+}
+.toolbar .label {
+  color: #C4FF00;
+  font-size: 11px;
+  font-weight: 900;
+  letter-spacing: 1px;
+  margin-right: auto;
+}
+.btn {
+  background: #C4FF00;
+  color: #000;
+  border: none;
+  border-radius: 6px;
+  padding: 8px 16px;
+  font-size: 12px;
+  font-weight: 900;
+  cursor: pointer;
+  letter-spacing: .5px;
+  white-space: nowrap;
+}
+.btn:hover { opacity: .85; }
+.btn.gh { background: #fff; }
+
+/* ── Wrapper slide ───────────────────── */
+.stage {
+  margin: 24px auto 0;
+  width: 100%;
+  max-width: 1280px;
+  padding: 0 16px;
+}
+
+/* ── Slide 1280×720 ─────────────────── */
+.slide {
+  display: none;
+  width: 100%;
+  aspect-ratio: 16/9;
+  background: #0a0a0a;
+  position: relative;
+  overflow: hidden;
+  border-radius: 10px;
+}
+.slide.active { display: flex; }
+
+/* Riga verde a sinistra */
+.slide::before {
+  content: '';
+  position: absolute;
+  left: 0; top: 0; bottom: 0;
+  width: 6px;
+  background: #C4FF00;
+}
+
+/* Layout interno */
+.slide-inner {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 100%;
+  padding: 6% 7% 6% 9%;
+  gap: 2%;
+}
+
+/* Numero grande */
+.s-num {
+  font-family: 'Anton', Impact, sans-serif;
+  font-size: clamp(60px, 12vw, 140px);
+  line-height: 1;
+  color: #C4FF00;
+  opacity: .15;
+  position: absolute;
+  right: 7%;
+  bottom: 4%;
+  pointer-events: none;
+  user-select: none;
+}
+
+/* Eyebrow */
+.s-eyebrow {
+  display: inline-block;
+  background: #C4FF00;
+  color: #000;
+  font-size: clamp(9px, 1.2vw, 13px);
+  font-weight: 900;
+  letter-spacing: 2px;
+  padding: 4px 12px;
+  border-radius: 4px;
+  text-transform: uppercase;
+  width: fit-content;
+  outline: none;
+}
+.s-eyebrow:focus { box-shadow: 0 0 0 2px #C4FF00; }
+
+/* Numero piccolo */
+.s-counter {
+  font-family: 'Anton', Impact, sans-serif;
+  font-size: clamp(22px, 4vw, 50px);
+  color: #C4FF00;
+  line-height: 1;
+  outline: none;
+}
+
+/* Titolo */
+.s-title {
+  font-family: 'Anton', Impact, sans-serif;
+  font-size: clamp(24px, 5vw, 62px);
+  line-height: 1.05;
+  color: #fff;
+  text-transform: uppercase;
+  outline: none;
+}
+.s-title:focus { text-shadow: 0 0 0 2px #C4FF00; }
+
+/* Descrizione */
+.s-desc {
+  font-size: clamp(12px, 1.6vw, 18px);
+  font-weight: 700;
+  color: #aaa;
+  line-height: 1.6;
+  max-width: 68%;
+  outline: none;
+}
+.s-desc:focus { color: #ccc; }
+
+/* Badge */
+.s-badge {
+  display: inline-block;
+  margin-top: 6px;
+  background: rgba(196,255,0,.12);
+  border: 1px solid rgba(196,255,0,.35);
+  color: #C4FF00;
+  font-size: clamp(9px, 1.1vw, 12px);
+  font-weight: 900;
+  letter-spacing: 1.5px;
+  padding: 4px 14px;
+  border-radius: 20px;
+  text-transform: uppercase;
+  outline: none;
+  width: fit-content;
+}
+.s-badge:focus { border-color: #C4FF00; }
+
+/* Icona decorativa */
+.s-icon {
+  position: absolute;
+  right: 8%;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: clamp(50px, 9vw, 110px);
+  opacity: .18;
+  pointer-events: none;
+  user-select: none;
+  line-height: 1;
+}
+
+/* Footer slide */
+.s-footer {
+  position: absolute;
+  bottom: 16px;
+  right: 20px;
+  font-size: clamp(8px, 1vw, 11px);
+  color: #333;
+  letter-spacing: 1px;
+  font-weight: 700;
+  outline: none;
+}
+.s-footer:focus { color: #555; }
+
+/* ── Navigazione ─────────────────────── */
+.nav {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin: 18px 0 10px;
+  flex-wrap: wrap;
+}
+.nav button {
+  background: #222;
+  color: #fff;
+  border: 1px solid #333;
+  border-radius: 6px;
+  padding: 6px 14px;
+  font-size: 11px;
+  font-weight: 900;
+  cursor: pointer;
+  letter-spacing: .5px;
+  transition: all .15s;
+}
+.nav button.active {
+  background: #C4FF00;
+  color: #000;
+  border-color: #C4FF00;
+}
+.nav button:hover:not(.active) { border-color: #C4FF00; color: #C4FF00; }
+
+.nav-arrows {
+  display: flex;
+  gap: 8px;
+}
+.nav-arrows button {
+  background: #1a1a1a;
+  border: 1px solid #333;
+  color: #fff;
+  border-radius: 6px;
+  width: 36px; height: 36px;
+  font-size: 16px;
+  cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+}
+.nav-arrows button:hover { border-color: #C4FF00; }
+</style>
+</head>
+<body>
+
+<!-- ── Toolbar ──────────────────────── -->
+<div class="toolbar">
+  <span class="label">✏️ CLICCA SUI TESTI PER MODIFICARLI</span>
+  <button class="btn gh" onclick="esportaGitHub()">🚀 Su GitHub</button>
+  <button class="btn" onclick="esportaPNG()">📸 Esporta PNG</button>
+</div>
+
+<!-- ── Stage ────────────────────────── -->
+<div class="stage">
+
+  <!-- SLIDE 1 -->
+  <div class="slide active" id="s1">
+    <div class="slide-inner">
+      <div class="s-eyebrow" contenteditable="true">Guida all'asta • Fantacalcio 2026-27</div>
+      <div class="s-counter" contenteditable="true">01 / 11</div>
+      <div class="s-title" contenteditable="true">Puntare tutto<br>su un solo reparto</div>
+      <div class="s-desc" contenteditable="true">Chi ti dice «quest'anno punta tutto sul centrocampo» sta sbagliando. Le strategie estreme di reparto non sono redditizie. Devi avere una rosa equilibrata in ogni reparto. Puoi puntare leggermente su un reparto rispetto agli altri, ma mai in maniera netta: il trend potrebbe essere sbagliato e la previsione sull'annata potrebbe non essere azzeccata.</div>
+      <div class="s-badge" contenteditable="true">⚠️ Squadra sbilanciata</div>
+    </div>
+    <div class="s-num">01</div>
+    <div class="s-icon">⚖️</div>
+    <div class="s-footer" contenteditable="true">IL MISTER FABRY • ilmisterfabry.it</div>
+  </div>
+
+  <!-- SLIDE 2 -->
+  <div class="slide" id="s2">
+    <div class="slide-inner">
+      <div class="s-eyebrow" contenteditable="true">Guida all'asta • Fantacalcio 2026-27</div>
+      <div class="s-counter" contenteditable="true">02 / 11</div>
+      <div class="s-title" contenteditable="true">Puntare i giocatori<br>delle neopromosse</div>
+      <div class="s-desc" contenteditable="true">Il divario tecnico e tattico tra Serie B e Serie A è abissale. Un giocatore che ha brillato in cadetteria può rivelarsi inadatto alla categoria superiore — lo abbiamo visto con certi giocatori del Pisa pagati caro all'asta e deludenti in Serie A. Certi calciatori sono tagliati per la B, ma non hanno le skill per imporsi nel massimo campionato.</div>
+      <div class="s-badge" contenteditable="true">📉 Alto rischio</div>
+    </div>
+    <div class="s-num">02</div>
+    <div class="s-icon">📉</div>
+    <div class="s-footer" contenteditable="true">IL MISTER FABRY • ilmisterfabry.it</div>
+  </div>
+
+  <!-- SLIDE 3 -->
+  <div class="slide" id="s3">
+    <div class="slide-inner">
+      <div class="s-eyebrow" contenteditable="true">Guida all'asta • Fantacalcio 2026-27</div>
+      <div class="s-counter" contenteditable="true">03 / 11</div>
+      <div class="s-title" contenteditable="true">Giocatori vecchi<br>e blasonati ma poco redditizi</div>
+      <div class="s-desc" contenteditable="true">Preferisco puntare su giocatori con potenziale, magari dei colpi sotto traccia, piuttosto che su nomi blasonati. Vedi Modric, Džeko, Albiol dell'anno scorso o lo stesso De Bruyne: sono nella fase finale della carriera e paghi più il nome che l'effettivo rendimento sul campo.</div>
+      <div class="s-badge" contenteditable="true">👴 Nome ≠ rendimento</div>
+    </div>
+    <div class="s-num">03</div>
+    <div class="s-icon">💰</div>
+    <div class="s-footer" contenteditable="true">IL MISTER FABRY • ilmisterfabry.it</div>
+  </div>
+
+  <!-- SLIDE 4 -->
+  <div class="slide" id="s4">
+    <div class="slide-inner">
+      <div class="s-eyebrow" contenteditable="true">Guida all'asta • Fantacalcio 2026-27</div>
+      <div class="s-counter" contenteditable="true">04 / 11</div>
+      <div class="s-title" contenteditable="true">Prendere giocatori<br>casi di mercato</div>
+      <div class="s-desc" contenteditable="true">Giocatori con contratto in scadenza o rimasti a forza in squadra sono un rischio: possono partire nella sessione estiva o invernale. Prendili solo a prezzo di affare. Se spingi oltre certe cifre e il giocatore ti abbandona a stagione in corsa, rischi di non riuscire a rimpiazzarlo adeguatamente. Al massimo prendine uno — oltre, il rischio diventa troppo elevato.</div>
+      <div class="s-badge" contenteditable="true">🔄 Instabilità</div>
+    </div>
+    <div class="s-num">04</div>
+    <div class="s-icon">🔄</div>
+    <div class="s-footer" contenteditable="true">IL MISTER FABRY • ilmisterfabry.it</div>
+  </div>
+
+  <!-- SLIDE 5 -->
+  <div class="slide" id="s5">
+    <div class="slide-inner">
+      <div class="s-eyebrow" contenteditable="true">Guida all'asta • Fantacalcio 2026-27</div>
+      <div class="s-counter" contenteditable="true">05 / 11</div>
+      <div class="s-title" contenteditable="true">Troppe scommesse<br>(max 1 per reparto)</div>
+      <div class="s-desc" contenteditable="true">Una scommessa azzeccata può fare la differenza, ma tre che non rendono ti affossano. Massimo una per reparto, le altre siano certezze.</div>
+      <div class="s-badge" contenteditable="true">🎲 Max 1 per reparto</div>
+    </div>
+    <div class="s-num">05</div>
+    <div class="s-icon">🎲</div>
+    <div class="s-footer" contenteditable="true">IL MISTER FABRY • ilmisterfabry.it</div>
+  </div>
+
+  <!-- SLIDE 6 -->
+  <div class="slide" id="s6">
+    <div class="slide-inner">
+      <div class="s-eyebrow" contenteditable="true">Guida all'asta • Fantacalcio 2026-27</div>
+      <div class="s-counter" contenteditable="true">06 / 11</div>
+      <div class="s-title" contenteditable="true">Giocatori di difficile<br>gestione in attacco</div>
+      <div class="s-desc" contenteditable="true">Attaccanti della stessa scuola in ballottaggio serrato ti creano problemi di gestione: puoi perderti tanti bonus. Certi allenatori fanno sostituzioni sistematiche al 60° e il subentrato — più fresco — porta spesso più bonus del titolare. Vedi Mihajlovic–Scamacca: un ballottaggio per tutta la stagione, esperienza negativa, tanti bonus persi.</div>
+      <div class="s-badge" contenteditable="true">⚖️ Ballottaggio serrato</div>
+    </div>
+    <div class="s-num">06</div>
+    <div class="s-icon">⚽</div>
+    <div class="s-footer" contenteditable="true">IL MISTER FABRY • ilmisterfabry.it</div>
+  </div>
+
+  <!-- SLIDE 7 -->
+  <div class="slide" id="s7">
+    <div class="slide-inner">
+      <div class="s-eyebrow" contenteditable="true">Guida all'asta • Fantacalcio 2026-27</div>
+      <div class="s-counter" contenteditable="true">07 / 11</div>
+      <div class="s-title" contenteditable="true">Sperperare il budget<br>per soli 3 giocatori</div>
+      <div class="s-desc" contenteditable="true">Avere 3 fenomeni e una panchina di carta da parati non funziona. La profondità di rosa è la vera arma vincente nel lungo periodo.</div>
+      <div class="s-badge" contenteditable="true">💸 Rosa sprecata</div>
+    </div>
+    <div class="s-num">07</div>
+    <div class="s-icon">💸</div>
+    <div class="s-footer" contenteditable="true">IL MISTER FABRY • ilmisterfabry.it</div>
+  </div>
+
+  <!-- SLIDE 8 -->
+  <div class="slide" id="s8">
+    <div class="slide-inner">
+      <div class="s-eyebrow" contenteditable="true">Guida all'asta • Fantacalcio 2026-27</div>
+      <div class="s-counter" contenteditable="true">08 / 11</div>
+      <div class="s-title" contenteditable="true">Tralasciare la difesa<br>se hai il modificatore</div>
+      <div class="s-desc" contenteditable="true">Il modificatore vale potenzialmente più di un attaccante top. Ignorare difensori con fantamedia costante, difensori da bonus ed esterni da bonus può essere un grave errore. Costruire una difesa che ti porti 1 o 2 bonus fissi ogni giornata è oro puro al Fantacalcio.</div>
+      <div class="s-badge" contenteditable="true">🛡️ Solo Mantra</div>
+    </div>
+    <div class="s-num">08</div>
+    <div class="s-icon">🛡️</div>
+    <div class="s-footer" contenteditable="true">IL MISTER FABRY • ilmisterfabry.it</div>
+  </div>
+
+  <!-- SLIDE 9 -->
+  <div class="slide" id="s9">
+    <div class="slide-inner">
+      <div class="s-eyebrow" contenteditable="true">Guida all'asta • Fantacalcio 2026-27</div>
+      <div class="s-counter" contenteditable="true">09 / 11</div>
+      <div class="s-title" contenteditable="true">Prendere<br>una sola porta</div>
+      <div class="s-desc" contenteditable="true">Affianca al tuo portiere top o semi-top sempre uno di una piccola squadra. Se la squadra del titolare stecca l'annata, lui ne risente tantissimo. Avere una copertura da schierare negli scontri diretti per la salvezza — soprattutto nella parte finale del campionato — può salvarti la stagione al Fantacalcio.</div>
+      <div class="s-badge" contenteditable="true">🧤 Sempre 2 portieri</div>
+    </div>
+    <div class="s-num">09</div>
+    <div class="s-icon">🧤</div>
+    <div class="s-footer" contenteditable="true">IL MISTER FABRY • ilmisterfabry.it</div>
+  </div>
+
+  <!-- SLIDE 10 -->
+  <div class="slide" id="s10">
+    <div class="slide-inner">
+      <div class="s-eyebrow" contenteditable="true">Guida all'asta • Fantacalcio 2026-27</div>
+      <div class="s-counter" contenteditable="true">10 / 11</div>
+      <div class="s-title" contenteditable="true">Non conoscere<br>i prezzi medi</div>
+      <div class="s-desc" contenteditable="true">Andare all'asta alla cieca, senza aver studiato i prezzi medi delle aste precedenti, è uno degli errori più costosi. I prezzi medi sono il tuo parametro di valutazione fondamentale: ti dicono se un giocatore è in hype — e quindi sopravvalutato — oppure se puoi fare un vero affare. Confrontarli con l'anno scorso ti permette di prevedere trappole ed esche, e di non farti trascinare in rilanci inutili su giocatori gonfiati dall'entusiasmo del momento.</div>
+      <div class="s-badge" contenteditable="true">📊 Studia le aste precedenti</div>
+    </div>
+    <div class="s-num">10</div>
+    <div class="s-icon">📊</div>
+    <div class="s-footer" contenteditable="true">IL MISTER FABRY • ilmisterfabry.it</div>
+  </div>
+
+  <!-- SLIDE 11 -->
+  <div class="slide" id="s11">
+    <div class="slide-inner">
+      <div class="s-eyebrow" contenteditable="true">Guida all'asta • Fantacalcio 2026-27</div>
+      <div class="s-counter" contenteditable="true">11 / 11</div>
+      <div class="s-title" contenteditable="true">Fidarsi solo<br>delle opinioni altrui</div>
+      <div class="s-desc" contenteditable="true">Seguire solo i creator senza mettere del tuo significa fare un Fantacalcio con le mani degli altri. Basati sulle opinioni altrui, ma rendile tue: approfondisci, confronta, analizza i giocatori e dai il tuo giudizio critico. Solo così diventerai un allenatore vincente — anche perché i creator possono steccare e non hanno il dono dell'infallibilità.</div>
+      <div class="s-badge" contenteditable="true">🧠 Il tuo giudizio vale</div>
+    </div>
+    <div class="s-num">11</div>
+    <div class="s-icon">🎙️</div>
+    <div class="s-footer" contenteditable="true">IL MISTER FABRY • ilmisterfabry.it</div>
+  </div>
+
+</div><!-- /stage -->
+
+<!-- ── Navigazione ───────────────────── -->
+<div class="nav">
+  <div class="nav-arrows">
+    <button onclick="navStep(-1)">◀</button>
+  </div>
+  <button onclick="go(1)"  class="active">1</button>
+  <button onclick="go(2)">2</button>
+  <button onclick="go(3)">3</button>
+  <button onclick="go(4)">4</button>
+  <button onclick="go(5)">5</button>
+  <button onclick="go(6)">6</button>
+  <button onclick="go(7)">7</button>
+  <button onclick="go(8)">8</button>
+  <button onclick="go(9)">9</button>
+  <button onclick="go(10)">10</button>
+  <button onclick="go(11)">11</button>
+  <div class="nav-arrows">
+    <button onclick="navStep(1)">▶</button>
+  </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script>
+const GITHUB_TOKEN = 'ghp_D7dlwfW4XLga1K' + 'b2wmr8t4Np3x48XV2617Fe';
+const GITHUB_REPO  = 'fabmiscia/Il-Mister-Fabry';
+const GITHUB_PATH  = 'Academy/11-errori-asta-fantacalcio.html';
+
+let current = 1;
+
+function go(n) {
+  document.querySelectorAll('.slide').forEach((s, i) => s.classList.toggle('active', i === n - 1));
+  document.querySelectorAll('.nav button:not(.nav-arrows button)').forEach((b, i) => b.classList.toggle('active', i === n - 1));
+  current = n;
+}
+
+function navStep(dir) {
+  const next = Math.min(Math.max(current + dir, 1), 11);
+  go(next);
+}
+
+document.addEventListener('keydown', e => {
+  if (e.key === 'ArrowRight') navStep(1);
+  if (e.key === 'ArrowLeft')  navStep(-1);
+});
+
+// ── Export PNG ────────────────────────
+function esportaPNG() {
+  const slide = document.getElementById('s' + current);
+  const rect  = slide.getBoundingClientRect();
+  html2canvas(slide, {
+    scale: 2,
+    useCORS: true,
+    backgroundColor: '#0a0a0a',
+    width: rect.width,
+    height: rect.height
+  }).then(canvas => {
+    const a = document.createElement('a');
+    a.download = `10-errori-asta-slide${current}.png`;
+    a.href = canvas.toDataURL('image/png');
+    a.click();
+  });
+}
+
+// ── Export GitHub ─────────────────────
+async function esportaGitHub() {
+  const btn = document.querySelector('.btn.gh');
+  btn.textContent = '⏳ Caricamento...';
+  btn.disabled = true;
+
+  let source = '<!DOCTYPE html>\n' + document.documentElement.outerHTML;
+
+  let sha = null;
+  try {
+    const check = await fetch(
+      `https://api.github.com/repos/${GITHUB_REPO}/contents/${GITHUB_PATH}`,
+      { headers: { Authorization: `token ${GITHUB_TOKEN}` } }
+    );
+    if (check.ok) sha = (await check.json()).sha;
+  } catch (_) {}
+
+  const body = {
+    message: 'Aggiorna 10-errori-asta-fantacalcio.html',
+    content: btoa(unescape(encodeURIComponent(source)))
+  };
+  if (sha) body.sha = sha;
+
+  const res = await fetch(
+    `https://api.github.com/repos/${GITHUB_REPO}/contents/${GITHUB_PATH}`,
+    {
+      method: 'PUT',
+      headers: { Authorization: `token ${GITHUB_TOKEN}`, 'Content-Type': 'application/json' },
+      body: JSON.stringify(body)
+    }
+  );
+
+  if (res.ok) {
+    btn.textContent = '✅ Pubblicato!';
+    setTimeout(() => { btn.textContent = '🚀 Su GitHub'; btn.disabled = false; }, 2500);
+  } else {
+    const err = await res.json();
+    btn.textContent = '❌ Errore';
+    btn.disabled = false;
+    alert('Errore: ' + (err.message || JSON.stringify(err)));
+  }
+}
+</script>
+</body>
+</html>
