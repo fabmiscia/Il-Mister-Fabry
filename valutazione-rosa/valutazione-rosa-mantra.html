@@ -272,6 +272,17 @@ body {
 .gt-item .gt-num { font-family: 'Anton', Impact, sans-serif; font-size: 22px; color: #ff9900; line-height: 1; }
 .gt-item .gt-sub { font-size: 8px; font-weight: 900; letter-spacing: 1.5px; color: #444; text-transform: uppercase; }
 
+/* ── Stampa / PDF ────────────────────── */
+@media print {
+  * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+  body { background: #111 !important; padding: 0; margin: 0; }
+  .toolbar { display: none !important; }
+  #rosa-card { margin: 0 !important; padding: 0 !important; max-width: 100% !important; }
+  .card-inner { border-radius: 0 !important; }
+  .remove-btn, .add-slot-btn { display: none !important; }
+  @page { margin: 0; size: A4 portrait; }
+}
+
 /* ── Footer card ──────────────────────── */
 .card-footer {
   background: #050505; padding: 10px 20px; text-align: center;
@@ -286,7 +297,8 @@ body {
   <span class="label">🔮 LA MIA ROSA • MANTRA</span>
   <span class="slot-counter">Slot: <span id="slot-count">28</span>/33</span>
   <button class="btn reset" onclick="resetRosa()">✚ Nuova Rosa</button>
-  <button class="btn" onclick="esportaPNG()">📸 Esporta PNG</button>
+  <button class="btn" onclick="esportaPNG()">📸 PNG</button>
+  <button class="btn" style="background:#e74c3c;color:#fff" onclick="esportaPDF()">📄 PDF</button>
   <button class="btn tg" onclick="condividiTelegram()">✈️ Invia su Telegram</button>
 </div>
 
@@ -723,6 +735,9 @@ function fixCloneInputs(doc) {
   });
   doc.querySelectorAll('.remove-btn, .add-slot-btn, input[type="file"]').forEach(el => el.remove());
 }
+
+// ── Export PDF ────────────────────────
+function esportaPDF() { window.print(); }
 
 // ── Export PNG ────────────────────────
 function esportaPNG() {
