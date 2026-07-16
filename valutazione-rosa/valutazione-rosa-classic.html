@@ -417,7 +417,7 @@ body {
     <div class="header-right">
       <div class="header-budget-box">
         <div class="hb-label">CREDITI ASTA</div>
-        <input class="hb-input" id="budget-totale" type="number" min="0" placeholder="500" oninput="saveData()">
+        <input class="hb-input" id="budget-totale" type="number" min="0" placeholder="500" oninput="onBudgetChange()">
       </div>
       <div class="header-budget-box">
         <div class="hb-label">CREDITI USATI</div>
@@ -537,12 +537,55 @@ function buildRows() {
       row.innerHTML = `
         <div class="slot-badge" style="background:${c.bg};color:${c.color};border-color:${c.border};font-weight:900;">${label}${i}</div>
         <input class="player-name" type="text" placeholder="Nome giocatore" data-rep="${id}" data-idx="${i}" oninput="saveData()">
-        <input class="num-input pct-input" type="number" min="0" max="100" placeholder="%" data-rep="${id}" oninput="updateTotals(); saveData()">
-        <input class="num-input crd-input" type="number" min="0" placeholder="cr" data-rep="${id}" oninput="updateTotals(); saveData()">
+        <input class="num-input pct-input" type="number" min="0" max="100" step="0.1" placeholder="%" data-rep="${id}" oninput="onPctChange(this)">
+        <input class="num-input crd-input" type="number" min="0" placeholder="cr" data-rep="${id}" oninput="onCrdChange(this)">
       `;
       container.appendChild(row);
     }
   });
+}
+
+// ── Calcolo bidirezionale % ↔ crediti ─
+let _upd = false;
+
+function getBudget() { return parseFloat(document.getElementById('budget-totale').value) || 0; }
+
+function onPctChange(el) {
+  if (_upd) return;
+  const b = getBudget();
+  if (b && el.value !== '') {
+    _upd = true;
+    el.closest('.player-row').querySelector('.crd-input').value = Math.round(parseFloat(el.value) / 100 * b);
+    _upd = false;
+  }
+  updateTotals(); saveData();
+}
+
+function onCrdChange(el) {
+  if (_upd) return;
+  const b = getBudget();
+  if (b && el.value !== '') {
+    _upd = true;
+    el.closest('.player-row').querySelector('.pct-input').value = (parseFloat(el.value) / b * 100).toFixed(1);
+    _upd = false;
+  }
+  updateTotals(); saveData();
+}
+
+function onBudgetChange() {
+  const b = getBudget();
+  if (b) {
+    document.querySelectorAll('.player-row').forEach(row => {
+      const pEl = row.querySelector('.pct-input');
+      const cEl = row.querySelector('.crd-input');
+      if (pEl.value !== '') {
+        cEl.value = Math.round(parseFloat(pEl.value) / 100 * b);
+      } else if (cEl.value !== '') {
+        pEl.value = (parseFloat(cEl.value) / b * 100).toFixed(1);
+      }
+    });
+  }
+  updateTotals(); saveData();
 }
 
 // ── Totali ────────────────────────────
