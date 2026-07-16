@@ -1,0 +1,732 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>La Mia Rosa • Mantra</title>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Montserrat:wght@700;900&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  background: #111;
+  font-family: 'Montserrat', Arial, sans-serif;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 100vh;
+  padding-bottom: 40px;
+}
+
+/* ── Toolbar ─────────────────────────── */
+.toolbar {
+  width: 100%;
+  background: #0a0a0a;
+  border-bottom: 2px solid #ff9900;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 20px;
+  flex-wrap: wrap;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+.toolbar .label {
+  color: #ff9900;
+  font-size: 11px;
+  font-weight: 900;
+  letter-spacing: 1px;
+  margin-right: auto;
+}
+.slot-counter {
+  font-size: 11px;
+  font-weight: 900;
+  letter-spacing: 1px;
+  color: #555;
+  white-space: nowrap;
+}
+.slot-counter span { color: #ff9900; }
+.btn {
+  background: #ff9900;
+  color: #000;
+  border: none;
+  border-radius: 6px;
+  padding: 8px 16px;
+  font-size: 12px;
+  font-weight: 900;
+  cursor: pointer;
+  letter-spacing: .5px;
+  white-space: nowrap;
+}
+.btn:hover { opacity: .85; }
+.btn.tg { background: #229ED9; color: #fff; }
+.btn.reset { background: #333; color: #fff; }
+
+/* ── Rosa Card ───────────────────────── */
+#rosa-card {
+  width: 100%;
+  max-width: 900px;
+  margin: 24px auto 0;
+  padding: 0 16px;
+}
+.card-inner {
+  background: #0a0a0a;
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1px solid #1a1a1a;
+}
+
+/* ── Header ─────────────────────────── */
+.card-header {
+  background: linear-gradient(135deg, #0d0d0d 0%, #1a1a1a 100%);
+  border-bottom: 3px solid #ff9900;
+  padding: 20px 28px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+.header-logo-wrap {
+  width: 68px; height: 68px;
+  border-radius: 50%;
+  border: 2px dashed #333;
+  cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  overflow: hidden;
+  flex-shrink: 0;
+  transition: border-color .15s;
+  background: #1a1a1a;
+}
+.header-logo-wrap:hover { border-color: #ff9900; }
+.header-logo-wrap img { width: 100%; height: 100%; object-fit: contain; }
+#logo-placeholder { font-size: 26px; color: #333; user-select: none; }
+
+.card-header-left { display: flex; flex-direction: column; gap: 4px; flex: 1; min-width: 160px; }
+.card-eyebrow {
+  font-size: 10px; font-weight: 900; letter-spacing: 3px;
+  color: #ff9900; text-transform: uppercase;
+}
+.card-title-input {
+  font-family: 'Anton', Impact, sans-serif;
+  font-size: clamp(20px, 4vw, 34px);
+  color: #fff; letter-spacing: 1px;
+  background: transparent; border: none;
+  border-bottom: 1px solid transparent; outline: none;
+  max-width: 280px; transition: border-color .15s;
+}
+.card-title-input:focus { border-bottom-color: #ff9900; }
+.card-title-input::placeholder { color: #fff; opacity: .2; }
+.allenatore-row { display: flex; align-items: center; gap: 6px; margin-top: 3px; }
+.allenatore-label { font-size: 9px; font-weight: 900; letter-spacing: 2px; color: #555; text-transform: uppercase; flex-shrink: 0; }
+.allenatore-input {
+  background: transparent; border: none; border-bottom: 1px solid transparent;
+  color: #888; font-family: 'Montserrat', sans-serif; font-size: 12px; font-weight: 700;
+  outline: none; max-width: 220px; transition: border-color .15s, color .15s;
+}
+.allenatore-input:focus { border-bottom-color: #555; color: #fff; }
+.allenatore-input::placeholder { color: #555; opacity: 1; }
+
+.header-right {
+  display: flex; align-items: center; gap: 16px; flex-wrap: wrap; justify-content: flex-end;
+}
+.header-budget-box { display: flex; flex-direction: column; align-items: center; gap: 3px; }
+.hb-label { font-size: 8px; font-weight: 900; letter-spacing: 1.5px; color: #555; text-transform: uppercase; }
+.hb-input {
+  background: #1a1a1a; border: 1px solid #333; border-radius: 6px;
+  color: #fff; font-family: 'Anton', Impact, sans-serif; font-size: 20px;
+  padding: 4px 10px; text-align: center; outline: none; width: 90px;
+  transition: border-color .15s;
+}
+.hb-input:focus { border-color: #ff9900; }
+.hb-input::placeholder { color: #444; }
+.hb-value { font-family: 'Anton', Impact, sans-serif; font-size: 20px; color: #fff; line-height: 1; padding: 4px 0; }
+.badge-mantra {
+  background: #ff9900; color: #000; font-size: 11px; font-weight: 900;
+  padding: 6px 16px; border-radius: 20px; letter-spacing: 1px; white-space: nowrap; align-self: center;
+}
+
+/* ── Intestazione colonne ─────────────── */
+.col-headers {
+  display: grid;
+  grid-template-columns: 95px 1fr 75px 75px 28px;
+  gap: 8px;
+  padding: 5px 20px 4px;
+  background: #050505;
+  border-top: 1px solid #1a1a1a;
+}
+.col-headers span {
+  font-size: 8px; font-weight: 900; letter-spacing: 1.5px;
+  color: #444; text-transform: uppercase; text-align: right;
+}
+.col-headers span:first-child,
+.col-headers span:nth-child(2) { text-align: left; }
+
+/* ── Sezione reparto ──────────────────── */
+.reparto { border-bottom: 1px solid #1a1a1a; }
+.reparto:last-child { border-bottom: none; }
+.rep-header {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 10px 20px; gap: 8px;
+}
+.rep-header-left { display: flex; align-items: center; gap: 8px; flex: 1; }
+.rep-icon { font-size: 16px; }
+.rep-title { font-family: 'Anton', Impact, sans-serif; font-size: 13px; letter-spacing: 2px; }
+.rep-totals { display: flex; gap: 14px; font-size: 10px; font-weight: 900; color: #666; letter-spacing: .5px; }
+.rep-totals span { white-space: nowrap; }
+.rep-totals .val { color: #ff9900; }
+.add-slot-btn {
+  background: transparent; border: 1px solid #333; border-radius: 5px;
+  color: #555; font-size: 14px; font-weight: 900; width: 26px; height: 26px;
+  cursor: pointer; display: flex; align-items: center; justify-content: center;
+  transition: border-color .15s, color .15s; flex-shrink: 0; line-height: 1;
+}
+.add-slot-btn:hover:not(:disabled) { border-color: #ff9900; color: #ff9900; }
+.add-slot-btn:disabled { opacity: .25; cursor: not-allowed; }
+
+/* Colori per reparto */
+.por .rep-header { background: rgba(68,136,255,.08); border-left: 3px solid #4488ff; }
+.por .rep-icon, .por .rep-title { color: #4488ff; }
+.por .rep-totals .val { color: #4488ff; }
+
+.dif .rep-header { background: rgba(196,255,0,.06); border-left: 3px solid #C4FF00; }
+.dif .rep-icon, .dif .rep-title { color: #C4FF00; }
+.dif .rep-totals .val { color: #C4FF00; }
+
+.cen .rep-header { background: rgba(0,204,255,.06); border-left: 3px solid #00ccff; }
+.cen .rep-icon, .cen .rep-title { color: #00ccff; }
+.cen .rep-totals .val { color: #00ccff; }
+
+.tre .rep-header { background: rgba(255,153,0,.07); border-left: 3px solid #ff9900; }
+.tre .rep-icon, .tre .rep-title { color: #ff9900; }
+.tre .rep-totals .val { color: #ff9900; }
+
+.att .rep-header { background: rgba(255,68,68,.08); border-left: 3px solid #ff4444; }
+.att .rep-icon, .att .rep-title { color: #ff4444; }
+.att .rep-totals .val { color: #ff4444; }
+
+/* ── Riga giocatore ───────────────────── */
+.player-row {
+  display: grid;
+  grid-template-columns: 95px 1fr 75px 75px 28px;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 20px;
+  border-top: 1px solid #141414;
+  transition: background .1s;
+}
+.player-row:hover { background: #0f0f0f; }
+
+.ruolo-select {
+  border-radius: 5px; border: 1px solid; font-family: 'Montserrat', sans-serif;
+  font-size: 10px; font-weight: 900; letter-spacing: .5px; padding: 4px 6px;
+  cursor: pointer; outline: none; width: 100%; text-align: center;
+  -webkit-appearance: none; appearance: none; text-align-last: center;
+}
+.ruolo-select:focus { opacity: 1; }
+.ruolo-select option { background: #1a1a1a; color: #fff; }
+.ruolo-select optgroup { color: #666; font-size: 10px; }
+
+/* colori select per reparto */
+.por .ruolo-select { background: rgba(68,136,255,.2); color: #4488ff; border-color: #4488ff; }
+.dif .ruolo-select { background: rgba(196,255,0,.15); color: #C4FF00; border-color: #C4FF00; }
+.cen .ruolo-select { background: rgba(0,204,255,.15); color: #00ccff; border-color: #00ccff; }
+.tre .ruolo-select { background: rgba(255,153,0,.18); color: #ff9900; border-color: #ff9900; }
+.att .ruolo-select { background: rgba(255,68,68,.2);  color: #ff4444; border-color: #ff4444; }
+
+.player-name {
+  background: transparent; border: none; border-bottom: 1px solid #222;
+  color: #fff; font-family: 'Montserrat', sans-serif; font-size: 12px; font-weight: 700;
+  padding: 4px 0; outline: none; width: 100%; transition: border-color .15s;
+}
+.player-name:focus { border-bottom-color: #ff9900; }
+.player-name::placeholder { color: #fff; font-weight: 700; opacity: .4; }
+
+.num-input {
+  background: #111; border: 1px solid #1e1e1e; border-radius: 5px;
+  color: #fff; font-family: 'Montserrat', sans-serif; font-size: 12px; font-weight: 900;
+  padding: 4px 8px; text-align: right; outline: none; width: 100%;
+  transition: border-color .15s;
+}
+.num-input:focus { border-color: #ff9900; }
+.num-input::placeholder { color: #fff; opacity: .3; }
+
+.remove-btn {
+  background: transparent; border: none; color: #333; font-size: 14px;
+  cursor: pointer; width: 24px; height: 24px; border-radius: 4px;
+  display: flex; align-items: center; justify-content: center;
+  transition: background .15s, color .15s; flex-shrink: 0;
+}
+.remove-btn:hover:not(:disabled) { background: rgba(255,68,68,.15); color: #ff4444; }
+.remove-btn:disabled { opacity: .15; cursor: not-allowed; }
+
+/* ── Totale generale ──────────────────── */
+.grand-total {
+  background: #0d0d0d; border-top: 2px solid #ff9900;
+  padding: 14px 20px; display: flex; align-items: center;
+  justify-content: space-between; flex-wrap: wrap; gap: 10px;
+}
+.gt-label { font-family: 'Anton', Impact, sans-serif; font-size: 13px; letter-spacing: 2px; color: #555; }
+.gt-values { display: flex; gap: 24px; flex-wrap: wrap; }
+.gt-item { display: flex; flex-direction: column; align-items: flex-end; gap: 2px; }
+.gt-item .gt-num { font-family: 'Anton', Impact, sans-serif; font-size: 22px; color: #ff9900; line-height: 1; }
+.gt-item .gt-sub { font-size: 8px; font-weight: 900; letter-spacing: 1.5px; color: #444; text-transform: uppercase; }
+
+/* ── Footer card ──────────────────────── */
+.card-footer {
+  background: #050505; padding: 10px 20px; text-align: center;
+  font-size: 9px; font-weight: 900; letter-spacing: 2px; color: #222;
+}
+</style>
+</head>
+<body>
+
+<!-- ── Toolbar ──────────────────────── -->
+<div class="toolbar">
+  <span class="label">🔮 LA MIA ROSA • MANTRA</span>
+  <span class="slot-counter">Slot: <span id="slot-count">28</span>/33</span>
+  <button class="btn reset" onclick="resetRosa()">✚ Nuova Rosa</button>
+  <button class="btn" onclick="esportaPNG()">📸 Esporta PNG</button>
+  <button class="btn tg" onclick="condividiTelegram()">✈️ Invia su Telegram</button>
+</div>
+
+<!-- ── Rosa Card ─────────────────────── -->
+<div id="rosa-card">
+<div class="card-inner">
+
+  <!-- Header -->
+  <div class="card-header">
+    <div class="header-logo-wrap" onclick="document.getElementById('logo-input').click()" title="Clicca per caricare il logo">
+      <img id="header-logo" src="" alt="" style="display:none">
+      <div id="logo-placeholder">🛡️</div>
+      <input type="file" id="logo-input" accept="image/*" style="display:none" onchange="loadLogo(this)">
+    </div>
+    <div class="card-header-left">
+      <div class="card-eyebrow">Asta Fantacalcio 2026-27</div>
+      <input class="card-title-input" id="nome-squadra" type="text" placeholder="NOME SQUADRA" oninput="saveData()">
+      <div class="allenatore-row">
+        <span class="allenatore-label">Coach</span>
+        <input class="allenatore-input" id="nome-allenatore" type="text" placeholder="Nome allenatore" oninput="saveData()">
+      </div>
+    </div>
+    <div class="header-right">
+      <div class="header-budget-box">
+        <div class="hb-label">CREDITI ASTA</div>
+        <input class="hb-input" id="budget-totale" type="number" min="0" placeholder="500" oninput="updateTotals(); saveData()">
+      </div>
+      <div class="header-budget-box">
+        <div class="hb-label">CREDITI USATI</div>
+        <div class="hb-value" id="hb-usati">0</div>
+      </div>
+      <div class="header-budget-box">
+        <div class="hb-label">RIMANENTI</div>
+        <div class="hb-value" id="hb-rimasti" style="color:#ff9900">—</div>
+      </div>
+      <div class="badge-mantra">MANTRA</div>
+    </div>
+  </div>
+
+  <!-- Intestazione colonne -->
+  <div class="col-headers">
+    <span>Ruolo</span>
+    <span>Giocatore</span>
+    <span>% Budget</span>
+    <span>Crediti</span>
+    <span></span>
+  </div>
+
+  <!-- ── PORTIERI ── -->
+  <div class="reparto por" id="rep-por">
+    <div class="rep-header">
+      <div class="rep-header-left">
+        <span class="rep-icon">🧤</span>
+        <span class="rep-title">PORTIERI</span>
+      </div>
+      <div class="rep-totals">
+        <span>Budget: <span class="val" id="tot-pct-por">0%</span></span>
+        <span>Crediti: <span class="val" id="tot-crd-por">0</span></span>
+      </div>
+      <button class="add-slot-btn" id="add-por" onclick="addSlot('por')" title="Aggiungi portiere">＋</button>
+    </div>
+    <div id="rows-por"></div>
+  </div>
+
+  <!-- ── DIFESA ── -->
+  <div class="reparto dif" id="rep-dif">
+    <div class="rep-header">
+      <div class="rep-header-left">
+        <span class="rep-icon">🛡️</span>
+        <span class="rep-title">DIFESA</span>
+      </div>
+      <div class="rep-totals">
+        <span>Budget: <span class="val" id="tot-pct-dif">0%</span></span>
+        <span>Crediti: <span class="val" id="tot-crd-dif">0</span></span>
+      </div>
+      <button class="add-slot-btn" id="add-dif" onclick="addSlot('dif')" title="Aggiungi difensore">＋</button>
+    </div>
+    <div id="rows-dif"></div>
+  </div>
+
+  <!-- ── CENTROCAMPO ── -->
+  <div class="reparto cen" id="rep-cen">
+    <div class="rep-header">
+      <div class="rep-header-left">
+        <span class="rep-icon">⚙️</span>
+        <span class="rep-title">CENTROCAMPO</span>
+      </div>
+      <div class="rep-totals">
+        <span>Budget: <span class="val" id="tot-pct-cen">0%</span></span>
+        <span>Crediti: <span class="val" id="tot-crd-cen">0</span></span>
+      </div>
+      <button class="add-slot-btn" id="add-cen" onclick="addSlot('cen')" title="Aggiungi centrocampista">＋</button>
+    </div>
+    <div id="rows-cen"></div>
+  </div>
+
+  <!-- ── TREQUARTISTI ── -->
+  <div class="reparto tre" id="rep-tre">
+    <div class="rep-header">
+      <div class="rep-header-left">
+        <span class="rep-icon">🎯</span>
+        <span class="rep-title">TREQUARTISTI</span>
+      </div>
+      <div class="rep-totals">
+        <span>Budget: <span class="val" id="tot-pct-tre">0%</span></span>
+        <span>Crediti: <span class="val" id="tot-crd-tre">0</span></span>
+      </div>
+      <button class="add-slot-btn" id="add-tre" onclick="addSlot('tre')" title="Aggiungi trequartista">＋</button>
+    </div>
+    <div id="rows-tre"></div>
+  </div>
+
+  <!-- ── ATTACCO ── -->
+  <div class="reparto att" id="rep-att">
+    <div class="rep-header">
+      <div class="rep-header-left">
+        <span class="rep-icon">⚡</span>
+        <span class="rep-title">ATTACCO</span>
+      </div>
+      <div class="rep-totals">
+        <span>Budget: <span class="val" id="tot-pct-att">0%</span></span>
+        <span>Crediti: <span class="val" id="tot-crd-att">0</span></span>
+      </div>
+      <button class="add-slot-btn" id="add-att" onclick="addSlot('att')" title="Aggiungi attaccante">＋</button>
+    </div>
+    <div id="rows-att"></div>
+  </div>
+
+  <!-- Totale generale -->
+  <div class="grand-total">
+    <div class="gt-label">TOTALE ROSA</div>
+    <div class="gt-values">
+      <div class="gt-item">
+        <div class="gt-num" id="grand-pct">0%</div>
+        <div class="gt-sub">Budget totale</div>
+      </div>
+      <div class="gt-item">
+        <div class="gt-num" id="grand-crd">0</div>
+        <div class="gt-sub">Crediti totali</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card-footer">IL MISTER FABRY • ilmisterfabry.it</div>
+
+</div><!-- /card-inner -->
+</div><!-- /rosa-card -->
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script>
+const TELEGRAM_LINK = 'https://t.me/+7ZtKXl33LOQxODhk';
+const SLOT_MIN = 28, SLOT_MAX = 33;
+
+const REPARTI = [
+  { id: 'por', defaultSlots: 3,  minSlots: 1 },
+  { id: 'dif', defaultSlots: 8,  minSlots: 1 },
+  { id: 'cen', defaultSlots: 8,  minSlots: 1 },
+  { id: 'tre', defaultSlots: 3,  minSlots: 1 },
+  { id: 'att', defaultSlots: 6,  minSlots: 1 },
+];
+
+// Ruoli Mantra con optgroup
+const RUOLI_HTML = `
+  <option value="">— Ruolo —</option>
+  <optgroup label="Portiere">
+    <option>Por</option>
+  </optgroup>
+  <optgroup label="Difensori">
+    <option>Dc</option><option>Dd</option><option>Ds</option>
+    <option>Dc/Dd</option><option>Dc/Ds</option><option>Dd/Ds</option>
+    <option>Dc/Dd/Ds</option>
+  </optgroup>
+  <optgroup label="Centrocampisti">
+    <option>M</option><option>Mcc</option><option>C</option><option>E</option>
+    <option>M/C</option><option>M/Mcc</option><option>M/E</option>
+    <option>Mcc/C</option><option>C/E</option>
+    <option>M/C/E</option><option>M/Mcc/C</option>
+  </optgroup>
+  <optgroup label="Trequartisti">
+    <option>T</option><option>W</option><option>T/W</option>
+    <option>Mcc/T</option><option>C/T</option><option>C/W</option>
+    <option>E/T</option><option>E/W</option><option>M/T</option>
+    <option>C/T/W</option><option>M/C/T</option>
+  </optgroup>
+  <optgroup label="Attaccanti">
+    <option>A</option><option>Pc</option><option>A/Pc</option>
+    <option>T/A</option><option>W/A</option><option>T/Pc</option>
+    <option>T/W/A</option><option>W/A/Pc</option>
+  </optgroup>
+`;
+
+// Stato slot per reparto
+const slots = { por: 3, dif: 8, cen: 8, tre: 3, att: 6 };
+
+function totalSlots() {
+  return Object.values(slots).reduce((a, b) => a + b, 0);
+}
+
+// ── Build rows ────────────────────────
+function buildRow(repId, idx, data = {}) {
+  const row = document.createElement('div');
+  row.className = 'player-row';
+  row.dataset.rep = repId;
+  row.dataset.idx = idx;
+  row.innerHTML = `
+    <select class="ruolo-select" onchange="saveData()">${RUOLI_HTML}</select>
+    <input class="player-name" type="text" placeholder="Nome giocatore" oninput="saveData()">
+    <input class="num-input pct-input" type="number" min="0" max="100" placeholder="%" data-rep="${repId}" oninput="updateTotals(); saveData()">
+    <input class="num-input crd-input" type="number" min="0" placeholder="cr" data-rep="${repId}" oninput="updateTotals(); saveData()">
+    <button class="remove-btn" onclick="removeSlot('${repId}', this)" title="Rimuovi">×</button>
+  `;
+  if (data.ruolo) row.querySelector('.ruolo-select').value = data.ruolo;
+  if (data.name)  row.querySelector('.player-name').value  = data.name;
+  if (data.pct)   row.querySelector('.pct-input').value    = data.pct;
+  if (data.crd)   row.querySelector('.crd-input').value    = data.crd;
+  return row;
+}
+
+function buildRows(savedSlots) {
+  REPARTI.forEach(({ id, defaultSlots }) => {
+    const count = (savedSlots && savedSlots[id]) ? savedSlots[id].length : defaultSlots;
+    slots[id] = count;
+    const container = document.getElementById('rows-' + id);
+    container.innerHTML = '';
+    const savedData = (savedSlots && savedSlots[id]) ? savedSlots[id] : [];
+    for (let i = 0; i < count; i++) {
+      container.appendChild(buildRow(id, i + 1, savedData[i] || {}));
+    }
+  });
+  updateButtons();
+  updateSlotCounter();
+}
+
+// ── Aggiungi / Rimuovi slot ───────────
+function addSlot(repId) {
+  if (totalSlots() >= SLOT_MAX) return;
+  slots[repId]++;
+  const container = document.getElementById('rows-' + repId);
+  container.appendChild(buildRow(repId, slots[repId]));
+  updateButtons();
+  updateSlotCounter();
+  saveData();
+}
+
+function removeSlot(repId, btn) {
+  if (totalSlots() <= SLOT_MIN) return;
+  if (slots[repId] <= REPARTI.find(r => r.id === repId).minSlots) return;
+  const row = btn.closest('.player-row');
+  row.remove();
+  slots[repId]--;
+  updateButtons();
+  updateSlotCounter();
+  updateTotals();
+  saveData();
+}
+
+function updateButtons() {
+  const tot = totalSlots();
+  REPARTI.forEach(({ id, minSlots }) => {
+    document.getElementById('add-' + id).disabled = (tot >= SLOT_MAX);
+    document.querySelectorAll(`#rows-${id} .remove-btn`).forEach(btn => {
+      btn.disabled = (tot <= SLOT_MIN || slots[id] <= minSlots);
+    });
+  });
+}
+
+function updateSlotCounter() {
+  document.getElementById('slot-count').textContent = totalSlots();
+}
+
+// ── Totali ────────────────────────────
+function updateTotals() {
+  let grandPct = 0, grandCrd = 0;
+
+  REPARTI.forEach(({ id }) => {
+    const pcts = [...document.querySelectorAll(`.pct-input[data-rep="${id}"]`)];
+    const crds = [...document.querySelectorAll(`.crd-input[data-rep="${id}"]`)];
+    const totPct = pcts.reduce((s, el) => s + (parseFloat(el.value) || 0), 0);
+    const totCrd = crds.reduce((s, el) => s + (parseFloat(el.value) || 0), 0);
+    document.getElementById('tot-pct-' + id).textContent = totPct.toFixed(1) + '%';
+    document.getElementById('tot-crd-' + id).textContent = Math.round(totCrd);
+    grandPct += totPct;
+    grandCrd += totCrd;
+  });
+
+  document.getElementById('grand-pct').textContent = grandPct.toFixed(1) + '%';
+  document.getElementById('grand-crd').textContent = Math.round(grandCrd);
+
+  const usati = Math.round(grandCrd);
+  document.getElementById('hb-usati').textContent = usati;
+  const totale = parseFloat(document.getElementById('budget-totale').value) || null;
+  const rimEl  = document.getElementById('hb-rimasti');
+  if (totale !== null) {
+    const rim = totale - usati;
+    rimEl.textContent = rim;
+    rimEl.style.color = rim >= 0 ? '#ff9900' : '#ff4444';
+  } else {
+    rimEl.textContent = '—';
+    rimEl.style.color = '#ff9900';
+  }
+}
+
+// ── Logo ──────────────────────────────
+function loadLogo(input) {
+  const file = input.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = e => {
+    setLogoSrc(e.target.result);
+    localStorage.setItem('rosa_mantra_logo', e.target.result);
+  };
+  reader.readAsDataURL(file);
+}
+function setLogoSrc(src) {
+  const img = document.getElementById('header-logo');
+  const ph  = document.getElementById('logo-placeholder');
+  if (src) { img.src = src; img.style.display = 'block'; ph.style.display = 'none'; }
+  else { img.style.display = 'none'; ph.style.display = 'block'; }
+}
+
+// ── LocalStorage ──────────────────────
+function saveData() {
+  const state = {
+    squadra:    document.getElementById('nome-squadra').value,
+    allenatore: document.getElementById('nome-allenatore').value,
+    budget:     document.getElementById('budget-totale').value,
+    slots:      {},
+  };
+  REPARTI.forEach(({ id }) => {
+    state.slots[id] = [...document.querySelectorAll(`#rows-${id} .player-row`)].map(row => ({
+      ruolo: row.querySelector('.ruolo-select').value,
+      name:  row.querySelector('.player-name').value,
+      pct:   row.querySelector('.pct-input').value,
+      crd:   row.querySelector('.crd-input').value,
+    }));
+  });
+  localStorage.setItem('rosa_mantra_v1', JSON.stringify(state));
+}
+
+function loadData() {
+  const logo = localStorage.getItem('rosa_mantra_logo');
+  if (logo) setLogoSrc(logo);
+
+  const raw = localStorage.getItem('rosa_mantra_v1');
+  if (raw) {
+    try {
+      const state = JSON.parse(raw);
+      if (state.squadra)    document.getElementById('nome-squadra').value    = state.squadra;
+      if (state.allenatore) document.getElementById('nome-allenatore').value = state.allenatore;
+      if (state.budget)     document.getElementById('budget-totale').value   = state.budget;
+      if (state.slots) buildRows(state.slots);
+      else buildRows();
+    } catch(_) { buildRows(); }
+  } else {
+    buildRows();
+  }
+  updateTotals();
+}
+
+function resetRosa() {
+  if (!confirm('Vuoi creare una nuova rosa? I dati attuali verranno cancellati.')) return;
+  localStorage.removeItem('rosa_mantra_v1');
+  localStorage.removeItem('rosa_mantra_logo');
+  document.getElementById('nome-squadra').value    = '';
+  document.getElementById('nome-allenatore').value = '';
+  document.getElementById('budget-totale').value   = '';
+  setLogoSrc('');
+  REPARTI.forEach(({ id, defaultSlots }) => { slots[id] = defaultSlots; });
+  buildRows();
+  updateTotals();
+}
+
+// ── onclone: fix inputs e selects per PNG ──
+function fixCloneInputs(doc) {
+  doc.querySelectorAll('input[type="text"], input[type="number"]').forEach(inp => {
+    const span = doc.createElement('span');
+    span.textContent = inp.value;
+    const cs = window.getComputedStyle(inp);
+    span.style.fontFamily    = cs.fontFamily;
+    span.style.fontSize      = cs.fontSize;
+    span.style.fontWeight    = cs.fontWeight;
+    span.style.color         = inp.value ? cs.color : '#333';
+    span.style.letterSpacing = cs.letterSpacing;
+    span.style.display       = 'block';
+    span.style.padding       = cs.padding;
+    span.style.width         = cs.width;
+    span.style.maxWidth      = cs.maxWidth;
+    inp.replaceWith(span);
+  });
+  doc.querySelectorAll('select').forEach(sel => {
+    const span = doc.createElement('span');
+    span.textContent = sel.value || '—';
+    const cs = window.getComputedStyle(sel);
+    span.style.fontFamily    = cs.fontFamily;
+    span.style.fontSize      = cs.fontSize;
+    span.style.fontWeight    = cs.fontWeight;
+    span.style.color         = cs.color;
+    span.style.background    = cs.backgroundColor;
+    span.style.border        = cs.border;
+    span.style.borderRadius  = cs.borderRadius;
+    span.style.display       = 'flex';
+    span.style.alignItems    = 'center';
+    span.style.justifyContent = 'center';
+    span.style.padding       = cs.padding;
+    span.style.width         = cs.width;
+    sel.replaceWith(span);
+  });
+  doc.querySelectorAll('.remove-btn, .add-slot-btn, input[type="file"]').forEach(el => el.remove());
+}
+
+// ── Export PNG ────────────────────────
+function esportaPNG() {
+  const squadra = document.getElementById('nome-squadra').value || 'mia-rosa';
+  html2canvas(document.getElementById('rosa-card'), {
+    scale: 2, useCORS: true, backgroundColor: '#111',
+    scrollX: 0, scrollY: -window.scrollY, onclone: fixCloneInputs,
+  }).then(canvas => {
+    const a = document.createElement('a');
+    a.download = `rosa-mantra-${squadra.toLowerCase().replace(/\s+/g,'-')}.png`;
+    a.href = canvas.toDataURL('image/png');
+    a.click();
+  });
+}
+
+// ── Condividi Telegram ────────────────
+function condividiTelegram() {
+  html2canvas(document.getElementById('rosa-card'), {
+    scale: 2, useCORS: true, backgroundColor: '#111',
+    scrollX: 0, scrollY: -window.scrollY, onclone: fixCloneInputs,
+  }).then(canvas => {
+    const a = document.createElement('a');
+    a.download = 'mia-rosa-mantra.png';
+    a.href = canvas.toDataURL('image/png');
+    a.click();
+    setTimeout(() => window.open(TELEGRAM_LINK, '_blank'), 800);
+  });
+}
+
+// ── Init ──────────────────────────────
+loadData();
+</script>
+</body>
+</html>
