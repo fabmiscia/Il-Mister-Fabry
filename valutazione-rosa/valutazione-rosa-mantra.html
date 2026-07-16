@@ -849,13 +849,12 @@ function fallbackTelegram(blob) {
   showToast('📎 PNG scaricato — allegalo nel gruppo Telegram');
 }
 
-// ── Mobile: polling ogni 300ms per aggiornamento garantito ──
-let _prevVals = {};
+// ── Mobile: polling ogni 300ms — WeakMap per chiave unica per elemento ──
+const _prevVals = new WeakMap();
 setInterval(() => {
   document.querySelectorAll('.pct-input, .crd-input, #budget-totale').forEach(el => {
-    const k = el.id || (el.dataset.rep + '_' + el.className);
-    if (_prevVals[k] !== el.value) {
-      _prevVals[k] = el.value;
+    if (_prevVals.get(el) !== el.value) {
+      _prevVals.set(el, el.value);
       if (el.classList.contains('pct-input')) onPctChange(el);
       else if (el.classList.contains('crd-input')) onCrdChange(el);
       else if (el.id === 'budget-totale') onBudgetChange();
