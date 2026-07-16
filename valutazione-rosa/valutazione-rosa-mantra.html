@@ -849,14 +849,19 @@ function fallbackTelegram(blob) {
   showToast('📎 PNG scaricato — allegalo nel gruppo Telegram');
 }
 
-// ── Mobile: event delegation su document ──
-['input','change','keyup'].forEach(evt => {
-  document.addEventListener(evt, function(e) {
-    if (e.target.classList.contains('pct-input')) onPctChange(e.target);
-    else if (e.target.classList.contains('crd-input')) onCrdChange(e.target);
-    else if (e.target.id === 'budget-totale') onBudgetChange();
-  }, true);
-});
+// ── Mobile: polling ogni 300ms per aggiornamento garantito ──
+let _prevVals = {};
+setInterval(() => {
+  document.querySelectorAll('.pct-input, .crd-input, #budget-totale').forEach(el => {
+    const k = el.id || (el.dataset.rep + '_' + el.className);
+    if (_prevVals[k] !== el.value) {
+      _prevVals[k] = el.value;
+      if (el.classList.contains('pct-input')) onPctChange(el);
+      else if (el.classList.contains('crd-input')) onCrdChange(el);
+      else if (el.id === 'budget-totale') onBudgetChange();
+    }
+  });
+}, 300);
 
 // ── Init ──────────────────────────────
 loadData();
