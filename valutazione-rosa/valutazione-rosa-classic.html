@@ -404,6 +404,53 @@ body {
   letter-spacing: 2px;
   color: #222;
 }
+
+/* ── Mobile ──────────────────────────── */
+@media (max-width: 600px) {
+  body { padding-bottom: 20px; }
+
+  .toolbar { gap: 6px; padding: 8px 12px; }
+  .toolbar .label { font-size: 10px; }
+  .btn { padding: 7px 10px; font-size: 11px; }
+
+  #rosa-card { margin: 12px auto 0; padding: 0 8px; }
+
+  .card-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 14px;
+    padding: 16px 16px;
+  }
+  .header-right {
+    width: 100%;
+    justify-content: flex-start;
+    gap: 10px;
+  }
+  .hb-input { width: 72px; font-size: 16px; }
+  .hb-value { font-size: 16px; }
+  .hb-label { font-size: 7px; }
+  .badge-classic { align-self: flex-start; }
+  .card-title-input { max-width: 100%; font-size: clamp(18px, 6vw, 28px); }
+  .allenatore-input { max-width: 100%; }
+  .header-logo-wrap { width: 54px; height: 54px; }
+
+  .col-headers { padding: 5px 10px 4px; }
+  .col-headers, .player-row {
+    grid-template-columns: 32px 1fr 72px 72px;
+    gap: 5px;
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+  .num-input { font-size: 11px; padding: 4px 5px; }
+  .player-name { font-size: 11px; }
+  .slot-badge { font-size: 8px; }
+
+  .rep-header { padding: 8px 10px; }
+  .rep-totals { font-size: 9px; gap: 10px; }
+
+  .grand-total { padding: 12px 10px; }
+  .gt-item .gt-num { font-size: 18px; }
+}
 </style>
 </head>
 <body>
