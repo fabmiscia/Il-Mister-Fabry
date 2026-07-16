@@ -140,7 +140,21 @@ body {
   transition: border-color .15s;
 }
 .hb-input:focus { border-color: #C4FF00; }
-.hb-input::placeholder { color: #444; }
+.hb-input::placeholder { color: rgba(255,255,255,.5); }
+.hb-input:placeholder-shown {
+  border-color: #C4FF00;
+  box-shadow: 0 0 10px rgba(196,255,0,.4);
+  animation: pulse-budget 1.4s ease-in-out infinite;
+}
+@keyframes pulse-budget {
+  0%, 100% { box-shadow: 0 0 4px rgba(196,255,0,.25); }
+  50%       { box-shadow: 0 0 14px rgba(196,255,0,.75); }
+}
+.budget-hint {
+  font-size: 9px; font-weight: 900; letter-spacing: 1px;
+  color: #C4FF00; text-align: center; margin-top: 3px;
+  animation: pulse-budget 1.4s ease-in-out infinite;
+}
 .hb-value {
   font-family: 'Anton', Impact, sans-serif;
   font-size: 20px;
@@ -191,7 +205,7 @@ body {
   transition: border-color .15s;
 }
 .card-title-input:focus { border-bottom-color: #C4FF00; }
-.card-title-input::placeholder { color: #fff; opacity: .2; }
+.card-title-input::placeholder { color: #fff; opacity: .5; }
 
 /* Nome allenatore */
 .allenatore-row {
@@ -214,7 +228,7 @@ body {
   transition: border-color .15s, color .15s;
 }
 .allenatore-input:focus { border-bottom-color: #555; color: #fff; }
-.allenatore-input::placeholder { color: #555; opacity: 1; }
+.allenatore-input::placeholder { color: rgba(255,255,255,.5); opacity: 1; }
 
 /* Sezione reparto */
 .reparto {
@@ -308,7 +322,7 @@ body {
   transition: border-color .15s;
 }
 .player-name:focus { border-bottom-color: #C4FF00; }
-.player-name::placeholder { color: #fff; font-weight: 700; opacity: .45; }
+.player-name::placeholder { color: #fff; font-weight: 700; opacity: .6; }
 
 .num-input {
   background: #111;
@@ -325,7 +339,7 @@ body {
   transition: border-color .15s;
 }
 .num-input:focus { border-color: #C4FF00; }
-.num-input::placeholder { color: #fff; opacity: .35; }
+.num-input::placeholder { color: #fff; opacity: .6; }
 
 /* Intestazione colonne */
 .col-headers {
@@ -488,6 +502,7 @@ body {
       <div class="header-budget-box">
         <div class="hb-label">CREDITI ASTA</div>
         <input class="hb-input" id="budget-totale" type="text" inputmode="numeric" placeholder="500" oninput="onBudgetChange()" onchange="onBudgetChange()">
+        <div class="budget-hint" id="budget-hint">▲ IMPOSTA PRIMA</div>
       </div>
       <div class="header-budget-box">
         <div class="hb-label">CREDITI USATI</div>
@@ -642,6 +657,11 @@ function onCrdChange(el) {
   updateTotals(); saveData();
 }
 
+function updateBudgetHint() {
+  const h = document.getElementById('budget-hint');
+  if (h) h.style.display = getBudget() ? 'none' : 'block';
+}
+
 function onBudgetChange() {
   const b = getBudget();
   if (b) {
@@ -655,7 +675,7 @@ function onBudgetChange() {
       }
     });
   }
-  updateTotals(); saveData();
+  updateTotals(); saveData(); updateBudgetHint();
 }
 
 // ── Totali ────────────────────────────
@@ -872,6 +892,7 @@ setInterval(() => {
 // ── Init ──────────────────────────────
 buildRows();
 loadData();
+updateBudgetHint();
 </script>
 </body>
 </html>
