@@ -340,7 +340,7 @@ body {
     <div class="rep-header">
       <div class="rep-header-left">
         <span class="rep-icon">🧤</span>
-        <span class="rep-title">PORTIERI</span>
+        <span class="rep-title">PORTA</span>
       </div>
       <div class="rep-totals">
         <span>Budget: <span class="val" id="tot-pct-por">0%</span></span>
@@ -388,7 +388,7 @@ body {
     <div class="rep-header">
       <div class="rep-header-left">
         <span class="rep-icon">🎯</span>
-        <span class="rep-title">TREQUARTISTI</span>
+        <span class="rep-title">TREQUARTI</span>
       </div>
       <div class="rep-totals">
         <span>Budget: <span class="val" id="tot-pct-tre">0%</span></span>
@@ -449,35 +449,18 @@ const REPARTI = [
 ];
 
 // Ruoli Mantra con optgroup
-const RUOLI_HTML = `
-  <option value="">— Ruolo —</option>
-  <optgroup label="Portiere">
-    <option>Por</option>
-  </optgroup>
-  <optgroup label="Difensori">
-    <option>Dc</option><option>Dd</option><option>Ds</option>
-    <option>Dde</option><option>Dse</option>
-    <option>Dc/Dd</option><option>Dc/Ds</option><option>Dd/Ds</option>
-    <option>Dc/Dd/Ds</option>
-  </optgroup>
-  <optgroup label="Centrocampisti">
-    <option>M</option><option>MC</option><option>C</option><option>E</option>
-    <option>M/C</option><option>M/MC</option><option>M/E</option>
-    <option>MC/C</option><option>C/E</option>
-    <option>C/T</option><option>C/W</option><option>MC/T</option>
-    <option>M/C/E</option><option>M/MC/C</option>
-  </optgroup>
-  <optgroup label="Trequartisti">
-    <option>T</option><option>W</option><option>T/W</option>
-    <option>E/T</option><option>E/W</option><option>M/T</option>
-    <option>C/T/W</option><option>M/C/T</option>
-  </optgroup>
-  <optgroup label="Attaccanti">
-    <option>A</option><option>Pc</option><option>A/Pc</option>
-    <option>T/A</option><option>W/A</option><option>T/Pc</option>
-    <option>T/W/A</option><option>W/A/Pc</option>
-  </optgroup>
-`;
+const RUOLI_PER_REPARTO = {
+  por: ['P'],
+  dif: ['DC', 'DC/DD', 'DC/DS', 'DC/B', 'B/DS/E', 'B/DD/E', 'DD/E', 'DS/E'],
+  cen: ['M/C', 'C', 'C/T', 'E', 'E/M', 'E/W', 'C/W/T', 'MC/C/T'],
+  tre: ['W/A', 'W', 'T', 'T/A', 'W/T/A', 'W/T'],
+  att: ['PC', 'A'],
+};
+
+function buildRuoliOptions(repId) {
+  return '<option value="">— Ruolo —</option>' +
+    (RUOLI_PER_REPARTO[repId] || []).map(r => `<option>${r}</option>`).join('');
+}
 
 // Stato slot per reparto
 const slots = { por: 3, dif: 8, cen: 8, tre: 3, att: 6 };
@@ -493,7 +476,7 @@ function buildRow(repId, idx, data = {}) {
   row.dataset.rep = repId;
   row.dataset.idx = idx;
   row.innerHTML = `
-    <select class="ruolo-select" onchange="saveData()">${RUOLI_HTML}</select>
+    <select class="ruolo-select" onchange="saveData()">${buildRuoliOptions(repId)}</select>
     <input class="player-name" type="text" placeholder="Nome giocatore" oninput="saveData()">
     <input class="num-input pct-input" type="number" min="0" max="100" step="0.1" placeholder="%" data-rep="${repId}" oninput="onPctChange(this)">
     <input class="num-input crd-input" type="number" min="0" placeholder="cr" data-rep="${repId}" oninput="onCrdChange(this)">
