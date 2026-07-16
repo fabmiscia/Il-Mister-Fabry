@@ -1,0 +1,987 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<title>Fantacalcio 2026-27 – Tutti gli Allenatori</title>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<style>
+* { margin:0; padding:0; box-sizing:border-box; }
+body {
+  background:#111;
+  font-family:'Oswald','Arial Black',Arial,sans-serif;
+  display:flex; flex-direction:column; align-items:center;
+  padding:16px 0 30px; gap:12px; min-height:100vh;
+}
+
+/* ── NAV BAR ── */
+.nav-bar {
+  width:1280px;
+  display:flex; flex-wrap:wrap; gap:6px;
+  background:rgba(0,195,255,.05);
+  border:1.5px solid rgba(0,195,255,.18);
+  border-radius:10px;
+  padding:10px 12px;
+}
+.nav-btn {
+  flex:1 1 auto;
+  min-width:100px;
+  padding:7px 10px;
+  border-radius:6px;
+  font-family:'Oswald',Arial,sans-serif;
+  font-size:13px; font-weight:600;
+  letter-spacing:1px; text-transform:uppercase;
+  cursor:pointer; border:1.5px solid rgba(0,195,255,.25);
+  background:rgba(0,195,255,.06); color:rgba(255,255,255,.6);
+  transition:background .15s, color .15s, border-color .15s;
+  white-space:nowrap;
+}
+.nav-btn:hover { background:rgba(0,195,255,.15); color:#fff; border-color:rgba(0,195,255,.5); }
+.nav-btn.active { background:rgba(0,195,255,.22); color:#00c3ff; border-color:#00c3ff; }
+
+/* ── TOOLBAR ── */
+.toolbar {
+  width:1280px; display:flex; align-items:center; gap:12px;
+}
+.toolbar h2 { color:#00c3ff; font-size:15px; font-weight:600; letter-spacing:2px; text-transform:uppercase; flex:1; }
+.toolbar span { color:rgba(255,255,255,.4); font-size:12px; letter-spacing:1px; }
+.btn {
+  padding:9px 22px; border-radius:7px;
+  font-family:'Oswald',Arial,sans-serif; font-size:14px; font-weight:600;
+  letter-spacing:1px; text-transform:uppercase;
+  cursor:pointer; border:none; transition:opacity .15s, transform .1s;
+}
+.btn:hover { opacity:.85; transform:translateY(-1px); }
+.btn:active { transform:translateY(0); }
+.btn-export   { background:#00c3ff; color:#000; }
+.btn-add-note { background:rgba(0,195,255,.15); color:#00c3ff; border:1.5px solid rgba(0,195,255,.4); }
+.btn-github   { background:#24292e; color:#fff; border:1.5px solid rgba(255,255,255,.2); }
+
+/* ── CARD 1280×720 ── */
+.card {
+  width:1280px; height:720px;
+  display:grid; grid-template-columns:195px 1fr;
+  background:#06080d;
+  position:relative; overflow:hidden; border-radius:2px;
+}
+.card::before {
+  content:''; position:absolute; inset:0;
+  background:
+    radial-gradient(ellipse 340px 700px at 97px 360px,rgba(0,195,255,.09) 0%,transparent 70%),
+    radial-gradient(ellipse 500px 300px at 1100px 680px,rgba(255,195,0,.05) 0%,transparent 70%);
+  pointer-events:none; z-index:0;
+}
+
+/* ── LEFT PANEL ── */
+.left-panel {
+  display:flex; flex-direction:column; align-items:center; justify-content:center;
+  gap:18px; padding:22px 14px;
+  border-right:2px solid rgba(0,195,255,.3);
+  background:linear-gradient(180deg,#0c1620 0%,#06080d 65%);
+  position:relative; z-index:1;
+}
+.coach-photo, .team-logo { cursor:pointer; transition:filter .2s; }
+.coach-photo:hover { filter:brightness(1.15); }
+.team-logo:hover   { filter:brightness(1.15); }
+.coach-photo {
+  width:158px; height:196px; border-radius:10px;
+  border:2.5px solid #00c3ff;
+  box-shadow:0 0 22px rgba(0,195,255,.4),0 0 50px rgba(0,195,255,.1);
+  background:#0e1e2c;
+  display:flex; flex-direction:column; align-items:center; justify-content:center;
+  gap:10px; color:rgba(0,195,255,.32); font-size:11px;
+  letter-spacing:2px; text-transform:uppercase;
+  background-size:cover; background-position:center;
+  overflow:hidden; position:relative;
+}
+.team-logo {
+  width:108px; height:108px; border-radius:50%;
+  border:2.5px solid #ffc800;
+  box-shadow:0 0 20px rgba(255,200,0,.38),0 0 45px rgba(255,200,0,.1);
+  background:#1a1600;
+  display:flex; flex-direction:column; align-items:center; justify-content:center;
+  gap:6px; color:rgba(255,200,0,.35); font-size:10px;
+  letter-spacing:1.5px; text-transform:uppercase;
+  background-size:contain; background-position:center; background-repeat:no-repeat;
+  overflow:hidden; position:relative;
+}
+.upload-hint {
+  position:absolute; bottom:0; left:0; right:0;
+  background:rgba(0,195,255,.18); font-size:9px;
+  letter-spacing:1.5px; text-align:center; padding:4px 0;
+  color:rgba(0,195,255,.7); text-transform:uppercase;
+  opacity:0; transition:opacity .2s; pointer-events:none;
+}
+.coach-photo:hover .upload-hint, .team-logo:hover .upload-hint { opacity:1; }
+
+/* ── RIGHT SECTION ── */
+.right-section {
+  display:flex; flex-direction:column; gap:9px;
+  padding:13px 18px 13px 16px; position:relative; z-index:1;
+}
+
+/* ── INFO STRIP ── */
+.info-strip {
+  display:grid; grid-template-columns:1fr 1.2fr 1.1fr 0.7fr 1.05fr; gap:8px;
+}
+.info-block {
+  background:rgba(255,255,255,.035); border:1.5px solid rgba(0,195,255,.22);
+  border-radius:9px; padding:9px 13px 10px;
+  display:flex; flex-direction:column; gap:5px; min-height:76px; justify-content:center;
+}
+.info-label {
+  font-size:10px; font-weight:500; color:#00c3ff;
+  text-transform:uppercase; letter-spacing:2.2px; line-height:1;
+  pointer-events:none; user-select:none;
+}
+.info-value {
+  font-size:28px; font-weight:700; color:#fff;
+  line-height:1; text-transform:uppercase; letter-spacing:.5px;
+  outline:none; border-radius:4px; padding:1px 3px; min-width:20px;
+  transition:background .15s;
+}
+.info-value:hover { background:rgba(0,195,255,.06); }
+.info-value:focus { background:rgba(0,195,255,.12); }
+.badge {
+  display:inline-flex; align-items:center; border-radius:6px; padding:5px 14px;
+  font-size:16px; font-weight:700; text-transform:uppercase; letter-spacing:.5px;
+  width:fit-content; cursor:pointer; user-select:none;
+  transition:filter .15s, transform .1s;
+}
+.badge:hover  { filter:brightness(1.1); transform:scale(1.03); }
+.badge:active { transform:scale(.97); }
+.badge.giochista    { background:#00d966; color:#000; }
+.badge.risultatista { background:#ff6230; color:#fff; }
+.stars-row { display:flex; gap:2px; margin-top:2px; }
+.st { font-size:20px; line-height:1; cursor:pointer; transition:transform .1s; user-select:none; }
+.st:hover { transform:scale(1.2); }
+.st.on  { color:#ffc800; }
+.st.off { color:rgba(255,200,0,.18); }
+
+/* ── MIDDLE ── */
+.middle-section { flex:1; display:grid; grid-template-columns:455px 1fr; gap:12px; }
+.field-section { display:flex; align-items:center; justify-content:center; }
+.field-svg-wrap { filter:drop-shadow(0 0 14px rgba(0,200,80,.28)); }
+.player-dot { cursor:pointer; }
+.player-dot:hover circle { filter:brightness(1.2); stroke-width:3.5; }
+
+/* ── NOTES ── */
+.notes-section {
+  background:rgba(255,255,255,.025); border:1.5px solid rgba(0,195,255,.2);
+  border-radius:10px; padding:14px 16px;
+  display:flex; flex-direction:column; gap:10px; overflow:hidden;
+}
+.notes-header {
+  display:flex; align-items:center; gap:10px;
+  padding-bottom:8px; border-bottom:1px solid rgba(0,195,255,.2);
+}
+.notes-title { font-size:11px; font-weight:600; color:#00c3ff; text-transform:uppercase; letter-spacing:2.5px; flex:1; }
+.notes-subtitle { font-size:10px; color:rgba(255,255,255,.25); letter-spacing:1px; text-transform:uppercase; }
+.notes-list { list-style:none; display:flex; flex-direction:column; gap:6px; flex:1; }
+.notes-list li {
+  display:flex; align-items:flex-start; gap:8px;
+  font-size:18px; font-weight:400; color:rgba(255,255,255,.82);
+  line-height:1.35; padding:4px 6px; border-radius:5px; transition:background .15s;
+}
+.notes-list li:hover { background:rgba(255,255,255,.04); }
+.note-bullet { color:#00c3ff; font-size:13px; margin-top:2px; flex-shrink:0; user-select:none; pointer-events:none; }
+.note-text { outline:none; flex:1; min-width:10px; border-radius:3px; padding:1px 4px; transition:background .15s; }
+.note-text:hover { background:rgba(0,195,255,.06); }
+.note-text:focus { background:rgba(0,195,255,.1); }
+.note-text:empty:before { content:'Scrivi nota...'; color:rgba(255,255,255,.2); pointer-events:none; }
+.note-delete {
+  color:rgba(255,80,80,.0); font-size:14px; cursor:pointer;
+  padding:0 3px; border-radius:3px; transition:color .15s, background .15s;
+  user-select:none; line-height:1.35; flex-shrink:0;
+}
+.notes-list li:hover .note-delete { color:rgba(255,80,80,.45); }
+.note-delete:hover { color:#ff5050 !important; background:rgba(255,80,80,.1); }
+
+/* ── BOTTOM STRIP ── */
+.bottom-strip { display:grid; grid-template-columns:1fr 1.2fr 1.1fr 0.7fr 1.05fr; gap:8px; }
+.indicator {
+  background:rgba(255,255,255,.035); border:1.5px solid rgba(255,255,255,.08);
+  border-radius:9px; padding:10px 14px;
+  display:flex; align-items:center; gap:13px;
+  min-height:70px; cursor:pointer; user-select:none;
+  transition:background .15s, border-color .15s, transform .1s;
+}
+.indicator:hover  { transform:scale(1.02); }
+.indicator:active { transform:scale(.98); }
+.indicator.si { border-color:rgba(0,217,102,.4); background:rgba(0,217,102,.05); }
+.indicator.no { border-color:rgba(255,70,70,.35); background:rgba(255,70,70,.05); }
+.ind-badge {
+  width:44px; height:44px; border-radius:50%; flex-shrink:0;
+  display:flex; align-items:center; justify-content:center;
+  font-size:24px; font-weight:700; line-height:1; transition:background .2s;
+}
+.ind-badge.si { background:rgba(0,217,102,.15); border:2px solid #00d966; color:#00d966; }
+.ind-badge.no { background:rgba(255,70,70,.12);  border:2px solid #ff4646; color:#ff4646; }
+.ind-info { display:flex; flex-direction:column; gap:2px; }
+.ind-lbl  { font-size:10px; color:rgba(255,255,255,.4); text-transform:uppercase; letter-spacing:1.5px; line-height:1; user-select:none; pointer-events:none; }
+.ind-val  { font-size:23px; font-weight:700; text-transform:uppercase; line-height:1; transition:color .2s; }
+.ind-val.si { color:#00d966; }
+.ind-val.no { color:#ff4646; }
+.appetibilita {
+  background:rgba(255,200,0,.06); border:1.5px solid rgba(255,200,0,.45);
+  border-radius:9px; padding:11px 18px;
+  display:flex; flex-direction:column; justify-content:center; gap:7px;
+  box-shadow:0 0 18px rgba(255,200,0,.08);
+}
+.app-lbl { font-size:10px; color:#ffc800; text-transform:uppercase; letter-spacing:2.2px; line-height:1; user-select:none; pointer-events:none; }
+.app-stars { display:flex; gap:6px; }
+.app-st { font-size:30px; line-height:1; cursor:pointer; transition:transform .1s; user-select:none; }
+.app-st:hover { transform:scale(1.2); }
+.app-st.on  { color:#ffc800; text-shadow:0 0 10px rgba(255,200,0,.55); }
+.app-st.off { color:rgba(255,200,0,.18); }
+
+[contenteditable]:focus { outline:1.5px solid rgba(0,195,255,.45); border-radius:4px; }
+</style>
+
+<script>
+(function(){
+  if(window.location.hostname.includes('github.io')||window.location.hostname.includes('fabmiscia')){
+    document.addEventListener('DOMContentLoaded',function(){
+      ['edit-toggle','btn-github','edit-hint'].forEach(function(id){
+        var el=document.getElementById(id);if(el)el.style.display='none';
+      });
+    });
+  }
+})();
+</script>
+</head>
+<body>
+
+<!-- NAV BAR -->
+<div class="nav-bar" id="nav-bar">
+  <button class="nav-btn active" data-idx="0">Atalanta</button>
+  <button class="nav-btn" data-idx="1">Bologna</button>
+  <button class="nav-btn" data-idx="2">Cagliari</button>
+  <button class="nav-btn" data-idx="3">Como</button>
+  <button class="nav-btn" data-idx="4">Fiorentina</button>
+  <button class="nav-btn" data-idx="5">Frosinone</button>
+  <button class="nav-btn" data-idx="6">Genoa</button>
+  <button class="nav-btn" data-idx="7">Inter</button>
+  <button class="nav-btn" data-idx="8">Juventus</button>
+  <button class="nav-btn" data-idx="9">Lazio</button>
+  <button class="nav-btn" data-idx="10">Lecce</button>
+  <button class="nav-btn" data-idx="11">Milan</button>
+  <button class="nav-btn" data-idx="12">Monza</button>
+  <button class="nav-btn" data-idx="13">Napoli</button>
+  <button class="nav-btn" data-idx="14">Parma</button>
+  <button class="nav-btn" data-idx="15">Roma</button>
+  <button class="nav-btn" data-idx="16">Sassuolo</button>
+  <button class="nav-btn" data-idx="17">Torino</button>
+  <button class="nav-btn" data-idx="18">Udinese</button>
+  <button class="nav-btn" data-idx="19">Venezia</button>
+</div>
+
+<!-- TOOLBAR -->
+<div class="toolbar">
+  <h2>⚽ Fantacalcio 2026-27 — Coach Card Editor</h2>
+  <span>Clicca su qualsiasi elemento per modificarlo</span>
+  <button class="btn btn-add-note" id="btn-add-note">+ Aggiungi nota</button>
+  <button class="btn btn-github" id="btn-github">📤 Su GitHub</button>
+  <button class="btn btn-export" id="btn-export">📥 Esporta PNG</button>
+  <button class="btn" style="background:rgba(255,70,70,.15);color:#ff6060;border:1.5px solid rgba(255,70,70,.35)" onclick="resetAllData()">↺ Reset</button>
+</div>
+
+<!-- CARD -->
+<div class="card" id="card">
+  <div class="left-panel">
+    <div class="coach-photo" id="coach-photo-area" title="Clicca per caricare la foto">
+      <svg width="46" height="46" viewBox="0 0 24 24" fill="rgba(0,195,255,.28)">
+        <path d="M12 12c2.7 0 4.8-2.1 4.8-4.8S14.7 2.4 12 2.4 7.2 4.5 7.2 7.2 9.3 12 12 12zm0 2.4c-3.2 0-9.6 1.6-9.6 4.8v2.4h19.2v-2.4c0-3.2-6.4-4.8-9.6-4.8z"/>
+      </svg>
+      FOTO
+      <div class="upload-hint">clicca per caricare</div>
+    </div>
+    <div class="team-logo" id="team-logo-area" title="Clicca per caricare il logo">
+      <svg width="36" height="36" viewBox="0 0 24 24" fill="rgba(255,200,0,.32)">
+        <path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4z"/>
+      </svg>
+      LOGO
+      <div class="upload-hint">clicca per caricare</div>
+    </div>
+  </div>
+
+  <div class="right-section">
+    <div class="info-strip">
+      <div class="info-block">
+        <span class="info-label">Squadra</span>
+        <span class="info-value no-enter" id="val-team" contenteditable="true">Atalanta</span>
+      </div>
+      <div class="info-block">
+        <span class="info-label">Allenatore</span>
+        <span class="info-value no-enter" id="val-coach" contenteditable="true">Sarri</span>
+      </div>
+      <div class="info-block">
+        <span class="info-label">Filosofia</span>
+        <span class="badge giochista" id="filosofia-badge">Giochista</span>
+      </div>
+      <div class="info-block">
+        <span class="info-label">Modulo</span>
+        <span class="info-value no-enter" id="val-modulo" contenteditable="true">4-3-3</span>
+      </div>
+      <div class="info-block">
+        <span class="info-label">Stabilità Panchina</span>
+        <div class="stars-row" id="stab-stars">
+          <span class="st on">★</span><span class="st on">★</span><span class="st on">★</span>
+          <span class="st off">★</span><span class="st off">★</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="middle-section">
+      <div class="field-section">
+        <div class="field-svg-wrap">
+          <svg id="field-svg" width="455" height="300" viewBox="0 0 500 330" xmlns="http://www.w3.org/2000/svg"></svg>
+        </div>
+      </div>
+      <div class="notes-section">
+        <div class="notes-header">
+          <span class="notes-title">Stile di Gioco</span>
+          <span class="notes-subtitle">clicca per modificare</span>
+        </div>
+        <ul class="notes-list" id="notes-list"></ul>
+      </div>
+    </div>
+
+    <div class="bottom-strip">
+      <div class="indicator si" id="ind-possesso">
+        <div class="ind-badge si">✓</div>
+        <div class="ind-info">
+          <span class="ind-lbl">Possesso Palla</span>
+          <span class="ind-val si">Sì</span>
+        </div>
+      </div>
+      <div class="indicator si" id="ind-basso">
+        <div class="ind-badge si">✓</div>
+        <div class="ind-info">
+          <span class="ind-lbl">Dal Basso</span>
+          <span class="ind-val si">Sì</span>
+        </div>
+      </div>
+      <div class="indicator no" id="ind-turnover">
+        <div class="ind-badge no">✗</div>
+        <div class="ind-info">
+          <span class="ind-lbl">Turnover</span>
+          <span class="ind-val no">No</span>
+        </div>
+      </div>
+      <div class="indicator no" id="ind-alternanza">
+        <div class="ind-badge no">✗</div>
+        <div class="ind-info">
+          <span class="ind-lbl">Alternanza Portieri</span>
+          <span class="ind-val no">No</span>
+        </div>
+      </div>
+      <div class="appetibilita">
+        <span class="app-lbl">Appetibilità Fantacalcistica</span>
+        <div class="app-stars" id="app-stars">
+          <span class="app-st on">★</span><span class="app-st on">★</span>
+          <span class="app-st on">★</span><span class="app-st on">★</span>
+          <span class="app-st off">★</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+/* ════════════════════════════════════════════════
+   DATI ALLENATORI
+════════════════════════════════════════════════ */
+/* <<COACHES_START>> */
+const COACHES_DEFAULT = [
+  { team:'Atalanta', coach:'Sarri', filosofia:'giochista', modulo:'4-3-3',
+    stabStars:3, appStars:4, possesso:true, basso:true, turnover:true, alternanza:false,
+    dots:['Y','G','Y','Y','G','G','G','G','G','Y','G'],
+    notes:['Pressing alto e aggressivo su tutto il campo','Possesso palla con circolazione rapida e verticale','Terzini molto offensivi, spingono fino al fondo','Mezzali con inserimenti senza palla in area','Gioco collettivo fluido, pochi individualismi'] },
+
+  { team:'Bologna', coach:'Tedesco', filosofia:'giochista', modulo:'4-2-3-1',
+    stabStars:3, appStars:3, possesso:true, basso:true, turnover:true, alternanza:false,
+    dots:['Y','G','Y','Y','G','Y','Y','G','G','G','G'],
+    notes:['Possesso strutturato con costruzione dal basso','Trequartisti liberi di svariare dietro la punta','Pressing organizzato con uscita alta','Terzini che supportano l\'azione offensiva','Grande intensità fisica e atletica in entrambe le fasi'] },
+
+  { team:'Cagliari', coach:'Pisacane', filosofia:'risultatista', modulo:'4-4-2',
+    stabStars:2, appStars:2, possesso:false, basso:false, turnover:false, alternanza:false,
+    dots:['Y','Y','G','G','Y','Y','Y','Y','Y','R','R'],
+    notes:['Difesa solida e compatta, basso baricentro','Centrocampo a protezione con sacrificio e copertura','Gioco diretto sulle punte, palla lunga','Ripartenze veloci sulle fasce esterne','Nuovo allenatore — valutare evoluzione tattica'] },
+
+  { team:'Como', coach:'Fabregas', filosofia:'giochista', modulo:'4-2-3-1',
+    stabStars:3, appStars:4, possesso:true, basso:true, turnover:true, alternanza:false,
+    dots:['Y','G','Y','Y','G','Y','Y','G','G','G','G'],
+    notes:['Possesso palla con circolazione tecnica e veloce','Gioco di posizione con triangolazioni strette','Terzini che si inseriscono in fascia','Trequartisti tecnici e creativi nella zona di rifinitura','Pressing alto ad uomo in tutto il campo'] },
+
+  { team:'Fiorentina', coach:'Grosso', filosofia:'risultatista', modulo:'4-3-3',
+    stabStars:3, appStars:3, possesso:false, basso:false, turnover:false, alternanza:false,
+    dots:['G','Y','G','G','Y','Y','Y','Y','Y','Y','Y'],
+    notes:['Equilibrio tattico tra fase difensiva e offensiva','Punta centrale come riferimento principale','Esterni con compiti difensivi importanti','Transizioni organizzate e controllate','Gioco prudente, poca propensione al rischio'] },
+
+  { team:'Frosinone', coach:'Alvini', filosofia:'giochista', modulo:'3-5-2',
+    stabStars:2, appStars:2, possesso:false, basso:false, turnover:false, alternanza:false,
+    dots:['G','G','G','G','G','Y','Y','Y','G','R','R'],
+    notes:['Difesa a 3 con marcatura aggressiva ad uomo','Esterni a tutta fascia, molto offensivi','Pressing alto con uscita decisa','Fase offensiva affidata agli esterni di fascia','Attaccanti spesso isolati e poco riforniti'] },
+
+  { team:'Genoa', coach:'De Rossi', filosofia:'giochista', modulo:'4-3-3',
+    stabStars:3, appStars:3, possesso:true, basso:true, turnover:false, alternanza:false,
+    dots:['Y','Y','Y','Y','Y','G','G','G','G','G','G'],
+    notes:['Possesso palla con costruzione dal basso paziente','Centrocampo creativo e propositivo','Esterni liberi di attaccare la profondità','Triangolazioni strette sulla trequarti avversaria','Stile di gioco offensivo e coraggioso'] },
+
+  { team:'Inter', coach:'Chivu', filosofia:'giochista', modulo:'3-5-2',
+    stabStars:3, appStars:4, possesso:true, basso:true, turnover:true, alternanza:false,
+    dots:['Y','Y','Y','Y','G','Y','G','Y','G','G','G'],
+    notes:['Eredità tattica del sistema di Simone Inzaghi','Wing-back fondamentali nell\'azione offensiva','Possesso palla con circolazione strutturata','Centrocampo tecnico e propositivo','Turnover gestito tra rosa ampia e di qualità'] },
+
+  { team:'Juventus', coach:'Spalletti', filosofia:'giochista', modulo:'4-3-3',
+    stabStars:3, appStars:4, possesso:true, basso:true, turnover:true, alternanza:false,
+    dots:['Y','Y','Y','Y','Y','G','G','G','G','G','G'],
+    notes:['Pressing alto e organizzato come identità di gioco','Possesso palla di qualità con fluidità posizionale','Centrocampo dinamico e tecnico, fulcro del sistema','Esterni valorizzati dalla manovra offensiva corale','Grande intensità fisica in entrambe le fasi di gioco'] },
+
+  { team:'Lazio', coach:'Gattuso', filosofia:'risultatista', modulo:'4-3-3',
+    stabStars:2, appStars:3, possesso:false, basso:false, turnover:false, alternanza:false,
+    dots:['G','Y','G','G','Y','G','Y','Y','Y','R','Y'],
+    notes:['Gioco fisico e aggressivo, difesa molto compatta','Pressing a zolle, baricentro medio-basso','Centrocampo con grande copertura e intensità','Ripartenze dirette e veloci sugli esterni','Poca propensione al possesso prolungato'] },
+
+  { team:'Lecce', coach:'—', filosofia:'risultatista', modulo:'4-4-2',
+    stabStars:0, appStars:0, possesso:false, basso:false, turnover:false, alternanza:false,
+    dots:['Y','Y','Y','Y','Y','Y','Y','Y','Y','Y','Y'],
+    notes:['Allenatore non ancora confermato','Compila i dati quando disponibili'] },
+
+  { team:'Milan', coach:'—', filosofia:'giochista', modulo:'4-3-3',
+    stabStars:0, appStars:0, possesso:false, basso:false, turnover:false, alternanza:false,
+    dots:['Y','Y','Y','Y','Y','Y','Y','Y','Y','Y','Y'],
+    notes:['Allenatore non ancora confermato','Compila i dati quando disponibili'] },
+
+  { team:'Monza', coach:'—', filosofia:'risultatista', modulo:'4-4-2',
+    stabStars:0, appStars:0, possesso:false, basso:false, turnover:false, alternanza:false,
+    dots:['Y','Y','Y','Y','Y','Y','Y','Y','Y','Y','Y'],
+    notes:['Allenatore non ancora confermato','Compila i dati quando disponibili'] },
+
+  { team:'Napoli', coach:'Allegri', filosofia:'risultatista', modulo:'4-3-3',
+    stabStars:3, appStars:3, possesso:false, basso:false, turnover:false, alternanza:false,
+    dots:['G','Y','G','G','Y','Y','Y','Y','Y','G','Y'],
+    notes:['Gioco pragmatico e difensivo, basso baricentro','Blocco corto e compatto in fase difensiva','Centravanti unico come riferimento offensivo centrale','Ripartenze rapide in verticale sugli esterni','Centrocampo a protezione della difesa, poco propositivo'] },
+
+  { team:'Parma', coach:'Cuesta', filosofia:'risultatista', modulo:'4-3-3',
+    stabStars:2, appStars:2, possesso:false, basso:false, turnover:false, alternanza:false,
+    dots:['Y','Y','Y','Y','Y','Y','Y','Y','Y','Y','Y'],
+    notes:['Nuovo allenatore alla prima esperienza in Serie A','Sistema difensivo organizzato e compatto','Gioco diretto e pratico','Squadra in fase di costruzione identità','Valutare evoluzione nel corso della stagione'] },
+
+  { team:'Roma', coach:'Gasperini', filosofia:'giochista', modulo:'3-4-2-1',
+    stabStars:4, appStars:5, possesso:true, basso:true, turnover:true, alternanza:false,
+    dots:['Y','Y','Y','Y','G','G','G','G','G','G','G'],
+    notes:['Pressing alto ad uomo in tutto il campo','Ampiezza garantita dagli esterni a tutta fascia','Mezzali con inserimenti senza palla in area','Costruzione dal basso con i tre difensori centrali','Transizioni offensive rapide verso l\'area avversaria'] },
+
+  { team:'Sassuolo', coach:'Aquilani', filosofia:'giochista', modulo:'4-3-3',
+    stabStars:3, appStars:3, possesso:true, basso:true, turnover:false, alternanza:false,
+    dots:['Y','Y','Y','Y','Y','G','G','G','G','G','G'],
+    notes:['Gioco propositivo e tecnico come identità','Possesso palla con costruzione dal basso strutturata','Centrocampo dinamico e creativo','Esterni offensivi valorizzati dal sistema','Pressing organizzato nella metà campo avversaria'] },
+
+  { team:'Torino', coach:'Abate', filosofia:'risultatista', modulo:'3-5-2',
+    stabStars:2, appStars:2, possesso:false, basso:false, turnover:false, alternanza:false,
+    dots:['Y','Y','Y','Y','Y','Y','Y','Y','Y','Y','Y'],
+    notes:['Difesa a 3 organizzata e compatta','Wing-back con grande corsa e sacrificio','Gioco diretto e verticale','Equilibrio tattico con baricentro medio','Nuovo allenatore — valutare evoluzione tattica'] },
+
+  { team:'Udinese', coach:'Runjaic', filosofia:'risultatista', modulo:'3-5-2',
+    stabStars:3, appStars:2, possesso:false, basso:false, turnover:false, alternanza:false,
+    dots:['Y','G','G','G','Y','Y','Y','Y','Y','Y','Y'],
+    notes:['Difesa a 3 solida e difficile da penetrare','Centrali valorizzati da sistema strutturato','Gioco diretto, palla lunga sulle punte','Wing-back con compiti prevalentemente difensivi','Ripartenze veloci sugli attaccanti isolati'] },
+
+  { team:'Venezia', coach:'Stroppa', filosofia:'risultatista', modulo:'4-3-3',
+    stabStars:2, appStars:2, possesso:false, basso:false, turnover:false, alternanza:false,
+    dots:['Y','Y','Y','Y','Y','Y','Y','Y','Y','Y','Y'],
+    notes:['Difesa solida e organizzata, bassa propensione al rischio','Squadra di lotta e di risultato','Gioco diretto e poco elaborato','Centrocampo fisico con buona copertura difensiva','Transizioni rapide senza troppa elaborazione'] },
+];
+/* <<COACHES_END>> */
+
+/* ════════════════════════════════════════════════
+   FORMAZIONI — posizioni sul campo
+════════════════════════════════════════════════ */
+const FORMATIONS = {
+  '4-3-3': [
+    {cx:462,cy:165,lb:'P'}, {cx:385,cy:72,lb:'TS'}, {cx:395,cy:130,lb:'DC'},
+    {cx:395,cy:200,lb:'DC'},{cx:385,cy:258,lb:'TS'},{cx:280,cy:105,lb:'M'},
+    {cx:265,cy:165,lb:'M'},{cx:280,cy:225,lb:'M'},{cx:140,cy:72,lb:'E'},
+    {cx:72,cy:165,lb:'A'},{cx:140,cy:258,lb:'E'}
+  ],
+  '3-4-2-1': [
+    {cx:462,cy:165,lb:'P'},{cx:376,cy:88,lb:'DC'},{cx:368,cy:165,lb:'DC'},
+    {cx:376,cy:242,lb:'DC'},{cx:270,cy:36,lb:'E'},{cx:284,cy:122,lb:'M'},
+    {cx:284,cy:208,lb:'M'},{cx:270,cy:285,lb:'E'},{cx:165,cy:117,lb:'T'},
+    {cx:165,cy:213,lb:'T'},{cx:62,cy:165,lb:'A'}
+  ],
+  '3-5-2': [
+    {cx:462,cy:165,lb:'P'},{cx:385,cy:88,lb:'DC'},{cx:375,cy:165,lb:'DC'},
+    {cx:385,cy:242,lb:'DC'},{cx:285,cy:38,lb:'E'},{cx:285,cy:110,lb:'M'},
+    {cx:270,cy:165,lb:'M'},{cx:285,cy:220,lb:'M'},{cx:285,cy:285,lb:'E'},
+    {cx:100,cy:115,lb:'A'},{cx:100,cy:215,lb:'A'}
+  ],
+  '4-2-3-1': [
+    {cx:462,cy:165,lb:'P'},{cx:385,cy:72,lb:'TS'},{cx:395,cy:130,lb:'DC'},
+    {cx:395,cy:200,lb:'DC'},{cx:385,cy:258,lb:'TS'},{cx:300,cy:125,lb:'DM'},
+    {cx:300,cy:205,lb:'DM'},{cx:185,cy:72,lb:'AM'},{cx:185,cy:165,lb:'AM'},
+    {cx:185,cy:258,lb:'AM'},{cx:72,cy:165,lb:'A'}
+  ],
+  '4-4-2': [
+    {cx:462,cy:165,lb:'P'},{cx:385,cy:72,lb:'TS'},{cx:395,cy:130,lb:'DC'},
+    {cx:395,cy:200,lb:'DC'},{cx:385,cy:258,lb:'TS'},{cx:280,cy:72,lb:'E'},
+    {cx:285,cy:135,lb:'CM'},{cx:285,cy:195,lb:'CM'},{cx:280,cy:258,lb:'E'},
+    {cx:100,cy:120,lb:'A'},{cx:100,cy:210,lb:'A'}
+  ],
+};
+
+/* ════════════════════════════════════════════════
+   SVG CAMPO (sfondo statico)
+════════════════════════════════════════════════ */
+const SVG_BG = `
+  <rect width="500" height="330" rx="9" fill="#1b5e2e"/>
+  <rect x="0"   y="0" width="50" height="330" fill="#1e6632"/>
+  <rect x="100" y="0" width="50" height="330" fill="#1e6632"/>
+  <rect x="200" y="0" width="50" height="330" fill="#1e6632"/>
+  <rect x="300" y="0" width="50" height="330" fill="#1e6632"/>
+  <rect x="400" y="0" width="50" height="330" fill="#1e6632"/>
+  <rect x="7" y="7" width="486" height="316" rx="5" fill="none" stroke="rgba(255,255,255,.78)" stroke-width="2.2"/>
+  <line x1="250" y1="7" x2="250" y2="323" stroke="rgba(255,255,255,.7)" stroke-width="1.8"/>
+  <circle cx="250" cy="165" r="46" fill="none" stroke="rgba(255,255,255,.7)" stroke-width="1.8"/>
+  <circle cx="250" cy="165" r="3" fill="rgba(255,255,255,.85)"/>
+  <rect x="7" y="95" width="100" height="140" fill="none" stroke="rgba(255,255,255,.6)" stroke-width="1.8"/>
+  <rect x="7" y="124" width="44" height="82" fill="none" stroke="rgba(255,255,255,.45)" stroke-width="1.4"/>
+  <rect x="0" y="138" width="9" height="54" fill="rgba(255,255,255,.1)" stroke="rgba(255,255,255,.6)" stroke-width="1.8"/>
+  <path d="M107 133 A40 40 0 0 1 107 197" fill="none" stroke="rgba(255,255,255,.45)" stroke-width="1.4"/>
+  <rect x="393" y="95" width="100" height="140" fill="none" stroke="rgba(255,255,255,.6)" stroke-width="1.8"/>
+  <rect x="449" y="124" width="44" height="82" fill="none" stroke="rgba(255,255,255,.45)" stroke-width="1.4"/>
+  <rect x="491" y="138" width="9" height="54" fill="rgba(255,255,255,.1)" stroke="rgba(255,255,255,.6)" stroke-width="1.8"/>
+  <path d="M393 133 A40 40 0 0 0 393 197" fill="none" stroke="rgba(255,255,255,.45)" stroke-width="1.4"/>
+  <path d="M 7 20 A12 12 0 0 1 20 7" fill="none" stroke="rgba(255,255,255,.45)" stroke-width="1.4"/>
+  <path d="M 480 7 A12 12 0 0 1 493 20" fill="none" stroke="rgba(255,255,255,.45)" stroke-width="1.4"/>
+  <path d="M 7 310 A12 12 0 0 0 20 323" fill="none" stroke="rgba(255,255,255,.45)" stroke-width="1.4"/>
+  <path d="M 480 323 A12 12 0 0 0 493 310" fill="none" stroke="rgba(255,255,255,.45)" stroke-width="1.4"/>
+`;
+const SVG_LEGEND = `
+  <rect x="136" y="302" width="228" height="24" rx="5" fill="rgba(0,0,0,.5)"/>
+  <circle cx="154" cy="314" r="7" fill="#00e676"/>
+  <text x="165" y="318" font-family="Oswald,Arial" font-size="10" fill="rgba(255,255,255,.7)">Valorizzato</text>
+  <circle cx="227" cy="314" r="7" fill="#ffd700"/>
+  <text x="238" y="318" font-family="Oswald,Arial" font-size="10" fill="rgba(255,255,255,.7)">Stabile</text>
+  <circle cx="291" cy="314" r="7" fill="#ff4444"/>
+  <text x="302" y="318" font-family="Oswald,Arial" font-size="10" fill="rgba(255,255,255,.7)">Penalizzato</text>
+`;
+
+/* ════════════════════════════════════════════════
+   STATO GLOBALE
+════════════════════════════════════════════════ */
+let currentIdx = 0;
+const coaches = COACHES_DEFAULT.map(c => Object.assign({}, c, {
+  dots: [...c.dots], notes: [...c.notes]
+}));
+
+// immagini caricate (separate dalla card data)
+const coachImages = new Array(20).fill(null);
+const logoImages  = new Array(20).fill(null);
+
+/* ════════════════════════════════════════════════
+   RENDER CAMPO
+════════════════════════════════════════════════ */
+const COLOR_MAP = {G:'#00e676', Y:'#ffd700', R:'#ff4444'};
+const TEXT_MAP  = {G:'#000',   Y:'#000',    R:'#fff'};
+
+function renderField(c) {
+  const positions = FORMATIONS[c.modulo] || FORMATIONS['4-3-3'];
+  const dotsHTML = positions.map((pos, i) => {
+    const saved = c.dotPositions && c.dotPositions[i];
+    const cx  = saved ? saved.cx : pos.cx;
+    const cy  = saved ? saved.cy : pos.cy;
+    const col = COLOR_MAP[c.dots[i]] || '#ffd700';
+    const txt = TEXT_MAP[c.dots[i]]  || '#000';
+    const fs  = pos.lb.length >= 2 ? 10 : 12;
+    return `<g class="player-dot" data-dot="${i}">
+      <circle cx="${cx}" cy="${cy}" r="17" fill="${col}" stroke="#0c3a18" stroke-width="2"/>
+      <text x="${cx}" y="${cy+6}" text-anchor="middle" font-family="Oswald,Arial" font-size="${fs}" font-weight="700" fill="${txt}">${pos.lb}</text>
+    </g>`;
+  }).join('');
+  document.getElementById('field-svg').innerHTML = SVG_BG + dotsHTML + SVG_LEGEND;
+  attachDotClicks();
+}
+
+function attachDotClicks() {
+  const DOT_C = ['#00e676','#ffd700','#ff4444'];
+  const TXT_C = ['#000','#000','#fff'];
+  const svg   = document.getElementById('field-svg');
+
+  document.querySelectorAll('.player-dot').forEach(g => {
+    let startClientX, startClientY, dragging = false;
+
+    g.addEventListener('pointerdown', e => {
+      e.preventDefault();
+      g.setPointerCapture(e.pointerId);
+      startClientX = e.clientX;
+      startClientY = e.clientY;
+      dragging = false;
+    });
+
+    g.addEventListener('pointermove', e => {
+      if (!g.hasPointerCapture(e.pointerId)) return;
+      const dx = e.clientX - startClientX;
+      const dy = e.clientY - startClientY;
+      if (!dragging && Math.hypot(dx, dy) > 5) dragging = true;
+      if (!dragging) return;
+
+      /* converti coordinate schermo → SVG */
+      const pt = svg.createSVGPoint();
+      pt.x = e.clientX; pt.y = e.clientY;
+      const sp = pt.matrixTransform(svg.getScreenCTM().inverse());
+
+      const circle = g.querySelector('circle');
+      const text   = g.querySelector('text');
+      const r = 17;
+      const cx = Math.max(r + 8, Math.min(492 - r, sp.x));
+      const cy = Math.max(r + 8, Math.min(296,      sp.y));
+
+      circle.setAttribute('cx', cx);
+      circle.setAttribute('cy', cy);
+      if (text) { text.setAttribute('x', cx); text.setAttribute('y', cy + 6); }
+    });
+
+    g.addEventListener('pointerup', e => {
+      if (!dragging) {
+        /* era un click → cicla colore */
+        const circle = g.querySelector('circle');
+        const label  = g.querySelector('text');
+        const cur  = circle.getAttribute('fill');
+        const idx  = DOT_C.indexOf(cur);
+        const next = (idx + 1) % DOT_C.length;
+        circle.setAttribute('fill', DOT_C[next]);
+        if (label) label.setAttribute('fill', TXT_C[next]);
+      }
+      dragging = false;
+    });
+  });
+}
+
+/* ════════════════════════════════════════════════
+   INDICATORI
+════════════════════════════════════════════════ */
+function setIndicator(id, isSi) {
+  const ind = document.getElementById(id);
+  ind.className = 'indicator ' + (isSi ? 'si' : 'no');
+  const b = ind.querySelector('.ind-badge');
+  b.className = 'ind-badge ' + (isSi ? 'si' : 'no');
+  b.textContent = isSi ? '✓' : '✗';
+  const v = ind.querySelector('.ind-val');
+  v.className = 'ind-val ' + (isSi ? 'si' : 'no');
+  v.textContent = isSi ? 'Sì' : 'No';
+}
+
+/* ════════════════════════════════════════════════
+   SALVA STATO CORRENTE
+════════════════════════════════════════════════ */
+function saveCurrentState() {
+  const c = coaches[currentIdx];
+  c.team    = document.getElementById('val-team').textContent.trim();
+  c.coach   = document.getElementById('val-coach').textContent.trim();
+  c.modulo  = document.getElementById('val-modulo').textContent.trim();
+  const badge = document.getElementById('filosofia-badge');
+  c.filosofia = badge.classList.contains('giochista') ? 'giochista' : 'risultatista';
+  c.stabStars = [...document.querySelectorAll('#stab-stars .st')].filter(s=>s.classList.contains('on')).length;
+  document.querySelectorAll('.player-dot').forEach((g, i) => {
+    const col = g.querySelector('circle').getAttribute('fill');
+    c.dots[i] = col === '#00e676' ? 'G' : col === '#ff4444' ? 'R' : 'Y';
+  });
+  c.possesso  = document.getElementById('ind-possesso').classList.contains('si');
+  c.basso     = document.getElementById('ind-basso').classList.contains('si');
+  c.turnover  = document.getElementById('ind-turnover').classList.contains('si');
+  c.alternanza= document.getElementById('ind-alternanza').classList.contains('si');
+  c.appStars  = [...document.querySelectorAll('#app-stars .app-st')].filter(s=>s.classList.contains('on')).length;
+  c.notes     = [...document.querySelectorAll('.note-text')].map(n => n.textContent.trim());
+  c.dotPositions = [...document.querySelectorAll('.player-dot')].map(g => {
+    const ci = g.querySelector('circle');
+    return { cx: parseFloat(ci.getAttribute('cx')), cy: parseFloat(ci.getAttribute('cy')) };
+  });
+}
+
+/* ════════════════════════════════════════════════
+   CARICA COACH
+════════════════════════════════════════════════ */
+function loadCoach(idx) {
+  currentIdx = idx;
+  const c = coaches[idx];
+
+  // nav buttons
+  document.querySelectorAll('.nav-btn').forEach((b,i) => b.classList.toggle('active', i===idx));
+
+  // testi
+  document.getElementById('val-team').textContent  = c.team;
+  document.getElementById('val-coach').textContent = c.coach;
+  document.getElementById('val-modulo').textContent= c.modulo;
+
+  // filosofia
+  const badge = document.getElementById('filosofia-badge');
+  badge.className = 'badge ' + c.filosofia;
+  badge.textContent = c.filosofia === 'giochista' ? 'Giochista' : 'Risultatista';
+
+  // stelle stabilità
+  document.querySelectorAll('#stab-stars .st').forEach((s,i) =>
+    s.className = 'st ' + (i < c.stabStars ? 'on' : 'off'));
+
+  // campo SVG
+  renderField(c);
+
+  // indicatori
+  setIndicator('ind-possesso',  c.possesso);
+  setIndicator('ind-basso',     c.basso);
+  setIndicator('ind-turnover',  c.turnover);
+  setIndicator('ind-alternanza',c.alternanza);
+
+  // stelle appetibilità
+  document.querySelectorAll('#app-stars .app-st').forEach((s,i) =>
+    s.className = 'app-st ' + (i < c.appStars ? 'on' : 'off'));
+
+  // note
+  const list = document.getElementById('notes-list');
+  list.innerHTML = c.notes.map(n => `
+    <li>
+      <span class="note-bullet">▸</span>
+      <span class="note-text" contenteditable="true">${n}</span>
+      <span class="note-delete" title="Elimina nota">✕</span>
+    </li>`).join('');
+
+  // immagini
+  const photoArea = document.getElementById('coach-photo-area');
+  const logoArea  = document.getElementById('team-logo-area');
+  restoreImageArea(photoArea, coachImages[idx], false,
+    `<svg width="46" height="46" viewBox="0 0 24 24" fill="rgba(0,195,255,.28)"><path d="M12 12c2.7 0 4.8-2.1 4.8-4.8S14.7 2.4 12 2.4 7.2 4.5 7.2 7.2 9.3 12 12 12zm0 2.4c-3.2 0-9.6 1.6-9.6 4.8v2.4h19.2v-2.4c0-3.2-6.4-4.8-9.6-4.8z"/></svg>FOTO`);
+  restoreImageArea(logoArea,  logoImages[idx],  true,
+    `<svg width="36" height="36" viewBox="0 0 24 24" fill="rgba(255,200,0,.32)"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4z"/></svg>LOGO`);
+}
+
+function restoreImageArea(area, imgData, circular, placeholderHTML) {
+  if (imgData) {
+    area.innerHTML = '<div class="upload-hint">clicca per cambiare</div>';
+    area.style.backgroundImage    = `url('${imgData}')`;
+    area.style.backgroundSize     = circular ? 'contain' : 'cover';
+    area.style.backgroundPosition = 'center';
+    area.style.backgroundRepeat   = 'no-repeat';
+  } else {
+    area.style.backgroundImage = 'none';
+    area.innerHTML = placeholderHTML + '<div class="upload-hint">clicca per caricare</div>';
+  }
+}
+
+/* ════════════════════════════════════════════════
+   EVENTI STATICI
+════════════════════════════════════════════════ */
+
+// nav
+document.getElementById('nav-bar').addEventListener('click', e => {
+  const btn = e.target.closest('.nav-btn');
+  if (!btn) return;
+  const idx = parseInt(btn.dataset.idx);
+  if (idx === currentIdx) return;
+  saveCurrentState();
+  saveToStorage();
+  loadCoach(idx);
+});
+
+// filosofia toggle
+document.getElementById('filosofia-badge').addEventListener('click', () => {
+  const b = document.getElementById('filosofia-badge');
+  const isG = b.classList.contains('giochista');
+  b.classList.toggle('giochista',    !isG);
+  b.classList.toggle('risultatista',  isG);
+  b.textContent = isG ? 'Risultatista' : 'Giochista';
+});
+
+// stelle stabilità
+document.getElementById('stab-stars').addEventListener('click', e => {
+  const stars = [...document.querySelectorAll('#stab-stars .st')];
+  const idx = stars.indexOf(e.target);
+  if (idx < 0) return;
+  stars.forEach((s,i) => s.className = 'st ' + (i <= idx ? 'on' : 'off'));
+});
+
+// stelle appetibilità
+document.getElementById('app-stars').addEventListener('click', e => {
+  const stars = [...document.querySelectorAll('#app-stars .app-st')];
+  const idx = stars.indexOf(e.target);
+  if (idx < 0) return;
+  stars.forEach((s,i) => s.className = 'app-st ' + (i <= idx ? 'on' : 'off'));
+});
+
+// indicatori
+['ind-possesso','ind-basso','ind-turnover','ind-alternanza'].forEach(id => {
+  document.getElementById(id).addEventListener('click', () => {
+    const isSi = document.getElementById(id).classList.contains('si');
+    setIndicator(id, !isSi);
+  });
+});
+
+// upload foto
+function setupUpload(areaId, storeArr, circular) {
+  document.getElementById(areaId).addEventListener('click', () => {
+    const inp = document.createElement('input');
+    inp.type='file'; inp.accept='image/*';
+    inp.onchange = () => {
+      const file = inp.files[0]; if (!file) return;
+      const reader = new FileReader();
+      reader.onload = ev => {
+        storeArr[currentIdx] = ev.target.result;
+        restoreImageArea(document.getElementById(areaId), ev.target.result, circular, '');
+        saveToStorage();
+      };
+      reader.readAsDataURL(file);
+    };
+    inp.click();
+  });
+}
+setupUpload('coach-photo-area', coachImages, false);
+setupUpload('team-logo-area',   logoImages,  true);
+
+// note — elimina
+document.getElementById('notes-list').addEventListener('click', e => {
+  if (e.target.classList.contains('note-delete')) e.target.closest('li').remove();
+});
+
+// note — aggiungi
+function addNote(text='') {
+  const li = document.createElement('li');
+  li.innerHTML = `<span class="note-bullet">▸</span>
+    <span class="note-text" contenteditable="true">${text}</span>
+    <span class="note-delete" title="Elimina nota">✕</span>`;
+  document.getElementById('notes-list').appendChild(li);
+  li.querySelector('.note-text').focus();
+}
+document.getElementById('btn-add-note').addEventListener('click', () => addNote());
+
+// no-enter nei campi single-line
+document.addEventListener('keydown', e => {
+  if (e.key === 'Enter' && e.target.classList.contains('no-enter')) {
+    e.preventDefault(); e.target.blur();
+  }
+});
+
+// esporta
+document.getElementById('btn-export').addEventListener('click', async () => {
+  saveCurrentState();
+  const btn = document.getElementById('btn-export');
+  btn.textContent = '⏳ Esportando...'; btn.disabled = true;
+  const c = coaches[currentIdx];
+  const nome = `${c.coach}-${c.team}`.toLowerCase().replace(/\s+/g,'-').replace(/[^a-z0-9-]/g,'');
+  try {
+    const canvas = await html2canvas(document.getElementById('card'), {
+      scale:2, useCORS:true, logging:false, backgroundColor:'#06080d'
+    });
+    const a = document.createElement('a');
+    a.download = `fantacalcio-${nome}.png`;
+    a.href = canvas.toDataURL('image/png');
+    a.click();
+  } catch(err) { alert('Errore: ' + err.message); }
+  saveToStorage();
+  btn.textContent = '📥 Esporta PNG'; btn.disabled = false;
+});
+
+/* ════════════════════════════════════════════════
+   LOCAL STORAGE — salva/carica tutto in automatico
+════════════════════════════════════════════════ */
+const STORAGE_KEY = 'fantacalcio-2026-v1';
+
+function saveToStorage() {
+  try {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(coaches));
+  } catch(e) { /* quota superata, ignora */ }
+  for (let i = 0; i < 20; i++) {
+    try { if (coachImages[i]) localStorage.setItem(`fanta-coach-${i}`, coachImages[i]); }
+    catch(e) { /* immagine troppo grande, ignora */ }
+    try { if (logoImages[i])  localStorage.setItem(`fanta-logo-${i}`,  logoImages[i]);  }
+    catch(e) { /* immagine troppo grande, ignora */ }
+  }
+}
+
+function loadFromStorage() {
+  try {
+    const saved = localStorage.getItem(STORAGE_KEY);
+    if (saved) {
+      const data = JSON.parse(saved);
+      data.forEach((c, i) => {
+        if (coaches[i]) Object.assign(coaches[i], c);
+      });
+    }
+    for (let i = 0; i < 20; i++) {
+      coachImages[i] = localStorage.getItem(`fanta-coach-${i}`) || null;
+      logoImages[i]  = localStorage.getItem(`fanta-logo-${i}`)  || null;
+    }
+  } catch(e) { /* dati corrotti, usa defaults */ }
+}
+
+function resetAllData() {
+  if (!confirm('Sei sicuro? Verranno cancellati tutti i dati modificati e le immagini caricate.')) return;
+  localStorage.clear();
+  location.reload();
+}
+
+/* ════════════════════════════════════════════════
+   ESPORTA SU GITHUB
+════════════════════════════════════════════════ */
+document.getElementById('btn-github').addEventListener('click', async () => {
+  const GH_REPO = 'fabmiscia/Il-Mister-Fabry';
+  const GH_FILE = 'allenatori-fantacalcio-2026.html';
+
+  let token = localStorage.getItem('gh-token');
+  if (!token) {
+    token = prompt('🔑 GitHub Personal Access Token:\n(salvato nel browser, non nel file)');
+    if (!token) return;
+    localStorage.setItem('gh-token', token.trim());
+    token = token.trim();
+  }
+
+  const btn = document.getElementById('btn-github');
+  btn.textContent = '⏳ Caricando...';
+  btn.disabled = true;
+
+  try {
+    const headers = { 'Authorization': `token ${token}`, 'Content-Type': 'application/json' };
+
+    // 1. Legge il file attuale da GitHub per ottenere SHA
+    const getResp = await fetch(`https://api.github.com/repos/${GH_REPO}/contents/${GH_FILE}`, { headers });
+    if (!getResp.ok) {
+      if (getResp.status === 401) { localStorage.removeItem('gh-token'); throw new Error('Token non valido. Riprova.'); }
+      throw new Error(`Errore lettura file da GitHub (${getResp.status})`);
+    }
+    const fileData = await getResp.json();
+    const sha = fileData.sha;
+
+    // 2. Decodifica contenuto
+    let source = decodeURIComponent(escape(atob(fileData.content.replace(/\n/g, ''))));
+
+    // 3. Sostituisce COACHES_DEFAULT con i dati correnti (incluse modifiche utente)
+    const currentCoaches = coaches.map(c => Object.assign({}, c));
+    const newBlock = `/* <<COACHES_START>> */\nconst COACHES_DEFAULT = ${JSON.stringify(currentCoaches, null, 2)};\n/* <<COACHES_END>> */`;
+    source = source.replace(/\/\* <<COACHES_START>> \*\/[\s\S]*?\/\* <<COACHES_END>> \*\//, newBlock);
+
+    // 4. Codifica e invia
+    const encoded = btoa(unescape(encodeURIComponent(source)));
+    const date = new Date().toLocaleDateString('it-IT');
+    const pushResp = await fetch(`https://api.github.com/repos/${GH_REPO}/contents/${GH_FILE}`, {
+      method: 'PUT', headers,
+      body: JSON.stringify({ message: `Aggiornamento allenatori — ${date}`, content: encoded, sha })
+    });
+    if (!pushResp.ok) { const e = await pushResp.json(); throw new Error(e.message); }
+
+    btn.textContent = '✅ Pubblicato!';
+    setTimeout(() => { btn.textContent = '📤 Su GitHub'; btn.disabled = false; }, 3000);
+  } catch(e) {
+    alert('❌ ' + e.message);
+    btn.textContent = '📤 Su GitHub';
+    btn.disabled = false;
+  }
+});
+
+/* ════════════════════════════════════════════════
+   INIT
+════════════════════════════════════════════════ */
+loadFromStorage();
+loadCoach(0);
+</script>
+</body>
+</html>

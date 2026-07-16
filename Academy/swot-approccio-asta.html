@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Analisi SWOT • Approccio all'Asta</title>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Montserrat:wght@600;700;900&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --forza:       #C4FF00;
+  --debolezza:   #ff8800;
+  --opportunita: #00d4ff;
+  --rischi:      #ff2d55;
+  --bg:          #080810;
+  --line:        rgba(255,255,255,.08);
+  --txt:         #f0f0ff;
+  --muted:       rgba(240,240,255,.45);
+}
+
+body {
+  background: #04040a;
+  font-family: 'Montserrat', sans-serif;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 100vh;
+  padding: 20px 16px 40px;
+  gap: 16px;
+}
+
+[contenteditable] { outline: none; cursor: text; }
+[contenteditable]:hover { background: rgba(255,255,255,.04); border-radius: 3px; }
+[contenteditable]:focus { background: rgba(255,255,255,.07); border-radius: 3px; }
+
+/* ── Toolbar ─────────────────────────── */
+.toolbar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  justify-content: center;
+  width: 100%;
+  max-width: 1280px;
+}
+.tb-label {
+  font-size: 10px; font-weight: 900; letter-spacing: 2px;
+  color: var(--muted); text-transform: uppercase; margin-right: 4px;
+}
+.tb-btn {
+  background: #111120; border: 1px solid #222240; border-radius: 6px;
+  color: var(--muted); font-family: 'Montserrat', sans-serif;
+  font-size: 11px; font-weight: 700; padding: 7px 14px;
+  cursor: pointer; letter-spacing: .5px; transition: all .15s; white-space: nowrap;
+}
+.tb-btn:hover { color: var(--txt); border-color: #4444aa; }
+.tb-btn.active { color: #000; font-weight: 900; }
+.tb-btn.v-forza.active       { background: var(--forza);       border-color: var(--forza); }
+.tb-btn.v-debolezza.active   { background: var(--debolezza);   border-color: var(--debolezza); }
+.tb-btn.v-opportunita.active { background: var(--opportunita); border-color: var(--opportunita); }
+.tb-btn.v-rischi.active      { background: var(--rischi);      border-color: var(--rischi); }
+.tb-btn.v-full.active        { background: #fff; border-color: #fff; color: #000; }
+.tb-sep { width: 1px; height: 24px; background: #222240; margin: 0 4px; }
+.btn-export {
+  background: linear-gradient(135deg, #C4FF00, #88cc00);
+  border: none; border-radius: 6px; color: #000;
+  font-family: 'Montserrat', sans-serif; font-size: 11px; font-weight: 900;
+  padding: 7px 18px; cursor: pointer; letter-spacing: .5px;
+}
+.btn-export:hover { opacity: .88; }
+.btn-github {
+  background: #1a1a2e; border: 1px solid #333366; border-radius: 6px; color: #888;
+  font-family: 'Montserrat', sans-serif; font-size: 11px; font-weight: 900;
+  padding: 7px 18px; cursor: pointer; letter-spacing: .5px; transition: all .15s;
+}
+.btn-github:hover { border-color: var(--forza); color: var(--forza); }
+
+/* ── Stage ───────────────────────────── */
+.stage { width: 100%; display: flex; align-items: center; justify-content: center; }
+
+/* ── Card 16:9 ───────────────────────── */
+#swot-card {
+  width: 1280px; height: 720px;
+  background: var(--bg);
+  position: relative; overflow: hidden;
+  transform-origin: top center; flex-shrink: 0;
+  display: flex; flex-direction: column;
+}
+
+/* ── Header ─────────────────────────── */
+.card-header {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 18px 36px 14px;
+  border-bottom: 1px solid var(--line);
+  flex-shrink: 0; position: relative; z-index: 2;
+}
+.header-left { display: flex; flex-direction: column; gap: 2px; }
+.eyebrow {
+  font-size: 10px; font-weight: 900; letter-spacing: 3px;
+  color: var(--muted); text-transform: uppercase;
+}
+.main-title {
+  font-family: 'Anton', Impact, sans-serif;
+  font-size: 28px; color: var(--txt); letter-spacing: 1.5px; line-height: 1;
+}
+.main-title .accent { color: var(--forza); }
+.header-right { display: flex; align-items: center; gap: 20px; }
+.swot-legend { display: flex; gap: 14px; align-items: center; }
+.leg-item {
+  font-size: 9px; font-weight: 900; letter-spacing: 1px;
+  color: var(--muted); display: flex; align-items: center; gap: 5px;
+}
+.leg-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+.branding {
+  font-family: 'Anton', Impact, sans-serif;
+  font-size: 11px; letter-spacing: 2px; color: rgba(255,255,255,.2);
+}
+
+/* ── SWOT Grid ───────────────────────── */
+.swot-grid {
+  flex: 1; display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  position: relative;
+}
+.swot-center {
+  position: absolute; top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 10; width: 52px; height: 52px;
+  display: flex; align-items: center; justify-content: center;
+}
+.swot-center::before {
+  content: ''; position: absolute; inset: 0;
+  background: var(--bg); transform: rotate(45deg);
+  border: 1px solid rgba(255,255,255,.15);
+}
+.swot-center-txt {
+  font-family: 'Anton', Impact, sans-serif;
+  font-size: 11px; letter-spacing: 2px;
+  color: rgba(255,255,255,.35); position: relative; z-index: 1;
+}
+.swot-grid::before, .swot-grid::after {
+  content: ''; position: absolute; background: var(--line); z-index: 1;
+}
+.swot-grid::before { top: 0; bottom: 0; left: 50%; width: 1px; }
+.swot-grid::after  { left: 0; right: 0; top: 50%; height: 1px; }
+
+/* ── Quadrant ────────────────────────── */
+.quadrant {
+  padding: 24px 28px 20px; display: flex; flex-direction: column;
+  gap: 12px; position: relative; overflow: hidden; transition: background .2s;
+}
+.quadrant::before {
+  content: ''; position: absolute; inset: 0; opacity: .055; transition: opacity .2s;
+  pointer-events: none;
+}
+.quadrant:hover::before { opacity: .09; }
+
+.q-letter {
+  position: absolute; font-family: 'Anton', Impact, sans-serif;
+  font-size: 120px; line-height: 1; opacity: .04; pointer-events: none;
+}
+
+.q-forza::before       { background: var(--forza); }
+.q-debolezza::before   { background: var(--debolezza); }
+.q-opportunita::before { background: var(--opportunita); }
+.q-rischi::before      { background: var(--rischi); }
+
+.q-forza .q-letter       { color: var(--forza);       bottom: -20px; right: 16px; }
+.q-debolezza .q-letter   { color: var(--debolezza);   bottom: -20px; left: 16px; }
+.q-opportunita .q-letter { color: var(--opportunita); top: -20px; right: 16px; }
+.q-rischi .q-letter      { color: var(--rischi);      top: -20px; left: 16px; }
+
+.q-forza       { border-right: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+.q-debolezza   { border-bottom: 1px solid var(--line); }
+.q-opportunita { border-right: 1px solid var(--line); }
+
+.q-head { display: flex; align-items: center; gap: 10px; }
+.q-icon {
+  width: 32px; height: 32px; border-radius: 8px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 16px; flex-shrink: 0;
+}
+.q-forza .q-icon       { background: rgba(196,255,0,.15); }
+.q-debolezza .q-icon   { background: rgba(255,136,0,.15); }
+.q-opportunita .q-icon { background: rgba(0,212,255,.15); }
+.q-rischi .q-icon      { background: rgba(255,45,85,.15); }
+
+.q-titles { display: flex; flex-direction: column; gap: 1px; }
+.q-badge {
+  font-size: 8px; font-weight: 900; letter-spacing: 2px;
+  text-transform: uppercase; opacity: .7;
+}
+.q-forza .q-badge       { color: var(--forza); }
+.q-debolezza .q-badge   { color: var(--debolezza); }
+.q-opportunita .q-badge { color: var(--opportunita); }
+.q-rischi .q-badge      { color: var(--rischi); }
+
+.q-name {
+  font-family: 'Anton', Impact, sans-serif;
+  font-size: 16px; letter-spacing: 1px; line-height: 1;
+}
+.q-forza .q-name       { color: var(--forza); }
+.q-debolezza .q-name   { color: var(--debolezza); }
+.q-opportunita .q-name { color: var(--opportunita); }
+.q-rischi .q-name      { color: var(--rischi); }
+
+.q-list { display: flex; flex-direction: column; gap: 7px; list-style: none; }
+.q-list li {
+  display: flex; align-items: flex-start; gap: 8px;
+  font-size: 11.5px; font-weight: 700;
+  color: rgba(240,240,255,.82); line-height: 1.4; outline: none;
+}
+.q-list li::before {
+  content: '—'; font-weight: 900; flex-shrink: 0; font-size: 11px;
+}
+.q-forza .q-list li::before       { color: var(--forza); }
+.q-debolezza .q-list li::before   { color: var(--debolezza); }
+.q-opportunita .q-list li::before { color: var(--opportunita); }
+.q-rischi .q-list li::before      { color: var(--rischi); }
+
+/* ── Slide singola ───────────────────── */
+#swot-card.slide-mode .swot-grid {
+  grid-template-columns: 1fr; grid-template-rows: 1fr;
+}
+#swot-card.slide-mode .swot-grid::before,
+#swot-card.slide-mode .swot-grid::after,
+#swot-card.slide-mode .swot-center { display: none; }
+#swot-card.slide-mode .quadrant { display: none; }
+#swot-card.slide-mode .quadrant.active {
+  display: flex; padding: 50px 80px; gap: 28px;
+}
+#swot-card.slide-mode .quadrant.active .q-letter { font-size: 260px; opacity: .06; }
+#swot-card.slide-mode .quadrant.active .q-icon   { width: 52px; height: 52px; font-size: 26px; border-radius: 14px; }
+#swot-card.slide-mode .quadrant.active .q-badge  { font-size: 11px; letter-spacing: 3px; }
+#swot-card.slide-mode .quadrant.active .q-name   { font-size: 40px; }
+#swot-card.slide-mode .quadrant.active .q-list   { gap: 18px; }
+#swot-card.slide-mode .quadrant.active .q-list li { font-size: 17px; gap: 14px; }
+#swot-card.slide-mode .quadrant.active .q-list li::before { font-size: 15px; margin-top: 2px; }
+#swot-card.slide-mode .quadrant.active .q-head   { gap: 16px; margin-bottom: 6px; }
+#swot-card.slide-mode .q-forza.active::before       { opacity: .12; }
+#swot-card.slide-mode .q-debolezza.active::before   { opacity: .12; }
+#swot-card.slide-mode .q-opportunita.active::before { opacity: .12; }
+#swot-card.slide-mode .q-rischi.active::before      { opacity: .12; }
+
+.card-footer {
+  display: none; position: absolute; bottom: 18px; right: 32px;
+  font-family: 'Anton', Impact, sans-serif; font-size: 11px;
+  letter-spacing: 2px; color: rgba(255,255,255,.12);
+}
+#swot-card.slide-mode .card-footer { display: block; }
+
+/* ── Status GitHub ───────────────────── */
+#gh-status {
+  font-size: 11px; font-weight: 700; letter-spacing: .5px;
+  color: var(--muted); min-width: 160px; text-align: center;
+}
+</style>
+</head>
+<body>
+
+<!-- ── Toolbar ──────────────────────── -->
+<div class="toolbar">
+  <span class="tb-label">Vista</span>
+  <button class="tb-btn v-full active" onclick="setView('full')">⊞ SWOT Completo</button>
+  <button class="tb-btn v-forza" onclick="setView('forza')">💪 Forza</button>
+  <button class="tb-btn v-debolezza" onclick="setView('debolezza')">⚠️ Debolezza</button>
+  <button class="tb-btn v-opportunita" onclick="setView('opportunita')">🚀 Opportunità</button>
+  <button class="tb-btn v-rischi" onclick="setView('rischi')">🔴 Rischi</button>
+  <div class="tb-sep"></div>
+  <button class="btn-export" onclick="esportaPNG()">📸 Esporta PNG</button>
+  <button class="btn-github" onclick="pubblicaGitHub()">🚀 Pubblica su GitHub</button>
+  <span id="gh-status"></span>
+</div>
+
+<!-- ── Stage ─────────────────────────── -->
+<div class="stage">
+<div id="swot-card">
+
+  <!-- Header -->
+  <div class="card-header">
+    <div class="header-left">
+      <div class="eyebrow" contenteditable="true">Fantacalcio 2026-27 · Strategia d'Asta</div>
+      <div class="main-title"><span contenteditable="true">APPROCCIO</span> <span class="accent" contenteditable="true">ALL'ASTA</span></div>
+    </div>
+    <div class="header-right">
+      <div class="swot-legend">
+        <div class="leg-item"><div class="leg-dot" style="background:var(--forza)"></div><span contenteditable="true">FORZA</span></div>
+        <div class="leg-item"><div class="leg-dot" style="background:var(--debolezza)"></div><span contenteditable="true">DEBOLEZZA</span></div>
+        <div class="leg-item"><div class="leg-dot" style="background:var(--opportunita)"></div><span contenteditable="true">OPPORTUNITÀ</span></div>
+        <div class="leg-item"><div class="leg-dot" style="background:var(--rischi)"></div><span contenteditable="true">RISCHI</span></div>
+      </div>
+      <div class="branding" contenteditable="true">IL MISTER FABRY</div>
+    </div>
+  </div>
+
+  <!-- SWOT Grid -->
+  <div class="swot-grid">
+
+    <div class="swot-center">
+      <div class="swot-center-txt" contenteditable="true">SWOT</div>
+    </div>
+
+    <!-- S: Punti di Forza -->
+    <div class="quadrant q-forza" id="q-forza">
+      <div class="q-letter">S</div>
+      <div class="q-head">
+        <div class="q-icon" contenteditable="true">💪</div>
+        <div class="q-titles">
+          <div class="q-badge" contenteditable="true">S · Strengths</div>
+          <div class="q-name" contenteditable="true">PUNTI DI FORZA</div>
+        </div>
+      </div>
+      <ul class="q-list">
+        <li contenteditable="true">Conosci i prezzi medi delle aste precedenti (annata per annata della lega) e quelli in corso</li>
+        <li contenteditable="true">Hai una strategia chiara: AGGRESSIVA/ATTENDISTA/OPPORTUNISTA/IBRIDA e una divisione di budget per reparto</li>
+        <li contenteditable="true">Porti una lista di obiettivo primari e alternative già pronte (SHORTLIST)</li>
+        <li contenteditable="true">Hai letto le conferenze stampa, informato su tutto il precampionato e hai studiato ogni allenatore: modulo stile di gioco chi valorizza e chi penalizza</li>
+        <li contenteditable="true">Sei aggiornato anche sui contratti, movimenti di mercato e rumors attendibili.</li>
+      </ul>
+    </div>
+
+    <!-- W: Punti di Debolezza -->
+    <div class="quadrant q-debolezza" id="q-debolezza">
+      <div class="q-letter">W</div>
+      <div class="q-head">
+        <div class="q-icon" contenteditable="true">⚠️</div>
+        <div class="q-titles">
+          <div class="q-badge" contenteditable="true">W · Weaknesses</div>
+          <div class="q-name" contenteditable="true">PUNTI DI DEBOLEZZA</div>
+        </div>
+      </div>
+      <ul class="q-list">
+        <li contenteditable="true">Entri senza aver studiato i prezzi: non sai collocare un giocatore in una range di prezzo e finisci di strapagare buona parte dei giocatori</li>
+        <li contenteditable="true">Lista obiettivi troppo corta o lunga: quando l'obiettivo sfuma, resti bloccato senza piano B oppure aspetti aspetti e alla fine ti riduci a prendere la tua 6 scelta a prezzi esorbitanti</li>
+        <li contenteditable="true">Spendi tutto nelle prime chiamate per 3 giocatori, ti perdi tutte le opportunità e fai tutta l'asta con l'acqua alla gola</li>
+        <li contenteditable="true">Ti fai prendere dal tifo, dal duello con un tuo rivale: rilanci per non perdere o per portarti a casa un giocatore della tua squadra, non perché ne valga la pena</li>
+        <li contenteditable="true">Non sai riconoscere le esche o le trappole, sei vittima di HYPE del momento e FOMO</li>
+      </ul>
+    </div>
+
+    <!-- O: Opportunità -->
+    <div class="quadrant q-opportunita" id="q-opportunita">
+      <div class="q-letter">O</div>
+      <div class="q-head">
+        <div class="q-icon" contenteditable="true">🚀</div>
+        <div class="q-titles">
+          <div class="q-badge" contenteditable="true">O · Opportunities</div>
+          <div class="q-name" contenteditable="true">OPPORTUNITÀ</div>
+        </div>
+      </div>
+      <ul class="q-list">
+        <li contenteditable="true">Sai riconoscere con lo studio dei prezzi medi possibili BUG DI PREZZO</li>
+        <li contenteditable="true">Sai riconoscere, prevedere e anticipare un possibile BUG DI RUOLO</li>
+        <li contenteditable="true">Portatori di bonus nascosti (possibili nuovi rigoristi, battiitori piazzati e corner)</li>
+        <li contenteditable="true">Tutti ormai sono omologati e allineati, sviluppa delle convinzione e intuizioni ( PENSIERO LATERALE)</li>
+        <li contenteditable="true">Sii FLESSIBILE cambia strategia anche in corsa sapendo prevedere l'andamento</li>
+      </ul>
+    </div>
+
+    <!-- T: Rischi -->
+    <div class="quadrant q-rischi" id="q-rischi">
+      <div class="q-letter">T</div>
+      <div class="q-head">
+        <div class="q-icon" contenteditable="true">🔴</div>
+        <div class="q-titles">
+          <div class="q-badge" contenteditable="true">T · Threats</div>
+          <div class="q-name" contenteditable="true">RISCHI</div>
+        </div>
+      </div>
+      <ul class="q-list">
+        <li contenteditable="true">Ti dai dei paletti troppo rigidi: se un tuo obiettivo va a un credito in piu lasci perdere</li>
+        <li contenteditable="true">Tendenza Talent: prendi troppe scommesse</li>
+        <li contenteditable="true">Tendenza croce rossa: prendi troppi giocatori Injoury Prone o infortunati</li>
+        <li contenteditable="true">Bruci slot facendo chiamate senza senso pensando siano esche alla fine</li>
+        <li contenteditable="true">Non c'è un tuo pensiero all'asta: copi la strategia di qualcuno senza nemmeno capirla</li>
+      </ul>
+    </div>
+
+  </div>
+
+  <div class="card-footer" contenteditable="true">IL MISTER FABRY · ilmisterfabry.it</div>
+
+</div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script>
+const GITHUB_REPO  = 'fabmiscia/Il-Mister-Fabry';
+const GITHUB_PATH  = 'Academy/swot-approccio-asta.html';
+
+const card = document.getElementById('swot-card');
+let currentView = 'full';
+
+// ── Scala card ───────────────────────
+function scaleCard() {
+  const scale = Math.min(1, (window.innerWidth - 32) / 1280);
+  card.style.transform = `scale(${scale})`;
+  card.style.marginBottom = `${(720 * scale) - 720}px`;
+}
+scaleCard();
+window.addEventListener('resize', scaleCard);
+
+// ── Cambio vista ─────────────────────
+function setView(view) {
+  currentView = view;
+  document.querySelectorAll('.tb-btn').forEach(b => b.classList.remove('active'));
+  document.querySelector(`.v-${view === 'full' ? 'full' : view}`).classList.add('active');
+  if (view === 'full') {
+    card.classList.remove('slide-mode');
+    document.querySelectorAll('.quadrant').forEach(q => q.classList.remove('active'));
+  } else {
+    card.classList.add('slide-mode');
+    document.querySelectorAll('.quadrant').forEach(q => q.classList.remove('active'));
+    document.getElementById('q-' + view).classList.add('active');
+  }
+}
+
+// ── Export PNG ───────────────────────
+function esportaPNG() {
+  const name = currentView === 'full' ? 'swot-completo' : 'swot-' + currentView;
+  const prev = card.style.transform;
+  card.style.transform = 'none';
+  html2canvas(card, {
+    scale: 2, useCORS: true, backgroundColor: '#080810',
+    width: 1280, height: 720, scrollX: 0, scrollY: 0,
+  }).then(canvas => {
+    card.style.transform = prev;
+    const a = document.createElement('a');
+    a.download = `${name}.png`;
+    a.href = canvas.toDataURL('image/png');
+    a.click();
+  }).catch(() => { card.style.transform = prev; });
+}
+
+// ── Pubblica su GitHub ────────────────
+async function pubblicaGitHub() {
+  const status = document.getElementById('gh-status');
+  const GITHUB_TOKEN = localStorage.getItem('gh_token') || prompt('Inserisci il token GitHub (PAT):');
+  if (!GITHUB_TOKEN) return;
+  localStorage.setItem('gh_token', GITHUB_TOKEN);
+
+  status.textContent = 'Pubblicazione in corso…';
+  status.style.color = 'var(--muted)';
+
+  try {
+    const html = '<!DOCTYPE html>\n' + document.documentElement.outerHTML;
+    const content = btoa(unescape(encodeURIComponent(html)));
+    const apiUrl = `https://api.github.com/repos/${GITHUB_REPO}/contents/${encodeURIComponent(GITHUB_PATH)}`;
+
+    // Controlla se esiste già (per sha)
+    let sha;
+    try {
+      const check = await fetch(apiUrl, { headers: { 'Authorization': `token ${GITHUB_TOKEN}` } });
+      if (check.ok) sha = (await check.json()).sha;
+    } catch(_) {}
+
+    const body = JSON.stringify({ message: 'Aggiorna SWOT approccio asta', content, ...(sha ? { sha } : {}) });
+    const res = await fetch(apiUrl, {
+      method: 'PUT',
+      headers: { 'Authorization': `token ${GITHUB_TOKEN}`, 'Content-Type': 'application/json' },
+      body,
+    });
+
+    if (res.ok) {
+      status.textContent = '✓ Pubblicato!';
+      status.style.color = 'var(--forza)';
+      setTimeout(() => { status.textContent = ''; }, 3000);
+    } else {
+      throw new Error(res.statusText);
+    }
+  } catch(e) {
+    status.textContent = '✗ Errore';
+    status.style.color = 'var(--rischi)';
+  }
+}
+</script>
+</body>
+</html>

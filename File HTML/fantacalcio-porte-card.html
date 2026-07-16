@@ -1,0 +1,866 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<title>Fantacalcio 2026-27 – Porte Serie A</title>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<style>
+* { margin:0; padding:0; box-sizing:border-box; }
+
+body {
+  background: #0a0a0a;
+  font-family: 'Oswald', 'Arial Black', Arial, sans-serif;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px 0 30px;
+  gap: 14px;
+  min-height: 100vh;
+}
+
+/* ── TOOLBAR ── */
+.toolbar {
+  width: 1280px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.toolbar h2 {
+  color: #2DB84A;
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  flex: 1;
+}
+.toolbar-hint {
+  color: rgba(255,255,255,.28);
+  font-size: 11px;
+  letter-spacing: 1px;
+}
+.btn {
+  padding: 8px 20px;
+  border-radius: 7px;
+  font-family: 'Oswald', Arial, sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  cursor: pointer;
+  border: none;
+  transition: opacity .15s, transform .1s;
+}
+.btn:hover  { opacity: .85; transform: translateY(-1px); }
+.btn:active { transform: translateY(0); }
+.btn-nav    { background: rgba(255,255,255,.12); color: #fff; padding: 8px 14px; font-size: 16px; }
+.btn-export { background: #2DB84A; color: #000; }
+.btn-reset     { background: rgba(255,80,80,.15); color: #ff8080; border: 1.5px solid rgba(255,80,80,.3); }
+.btn-save-html { background: rgba(0,195,255,.15); color: #00c3ff; border: 1.5px solid rgba(0,195,255,.3); }
+.btn-github    { background: rgba(255,200,0,.12); color: #ffc800; border: 1.5px solid rgba(255,200,0,.35); }
+.save-status { font-size: 11px; color: #2DB84A; letter-spacing: 1px; min-width: 80px; text-align:right; opacity:0; transition: opacity .4s; }
+.save-status.visible { opacity:1; }
+.slide-counter {
+  color: #fff;
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  min-width: 50px;
+  text-align: center;
+}
+
+/* ── CARD 1280×720 ── */
+.card {
+  width: 1280px;
+  height: 720px;
+  background: #134d22;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  border-radius: 2px;
+}
+
+/* ambient glow */
+.card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 700px 450px at -5% -5%, rgba(0,0,0,.18) 0%, transparent 55%),
+    radial-gradient(ellipse 500px 700px at 105% 105%, rgba(0,0,0,.12) 0%, transparent 55%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ── SLIDE HIDDEN ── */
+.slide { display: none; }
+.slide.active { display: flex; }
+
+/* ── HEADER ── */
+.card-header {
+  display: grid;
+  grid-template-columns: 310px 1fr;
+  padding: 20px 34px 12px 34px;
+  gap: 0;
+  align-items: start;
+  flex-shrink: 0;
+  position: relative;
+  z-index: 1;
+}
+.header-title-block { display: flex; flex-direction: column; gap: 1px; }
+.title-line1 {
+  font-size: 17px;
+  font-weight: 600;
+  color: rgba(255,255,255,.75);
+  text-transform: uppercase;
+  letter-spacing: .4px;
+  outline: none;
+  border-radius: 3px;
+  padding: 1px 4px;
+}
+.title-line2 {
+  font-size: 28px;
+  font-weight: 700;
+  color: #fff;
+  text-transform: uppercase;
+  letter-spacing: .5px;
+  line-height: 1.1;
+  outline: none;
+  border-radius: 3px;
+  padding: 1px 4px;
+}
+.title-line1:hover, .title-line2:hover { background: rgba(0,0,0,.12); }
+.title-line1:focus, .title-line2:focus { background: rgba(0,0,0,.2); }
+
+.header-notes {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  padding-top: 4px;
+  padding-left: 14px;
+  border-left: 2px solid rgba(255,255,255,.3);
+  gap: 3px;
+}
+.note-line {
+  font-size: 13px;
+  font-weight: 400;
+  color: rgba(255,255,255,.62);
+  line-height: 1.35;
+  outline: none;
+  border-radius: 3px;
+  padding: 1px 4px;
+}
+.note-line:hover { background: rgba(0,0,0,.1); }
+.note-line:focus { background: rgba(0,0,0,.18); }
+
+/* ── DIVIDER ── */
+.header-divider {
+  height: 1.5px;
+  background: rgba(255,255,255,.22);
+  margin: 0 34px;
+  flex-shrink: 0;
+  position: relative;
+  z-index: 1;
+}
+
+/* ── COLUMN HEADERS ── */
+.col-headers {
+  display: grid;
+  grid-template-columns: 220px 1fr 1fr 1fr 130px 128px;
+  padding: 7px 34px 5px;
+  gap: 0;
+  flex-shrink: 0;
+  position: relative;
+  z-index: 1;
+}
+.col-hdr {
+  font-size: 11px;
+  font-weight: 500;
+  color: rgba(255,255,255,.6);
+  letter-spacing: .6px;
+  line-height: 1.3;
+  padding: 0 4px;
+  text-align: center;
+}
+.col-hdr:first-child { text-align: left; padding-left: 0; }
+
+/* ── TEAMS TABLE ── */
+.teams-table {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding: 0 34px 6px;
+  min-height: 0;
+  position: relative;
+  z-index: 1;
+}
+
+.team-row {
+  flex: 1;
+  display: grid;
+  grid-template-columns: 220px 1fr 1fr 1fr 130px 128px;
+  align-items: center;
+  border-top: 1px solid rgba(255,255,255,.18);
+  min-height: 0;
+  transition: background .15s;
+}
+.team-row:hover { background: rgba(0,0,0,.08); }
+.team-row:last-child { border-bottom: 1px solid rgba(255,255,255,.18); }
+
+/* ── LOGO + NAME ── */
+.team-identity {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 6px 0;
+}
+
+.team-logo-area {
+  width: 66px;
+  height: 66px;
+  border-radius: 50%;
+  border: 2px solid rgba(255,255,255,.35);
+  background-color: rgba(0,0,0,.15);
+  box-shadow: 0 0 10px rgba(0,0,0,.2);
+  flex-shrink: 0;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+  overflow: hidden;
+  position: relative;
+  transition: border-color .2s, box-shadow .2s;
+}
+.team-logo-area:hover { border-color: rgba(255,255,255,.75); box-shadow: 0 0 18px rgba(0,0,0,.35); }
+.logo-placeholder {
+  font-size: 9px;
+  font-weight: 600;
+  color: rgba(255,255,255,.4);
+  letter-spacing: 1px;
+  text-align: center;
+  pointer-events: none;
+}
+.logo-upload-hint {
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  background: rgba(0,0,0,.6);
+  font-size: 7px;
+  text-align: center;
+  padding: 3px 0;
+  color: rgba(255,255,255,.85);
+  text-transform: uppercase;
+  opacity: 0;
+  transition: opacity .2s;
+  pointer-events: none;
+  letter-spacing: .5px;
+}
+.team-logo-area:hover .logo-upload-hint { opacity: 1; }
+
+.team-name {
+  font-size: 21px;
+  font-weight: 700;
+  color: #fff;
+  text-transform: uppercase;
+  letter-spacing: .8px;
+  outline: none;
+  border-radius: 4px;
+  padding: 2px 4px;
+  flex: 1;
+}
+.team-name:hover { background: rgba(0,0,0,.12); }
+.team-name:focus { background: rgba(0,0,0,.2); }
+
+/* ── STARS ── */
+.stars-cell {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1px;
+  padding: 0 4px;
+}
+.star {
+  font-size: 28px;
+  line-height: 1;
+  cursor: pointer;
+  transition: transform .1s, filter .1s;
+  user-select: none;
+}
+.star:hover  { transform: scale(1.3); }
+.star.on     { color: #FFD000; text-shadow: 0 0 10px rgba(255,200,0,.45); }
+.star.off    { color: rgba(255,255,255,.2); }
+
+/* ── SPESA ── */
+.spesa-cell {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.spesa-value {
+  font-size: 28px;
+  font-weight: 700;
+  color: #fff;
+  letter-spacing: -.5px;
+  outline: none;
+  border-radius: 4px;
+  padding: 2px 6px;
+  text-align: center;
+  min-width: 20px;
+  white-space: nowrap;
+}
+.spesa-value:hover { background: rgba(0,0,0,.12); }
+.spesa-value:focus { background: rgba(0,0,0,.2); }
+
+/* ── APPETIBILITÀ ── */
+.app-cell {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.app-value {
+  font-size: 40px;
+  font-weight: 700;
+  color: #fff;
+  letter-spacing: -1px;
+  outline: none;
+  border-radius: 4px;
+  padding: 2px 6px;
+  text-align: center;
+  min-width: 20px;
+  white-space: nowrap;
+}
+.app-value:hover { background: rgba(0,0,0,.12); }
+.app-value:focus { background: rgba(0,0,0,.2); }
+
+/* ── SLIDE DOTS ── */
+.slide-dots {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  padding: 4px 0 7px;
+  flex-shrink: 0;
+  position: relative;
+  z-index: 1;
+}
+.slide-dot {
+  width: 9px; height: 9px;
+  border-radius: 50%;
+  background: rgba(255,255,255,.15);
+  cursor: pointer;
+  transition: background .2s, transform .15s, box-shadow .2s;
+}
+.slide-dot.active {
+  background: #fff;
+  transform: scale(1.3);
+  box-shadow: 0 0 8px rgba(255,255,255,.4);
+}
+
+[contenteditable]:focus { outline: 1.5px solid rgba(255,255,255,.45); border-radius: 4px; }
+
+.no-enter { white-space: nowrap; overflow: hidden; }
+</style>
+
+<script>
+(function(){
+  if(window.location.hostname.includes('github.io')||window.location.hostname.includes('fabmiscia')){
+    document.addEventListener('DOMContentLoaded',function(){
+      ['edit-toggle','btn-github','edit-hint'].forEach(function(id){
+        var el=document.getElementById(id);if(el)el.style.display='none';
+      });
+    });
+  }
+})();
+</script>
+</head>
+<body>
+
+<!-- ══ TOOLBAR ══ -->
+<div class="toolbar">
+  <h2>⚽ Fantacalcio 2026-27 — Porte Serie A Editor</h2>
+  <span class="toolbar-hint">Clicca su qualsiasi elemento per modificarlo</span>
+  <span class="save-status" id="save-status"></span>
+  <button class="btn btn-nav" id="btn-prev">◀</button>
+  <span class="slide-counter" id="slide-counter">1 / 5</span>
+  <button class="btn btn-nav" id="btn-next">▶</button>
+  <button class="btn btn-reset" id="btn-reset" title="Cancella tutti i dati salvati">↺ Reset</button>
+  <button class="btn btn-save-html" id="btn-save-html">💾 Scarica HTML</button>
+  <button class="btn btn-github" id="btn-github">📤 Su GitHub</button>
+  <button class="btn btn-export" id="btn-export">📥 Esporta PNG</button>
+</div>
+
+<!-- ══════════════ SLIDES ══════════════ -->
+<div id="slides-container"></div>
+
+<script>
+/* ══ LOCALSTORAGE ══ */
+const STORAGE_KEY = 'fantacalcio-porte-v1';
+let saveTimer = null;
+
+function showSaved() {
+  const el = document.getElementById('save-status');
+  el.textContent = '💾 Salvato';
+  el.classList.add('visible');
+  clearTimeout(saveTimer);
+  saveTimer = setTimeout(() => el.classList.remove('visible'), 2000);
+}
+
+function saveAll() {
+  const state = { slide: currentSlide, texts: {}, stars: {}, logos: {} };
+
+  document.querySelectorAll('[data-key][contenteditable]').forEach(el => {
+    state.texts[el.dataset.key] = el.textContent;
+  });
+
+  document.querySelectorAll('.stars-cell').forEach(cell => {
+    const first = cell.querySelector('.star');
+    if (!first) return;
+    const group = first.dataset.group;
+    state.stars[group] = cell.querySelectorAll('.star.on').length;
+  });
+
+  document.querySelectorAll('.team-logo-area[data-key]').forEach(logo => {
+    const bg = logo.style.backgroundImage;
+    if (bg && bg !== 'none') state.logos[logo.dataset.key] = bg;
+  });
+
+  try { localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); } catch(e) {}
+  showSaved();
+}
+
+function restoreAll() {
+  let state;
+  try { state = JSON.parse(localStorage.getItem(STORAGE_KEY)); } catch(e) {}
+  if (!state) return;
+
+  document.querySelectorAll('[data-key][contenteditable]').forEach(el => {
+    if (state.texts?.[el.dataset.key] !== undefined)
+      el.textContent = state.texts[el.dataset.key];
+  });
+
+  document.querySelectorAll('.stars-cell').forEach(cell => {
+    const first = cell.querySelector('.star');
+    if (!first) return;
+    const group = first.dataset.group;
+    const n = state.stars?.[group];
+    if (n !== undefined)
+      cell.querySelectorAll('.star').forEach((s, i) => {
+        s.className = 'star ' + (i < n ? 'on' : 'off');
+      });
+  });
+
+  document.querySelectorAll('.team-logo-area[data-key]').forEach(logo => {
+    const bg = state.logos?.[logo.dataset.key];
+    if (bg) {
+      logo.innerHTML = '<div class="logo-upload-hint">carica</div>';
+      logo.style.backgroundImage = bg;
+      logo.style.backgroundSize = 'contain';
+      logo.style.backgroundPosition = 'center';
+      logo.style.backgroundRepeat = 'no-repeat';
+      logo.style.backgroundColor = 'rgba(0,0,0,.15)';
+    }
+  });
+
+  if (state.slide !== undefined) goToSlide(state.slide);
+}
+
+/* ══ DATA ══ */
+const SLIDES = [
+  {
+    note1: "*Livello Appetibilità: da 1 a 20 in ordine di preferenza come scelta",
+    note2: "Tabella di riferimento: leghe 10/12 partecipanti",
+    teams: [
+      { name: "ATALANTA",   s1: 4, s2: 5, s3: 4, spesa: "8.5%",  app: "6/20"  },
+      { name: "BOLOGNA",    s1: 4, s2: 4, s3: 4, spesa: "7%",    app: "9/20"  },
+      { name: "CAGLIARI",   s1: 2, s2: 5, s3: 5, spesa: "1.5%",  app: "16/20" },
+      { name: "COMO",       s1: 4, s2: 5, s3: 5, spesa: "4.2%",  app: "10/20" },
+    ]
+  },
+  {
+    note1: "*Livello Appetibilità: da 1 a 20 in ordine di preferenza come scelta",
+    note2: "Tabella di riferimento: leghe 10/12 partecipanti",
+    teams: [
+      { name: "CREMONESE",  s1: 5, s2: 5, s3: 4, spesa: "0.5%",  app: "20/20" },
+      { name: "FIORENTINA", s1: 4, s2: 5, s3: 4, spesa: "7.5%",  app: "8/20"  },
+      { name: "GENOA",      s1: 4, s2: 5, s3: 5, spesa: "3%",    app: "12/20" },
+      { name: "INTER",      s1: 5, s2: 5, s3: 4, spesa: "10%",   app: "2/20"  },
+    ]
+  },
+  {
+    note1: "*Livello Appetibilità: da 1 a 20 in ordine di preferenza come scelta",
+    note2: "Tabella di riferimento: leghe 10 partecipanti",
+    teams: [
+      { name: "JUVENTUS",   s1: 4, s2: 5, s3: 4, spesa: "8.5%",  app: "4/20"  },
+      { name: "LAZIO",      s1: 4, s2: 4, s3: 4, spesa: "8%",    app: "7/20"  },
+      { name: "LECCE",      s1: 2, s2: 5, s3: 5, spesa: "1.5%",  app: "15/20" },
+      { name: "MILAN",      s1: 4, s2: 5, s3: 5, spesa: "9%",    app: "3/20"  },
+    ]
+  },
+  {
+    note1: "*Livello Appetibilità: da 1 a 20 in ordine di preferenza come scelta",
+    note2: "Tabella di riferimento: leghe 10/12 partecipanti",
+    teams: [
+      { name: "NAPOLI",     s1: 5, s2: 4, s3: 5, spesa: "12%",   app: "1/20"  },
+      { name: "PISA",       s1: 2, s2: 5, s3: 5, spesa: "0.9%",  app: "17/20" },
+      { name: "PARMA",      s1: 2, s2: 5, s3: 5, spesa: "1.8%",  app: "14/20" },
+      { name: "ROMA",       s1: 4, s2: 5, s3: 4, spesa: "8.5%",  app: "5/20"  },
+    ]
+  },
+  {
+    note1: "*Livello Appetibilità: da 1 a 20 in ordine di preferenza come scelta",
+    note2: "Tabella di riferimento: leghe 10/12 partecipanti",
+    teams: [
+      { name: "SASSUOLO",   s1: 4, s2: 5, s3: 4, spesa: "0.8%",  app: "18/20" },
+      { name: "TORINO",     s1: 4, s2: 5, s3: 4, spesa: "4%",    app: "11/20" },
+      { name: "UDINESE",    s1: 4, s2: 5, s3: 4, spesa: "2%",    app: "13/20" },
+      { name: "VERONA",     s1: 4, s2: 5, s3: 4, spesa: "0.7%",  app: "19/20" },
+    ]
+  },
+];
+
+const MAX_STARS = 5;
+let currentSlide = 0;
+
+/* ── BUILD STARS HTML ── */
+function starsHTML(n, groupId) {
+  let html = '';
+  for (let i = 1; i <= MAX_STARS; i++) {
+    html += `<span class="star ${i <= n ? 'on' : 'off'}" data-group="${groupId}" data-idx="${i}">★</span>`;
+  }
+  return html;
+}
+
+/* ── BUILD ONE SLIDE ── */
+function buildSlide(sIdx, data) {
+  const card = document.createElement('div');
+  card.className = 'card slide' + (sIdx === 0 ? ' active' : '');
+  card.id = `slide-${sIdx}`;
+
+  // --- HEADER ---
+  const header = document.createElement('div');
+  header.className = 'card-header';
+  header.innerHTML = `
+    <div class="header-title-block">
+      <span class="title-line1 no-enter" contenteditable="true" data-key="s${sIdx}-title1">Analisi, spesa e appetibilità</span>
+      <span class="title-line2 no-enter" contenteditable="true" data-key="s${sIdx}-title2">PORTE SERIE A</span>
+    </div>
+    <div class="header-notes">
+      <span class="note-line" contenteditable="true" data-key="s${sIdx}-note1">${data.note1}</span>
+      <span class="note-line" contenteditable="true" data-key="s${sIdx}-note2">${data.note2}</span>
+    </div>
+  `;
+  card.appendChild(header);
+
+  // --- DIVIDER ---
+  const div1 = document.createElement('div');
+  div1.className = 'header-divider';
+  card.appendChild(div1);
+
+  // --- COL HEADERS ---
+  const colHdrs = document.createElement('div');
+  colHdrs.className = 'col-headers';
+  colHdrs.innerHTML = `
+    <div class="col-hdr"></div>
+    <div class="col-hdr">Gol subiti EXP<br>valore squadra</div>
+    <div class="col-hdr">Livello Portiere<br>concorrenza</div>
+    <div class="col-hdr">Allenatore e<br>valutazione rischi</div>
+    <div class="col-hdr">Spesa MAX<br>consigliata</div>
+    <div class="col-hdr">*Livello<br>Appetibilità</div>
+  `;
+  card.appendChild(colHdrs);
+
+  // --- TEAMS TABLE ---
+  const table = document.createElement('div');
+  table.className = 'teams-table';
+
+  data.teams.forEach((team, tIdx) => {
+    const gid1 = `s${sIdx}-t${tIdx}-c1`;
+    const gid2 = `s${sIdx}-t${tIdx}-c2`;
+    const gid3 = `s${sIdx}-t${tIdx}-c3`;
+
+    const row = document.createElement('div');
+    row.className = 'team-row';
+    row.innerHTML = `
+      <div class="team-identity">
+        <div class="team-logo-area" id="logo-${sIdx}-${tIdx}" data-key="s${sIdx}-t${tIdx}-logo" title="Clicca per caricare il logo">
+          <span class="logo-placeholder">LOGO</span>
+          <div class="logo-upload-hint">carica</div>
+        </div>
+        <span class="team-name no-enter" contenteditable="true" data-key="s${sIdx}-t${tIdx}-name">${team.name}</span>
+      </div>
+      <div class="stars-cell">${starsHTML(team.s1, gid1)}</div>
+      <div class="stars-cell">${starsHTML(team.s2, gid2)}</div>
+      <div class="stars-cell">${starsHTML(team.s3, gid3)}</div>
+      <div class="spesa-cell">
+        <span class="spesa-value no-enter" contenteditable="true" data-key="s${sIdx}-t${tIdx}-spesa">${team.spesa}</span>
+      </div>
+      <div class="app-cell">
+        <span class="app-value no-enter" contenteditable="true" data-key="s${sIdx}-t${tIdx}-app">${team.app}</span>
+      </div>
+    `;
+    table.appendChild(row);
+  });
+
+  card.appendChild(table);
+
+  // --- SLIDE DOTS ---
+  const dots = document.createElement('div');
+  dots.className = 'slide-dots';
+  for (let i = 0; i < SLIDES.length; i++) {
+    const dot = document.createElement('div');
+    dot.className = 'slide-dot' + (i === sIdx ? ' active' : '');
+    dot.dataset.slide = i;
+    dots.appendChild(dot);
+  }
+  card.appendChild(dots);
+
+  return card;
+}
+
+/* ── WIRE STARS ── */
+function wireStars(container) {
+  container.querySelectorAll('.stars-cell').forEach(cell => {
+    const stars = cell.querySelectorAll('.star');
+    stars.forEach(star => {
+      star.addEventListener('click', () => {
+        const idx = parseInt(star.dataset.idx);
+        stars.forEach((s, i) => {
+          s.className = 'star ' + (i < idx ? 'on' : 'off');
+        });
+        saveAll();
+      });
+    });
+  });
+}
+
+/* ── WIRE LOGO UPLOAD ── */
+function wireLogo(area) {
+  area.addEventListener('click', () => {
+    const inp = document.createElement('input');
+    inp.type = 'file';
+    inp.accept = 'image/*';
+    inp.onchange = () => {
+      const file = inp.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = ev => {
+        area.innerHTML = '<div class="logo-upload-hint">carica</div>';
+        area.style.backgroundImage = `url('${ev.target.result}')`;
+        area.style.backgroundSize = 'contain';
+        area.style.backgroundPosition = 'center';
+        area.style.backgroundRepeat = 'no-repeat';
+        area.style.backgroundColor = 'rgba(255,255,255,.15)';
+        saveAll();
+      };
+      reader.readAsDataURL(file);
+    };
+    inp.click();
+  });
+}
+
+/* ── WIRE DOTS ── */
+function wireDots(container) {
+  container.querySelectorAll('.slide-dot').forEach(dot => {
+    dot.addEventListener('click', () => {
+      goToSlide(parseInt(dot.dataset.slide));
+    });
+  });
+}
+
+/* ── WIRE PREVENT ENTER ── */
+function wireNoEnter(container) {
+  container.querySelectorAll('.no-enter').forEach(el => {
+    el.addEventListener('keydown', e => {
+      if (e.key === 'Enter') { e.preventDefault(); el.blur(); }
+    });
+  });
+}
+
+/* ── RENDER ALL SLIDES ── */
+const slidesContainer = document.getElementById('slides-container');
+SLIDES.forEach((data, idx) => {
+  const card = buildSlide(idx, data);
+  wireStars(card);
+  card.querySelectorAll('.team-logo-area').forEach(area => wireLogo(area));
+  wireDots(card);
+  wireNoEnter(card);
+  slidesContainer.appendChild(card);
+});
+
+/* ── RESTORE & AUTOSAVE TESTI ── */
+restoreAll();
+document.addEventListener('input', e => {
+  if (e.target.hasAttribute('contenteditable')) saveAll();
+});
+
+/* ── NAVIGATION ── */
+function goToSlide(n) {
+  document.querySelectorAll('.slide').forEach((s, i) => {
+    s.classList.toggle('active', i === n);
+    // update dots inside each slide to reflect current active
+    s.querySelectorAll('.slide-dot').forEach(d => {
+      d.classList.toggle('active', parseInt(d.dataset.slide) === n);
+    });
+  });
+  currentSlide = n;
+  document.getElementById('slide-counter').textContent = `${n + 1} / ${SLIDES.length}`;
+}
+
+document.getElementById('btn-prev').addEventListener('click', () => {
+  goToSlide((currentSlide - 1 + SLIDES.length) % SLIDES.length);
+  saveAll();
+});
+document.getElementById('btn-next').addEventListener('click', () => {
+  goToSlide((currentSlide + 1) % SLIDES.length);
+  saveAll();
+});
+
+/* ── SCARICA HTML AGGIORNATO ── */
+document.getElementById('btn-save-html').addEventListener('click', () => {
+  // Raccoglie lo stato attuale (stesso di saveAll)
+  const state = { slide: currentSlide, texts: {}, stars: {}, logos: {} };
+
+  document.querySelectorAll('[data-key][contenteditable]').forEach(el => {
+    state.texts[el.dataset.key] = el.textContent;
+  });
+  document.querySelectorAll('.stars-cell').forEach(cell => {
+    const first = cell.querySelector('.star');
+    if (!first) return;
+    state.stars[first.dataset.group] = cell.querySelectorAll('.star.on').length;
+  });
+  document.querySelectorAll('.team-logo-area[data-key]').forEach(logo => {
+    const bg = logo.style.backgroundImage;
+    if (bg && bg !== 'none') state.logos[logo.dataset.key] = bg;
+  });
+
+  // Clona il documento e svuota il container generato da JS
+  const clone = document.documentElement.cloneNode(true);
+  clone.querySelector('#slides-container').innerHTML = '';
+
+  // Rimuove eventuali script di bootstrap precedenti
+  clone.querySelectorAll('script[data-bootstrap]').forEach(s => s.remove());
+
+  // Aggiunge uno script che pre-carica localStorage con i dati attuali
+  const script = document.createElement('script');
+  script.setAttribute('data-bootstrap', '1');
+  script.textContent = `localStorage.setItem('fantacalcio-porte-v1', ${JSON.stringify(JSON.stringify(state))});`;
+  clone.querySelector('body').appendChild(script);
+
+  // Scarica
+  const blob = new Blob(['<!DOCTYPE html>\n' + clone.outerHTML], { type: 'text/html;charset=utf-8' });
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'fantacalcio-porte-card.html';
+  a.click();
+  URL.revokeObjectURL(a.href);
+});
+
+/* ── RESET ── */
+document.getElementById('btn-reset').addEventListener('click', () => {
+  if (!confirm('Cancellare tutti i dati salvati e ripristinare i valori originali?')) return;
+  localStorage.removeItem(STORAGE_KEY);
+  location.reload();
+});
+
+/* ── PUBBLICA SU GITHUB ── */
+document.getElementById('btn-github').addEventListener('click', async () => {
+  const GH_OWNER = 'fabmiscia';
+  const GH_REPO  = 'il-mister-fabry';
+  const GH_FILE  = 'fantacalcio-porte-card.html';
+
+  let token = sessionStorage.getItem('gh_token') || '';
+  token = prompt('Token GitHub (rimane in memoria finché non chiudi il browser):', token);
+  if (!token) return;
+  sessionStorage.setItem('gh_token', token.trim());
+
+  const btn = document.getElementById('btn-github');
+  btn.textContent = '⏳ Caricando...';
+  btn.disabled = true;
+
+  try {
+    // 1. SHA attuale del file su GitHub
+    const infoResp = await fetch(`https://api.github.com/repos/${GH_OWNER}/${GH_REPO}/contents/${GH_FILE}`,
+      { headers: { Authorization: `token ${token}` } });
+    const info = await infoResp.json();
+    if (!infoResp.ok) throw new Error(info.message || 'Token non valido o file non trovato');
+    const sha = info.sha;
+
+    // 2. Costruisce HTML con stato attuale baked-in
+    const state = { slide: currentSlide, texts: {}, stars: {}, logos: {} };
+    document.querySelectorAll('[data-key][contenteditable]').forEach(el => {
+      state.texts[el.dataset.key] = el.textContent;
+    });
+    document.querySelectorAll('.stars-cell').forEach(cell => {
+      const first = cell.querySelector('.star');
+      if (!first) return;
+      state.stars[first.dataset.group] = cell.querySelectorAll('.star.on').length;
+    });
+    document.querySelectorAll('.team-logo-area[data-key]').forEach(logo => {
+      const bg = logo.style.backgroundImage;
+      if (bg && bg !== 'none') state.logos[logo.dataset.key] = bg;
+    });
+
+    const clone = document.documentElement.cloneNode(true);
+    clone.querySelector('#slides-container').innerHTML = '';
+    clone.querySelectorAll('script[data-bootstrap]').forEach(s => s.remove());
+    const script = document.createElement('script');
+    script.setAttribute('data-bootstrap', '1');
+    script.textContent = `localStorage.setItem('fantacalcio-porte-v1', ${JSON.stringify(JSON.stringify(state))});`;
+    clone.querySelector('body').appendChild(script);
+    const html = '<!DOCTYPE html>\n' + clone.outerHTML;
+
+    // 3. Codifica UTF-8 → base64
+    const bytes = new TextEncoder().encode(html);
+    const binStr = Array.from(bytes).map(b => String.fromCharCode(b)).join('');
+    const content = btoa(binStr);
+
+    // 4. Carica su GitHub
+    const upResp = await fetch(`https://api.github.com/repos/${GH_OWNER}/${GH_REPO}/contents/${GH_FILE}`, {
+      method: 'PUT',
+      headers: { Authorization: `token ${token}`, 'Content-Type': 'application/json' },
+      body: JSON.stringify({ message: 'Aggiorna porte card', content, sha })
+    });
+    if (!upResp.ok) { const e = await upResp.json(); throw new Error(e.message); }
+
+    btn.textContent = '✅ Pubblicato!';
+    setTimeout(() => { btn.textContent = '📤 Su GitHub'; btn.disabled = false; }, 3000);
+  } catch(err) {
+    alert('Errore: ' + err.message);
+    btn.textContent = '📤 Su GitHub';
+    btn.disabled = false;
+  }
+});
+
+/* ── EXPORT PNG ── */
+document.getElementById('btn-export').addEventListener('click', async () => {
+  const btn = document.getElementById('btn-export');
+  btn.textContent = '⏳ Esportando...';
+  btn.disabled = true;
+
+  const activeCard = document.querySelector('.slide.active');
+  const firstName = activeCard.querySelector('.team-name')?.textContent?.trim() || 'slide';
+
+  try {
+    const canvas = await html2canvas(activeCard, {
+      scale: 2,
+      useCORS: true,
+      logging: false,
+      backgroundColor: '#134d22'
+    });
+    const link = document.createElement('a');
+    link.download = `porte-serieA-${firstName.toLowerCase().replace(/\s+/g, '-')}.png`;
+    link.href = canvas.toDataURL('image/png');
+    link.click();
+  } catch(err) {
+    alert('Errore esportazione: ' + err.message);
+  }
+
+  btn.textContent = '📥 Esporta PNG';
+  btn.disabled = false;
+});
+</script>
+</body>
+</html>

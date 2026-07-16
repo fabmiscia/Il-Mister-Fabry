@@ -1,0 +1,958 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<title>Martin Baturina – Card Fantacalcio</title>
+<style>
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+
+body {
+  background:#141414;
+  font-family: Arial, 'Helvetica Neue', sans-serif;
+  color:#fff;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:flex-start;
+  min-height:100vh;
+  gap:14px;
+  padding:18px 20px 30px;
+}
+
+/* ── Nav ── */
+.nav {
+  display:flex;
+  gap:10px;
+  align-items:center;
+}
+.nav button {
+  background:#252525;
+  color:#ccc;
+  border:1px solid #333;
+  padding:7px 20px;
+  border-radius:20px;
+  cursor:pointer;
+  font-size:12px;
+  font-weight:700;
+  letter-spacing:.6px;
+  text-transform:uppercase;
+  transition:.15s;
+}
+.nav button:hover  { background:#2e2e2e; color:#ddd; }
+.nav button.active { background:#b0ff00; color:#000; border-color:#b0ff00; }
+
+/* ── Card ── */
+.card {
+  width:1280px;
+  height:720px;
+  overflow:hidden;
+  display:none;
+  position:relative;
+  background:#000;
+  flex-shrink:0;
+}
+.card.active { display:flex; }
+
+/* ── Export toolbar ── */
+.toolbar {
+  display:flex;
+  gap:10px;
+  align-items:center;
+  position:sticky;
+  top:0;
+  z-index:200;
+  background:#141414;
+  padding:8px 16px;
+  border-radius:30px;
+  border:1px solid #2a2a2a;
+  box-shadow:0 2px 12px rgba(0,0,0,.5);
+}
+.toolbar button {
+  background:#b0ff00;
+  color:#000;
+  border:none;
+  padding:8px 22px;
+  border-radius:20px;
+  cursor:pointer;
+  font-size:12px;
+  font-weight:800;
+  letter-spacing:.5px;
+  transition:.12s;
+}
+.toolbar button:hover { background:#d4ff55; }
+.toolbar .gh-btn {
+  background:#24292e;
+  color:#fff;
+  border:1px solid #444;
+}
+.toolbar .gh-btn:hover { background:#333; }
+.toolbar .tip {
+  color:#999;
+  font-size:11px;
+}
+
+/* ══════════════════════════════════════════════
+   SLIDE 1 – Info card
+══════════════════════════════════════════════ */
+#s1 { background:#000; }
+
+/* Foto (corpo intero visibile) */
+.photo-col {
+  width:320px;
+  min-width:320px;
+  height:720px;
+  position:relative;
+  overflow:hidden;
+  cursor:pointer;
+  background:#000;
+}
+.photo-col img.player-img {
+  width:100%;
+  height:100%;
+  object-fit:contain;
+  object-position:top center;
+  display:block;
+}
+.photo-col::after {
+  content:'';
+  position:absolute;
+  inset:0;
+  background:linear-gradient(90deg, transparent 60%, #000 100%);
+  pointer-events:none;
+}
+.photo-upload-hint {
+  position:absolute;
+  bottom:10px;
+  left:50%;
+  transform:translateX(-50%);
+  background:rgba(0,0,0,.7);
+  color:#b0ff00;
+  font-size:10px;
+  font-weight:700;
+  letter-spacing:.5px;
+  padding:5px 10px;
+  border-radius:10px;
+  pointer-events:none;
+  opacity:.6;
+}
+
+/* Info centrale */
+.info-col {
+  flex:1;
+  padding:26px 18px 18px 22px;
+  display:flex;
+  flex-direction:column;
+  min-width:0;
+}
+
+.player-name {
+  font-family:'Arial Black', Impact, sans-serif;
+  font-size:56px;
+  font-weight:900;
+  color:#b0ff00;
+  text-transform:uppercase;
+  letter-spacing:1px;
+  line-height:1;
+  margin-bottom:12px;
+  outline:none;
+  cursor:text;
+}
+
+.sub-row {
+  display:flex;
+  align-items:center;
+  margin-bottom:16px;
+  font-style:italic;
+  font-size:14.5px;
+  color:#fff;
+  gap:0;
+  flex-wrap:nowrap;
+}
+.sub-row em { color:#b0ff00; font-weight:700; font-style:normal; }
+.sub-row .pipe { margin:0 7px; color:#333; }
+
+/* Stats grid */
+.stats-list {
+  display:flex;
+  flex-direction:column;
+  flex:1;
+  gap:0;
+  overflow:hidden;
+}
+.srow {
+  display:flex;
+  align-items:center;
+  padding:6px 2px;
+  border-bottom:1px solid #161616;
+  gap:7px;
+  min-height:36px;
+}
+.srow:last-child { border-bottom:none; }
+.sic {
+  font-size:15px;
+  width:26px;
+  text-align:center;
+  flex-shrink:0;
+  line-height:1;
+}
+.sic img { height:16px; vertical-align:middle; }
+.slbl {
+  font-size:11px;
+  font-weight:700;
+  letter-spacing:.9px;
+  text-transform:uppercase;
+  color:#bbb;
+  flex:1;
+  white-space:nowrap;
+  min-width:0;
+}
+.slbl em { color:#aaa; font-style:normal; font-size:10px; }
+.sval {
+  font-size:13px;
+  font-weight:700;
+  color:#ffffff;
+  text-transform:uppercase;
+  letter-spacing:.4px;
+  text-align:right;
+  flex-shrink:0;
+  outline:none;
+  cursor:text;
+  max-width:260px;
+  text-shadow:0 0 8px rgba(255,255,255,.25);
+}
+.sval.bold-xl {
+  font-size:14.5px;
+  font-weight:900;
+  color:#ffffff;
+  letter-spacing:.6px;
+}
+
+/* Ruolo box */
+.role-col {
+  width:238px;
+  min-width:238px;
+  margin:18px 18px 18px 0;
+  background:#f2f2f2;
+  border-radius:6px;
+  display:flex;
+  flex-direction:column;
+  overflow:hidden;
+  color:#222;
+}
+.role-hdr {
+  padding:8px 12px 7px;
+  font-size:11.5px;
+  font-weight:700;
+  color:#333;
+  border-bottom:2px solid #ddd;
+  letter-spacing:.5px;
+  text-transform:uppercase;
+}
+.role-field {
+  flex:1;
+  position:relative;
+  background:#1e4d8c;
+  min-height:0;
+}
+.role-field svg {
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
+}
+.role-meta {
+  padding:7px 12px 9px;
+  font-size:10.5px;
+  color:#444;
+  line-height:1.65;
+}
+.role-meta .rl  { color:#999; font-size:10px; }
+.role-meta .rv  { font-weight:700; color:#111; outline:none; cursor:text; }
+.role-legend {
+  display:flex;
+  gap:6px;
+  flex-wrap:wrap;
+  margin-top:5px;
+  padding:0 12px 8px;
+  font-size:9.5px;
+}
+.legend-dot {
+  display:flex;
+  align-items:center;
+  gap:3px;
+  color:#aaa;
+}
+.legend-dot span.dot {
+  width:9px;
+  height:9px;
+  border-radius:50%;
+  display:inline-block;
+  border:1.5px solid rgba(0,0,0,.2);
+}
+
+/* ══════════════════════════════════════════════
+   SLIDE 2 – Statistiche stagione + carriera
+══════════════════════════════════════════════ */
+#s2 { background:#0a0a0a; }
+
+.s2-photo {
+  width:260px;
+  min-width:260px;
+  height:720px;
+  position:relative;
+  overflow:hidden;
+  cursor:pointer;
+}
+.s2-photo img {
+  width:100%;
+  height:100%;
+  object-fit:contain;
+  object-position:top center;
+}
+.s2-photo::after {
+  content:'';
+  position:absolute;
+  inset:0;
+  background:linear-gradient(90deg, transparent 60%, #0a0a0a 100%);
+  pointer-events:none;
+}
+
+.s2-body {
+  flex:1;
+  padding:24px 28px 20px 22px;
+  display:flex;
+  flex-direction:column;
+  gap:18px;
+  overflow:hidden;
+  min-width:0;
+}
+
+/* Blocco tabella */
+.tbl-block { display:flex; flex-direction:column; min-height:0; }
+.tbl-title {
+  font-size:11px;
+  font-weight:800;
+  letter-spacing:2px;
+  text-transform:uppercase;
+  color:#b0ff00;
+  padding-bottom:6px;
+  border-bottom:1px solid #1e1e1e;
+  margin-bottom:8px;
+}
+
+/* Tabella stagione corrente */
+table.stats-tbl {
+  width:100%;
+  border-collapse:collapse;
+  font-size:12px;
+}
+table.stats-tbl thead th {
+  color:#888;
+  font-size:10px;
+  letter-spacing:.7px;
+  text-transform:uppercase;
+  padding:0 10px 6px;
+  text-align:left;
+  border-bottom:1px solid #1c1c1c;
+  font-weight:700;
+}
+table.stats-tbl thead th.c { text-align:center; }
+table.stats-tbl tbody tr { border-bottom:1px solid #111; }
+table.stats-tbl tbody tr:last-child { border-bottom:none; }
+table.stats-tbl td { padding:7px 10px; vertical-align:middle; color:#fff; }
+table.stats-tbl td.num { text-align:center; color:#fff; font-size:12px; }
+table.stats-tbl td.hi { color:#fff; font-weight:700; }
+table.stats-tbl td.hi2 { color:#b0ff00; font-weight:800; font-size:14px; }
+table.stats-tbl td.comp-cell { display:flex; align-items:center; }
+table.stats-tbl td.comp-name { color:#4db6ff; font-weight:600; }
+table.stats-tbl .totals-row { background:#111; border-top:1px solid #222; }
+span.comp-name { color:#4db6ff; font-weight:600; }
+
+/* Tabella carriera – branded */
+table.career-tbl {
+  width:100%;
+  border-collapse:collapse;
+  font-size:12px;
+}
+table.career-tbl thead th {
+  color:#888;
+  font-size:9.5px;
+  letter-spacing:.7px;
+  text-transform:uppercase;
+  padding:0 10px 5px;
+  text-align:left;
+  border-bottom:1px solid #1c1c1c;
+  font-weight:700;
+}
+table.career-tbl thead th.c { text-align:center; }
+.career-row { border-bottom:1px solid #111; transition:background .12s; }
+.career-row:hover { background:#111; }
+.career-row:nth-child(even) { background:#0d0d0d; }
+.career-year { color:#b0ff00; font-weight:800; font-size:13px; padding:8px 10px; width:60px; outline:none; cursor:text; }
+.career-club { padding:8px 10px; color:#fff; font-weight:600; display:flex; align-items:center; }
+.career-club span { outline:none; cursor:text; }
+.career-comp { padding:8px 10px; color:#4db6ff; font-size:11.5px; outline:none; cursor:text; }
+.career-num  { padding:8px 10px; text-align:center; color:#fff; font-weight:700; outline:none; cursor:text; }
+.career-min  { padding:8px 10px; text-align:center; color:#ddd; font-size:11px; outline:none; cursor:text; }
+.add-row-btn {
+  margin-top:6px;
+  background:transparent;
+  border:1px dashed #333;
+  color:#444;
+  padding:5px 14px;
+  border-radius:4px;
+  cursor:pointer;
+  font-size:11px;
+  font-weight:600;
+  letter-spacing:.5px;
+  align-self:flex-start;
+  transition:.15s;
+}
+.add-row-btn:hover { border-color:#b0ff00; color:#b0ff00; }
+
+/* ══════════════════════════════════════════════
+   SLIDE 3 – Infortuni + Bio
+══════════════════════════════════════════════ */
+#s3 { background:#0a0a0a; }
+
+.s3-photo {
+  width:260px;
+  min-width:260px;
+  height:720px;
+  position:relative;
+  overflow:hidden;
+  cursor:pointer;
+}
+.s3-photo img {
+  width:100%;
+  height:100%;
+  object-fit:contain;
+  object-position:top center;
+}
+.s3-photo::after {
+  content:'';
+  position:absolute;
+  inset:0;
+  background:linear-gradient(90deg, transparent 60%, #0a0a0a 100%);
+  pointer-events:none;
+}
+
+.s3-body {
+  flex:1;
+  padding:24px 28px 20px 22px;
+  display:flex;
+  flex-direction:column;
+  gap:18px;
+  overflow:hidden;
+}
+
+/* Tabella infortuni */
+table.inj-tbl {
+  width:100%;
+  border-collapse:collapse;
+  font-size:12px;
+}
+table.inj-tbl thead th {
+  color:#888;
+  font-size:9.5px;
+  letter-spacing:.7px;
+  text-transform:uppercase;
+  padding:0 10px 5px;
+  text-align:left;
+  border-bottom:1px solid #1c1c1c;
+  font-weight:700;
+}
+.inj-row { border-bottom:1px solid #111; }
+.inj-row:nth-child(even) { background:#0d0d0d; }
+.inj-row td { padding:7px 10px; color:#fff; outline:none; cursor:text; font-size:12px; }
+.inj-row td:first-child { color:#b0ff00; font-weight:700; font-size:13px; width:60px; }
+.inj-row td:nth-child(2) { color:#f87171; }
+
+/* Bio */
+.bio-box {
+  background:#0f0f0f;
+  border:1px solid #1a1a1a;
+  border-radius:6px;
+  padding:14px 16px;
+  flex:1;
+  min-height:0;
+  overflow:hidden;
+}
+.bio-box .bio-title {
+  font-size:10px;
+  font-weight:800;
+  letter-spacing:2px;
+  color:#b0ff00;
+  text-transform:uppercase;
+  margin-bottom:8px;
+}
+.bio-text {
+  font-size:13px;
+  color:#ffffff;
+  line-height:1.7;
+  outline:none;
+  cursor:text;
+  height:calc(100% - 26px);
+  overflow:auto;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar { width:4px; height:4px; }
+::-webkit-scrollbar-track { background:#111; }
+::-webkit-scrollbar-thumb { background:#333; border-radius:2px; }
+</style>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+</head>
+<body>
+
+<div class="nav">
+  <button class="active" onclick="go(1)">📋 Info</button>
+  <button onclick="go(2)">📊 Statistiche</button>
+  <button onclick="go(3)">🏥 Infortuni + Bio</button>
+</div>
+
+<!-- Toolbar -->
+<div class="toolbar">
+  <button onclick="exportPNG(1)">💾 Slide 1</button>
+  <button onclick="exportPNG(2)">💾 Slide 2</button>
+  <button onclick="exportPNG(3)">💾 Slide 3</button>
+  <button class="gh-btn" onclick="pubblicaGitHub()">🚀 Pubblica su GitHub</button>
+  <span class="tip">← → per navigare | Click sulla foto per cambiarla</span>
+</div>
+
+<!-- Input nascosti per upload -->
+<input type="file" id="photo-input" accept="image/*" style="display:none">
+<input type="file" id="logo-input"  accept="image/*" style="display:none">
+
+<!-- ══════════════════════════════════════════════
+     SLIDE 1
+══════════════════════════════════════════════ -->
+<div id="s1" class="card active">
+
+  <!-- Foto cliccabile -->
+  <div class="photo-col" onclick="triggerPhotoUpload('all')">
+    <img class="player-img photo-all" src="https://img.a.transfermarkt.technology/portrait/big/580451-1716240952.jpg?lm=1" alt="Martin Baturina"
+         onerror="this.src='https://img.a.transfermarkt.technology/portrait/big/default.jpg'">
+    <div class="photo-upload-hint">📷 Click per cambiare foto</div>
+  </div>
+
+  <!-- Info centrale -->
+  <div class="info-col">
+    <div class="player-name" contenteditable="true">Martin Baturina</div>
+
+    <div class="sub-row">
+      <img id="team-logo-img" src="https://tmssl.akamaized.net//images/wappen/homepageWappen150x150/1047.png" onclick="triggerLogoUpload()" title="Click per sostituire il logo" style="height:46px;vertical-align:middle;margin-right:12px;cursor:pointer;border-radius:4px">
+      <em>ETÀ:</em>&nbsp;23 ANNI
+      <span class="pipe">|</span>
+      <em>RUOLO:</em>&nbsp;TC
+      <span class="pipe">|</span>
+      <em>SQUADRA:</em>&nbsp;<span contenteditable="true">COMO</span>
+    </div>
+
+    <div class="stats-list">
+      <div class="srow">
+        <span class="sic">💰</span>
+        <span class="slbl">Valore mercato</span>
+        <span class="sval" contenteditable="true">30,00 mln €</span>
+      </div>
+      <div class="srow">
+        <span class="sic">🔄</span>
+        <span class="slbl">Transfer</span>
+        <span class="sval" contenteditable="true">Acquisto definitivo</span>
+      </div>
+      <div class="srow">
+        <span class="sic"><img src="https://tmssl.akamaized.net//images/flagge/tiny/148.png" style="height:16px;vertical-align:middle;margin-right:5px;border:1px solid #555"></span>
+        <span class="slbl">Nazionalità</span>
+        <span class="sval bold-xl" contenteditable="true">CROAZIA</span>
+      </div>
+      <div class="srow">
+        <span class="sic">👟</span>
+        <span class="slbl">Piede</span>
+        <span class="sval" contenteditable="true">DESTRO</span>
+      </div>
+      <div class="srow">
+        <span class="sic">📏</span>
+        <span class="slbl">Altezza</span>
+        <span class="sval bold-xl" contenteditable="true">1,72 m</span>
+      </div>
+      <div class="srow">
+        <span class="sic"><img src="https://tmssl.akamaized.net//images/wappen/profil/419.png?lm=1571921138" style="height:20px;vertical-align:middle;margin-right:5px"></span>
+        <span class="slbl">Ultimo club</span>
+        <span class="sval" contenteditable="true">GNK DINAMO ZAGABRIA</span>
+      </div>
+      <div class="srow">
+        <span class="sic">✅</span>
+        <span class="slbl">Presenze <em>2025/26</em></span>
+        <span class="sval" contenteditable="true">34</span>
+      </div>
+      <div class="srow">
+        <span class="sic">⚽</span>
+        <span class="slbl">Gol</span>
+        <span class="sval" contenteditable="true">8</span>
+      </div>
+      <div class="srow">
+        <span class="sic">🎯</span>
+        <span class="slbl">Assist</span>
+        <span class="sval" contenteditable="true">4</span>
+      </div>
+      <div class="srow">
+        <span class="sic">📝</span>
+        <span class="slbl">Scadenza</span>
+        <span class="sval" contenteditable="true">30/06/2030</span>
+      </div>
+      <div class="srow">
+        <span class="sic">🚑</span>
+        <span class="slbl">Infortuni</span>
+        <span class="sval" contenteditable="true">2 infortuni registrati</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Box Ruolo -->
+  <div class="role-col">
+    <div class="role-hdr">Ruolo</div>
+    <div class="role-field">
+      <svg viewBox="0 0 100 150" preserveAspectRatio="xMidYMid meet">
+        <rect x="0" y="0" width="100" height="150" fill="#1e4d8c"/>
+        <rect x="6" y="5" width="88" height="140" rx="2" fill="none" stroke="rgba(255,255,255,.6)" stroke-width="1"/>
+        <line x1="6" y1="75" x2="94" y2="75" stroke="rgba(255,255,255,.4)" stroke-width=".8"/>
+        <circle cx="50" cy="75" r="13" fill="none" stroke="rgba(255,255,255,.4)" stroke-width=".8"/>
+        <circle cx="50" cy="75" r="1.5" fill="rgba(255,255,255,.4)"/>
+        <rect x="22" y="117" width="56" height="23" rx="1" fill="none" stroke="rgba(255,255,255,.6)" stroke-width=".9"/>
+        <rect x="36" y="130" width="28" height="10" rx="1" fill="none" stroke="rgba(255,255,255,.5)" stroke-width=".7"/>
+        <rect x="22" y="10" width="56" height="23" rx="1" fill="none" stroke="rgba(255,255,255,.6)" stroke-width=".9"/>
+        <rect x="36" y="10" width="28" height="10" rx="1" fill="none" stroke="rgba(255,255,255,.5)" stroke-width=".7"/>
+        <circle cx="50%" cy="33%" r="7" fill="white" stroke="#b0ff00" stroke-width="2.5"/><circle cx="50%" cy="33%" r="3.5" fill="#b0ff00"/>
+        <circle cx="50%" cy="46%" r="5.5" fill="#22c55e" stroke="white" stroke-width="1.5" opacity=".85"/><circle cx="50%" cy="46%" r="2" fill="white" opacity=".9"/>
+        <circle cx="18%" cy="23%" r="5.5" fill="#b0ff00" stroke="white" stroke-width="1.5" opacity=".85"/><circle cx="18%" cy="23%" r="2" fill="white" opacity=".9"/>
+      </svg>
+    </div>
+    <div class="role-meta">
+      <div class="rl">Ruolo naturale:</div>
+      <div class="rv" contenteditable="true">Trequartista</div>
+      <div class="rl" style="margin-top:4px">Ruoli secondari:</div>
+      <div class="rv" contenteditable="true">Centrocampista, Ala sinistra</div>
+    </div>
+    <div class="role-legend">
+      <div class="legend-dot"><span class="dot" style="background:white;border-color:#888"></span> Primario</div>
+      <div class="legend-dot"><span class="dot" style="background:#b0ff00"></span> Offensivo</div>
+      <div class="legend-dot"><span class="dot" style="background:#22c55e"></span> Centrocampo</div>
+      <div class="legend-dot"><span class="dot" style="background:#3b82f6"></span> Difensivo</div>
+    </div>
+  </div>
+
+</div><!-- /s1 -->
+
+<!-- ══════════════════════════════════════════════
+     SLIDE 2 – Statistiche
+══════════════════════════════════════════════ -->
+<div id="s2" class="card">
+
+  <div class="s2-photo" onclick="triggerPhotoUpload('all')">
+    <img class="photo-all" src="https://img.a.transfermarkt.technology/portrait/big/580451-1716240952.jpg?lm=1" alt="Martin Baturina"
+         onerror="this.src='https://img.a.transfermarkt.technology/portrait/big/default.jpg'">
+  </div>
+
+  <div class="s2-body">
+
+    <!-- Stagione corrente -->
+    <div class="tbl-block">
+      <div class="tbl-title">Rendimento 2025/26</div>
+      <table class="stats-tbl">
+        <thead>
+          <tr>
+            <th>Competizione</th>
+            <th class="c">Presenze</th>
+            <th class="c">⚽ Gol</th>
+            <th class="c">🎯 Assist</th>
+            <th class="c">Minuti</th>
+            <th class="c">Cartellini</th>
+          </tr>
+        </thead>
+        <tbody id="comp-body">
+          
+            <tr>
+              <td class="comp-cell"><img src="https://tmssl.akamaized.net//images/logo/normal/it1.png?lm=1656073460" style="height:18px;vertical-align:middle;margin-right:8px;opacity:.9"><span class="comp-name">Serie A</span></td>
+              <td class="num">29</td>
+              <td class="num hi">6</td>
+              <td class="num hi">3</td>
+              <td class="num">1,569′</td>
+              <td class="num">— </td>
+            </tr>
+            <tr>
+              <td class="comp-cell"><img src="https://tmssl.akamaized.net//images/logo/normal/cit.png?lm=1726237063" style="height:18px;vertical-align:middle;margin-right:8px;opacity:.9"><span class="comp-name">Coppa Italia</span></td>
+              <td class="num">5</td>
+              <td class="num hi">2</td>
+              <td class="num hi">1</td>
+              <td class="num">266′</td>
+              <td class="num">🟨 1 </td>
+            </tr>
+            <tr class="totals-row">
+              <td style="text-align:right;color:#b0ff00;font-size:11px;letter-spacing:.8px;text-transform:uppercase">Totale stagione</td>
+              <td class="num hi2">34</td>
+              <td class="num hi2">8</td>
+              <td class="num hi2">4</td>
+              <td class="num">1,835′</td>
+              <td class="num">—</td>
+            </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Carriera -->
+    <div class="tbl-block" style="flex:1;min-height:0;overflow:hidden;display:flex;flex-direction:column;">
+      <div class="tbl-title">Carriera</div>
+      <div style="overflow-y:auto;flex:1;">
+        <table class="career-tbl" id="career-tbl">
+          <thead>
+            <tr>
+              <th>Anno</th>
+              <th>Squadra</th>
+              <th>Competizione</th>
+              <th class="c">G</th>
+              <th class="c">⚽</th>
+              <th class="c">🎯</th>
+              <th class="c">Min</th>
+            </tr>
+          </thead>
+          <tbody id="career-body">
+            
+            <tr class="career-row">
+              <td class="career-year" contenteditable="true">2020</td>
+              <td class="career-club"><img src="https://tmssl.akamaized.net//images/wappen/profil/9641.png?lm=1571921138" style="height:20px;vertical-align:middle;margin-right:8px;border-radius:2px"><span contenteditable="true">GNK Dinamo Zagreb U19</span></td>
+              <td class="career-comp" contenteditable="true">—</td>
+              <td class="career-num" contenteditable="true">—</td>
+              <td class="career-num" contenteditable="true">—</td>
+              <td class="career-num" contenteditable="true">—</td>
+              <td class="career-min" contenteditable="true">—</td>
+            </tr>
+            <tr class="career-row">
+              <td class="career-year" contenteditable="true">2021</td>
+              <td class="career-club"><img src="https://tmssl.akamaized.net//images/wappen/profil/44796.png?lm=1571921138" style="height:20px;vertical-align:middle;margin-right:8px;border-radius:2px"><span contenteditable="true">GNK Dinamo Zagabria II</span></td>
+              <td class="career-comp" contenteditable="true">—</td>
+              <td class="career-num" contenteditable="true">—</td>
+              <td class="career-num" contenteditable="true">—</td>
+              <td class="career-num" contenteditable="true">—</td>
+              <td class="career-min" contenteditable="true">—</td>
+            </tr>
+            <tr class="career-row">
+              <td class="career-year" contenteditable="true">20/21</td>
+              <td class="career-club"><img src="https://tmssl.akamaized.net//images/wappen/profil/419.png?lm=1571921138" style="height:20px;vertical-align:middle;margin-right:8px;border-radius:2px"><span contenteditable="true">GNK Dinamo Zagabria</span></td>
+              <td class="career-comp" contenteditable="true">EL, KR1, KR2, KRC</td>
+              <td class="career-num" contenteditable="true">287</td>
+              <td class="career-num" contenteditable="true">23</td>
+              <td class="career-num" contenteditable="true">35</td>
+              <td class="career-min" contenteditable="true">—</td>
+            </tr>
+            <tr class="career-row" style="background:#0e1a0e">
+              <td class="career-year" contenteditable="true">2025</td>
+              <td class="career-club"><img src="https://tmssl.akamaized.net//images/wappen/profil/1047.png?lm=1565704078" style="height:20px;vertical-align:middle;margin-right:8px;border-radius:2px"><span contenteditable="true">Como 1907</span></td>
+              <td class="career-comp" contenteditable="true">Serie A / Coppa Italia</td>
+              <td class="career-num" contenteditable="true" style="color:#b0ff00">34</td>
+              <td class="career-num" contenteditable="true" style="color:#b0ff00">8</td>
+              <td class="career-num" contenteditable="true" style="color:#b0ff00">4</td>
+              <td class="career-min" contenteditable="true">1,835′</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <button class="add-row-btn" onclick="addCareerRow()">+ Aggiungi stagione</button>
+    </div>
+
+  </div>
+</div><!-- /s2 -->
+
+<!-- ══════════════════════════════════════════════
+     SLIDE 3 – Infortuni + Bio
+══════════════════════════════════════════════ -->
+<div id="s3" class="card">
+
+  <div class="s3-photo" onclick="triggerPhotoUpload('all')">
+    <img class="photo-all" src="https://img.a.transfermarkt.technology/portrait/big/580451-1716240952.jpg?lm=1" alt="Martin Baturina"
+         onerror="this.src='https://img.a.transfermarkt.technology/portrait/big/default.jpg'">
+  </div>
+
+  <div class="s3-body">
+
+    <div class="tbl-block">
+      <div class="tbl-title">Storico infortuni</div>
+      <table class="inj-tbl">
+        <thead>
+          <tr>
+            <th>Stagione</th>
+            <th>Infortunio</th>
+            <th>Dal</th>
+            <th>Al</th>
+            <th>Giorni</th>
+            <th>Partite perse</th>
+          </tr>
+        </thead>
+        <tbody id="inj-body">
+          
+              <tr class="inj-row">
+                <td contenteditable="true">25/26</td>
+                <td contenteditable="true">Infortunio all'articolazione della caviglia</td>
+                <td contenteditable="true">22/02/2026</td>
+                <td contenteditable="true">02/03/2026</td>
+                <td contenteditable="true">9 giorni</td>
+                <td contenteditable="true">1</td>
+              </tr>
+              <tr class="inj-row">
+                <td contenteditable="true">23/24</td>
+                <td contenteditable="true">Indurimento muscolare</td>
+                <td contenteditable="true">18/03/2024</td>
+                <td contenteditable="true">28/03/2024</td>
+                <td contenteditable="true">11 giorni</td>
+                <td contenteditable="true">2</td>
+              </tr>
+        </tbody>
+      </table>
+      <button class="add-row-btn" onclick="addInjRow()">+ Aggiungi infortunio</button>
+    </div>
+
+    <!-- Bio -->
+    <div class="bio-box">
+      <div class="bio-title">Appunti del Mister</div>
+      <div class="bio-text" contenteditable="true">Clicca qui per scrivere i tuoi appunti sul giocatore…</div>
+    </div>
+
+  </div>
+</div><!-- /s3 -->
+
+<!-- Overlay GitHub -->
+<div id="gh-overlay" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.85);z-index:999;align-items:center;justify-content:center;">
+  <div style="background:#1a1a1a;border:1px solid #333;border-radius:10px;padding:28px 32px;max-width:520px;width:90%;text-align:center;font-family:Arial,sans-serif;">
+    <div style="font-size:28px;margin-bottom:10px">🚀</div>
+    <div style="font-size:16px;font-weight:700;color:#b0ff00;margin-bottom:8px">Pubblica su GitHub</div>
+    <div style="font-size:12px;color:#888;margin-bottom:16px">Apri il Terminale e incolla questo comando:</div>
+    <div id="gh-cmd" style="background:#0a0a0a;border:1px solid #2a2a2a;border-radius:6px;padding:12px 16px;font-family:monospace;font-size:12px;color:#b0ff00;text-align:left;word-break:break-all;margin-bottom:14px"></div>
+    <div style="display:flex;gap:10px;justify-content:center;">
+      <button onclick="copiaComando()" style="background:#b0ff00;color:#000;border:none;padding:9px 22px;border-radius:20px;cursor:pointer;font-weight:800;font-size:12px">📋 Copia comando</button>
+      <button onclick="document.getElementById('gh-overlay').style.display='none'" style="background:#222;color:#aaa;border:1px solid #333;padding:9px 22px;border-radius:20px;cursor:pointer;font-size:12px">Chiudi</button>
+    </div>
+    <div id="copy-ok" style="color:#b0ff00;font-size:11px;margin-top:10px;display:none">✓ Copiato! Incollalo nel Terminale con Cmd+V</div>
+  </div>
+</div>
+
+<script>
+// ── Nav ─────────────────────────────────────
+function go(n) {
+  document.querySelectorAll('.card').forEach(c => c.classList.remove('active'));
+  document.querySelectorAll('.nav button').forEach(b => b.classList.remove('active'));
+  document.getElementById('s' + n).classList.add('active');
+  document.querySelectorAll('.nav button')[n - 1].classList.add('active');
+}
+document.addEventListener('keydown', e => {
+  const idx = [...document.querySelectorAll('.card')].findIndex(c => c.classList.contains('active'));
+  if (e.key === 'ArrowRight' && idx < 2) go(idx + 2);
+  if (e.key === 'ArrowLeft'  && idx > 0) go(idx);
+});
+
+// ── Cambio foto ─────────────────────────────
+function triggerPhotoUpload() {
+  document.getElementById('photo-input').click();
+}
+document.getElementById('photo-input').addEventListener('change', function(e) {
+  const file = e.target.files[0];
+  if (!file) return;
+  const url = URL.createObjectURL(file);
+  document.querySelectorAll('.photo-all').forEach(img => img.src = url);
+});
+
+// ── Cambio logo squadra ──────────────────────
+function triggerLogoUpload() {
+  document.getElementById('logo-input').click();
+}
+document.getElementById('logo-input').addEventListener('change', function(e) {
+  const file = e.target.files[0];
+  if (!file) return;
+  const url = URL.createObjectURL(file);
+  const el = document.getElementById('team-logo-img');
+  if (el.tagName === 'IMG') {
+    el.src = url;
+  } else {
+    // era un placeholder span → sostituisci con img
+    const img = document.createElement('img');
+    img.id = 'team-logo-img';
+    img.src = url;
+    img.onclick = triggerLogoUpload;
+    img.title = 'Click per sostituire il logo';
+    img.style.cssText = 'height:46px;vertical-align:middle;margin-right:12px;cursor:pointer;border-radius:4px';
+    el.replaceWith(img);
+  }
+});
+
+// ── Export PNG ──────────────────────────────
+function exportPNG(n) {
+  const slide = document.getElementById('s' + n);
+  const wasHidden = !slide.classList.contains('active');
+  if (wasHidden) { slide.style.display = 'flex'; }
+  html2canvas(slide, {
+    scale: 2, useCORS: true, allowTaint: true,
+    width: 1280, height: 720, backgroundColor: '#000'
+  }).then(canvas => {
+    const a = document.createElement('a');
+    a.href = canvas.toDataURL('image/png');
+    a.download = 'Martin_Baturina_slide' + n + '.png';
+    a.click();
+  }).finally(() => {
+    if (wasHidden) { slide.style.display = ''; }
+  });
+}
+
+// ── Pubblica su GitHub ──────────────────────
+const FILENAME = 'Martin_Baturina';
+function pubblicaGitHub() {
+  const cmd = `python3 /Users/fabriziomiscia/genera_card.py "${FILENAME.replace(/_/g,' ')}" --pubblica`;
+  document.getElementById('gh-cmd').textContent = `python3 /Users/fabriziomiscia/genera_card.py "Martin Baturina" --pubblica`;
+  document.getElementById('gh-overlay').style.display = 'flex';
+  document.getElementById('copy-ok').style.display = 'none';
+}
+function copiaComando() {
+  const cmd = `python3 /Users/fabriziomiscia/genera_card.py "Martin Baturina" --pubblica`;
+  navigator.clipboard.writeText(cmd).then(() => {
+    document.getElementById('copy-ok').style.display = 'block';
+  });
+}
+document.getElementById('gh-overlay').addEventListener('click', function(e) {
+  if (e.target === this) this.style.display = 'none';
+});
+
+// ── Aggiungi riga carriera ───────────────────
+function addCareerRow() {
+  const tbody = document.getElementById('career-body');
+  const tr = document.createElement('tr');
+  tr.className = 'career-row';
+  tr.innerHTML = `
+    <td class="career-year" contenteditable="true">—</td>
+    <td class="career-club"><span contenteditable="true">—</span></td>
+    <td class="career-comp" contenteditable="true">—</td>
+    <td class="career-num"  contenteditable="true">—</td>
+    <td class="career-num"  contenteditable="true">—</td>
+    <td class="career-num"  contenteditable="true">—</td>
+    <td class="career-min"  contenteditable="true">—</td>
+  `;
+  tbody.appendChild(tr);
+}
+
+// ── Aggiungi riga infortuni ──────────────────
+function addInjRow() {
+  const tbody = document.getElementById('inj-body');
+  // Rimuovi riga "nessun infortunio" se presente
+  const empty = tbody.querySelector('td[colspan]');
+  if (empty) empty.closest('tr').remove();
+  const tr = document.createElement('tr');
+  tr.className = 'inj-row';
+  tr.innerHTML = `
+    <td contenteditable="true">—</td>
+    <td contenteditable="true">—</td>
+    <td contenteditable="true">—</td>
+    <td contenteditable="true">—</td>
+    <td contenteditable="true">—</td>
+    <td contenteditable="true">—</td>
+  `;
+  tbody.appendChild(tr);
+}
+</script>
+</body>
+</html>
