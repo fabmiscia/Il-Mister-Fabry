@@ -849,6 +849,15 @@ function fallbackTelegram(blob) {
   showToast('📎 PNG scaricato — allegalo nel gruppo Telegram');
 }
 
+// ── Mobile: event delegation su document ──
+['input','change','keyup'].forEach(evt => {
+  document.addEventListener(evt, function(e) {
+    if (e.target.classList.contains('pct-input')) onPctChange(e.target);
+    else if (e.target.classList.contains('crd-input')) onCrdChange(e.target);
+    else if (e.target.id === 'budget-totale') onBudgetChange();
+  }, true);
+});
+
 // ── Init ──────────────────────────────
 loadData();
 </script>
