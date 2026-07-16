@@ -55,6 +55,17 @@ body {
 .btn.tg { background: #229ED9; color: #fff; }
 .btn.reset { background: #333; color: #fff; }
 
+/* ── Toast ───────────────────────────── */
+#toast {
+  position: fixed; bottom: 28px; left: 50%; transform: translateX(-50%);
+  background: #1a1a1a; border: 1px solid #333; color: #fff;
+  font-size: 12px; font-weight: 700; letter-spacing: .5px;
+  padding: 12px 22px; border-radius: 8px; z-index: 9999;
+  opacity: 0; transition: opacity .3s; pointer-events: none;
+  white-space: nowrap;
+}
+#toast.show { opacity: 1; }
+
 /* ── Rosa Card ───────────────────────── */
 #rosa-card {
   width: 100%;
@@ -405,6 +416,7 @@ body {
   <button class="btn" style="background:#e74c3c;color:#fff" onclick="esportaPDF()">📄 PDF</button>
   <button class="btn tg" onclick="condividiTelegram()">✈️ Invia su Telegram</button>
 </div>
+<div id="toast"></div>
 
 <!-- ── Rosa Card ─────────────────────── -->
 <div id="rosa-card">
@@ -763,25 +775,38 @@ function esportaPNG() {
   });
 }
 
+// ── Toast ─────────────────────────────
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg; t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 3500);
+}
+
 // ── Condividi Telegram ────────────────
 function condividiTelegram() {
-  const card = document.getElementById('rosa-card');
-  html2canvas(card, {
-    scale: 2,
-    useCORS: true,
-    backgroundColor: '#111',
-    scrollX: 0,
-    scrollY: -window.scrollY,
-    onclone: fixCloneInputs,
+  html2canvas(document.getElementById('rosa-card'), {
+    scale: 2, useCORS: true, backgroundColor: '#111',
+    scrollX: 0, scrollY: -window.scrollY, onclone: fixCloneInputs,
   }).then(canvas => {
-    const a = document.createElement('a');
-    a.download = 'mia-rosa-classic.png';
-    a.href = canvas.toDataURL('image/png');
-    a.click();
-    setTimeout(() => {
-      window.open(TELEGRAM_LINK, '_blank');
-    }, 800);
+    canvas.toBlob(blob => {
+      const file = new File([blob], 'mia-rosa-classic.png', { type: 'image/png' });
+      if (navigator.share && navigator.canShare && navigator.canShare({ files: [file] })) {
+        navigator.share({ files: [file], title: 'La mia Rosa Classic' })
+          .catch(() => fallbackTelegram(blob));
+      } else {
+        fallbackTelegram(blob);
+      }
+    }, 'image/png');
   });
+}
+
+function fallbackTelegram(blob) {
+  const a = document.createElement('a');
+  a.download = 'mia-rosa-classic.png';
+  a.href = URL.createObjectURL(blob);
+  a.click();
+  setTimeout(() => window.open(TELEGRAM_LINK, '_blank'), 600);
+  showToast('📎 PNG scaricato — allegalo nel gruppo Telegram');
 }
 
 // ── Init ──────────────────────────────
