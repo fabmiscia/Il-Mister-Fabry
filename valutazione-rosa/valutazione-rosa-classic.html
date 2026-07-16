@@ -1,0 +1,735 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>La Mia Rosa • Classic</title>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Montserrat:wght@700;900&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  background: #111;
+  font-family: 'Montserrat', Arial, sans-serif;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 100vh;
+  padding-bottom: 40px;
+}
+
+/* ── Toolbar ─────────────────────────── */
+.toolbar {
+  width: 100%;
+  background: #0a0a0a;
+  border-bottom: 2px solid #C4FF00;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 20px;
+  flex-wrap: wrap;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+.toolbar .label {
+  color: #C4FF00;
+  font-size: 11px;
+  font-weight: 900;
+  letter-spacing: 1px;
+  margin-right: auto;
+}
+.btn {
+  background: #C4FF00;
+  color: #000;
+  border: none;
+  border-radius: 6px;
+  padding: 8px 16px;
+  font-size: 12px;
+  font-weight: 900;
+  cursor: pointer;
+  letter-spacing: .5px;
+  white-space: nowrap;
+}
+.btn:hover { opacity: .85; }
+.btn.tg { background: #229ED9; color: #fff; }
+.btn.reset { background: #333; color: #fff; }
+
+/* ── Rosa Card ───────────────────────── */
+#rosa-card {
+  width: 100%;
+  max-width: 860px;
+  margin: 24px auto 0;
+  padding: 0 16px;
+}
+
+.card-inner {
+  background: #0a0a0a;
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1px solid #1a1a1a;
+}
+
+/* Header */
+.card-header {
+  background: linear-gradient(135deg, #0d0d0d 0%, #1a1a1a 100%);
+  border-bottom: 3px solid #C4FF00;
+  padding: 20px 28px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+.card-header-left { display: flex; flex-direction: column; gap: 4px; }
+.card-eyebrow {
+  font-size: 10px;
+  font-weight: 900;
+  letter-spacing: 3px;
+  color: #C4FF00;
+  text-transform: uppercase;
+}
+.card-title {
+  font-family: 'Anton', Impact, sans-serif;
+  font-size: clamp(22px, 4vw, 36px);
+  color: #fff;
+  letter-spacing: 1px;
+}
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+}
+.header-budget-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+}
+.hb-label {
+  font-size: 8px;
+  font-weight: 900;
+  letter-spacing: 1.5px;
+  color: #555;
+  text-transform: uppercase;
+}
+.hb-input {
+  background: #1a1a1a;
+  border: 1px solid #333;
+  border-radius: 6px;
+  color: #fff;
+  font-family: 'Anton', Impact, sans-serif;
+  font-size: 20px;
+  font-weight: 900;
+  padding: 4px 10px;
+  text-align: center;
+  outline: none;
+  width: 90px;
+  transition: border-color .15s;
+}
+.hb-input:focus { border-color: #C4FF00; }
+.hb-input::placeholder { color: #444; }
+.hb-value {
+  font-family: 'Anton', Impact, sans-serif;
+  font-size: 20px;
+  color: #fff;
+  line-height: 1;
+  padding: 4px 0;
+}
+.badge-classic {
+  background: #C4FF00;
+  color: #000;
+  font-size: 11px;
+  font-weight: 900;
+  padding: 6px 16px;
+  border-radius: 20px;
+  letter-spacing: 1px;
+  white-space: nowrap;
+  align-self: center;
+}
+
+/* Logo upload */
+.header-logo-wrap {
+  width: 68px; height: 68px;
+  border-radius: 50%;
+  border: 2px dashed #333;
+  cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  overflow: hidden;
+  flex-shrink: 0;
+  transition: border-color .15s;
+  background: #1a1a1a;
+  position: relative;
+}
+.header-logo-wrap:hover { border-color: #C4FF00; }
+.header-logo-wrap img { width: 100%; height: 100%; object-fit: contain; }
+#logo-placeholder { font-size: 26px; color: #333; user-select: none; }
+
+/* Nome squadra */
+.card-title-input {
+  font-family: 'Anton', Impact, sans-serif;
+  font-size: clamp(20px, 4vw, 34px);
+  color: #fff;
+  letter-spacing: 1px;
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid transparent;
+  outline: none;
+  max-width: 260px;
+  transition: border-color .15s;
+}
+.card-title-input:focus { border-bottom-color: #C4FF00; }
+.card-title-input::placeholder { color: #fff; opacity: .2; }
+
+/* Nome allenatore */
+.allenatore-row {
+  display: flex; align-items: center; gap: 6px; margin-top: 3px;
+}
+.allenatore-label {
+  font-size: 9px; font-weight: 900; letter-spacing: 2px;
+  color: #555; text-transform: uppercase; flex-shrink: 0;
+}
+.allenatore-input {
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid transparent;
+  color: #888;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  outline: none;
+  max-width: 220px;
+  transition: border-color .15s, color .15s;
+}
+.allenatore-input:focus { border-bottom-color: #555; color: #fff; }
+.allenatore-input::placeholder { color: #555; opacity: 1; }
+
+/* Sezione reparto */
+.reparto {
+  border-bottom: 1px solid #1a1a1a;
+}
+.reparto:last-child { border-bottom: none; }
+
+.rep-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 20px;
+  gap: 8px;
+}
+.rep-title {
+  font-family: 'Anton', Impact, sans-serif;
+  font-size: 13px;
+  letter-spacing: 2px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.rep-dot {
+  width: 10px; height: 10px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+.rep-totals {
+  display: flex;
+  gap: 16px;
+  font-size: 10px;
+  font-weight: 900;
+  color: #666;
+  letter-spacing: .5px;
+}
+.rep-totals span { white-space: nowrap; }
+.rep-totals .val { color: #C4FF00; }
+
+/* Colori reparto */
+.por .rep-header { background: rgba(68,136,255,.08); border-left: 3px solid #4488ff; }
+.por .rep-dot { background: #4488ff; }
+.por .rep-title { color: #4488ff; }
+
+.dif .rep-header { background: rgba(196,255,0,.06); border-left: 3px solid #C4FF00; }
+.dif .rep-dot { background: #C4FF00; }
+.dif .rep-title { color: #C4FF00; }
+
+.cen .rep-header { background: rgba(0,204,255,.06); border-left: 3px solid #00ccff; }
+.cen .rep-dot { background: #00ccff; }
+.cen .rep-title { color: #00ccff; }
+
+.att .rep-header { background: rgba(255,68,68,.08); border-left: 3px solid #ff4444; }
+.att .rep-dot { background: #ff4444; }
+.att .rep-title { color: #ff4444; }
+
+/* Riga giocatore */
+.player-row {
+  display: grid;
+  grid-template-columns: 36px 1fr 90px 90px;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 20px;
+  border-top: 1px solid #141414;
+  transition: background .1s;
+}
+.player-row:hover { background: #0f0f0f; }
+
+.slot-badge {
+  font-size: 9px;
+  font-weight: 900;
+  letter-spacing: 1px;
+  color: #333;
+  text-align: center;
+  padding: 3px 4px;
+  border-radius: 4px;
+  border: 1px solid #222;
+  line-height: 1.2;
+}
+
+.player-name {
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid #222;
+  color: #fff;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  padding: 4px 0;
+  outline: none;
+  width: 100%;
+  transition: border-color .15s;
+}
+.player-name:focus { border-bottom-color: #C4FF00; }
+.player-name::placeholder { color: #fff; font-weight: 700; opacity: .45; }
+
+.num-input {
+  background: #111;
+  border: 1px solid #1e1e1e;
+  border-radius: 5px;
+  color: #fff;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 12px;
+  font-weight: 900;
+  padding: 4px 8px;
+  text-align: right;
+  outline: none;
+  width: 100%;
+  transition: border-color .15s;
+}
+.num-input:focus { border-color: #C4FF00; }
+.num-input::placeholder { color: #fff; opacity: .35; }
+
+/* Intestazione colonne */
+.col-headers {
+  display: grid;
+  grid-template-columns: 36px 1fr 90px 90px;
+  gap: 8px;
+  padding: 5px 20px 4px;
+  background: #050505;
+  border-top: 1px solid #1a1a1a;
+}
+.col-headers span {
+  font-size: 8px;
+  font-weight: 900;
+  letter-spacing: 1.5px;
+  color: #444;
+  text-transform: uppercase;
+  text-align: right;
+}
+.col-headers span:first-child { text-align: left; }
+.col-headers span:nth-child(2) { text-align: left; }
+
+/* Totale generale */
+.grand-total {
+  background: #0d0d0d;
+  border-top: 2px solid #C4FF00;
+  padding: 14px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+.gt-label {
+  font-family: 'Anton', Impact, sans-serif;
+  font-size: 13px;
+  letter-spacing: 2px;
+  color: #555;
+}
+.gt-values {
+  display: flex;
+  gap: 24px;
+  flex-wrap: wrap;
+}
+.gt-item { display: flex; flex-direction: column; align-items: flex-end; gap: 2px; }
+.gt-item .gt-num {
+  font-family: 'Anton', Impact, sans-serif;
+  font-size: 22px;
+  color: #C4FF00;
+  line-height: 1;
+}
+.gt-item .gt-sub {
+  font-size: 8px;
+  font-weight: 900;
+  letter-spacing: 1.5px;
+  color: #444;
+  text-transform: uppercase;
+}
+
+/* Footer card */
+.card-footer {
+  background: #050505;
+  padding: 10px 20px;
+  text-align: center;
+  font-size: 9px;
+  font-weight: 900;
+  letter-spacing: 2px;
+  color: #222;
+}
+</style>
+</head>
+<body>
+
+<!-- ── Toolbar ──────────────────────── -->
+<div class="toolbar">
+  <span class="label">⚽ LA MIA ROSA • CLASSIC</span>
+  <button class="btn reset" onclick="resetRosa()">✚ Nuova Rosa</button>
+  <button class="btn" onclick="esportaPNG()">📸 Esporta PNG</button>
+  <button class="btn tg" onclick="condividiTelegram()">✈️ Invia su Telegram</button>
+</div>
+
+<!-- ── Rosa Card ─────────────────────── -->
+<div id="rosa-card">
+<div class="card-inner">
+
+  <!-- Header -->
+  <div class="card-header">
+    <div class="header-logo-wrap" onclick="document.getElementById('logo-input').click()" title="Clicca per caricare il logo">
+      <img id="header-logo" src="" alt="" style="display:none">
+      <div id="logo-placeholder">🛡️</div>
+      <input type="file" id="logo-input" accept="image/*" style="display:none" onchange="loadLogo(this)">
+    </div>
+    <div class="card-header-left">
+      <div class="card-eyebrow">Asta Fantacalcio 2026-27</div>
+      <input class="card-title-input" id="nome-squadra" type="text" placeholder="NOME SQUADRA" oninput="saveData()">
+      <div class="allenatore-row">
+        <span class="allenatore-label">Coach</span>
+        <input class="allenatore-input" id="nome-allenatore" type="text" placeholder="Nome allenatore" oninput="saveData()">
+      </div>
+    </div>
+    <div class="header-right">
+      <div class="header-budget-box">
+        <div class="hb-label">CREDITI ASTA</div>
+        <input class="hb-input" id="budget-totale" type="number" min="0" placeholder="500" oninput="saveData()">
+      </div>
+      <div class="header-budget-box">
+        <div class="hb-label">CREDITI USATI</div>
+        <div class="hb-value" id="hb-usati">0</div>
+      </div>
+      <div class="header-budget-box">
+        <div class="hb-label">RIMANENTI</div>
+        <div class="hb-value" id="hb-rimasti" style="color:#C4FF00">—</div>
+      </div>
+      <div class="badge-classic">CLASSIC</div>
+    </div>
+  </div>
+
+  <!-- Intestazione colonne -->
+  <div class="col-headers">
+    <span></span>
+    <span>Giocatore</span>
+    <span>% Budget</span>
+    <span>Crediti</span>
+  </div>
+
+  <!-- ── PORTIERI ── -->
+  <div class="reparto por">
+    <div class="rep-header">
+      <div class="rep-title"><div class="rep-dot"></div>PORTIERI</div>
+      <div class="rep-totals">
+        <span>Budget: <span class="val" id="tot-pct-por">0%</span></span>
+        <span>Crediti: <span class="val" id="tot-crd-por">0</span></span>
+      </div>
+    </div>
+    <div id="rows-por"></div>
+  </div>
+
+  <!-- ── DIFENSORI ── -->
+  <div class="reparto dif">
+    <div class="rep-header">
+      <div class="rep-title"><div class="rep-dot"></div>DIFENSORI</div>
+      <div class="rep-totals">
+        <span>Budget: <span class="val" id="tot-pct-dif">0%</span></span>
+        <span>Crediti: <span class="val" id="tot-crd-dif">0</span></span>
+      </div>
+    </div>
+    <div id="rows-dif"></div>
+  </div>
+
+  <!-- ── CENTROCAMPISTI ── -->
+  <div class="reparto cen">
+    <div class="rep-header">
+      <div class="rep-title"><div class="rep-dot"></div>CENTROCAMPISTI</div>
+      <div class="rep-totals">
+        <span>Budget: <span class="val" id="tot-pct-cen">0%</span></span>
+        <span>Crediti: <span class="val" id="tot-crd-cen">0</span></span>
+      </div>
+    </div>
+    <div id="rows-cen"></div>
+  </div>
+
+  <!-- ── ATTACCANTI ── -->
+  <div class="reparto att">
+    <div class="rep-header">
+      <div class="rep-title"><div class="rep-dot"></div>ATTACCANTI</div>
+      <div class="rep-totals">
+        <span>Budget: <span class="val" id="tot-pct-att">0%</span></span>
+        <span>Crediti: <span class="val" id="tot-crd-att">0</span></span>
+      </div>
+    </div>
+    <div id="rows-att"></div>
+  </div>
+
+  <!-- Totale generale -->
+  <div class="grand-total">
+    <div class="gt-label">TOTALE ROSA</div>
+    <div class="gt-values">
+      <div class="gt-item">
+        <div class="gt-num" id="grand-pct">0%</div>
+        <div class="gt-sub">Budget totale</div>
+      </div>
+      <div class="gt-item">
+        <div class="gt-num" id="grand-crd">0</div>
+        <div class="gt-sub">Crediti totali</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card-footer">IL MISTER FABRY • ilmisterfabry.it</div>
+
+</div><!-- /card-inner -->
+</div><!-- /rosa-card -->
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script>
+const TELEGRAM_LINK = 'https://t.me/+7ZtKXl33LOQxODhk';
+
+const REPARTI = [
+  { id: 'por', label: 'P',  slots: 3  },
+  { id: 'dif', label: 'D',  slots: 8  },
+  { id: 'cen', label: 'C',  slots: 6  },
+  { id: 'att', label: 'A',  slots: 6  },
+];
+
+const BADGE_COLORS = {
+  por: { bg: 'rgba(68,136,255,.25)',  color: '#4488ff', border: '#4488ff' },
+  dif: { bg: 'rgba(196,255,0,.2)',    color: '#C4FF00', border: '#C4FF00' },
+  cen: { bg: 'rgba(0,204,255,.2)',    color: '#00ccff', border: '#00ccff' },
+  att: { bg: 'rgba(255,68,68,.25)',   color: '#ff4444', border: '#ff4444' },
+};
+
+// ── Build rows ────────────────────────
+function buildRows() {
+  REPARTI.forEach(({ id, label, slots }) => {
+    const c = BADGE_COLORS[id];
+    const container = document.getElementById('rows-' + id);
+    container.innerHTML = '';
+    for (let i = 1; i <= slots; i++) {
+      const row = document.createElement('div');
+      row.className = 'player-row';
+      row.innerHTML = `
+        <div class="slot-badge" style="background:${c.bg};color:${c.color};border-color:${c.border};font-weight:900;">${label}${i}</div>
+        <input class="player-name" type="text" placeholder="Nome giocatore" data-rep="${id}" data-idx="${i}" oninput="saveData()">
+        <input class="num-input pct-input" type="number" min="0" max="100" placeholder="%" data-rep="${id}" oninput="updateTotals(); saveData()">
+        <input class="num-input crd-input" type="number" min="0" placeholder="cr" data-rep="${id}" oninput="updateTotals(); saveData()">
+      `;
+      container.appendChild(row);
+    }
+  });
+}
+
+// ── Totali ────────────────────────────
+function updateTotals() {
+  let grandPct = 0, grandCrd = 0;
+
+  REPARTI.forEach(({ id }) => {
+    const pcts = [...document.querySelectorAll(`.pct-input[data-rep="${id}"]`)];
+    const crds = [...document.querySelectorAll(`.crd-input[data-rep="${id}"]`)];
+
+    const totPct = pcts.reduce((s, el) => s + (parseFloat(el.value) || 0), 0);
+    const totCrd = crds.reduce((s, el) => s + (parseFloat(el.value) || 0), 0);
+
+    document.getElementById('tot-pct-' + id).textContent = totPct.toFixed(1) + '%';
+    document.getElementById('tot-crd-' + id).textContent = Math.round(totCrd);
+
+    grandPct += totPct;
+    grandCrd += totCrd;
+  });
+
+  document.getElementById('grand-pct').textContent = grandPct.toFixed(1) + '%';
+  document.getElementById('grand-crd').textContent = Math.round(grandCrd);
+
+  // Header: crediti usati e rimanenti
+  const usati = Math.round(grandCrd);
+  document.getElementById('hb-usati').textContent = usati;
+  const totale = parseFloat(document.getElementById('budget-totale').value) || null;
+  const rimEl = document.getElementById('hb-rimasti');
+  if (totale !== null) {
+    const rim = totale - usati;
+    rimEl.textContent = rim;
+    rimEl.style.color = rim >= 0 ? '#C4FF00' : '#ff4444';
+  } else {
+    rimEl.textContent = '—';
+    rimEl.style.color = '#C4FF00';
+  }
+}
+
+// ── Logo ──────────────────────────────
+function loadLogo(input) {
+  const file = input.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = e => {
+    setLogoSrc(e.target.result);
+    localStorage.setItem('rosa_classic_logo', e.target.result);
+  };
+  reader.readAsDataURL(file);
+}
+
+function setLogoSrc(src) {
+  const img = document.getElementById('header-logo');
+  const ph  = document.getElementById('logo-placeholder');
+  if (src) {
+    img.src = src;
+    img.style.display = 'block';
+    ph.style.display  = 'none';
+  } else {
+    img.style.display = 'none';
+    ph.style.display  = 'block';
+  }
+}
+
+// ── LocalStorage ──────────────────────
+function saveData() {
+  const state = {
+    squadra:    document.getElementById('nome-squadra').value,
+    allenatore: document.getElementById('nome-allenatore').value,
+    budget:     document.getElementById('budget-totale').value,
+  };
+  REPARTI.forEach(({ id, slots }) => {
+    state[id] = [];
+    for (let i = 1; i <= slots; i++) {
+      const rows = document.querySelectorAll(`#rows-${id} .player-row`);
+      const row = rows[i - 1];
+      if (!row) return;
+      state[id].push({
+        name: row.querySelector('.player-name').value,
+        pct:  row.querySelector('.pct-input').value,
+        crd:  row.querySelector('.crd-input').value,
+      });
+    }
+  });
+  localStorage.setItem('rosa_classic_v1', JSON.stringify(state));
+}
+
+function loadData() {
+  const logo = localStorage.getItem('rosa_classic_logo');
+  if (logo) setLogoSrc(logo);
+
+  const raw = localStorage.getItem('rosa_classic_v1');
+  if (!raw) return;
+  try {
+    const state = JSON.parse(raw);
+    if (state.squadra)    document.getElementById('nome-squadra').value    = state.squadra;
+    if (state.allenatore) document.getElementById('nome-allenatore').value = state.allenatore;
+    if (state.budget)     document.getElementById('budget-totale').value   = state.budget;
+    REPARTI.forEach(({ id }) => {
+      if (!state[id]) return;
+      const rows = document.querySelectorAll(`#rows-${id} .player-row`);
+      state[id].forEach((p, i) => {
+        if (!rows[i]) return;
+        rows[i].querySelector('.player-name').value = p.name || '';
+        rows[i].querySelector('.pct-input').value  = p.pct  || '';
+        rows[i].querySelector('.crd-input').value  = p.crd  || '';
+      });
+    });
+    updateTotals();
+  } catch(_) {}
+}
+
+function resetRosa() {
+  if (!confirm('Vuoi creare una nuova rosa? I dati attuali verranno cancellati.')) return;
+  localStorage.removeItem('rosa_classic_v1');
+  localStorage.removeItem('rosa_classic_logo');
+  document.getElementById('nome-squadra').value    = '';
+  document.getElementById('nome-allenatore').value = '';
+  document.getElementById('budget-totale').value   = '';
+  setLogoSrc('');
+  buildRows();
+  updateTotals();
+}
+
+// ── onclone: replace inputs with divs so i valori appaiono nel PNG ──
+function fixCloneInputs(doc) {
+  doc.querySelectorAll('input[type="text"], input[type="number"]').forEach(inp => {
+    const span = doc.createElement('span');
+    span.textContent = inp.value;
+    const cs = window.getComputedStyle(inp);
+    span.style.fontFamily   = cs.fontFamily;
+    span.style.fontSize     = cs.fontSize;
+    span.style.fontWeight   = cs.fontWeight;
+    span.style.color        = inp.value ? cs.color : '#333';
+    span.style.letterSpacing = cs.letterSpacing;
+    span.style.display      = 'block';
+    span.style.padding      = cs.padding;
+    span.style.width        = cs.width;
+    span.style.maxWidth     = cs.maxWidth;
+    inp.replaceWith(span);
+  });
+  // Nascondi l'input file logo
+  doc.querySelectorAll('input[type="file"]').forEach(el => el.remove());
+}
+
+// ── Export PNG ────────────────────────
+function esportaPNG() {
+  const squadra = document.getElementById('nome-squadra').value || 'mia-rosa';
+  const card = document.getElementById('rosa-card');
+  html2canvas(card, {
+    scale: 2,
+    useCORS: true,
+    backgroundColor: '#111',
+    scrollX: 0,
+    scrollY: -window.scrollY,
+    onclone: fixCloneInputs,
+  }).then(canvas => {
+    const a = document.createElement('a');
+    a.download = `rosa-${squadra.toLowerCase().replace(/\s+/g,'-')}.png`;
+    a.href = canvas.toDataURL('image/png');
+    a.click();
+  });
+}
+
+// ── Condividi Telegram ────────────────
+function condividiTelegram() {
+  const card = document.getElementById('rosa-card');
+  html2canvas(card, {
+    scale: 2,
+    useCORS: true,
+    backgroundColor: '#111',
+    scrollX: 0,
+    scrollY: -window.scrollY,
+    onclone: fixCloneInputs,
+  }).then(canvas => {
+    const a = document.createElement('a');
+    a.download = 'mia-rosa-classic.png';
+    a.href = canvas.toDataURL('image/png');
+    a.click();
+    setTimeout(() => {
+      window.open(TELEGRAM_LINK, '_blank');
+    }, 800);
+  });
+}
+
+// ── Init ──────────────────────────────
+buildRows();
+loadData();
+</script>
+</body>
+</html>
