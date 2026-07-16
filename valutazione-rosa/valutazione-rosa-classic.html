@@ -373,6 +373,16 @@ body {
   text-transform: uppercase;
 }
 
+/* ── Stampa / PDF ────────────────────── */
+@media print {
+  * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+  body { background: #111 !important; padding: 0; margin: 0; }
+  .toolbar { display: none !important; }
+  #rosa-card { margin: 0 !important; padding: 0 !important; max-width: 100% !important; }
+  .card-inner { border-radius: 0 !important; }
+  @page { margin: 0; size: A4 portrait; }
+}
+
 /* Footer card */
 .card-footer {
   background: #050505;
@@ -391,7 +401,8 @@ body {
 <div class="toolbar">
   <span class="label">⚽ LA MIA ROSA • CLASSIC</span>
   <button class="btn reset" onclick="resetRosa()">✚ Nuova Rosa</button>
-  <button class="btn" onclick="esportaPNG()">📸 Esporta PNG</button>
+  <button class="btn" onclick="esportaPNG()">📸 PNG</button>
+  <button class="btn" style="background:#e74c3c;color:#fff" onclick="esportaPDF()">📄 PDF</button>
   <button class="btn tg" onclick="condividiTelegram()">✈️ Invia su Telegram</button>
 </div>
 
@@ -729,6 +740,9 @@ function fixCloneInputs(doc) {
   // Nascondi l'input file logo
   doc.querySelectorAll('input[type="file"]').forEach(el => el.remove());
 }
+
+// ── Export PDF ────────────────────────
+function esportaPDF() { window.print(); }
 
 // ── Export PNG ────────────────────────
 function esportaPNG() {
