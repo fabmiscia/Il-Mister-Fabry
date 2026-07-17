@@ -1,10 +1,9 @@
 <!DOCTYPE html>
-<html lang="it">
-<head>
+<html lang="it"><head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Analisi SWOT • Approccio all'Asta</title>
-<link href="https://fonts.googleapis.com/css2?family=Anton&family=Montserrat:wght@600;700;900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Anton&amp;family=Montserrat:wght@600;700;900&amp;display=swap" rel="stylesheet">
 <style>
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -271,12 +270,12 @@ body {
   <div class="tb-sep"></div>
   <button class="btn-export" onclick="esportaPNG()">📸 Esporta PNG</button>
   <button class="btn-github" onclick="pubblicaGitHub()">🚀 Pubblica su GitHub</button>
-  <span id="gh-status"></span>
+  <span id="gh-status" style="color: var(--muted);">Pubblicazione in corso…</span>
 </div>
 
 <!-- ── Stage ─────────────────────────── -->
 <div class="stage">
-<div id="swot-card">
+<div id="swot-card" class="" style="transform: scale(0.975); margin-bottom: -18px;">
 
   <!-- Header -->
   <div class="card-header">
@@ -313,11 +312,11 @@ body {
         </div>
       </div>
       <ul class="q-list">
-        <li contenteditable="true">Conosci i prezzi medi delle aste precedenti (annata per annata della lega) e quelli in corso</li>
-        <li contenteditable="true">Hai una strategia chiara: AGGRESSIVA/ATTENDISTA/OPPORTUNISTA/IBRIDA e una divisione di budget per reparto</li>
-        <li contenteditable="true">Porti una lista di obiettivo primari e alternative già pronte (SHORTLIST)</li>
-        <li contenteditable="true">Hai letto le conferenze stampa, informato su tutto il precampionato e hai studiato ogni allenatore: modulo stile di gioco chi valorizza e chi penalizza</li>
-        <li contenteditable="true">Sei aggiornato anche sui contratti, movimenti di mercato e rumors attendibili.</li>
+        <li contenteditable="true">CONOSCI: I PREZZI MEDI precedenti e quelli in corso</li>
+        <li contenteditable="true">HAI UNA STRATEGIA CHIARA e una divisione di budget per reparto</li>
+        <li contenteditable="true">HAI UNA LISTA DI OBIETTIVI PRIMARI e alternative già pronte (SHORTLIST)</li>
+        <li contenteditable="true">PREPARAZIONE MEDIATICA: Hai letto le conferenze stampa, informato su tutto il precampionato e hai studiato ogni allenatore: modulo stile di gioco chi valorizza e chi penalizza</li>
+        <li contenteditable="true">CONOSCI: Partecipanti della tua lega e le loro debolezze: puoi lanciare esche e trappole e far spendere crediti.</li>
       </ul>
     </div>
 
@@ -332,11 +331,11 @@ body {
         </div>
       </div>
       <ul class="q-list">
-        <li contenteditable="true">Entri senza aver studiato i prezzi: non sai collocare un giocatore in una range di prezzo e finisci di strapagare buona parte dei giocatori</li>
-        <li contenteditable="true">Lista obiettivi troppo corta o lunga: quando l'obiettivo sfuma, resti bloccato senza piano B oppure aspetti aspetti e alla fine ti riduci a prendere la tua 6 scelta a prezzi esorbitanti</li>
-        <li contenteditable="true">Spendi tutto nelle prime chiamate per 3 giocatori, ti perdi tutte le opportunità e fai tutta l'asta con l'acqua alla gola</li>
-        <li contenteditable="true">Ti fai prendere dal tifo, dal duello con un tuo rivale: rilanci per non perdere o per portarti a casa un giocatore della tua squadra, non perché ne valga la pena</li>
-        <li contenteditable="true">Non sai riconoscere le esche o le trappole, sei vittima di HYPE del momento e FOMO</li>
+        <li contenteditable="true">IGNORI I PREZZI E LO STORICO: non sai collocare un giocatore in una range di prezzo e finisci di strapagare buona parte dei giocatori</li>
+        <li contenteditable="true">OBIETTIVI E STRATEGIA POCO CHIARI: quando l'obiettivo sfuma, resti bloccato senza piano B oppure aspetti aspetti e alla fine ti riduci a prendere la tua 6 scelta a prezzi esorbitanti.&nbsp;</li>
+        <li contenteditable="true">BRUCI I CREDITI: Spendi tutto nelle prime chiamate per 3 giocatori o strapaghi un giocatore, ti perdi tutte le opportunità e fai tutta l'asta con l'acqua alla gola</li>
+        <li contenteditable="true">FATTORE TIFO, PUPILLI, DUELLI: Ti fai prendere dal tifo, dal duello con un tuo rivale: rilanci per non perdere o per portarti a casa un giocatore a ogni costo</li>
+        <li contenteditable="true">SEI VITTIMA di HYPE del momento e FOMO: sei il primo a cadere nelle trappole</li>
       </ul>
     </div>
 
@@ -351,11 +350,11 @@ body {
         </div>
       </div>
       <ul class="q-list">
-        <li contenteditable="true">Sai riconoscere con lo studio dei prezzi medi possibili BUG DI PREZZO</li>
-        <li contenteditable="true">Sai riconoscere, prevedere e anticipare un possibile BUG DI RUOLO</li>
-        <li contenteditable="true">Portatori di bonus nascosti (possibili nuovi rigoristi, battiitori piazzati e corner)</li>
-        <li contenteditable="true">Tutti ormai sono omologati e allineati, sviluppa delle convinzione e intuizioni ( PENSIERO LATERALE)</li>
-        <li contenteditable="true">Sii FLESSIBILE cambia strategia anche in corsa sapendo prevedere l'andamento</li>
+        <li contenteditable="true">BUG DI PREZZO: Sai riconoscerli e capire chi prendere come AFFARE</li>
+        <li contenteditable="true">BUG DI RUOLO: Sai identificarli e capire chi realmente può farti la differenza senza strapagarlo</li>
+        <li contenteditable="true">BONUS NASCOSTI: sai identificare possibili nuovi rigoristi, battiitori piazzati e corner)</li>
+        <li contenteditable="true">PENSIERO LATERALE: Tutti ormai sono omologati e allineati, sviluppa delle convinzione e intuizioni e cavalcale con fermezza</li>
+        <li contenteditable="true">Sii FLESSIBILE cambia strategia anche in corsa sapendo valutare l'andamento</li>
       </ul>
     </div>
 
@@ -370,11 +369,11 @@ body {
         </div>
       </div>
       <ul class="q-list">
-        <li contenteditable="true">Ti dai dei paletti troppo rigidi: se un tuo obiettivo va a un credito in piu lasci perdere</li>
-        <li contenteditable="true">Tendenza Talent: prendi troppe scommesse</li>
-        <li contenteditable="true">Tendenza croce rossa: prendi troppi giocatori Injoury Prone o infortunati</li>
-        <li contenteditable="true">Bruci slot facendo chiamate senza senso pensando siano esche alla fine</li>
-        <li contenteditable="true">Non c'è un tuo pensiero all'asta: copi la strategia di qualcuno senza nemmeno capirla</li>
+        <li contenteditable="true">PALETTI TROPPO RIGIDI se un tuo obiettivo va a un credito in piu lasci perdere</li>
+        <li contenteditable="true">TENDENZA TALENT e INCOGNITE: prendi troppe scommesse o casi di mercato</li>
+        <li contenteditable="true">TENDENZA CROCE ROSSA prendi troppi giocatori Injoury Prone o infortunati</li>
+        <li contenteditable="true">BRUCI SLOT: per la fretta di finire l'asta o perché pensi che siano esche da tirare alla fine</li>
+        <li contenteditable="true">COPI o EMULI: copi la strategia di qualcuno senza nemmeno capirla</li>
       </ul>
     </div>
 
@@ -476,5 +475,6 @@ async function pubblicaGitHub() {
   }
 }
 </script>
-</body>
-</html>
+
+
+</body></html>
