@@ -206,7 +206,7 @@ body.edit-mode .add-row { display:flex; }
     <div>
       <div class="section-title">
         Iscritti confermati
-        <span class="cnt" id="cnt-classico">3</span>
+        <span class="cnt" id="cnt-classico">4</span>
       </div>
       <table class="iscritti-table">
         <thead>
@@ -220,7 +220,7 @@ body.edit-mode .add-row { display:flex; }
           </tr>
         </thead>
         <tbody id="tbody-classico">
-          <tr class="data-row"><td><span class="num-circle">1</span></td><td>Oreste</td><td>Iacopino</td><td>14 luglio</td><td><span class="badge-pagato">✅ Pagato</span></td><td class="edit-only"><button class="btn-del" onclick="delIscritto('classico',0)">✕</button></td></tr><tr class="data-row"><td><span class="num-circle">2</span></td><td>Giuseppe</td><td>Castiglia</td><td>13 luglio</td><td><span class="badge-pagato">✅ Pagato</span></td><td class="edit-only"><button class="btn-del" onclick="delIscritto('classico',1)">✕</button></td></tr><tr class="data-row"><td><span class="num-circle">3</span></td><td>Fabrizio</td><td>Miscia</td><td>13 liglio</td><td><span class="badge-pagato">✅ Pagato</span></td><td class="edit-only"><button class="btn-del" onclick="delIscritto('classico',2)">✕</button></td></tr><tr id="empty-classico" style="display: none;">
+          <tr class="data-row"><td><span class="num-circle">1</span></td><td>Oreste</td><td>Iacopino</td><td>14 luglio</td><td><span class="badge-pagato">✅ Pagato</span></td><td class="edit-only"><button class="btn-del" onclick="delIscritto('classico',0)">✕</button></td></tr><tr class="data-row"><td><span class="num-circle">2</span></td><td>Giuseppe</td><td>Castiglia</td><td>13 luglio</td><td><span class="badge-pagato">✅ Pagato</span></td><td class="edit-only"><button class="btn-del" onclick="delIscritto('classico',1)">✕</button></td></tr><tr class="data-row"><td><span class="num-circle">3</span></td><td>Fabrizio</td><td>Miscia</td><td>13 liglio</td><td><span class="badge-pagato">✅ Pagato</span></td><td class="edit-only"><button class="btn-del" onclick="delIscritto('classico',2)">✕</button></td></tr><tr class="data-row"><td><span class="num-circle">4</span></td><td>Marco</td><td>Loda</td><td>17 luglio</td><td><span class="badge-pagato">✅ Pagato</span></td><td class="edit-only"><button class="btn-del" onclick="delIscritto('classico',3)">✕</button></td></tr><tr id="empty-classico" style="display: none;">
             <td colspan="6" style="text-align:center;color:#333;font-size:12px;letter-spacing:2px;padding:32px">
               Nessun iscritto ancora
             </td>
@@ -251,7 +251,7 @@ const GH_FILE = 'iscrizione-torneo-classic-mihajlovic.html';
 const STORE_KEY = 'iscritti-mihajlovic';
 
 // ── DATI ──
-let data = {"classico":[{"nome":"Oreste","cogn":"Iacopino","data":"14 luglio","stato":"pagato"},{"nome":"Giuseppe","cogn":"Castiglia","data":"13 luglio","stato":"pagato"},{"nome":"Fabrizio","cogn":"Miscia","data":"13 liglio","stato":"pagato"}]}; // __DATA_EMBED__
+let data = {"classico":[{"nome":"Oreste","cogn":"Iacopino","data":"14 luglio","stato":"pagato"},{"nome":"Giuseppe","cogn":"Castiglia","data":"13 luglio","stato":"pagato"},{"nome":"Fabrizio","cogn":"Miscia","data":"13 liglio","stato":"pagato"},{"nome":"Marco","cogn":"Loda","data":"17 luglio","stato":"pagato"}]}; // __DATA_EMBED__
 function saveData(){localStorage.setItem(STORE_KEY, JSON.stringify(data));}
 function loadData(){
   try{ const d=JSON.parse(localStorage.getItem(STORE_KEY)||'null'); if(d)data=d; }catch(e){}
