@@ -190,5 +190,29 @@
     "file": "nuovo_arrivo_Harry_Winks__Cagliari.html",
     "giocatore": "Harry Winks",
     "squadra": "Cagliari"
+  },
+  {
+    "file": "nuovo_arrivo_Mergim_Vojvoda__Udinese.html",
+    "giocatore": "Mërgim Vojvoda",
+    "squadra": "Udinese",
+    "ruolo": "D"
+  },
+  {
+    "file": "nuovo_arrivo_Hamed_Traore__Genoa.html",
+    "giocatore": "Hamed Traoré",
+    "squadra": "Genoa",
+    "ruolo": "C"
+  },
+  {
+    "file": "nuovo_arrivo_Zeki_Celik__Juventus.html",
+    "giocatore": "Zeki Çelik",
+    "squadra": "Juventus",
+    "ruolo": "D"
+  },
+  {
+    "file": "nuovo_arrivo_Christ_Inao_Oulai__Fiorentina.html",
+    "giocatore": "Christ Inao Oulaï",
+    "squadra": "Fiorentina",
+    "ruolo": "C"
   }
 ]
