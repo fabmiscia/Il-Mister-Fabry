@@ -200,7 +200,7 @@ body.edit-mode .add-row { display:flex; }
     <div>
       <div class="section-title">
         Iscritti confermati
-        <span class="cnt" id="cnt-mondonico">3</span>
+        <span class="cnt" id="cnt-mondonico">4</span>
       </div>
       <table class="iscritti-table">
         <thead>
@@ -214,7 +214,7 @@ body.edit-mode .add-row { display:flex; }
           </tr>
         </thead>
         <tbody id="tbody-mondonico">
-          <tr class="data-row"><td><span class="num-circle">1</span></td><td>Antonio</td><td>Iacovelli</td><td>10 luglio</td><td><span class="badge-pagato">✅ Pagato</span></td><td class="edit-only"><button class="btn-del" onclick="delIscritto('mondonico',0)">✕</button></td></tr><tr class="data-row"><td><span class="num-circle">2</span></td><td>Fabrizio</td><td>Misca</td><td>9 luglio</td><td><span class="badge-pagato">✅ Pagato</span></td><td class="edit-only"><button class="btn-del" onclick="delIscritto('mondonico',1)">✕</button></td></tr><tr class="data-row"><td><span class="num-circle">3</span></td><td>Paolo</td><td>Di Capua</td><td>13 luglio</td><td><span class="badge-pagato">✅ Pagato</span></td><td class="edit-only"><button class="btn-del" onclick="delIscritto('mondonico',2)">✕</button></td></tr><tr id="empty-mondonico" style="display: none;">
+          <tr class="data-row"><td><span class="num-circle">1</span></td><td>Antonio</td><td>Iacovelli</td><td>10 luglio</td><td><span class="badge-pagato">✅ Pagato</span></td><td class="edit-only"><button class="btn-del" onclick="delIscritto('mondonico',0)">✕</button></td></tr><tr class="data-row"><td><span class="num-circle">2</span></td><td>Fabrizio</td><td>Misca</td><td>9 luglio</td><td><span class="badge-pagato">✅ Pagato</span></td><td class="edit-only"><button class="btn-del" onclick="delIscritto('mondonico',1)">✕</button></td></tr><tr class="data-row"><td><span class="num-circle">3</span></td><td>Paolo</td><td>Di Capua</td><td>13 luglio</td><td><span class="badge-pagato">✅ Pagato</span></td><td class="edit-only"><button class="btn-del" onclick="delIscritto('mondonico',2)">✕</button></td></tr><tr class="data-row"><td><span class="num-circle">4</span></td><td>Salvatore</td><td>Martelli</td><td>20 luglio</td><td><span class="badge-pagato">✅ Pagato</span></td><td class="edit-only"><button class="btn-del" onclick="delIscritto('mondonico',3)">✕</button></td></tr><tr id="empty-mondonico" style="display: none;">
             <td colspan="6" style="text-align:center;color:#333;font-size:12px;letter-spacing:2px;padding:32px">
               Nessun iscritto ancora
             </td>
@@ -243,7 +243,7 @@ const GH_REPO = 'fabmiscia/Il-Mister-Fabry';
 const GH_FILE = 'iscrizione-torneo-mantra-mondonico.html';
 const STORE_KEY = 'iscritti-mondonico';
 
-let data = {"mondonico":[{"nome":"Antonio","cogn":"Iacovelli","data":"10 luglio","stato":"pagato"},{"nome":"Fabrizio","cogn":"Misca","data":"9 luglio","stato":"pagato"},{"nome":"Paolo","cogn":"Di Capua","data":"13 luglio","stato":"pagato"}]}; // __DATA_EMBED__
+let data = {"mondonico":[{"nome":"Antonio","cogn":"Iacovelli","data":"10 luglio","stato":"pagato"},{"nome":"Fabrizio","cogn":"Misca","data":"9 luglio","stato":"pagato"},{"nome":"Paolo","cogn":"Di Capua","data":"13 luglio","stato":"pagato"},{"nome":"Salvatore","cogn":"Martelli","data":"20 luglio","stato":"pagato"}]}; // __DATA_EMBED__
 function saveData(){localStorage.setItem(STORE_KEY, JSON.stringify(data));}
 function loadData(){
   try{ const d=JSON.parse(localStorage.getItem(STORE_KEY)||'null'); if(d)data=d; }catch(e){}
