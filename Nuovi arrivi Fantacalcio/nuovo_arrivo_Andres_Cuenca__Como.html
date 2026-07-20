@@ -643,9 +643,9 @@ table.inj-tbl thead th {
 <body style="overflow-x: hidden;">
 
 <div class="nav">
-  <button class="" onclick="go(1)">📋 Info</button>
+  <button class="active" onclick="go(1)">📋 Info</button>
   <button onclick="go(2)" class="">📊 Statistiche</button>
-  <button onclick="go(3)" class="active">⭐ Consigli Fantacalcio</button>
+  <button onclick="go(3)" class="">⭐ Consigli Fantacalcio</button>
 </div>
 
 <!-- Toolbar -->
@@ -653,9 +653,9 @@ table.inj-tbl thead th {
   <button onclick="exportPNG(1)">💾 Slide 1</button>
   <button onclick="exportPNG(2)">💾 Slide 2</button>
   <button onclick="exportPNG(3)">💾 Slide 3</button>
-  <button style="background: rgb(255, 215, 0); color: rgb(0, 0, 0); border-width: medium; border-style: none; border-color: currentcolor; border-image: initial; padding: 7px 18px; border-radius: 6px; cursor: pointer; font-size: 12px; font-weight: 800; letter-spacing: 0.5px; transition: 0.15s;" onmouseover="this.style.background='#ffe55c'" onmouseout="this.style.background='#FFD700'" onclick="salvaEPubblica()">💾🚀 Salva + Pubblica</button>
+  <button style="background: rgb(255, 229, 92); color: rgb(0, 0, 0); border-width: medium; border-style: none; border-color: currentcolor; border-image: initial; padding: 7px 18px; border-radius: 6px; cursor: pointer; font-size: 12px; font-weight: 800; letter-spacing: 0.5px; transition: 0.15s;" onmouseover="this.style.background='#ffe55c'" onmouseout="this.style.background='#FFD700'" onclick="pubblicaGitHub()">💾🚀 Salva + Pubblica</button>
   
-  <button id="btn-salva-locale" onclick="salvaInLocale()" style="background: rgb(26, 26, 26); color: rgb(255, 255, 255); border: 1px solid rgb(51, 51, 51); padding: 7px 14px; border-radius: 6px; cursor: pointer; font-size: 12px; font-weight: 700; letter-spacing: 0.5px; transition: 0.15s;" onmouseover="this.style.borderColor='#b0ff00';this.style.color='#b0ff00'" onmouseout="this.style.borderColor='#333';this.style.color='#fff'">💾 Salva in locale</button>
+  <button id="btn-salva-locale" onclick="salvaInLocale()" style="background: rgb(26, 26, 26); color: rgb(176, 255, 0); border: 1px solid rgb(176, 255, 0); padding: 7px 14px; border-radius: 6px; cursor: pointer; font-size: 12px; font-weight: 700; letter-spacing: 0.5px; transition: 0.15s;" onmouseover="this.style.borderColor='#b0ff00';this.style.color='#b0ff00'" onmouseout="this.style.borderColor='#333';this.style.color='#fff'">💾 Salva in locale</button>
   <span class="tip">← → per navigare | Click sulla foto per cambiarla</span>
 </div>
 
@@ -678,7 +678,7 @@ table.inj-tbl thead th {
     <button class="mv-tab" onclick="mvGo(2)">📊 Stats</button>
     <button class="mv-tab" onclick="mvGo(3)">⭐ Consigli</button>
   </div>
-  <div class="mv-slide active" id="mv-s1"><div><div class="mv-stat-row"><span class="mv-stat-icon">💰</span><span class="mv-stat-label">Valore mercato</span><span class="mv-stat-val">500 mila €</span></div><div class="mv-stat-row"><span class="mv-stat-icon">🔄</span><span class="mv-stat-label">Transfer</span><span class="mv-stat-val">Acquisto definitivo</span></div><div class="mv-stat-row"><span class="mv-stat-icon"><img src="https://tmssl.akamaized.net//images/flagge/tiny/157.png" style="height:16px;vertical-align:middle;margin-right:5px;border:1px solid #555"></span><span class="mv-stat-label">Nazionalità</span><span class="mv-stat-val hl">SPAGNA</span></div><div class="mv-stat-row"><span class="mv-stat-icon">👟</span><span class="mv-stat-label">Piede</span><span class="mv-stat-val">SINISTRO</span></div><div class="mv-stat-row"><span class="mv-stat-icon">📏</span><span class="mv-stat-label">Altezza</span><span class="mv-stat-val hl">1,87&nbsp;m</span></div><div class="mv-stat-row"><span class="mv-stat-icon"><img src="https://tmssl.akamaized.net//images/wappen/homepageWappen150x150/1047.png" style="height:20px;vertical-align:middle;margin-right:5px"></span><span class="mv-stat-label">Ultimo club</span><span class="mv-stat-val">S.GIJON</span></div><div class="mv-stat-row"><span class="mv-stat-icon">✅</span><span class="mv-stat-label">Presenze</span><span class="mv-stat-val">0</span></div><div class="mv-stat-row"><span class="mv-stat-icon">⚽</span><span class="mv-stat-label">Gol</span><span class="mv-stat-val">0</span></div><div class="mv-stat-row"><span class="mv-stat-icon">🎯</span><span class="mv-stat-label">Assist</span><span class="mv-stat-val">0</span></div><div class="mv-stat-row"><span class="mv-stat-icon">📝</span><span class="mv-stat-label">Scadenza</span><span class="mv-stat-val">30/06/2030</span></div><div class="mv-stat-row"><span class="mv-stat-icon">🚑</span><span class="mv-stat-label">Infortuni</span><span class="mv-stat-val">2 infortuni registrati</span></div></div><div style="margin-top: 10px; border-radius: 8px; overflow: hidden; background: rgb(242, 242, 242); max-width: 220px; align-self: center; width: 100%;"><div class="role-col" style="width: 100%; margin: 0px; border-radius: 0px; display: flex; flex-direction: column; color: rgb(34, 34, 34);">
+  <div class="mv-slide active" id="mv-s1"><div><div class="mv-stat-row"><span class="mv-stat-icon">💰</span><span class="mv-stat-label">Valore mercato</span><span class="mv-stat-val">700 mila €</span></div><div class="mv-stat-row"><span class="mv-stat-icon">🔄</span><span class="mv-stat-label">Transfer</span><span class="mv-stat-val">Acquisto definitivo con recompra barcellona</span></div><div class="mv-stat-row"><span class="mv-stat-icon"><img src="https://tmssl.akamaized.net//images/flagge/tiny/157.png" style="height:16px;vertical-align:middle;margin-right:5px;border:1px solid #555"></span><span class="mv-stat-label">Nazionalità</span><span class="mv-stat-val hl">SPAGNA</span></div><div class="mv-stat-row"><span class="mv-stat-icon">👟</span><span class="mv-stat-label">Piede</span><span class="mv-stat-val">SINISTRO</span></div><div class="mv-stat-row"><span class="mv-stat-icon">📏</span><span class="mv-stat-label">Altezza</span><span class="mv-stat-val hl">1,87&nbsp;m</span></div><div class="mv-stat-row"><span class="mv-stat-icon"><img src="https://tmssl.akamaized.net//images/wappen/homepageWappen150x150/1047.png" style="height:20px;vertical-align:middle;margin-right:5px"></span><span class="mv-stat-label">Ultimo club</span><span class="mv-stat-val">S.GIJON</span></div><div class="mv-stat-row"><span class="mv-stat-icon">✅</span><span class="mv-stat-label">Presenze</span><span class="mv-stat-val">7</span></div><div class="mv-stat-row"><span class="mv-stat-icon">⚽</span><span class="mv-stat-label">Gol</span><span class="mv-stat-val">0</span></div><div class="mv-stat-row"><span class="mv-stat-icon">🎯</span><span class="mv-stat-label">Assist</span><span class="mv-stat-val">1</span></div><div class="mv-stat-row"><span class="mv-stat-icon">📝</span><span class="mv-stat-label">Scadenza</span><span class="mv-stat-val">30/06/2030</span></div><div class="mv-stat-row"><span class="mv-stat-icon">🚑</span><span class="mv-stat-label">Infortuni</span><span class="mv-stat-val">2 infortuni registrati</span></div></div><div style="margin-top: 10px; border-radius: 8px; overflow: hidden; background: rgb(242, 242, 242); max-width: 220px; align-self: center; width: 100%;"><div class="role-col" style="width: 100%; margin: 0px; border-radius: 0px; display: flex; flex-direction: column; color: rgb(34, 34, 34);">
     <div class="role-hdr">Ruolo</div>
     <div class="role-field" style="min-height: 160px;">
       <svg viewBox="0 0 100 150" preserveAspectRatio="xMidYMid meet">
@@ -714,21 +714,17 @@ table.inj-tbl thead th {
 <div class="mv-tbl-wrap"><table class="mv-tbl">
 <thead><tr><th>Stagione</th><th>Infortunio</th><th class="c">Gg</th></tr></thead><tbody><tr><td class="hl">25/26</td><td class="hl2">Infortunio muscolare</td><td class="c">59 giorni</td></tr><tr><td class="hl">23/24</td><td class="hl2">Infortunio muscolare</td><td class="c">96 giorni</td></tr></tbody></table></div></div>
   <div class="mv-slide" id="mv-s3">
-<div class="mv-section-title">Appetibilità al Fantacalcio</div><div class="mv-stars"><span class="mv-star-f">★</span><span class="mv-star-e">★</span><span class="mv-star-e">★</span><span class="mv-star-e">★</span><span class="mv-star-e">★</span></div>
+<div class="mv-section-title">Appetibilità al Fantacalcio</div><div class="mv-stars"><span class="mv-star-f">★</span><span class="mv-star-f">★</span><span style="background:linear-gradient(90deg,#FFD700 50%,#333 50%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;font-size:28px">★</span><span class="mv-star-e">★</span><span class="mv-star-e">★</span></div>
 <div class="mv-section-title">Consiglio di spesa del Mister</div>
-<div class="mv-card-text">Da evitare: andrà in prestito in Spagna, non gioca in A</div>
+<div class="mv-card-text">Giovane di grande prospettiva. Non sarà un titolare nell'immediato, potrebbe esserlo nel futuro</div>
 <div class="mv-section-title">Appunti del Mister</div>
-<div class="mv-notes">Andrés Cuenca, difensore centrale/terzino sinistro classe 2007 (18 anni), arriva dal Barcellona Atlètic per ~500K. Ha collezionato 26 presenze con il Barça B più 1 con il primo team. Como mantiene la clausola di recompra del Barcellona. Il piano è un prestito allo Sporting Gijón per 6-18 mesi per la maturazione.
-
-🟢 PRO: Potenziale enorme, erede di una delle migliori scuole calcistiche al mondo.
-🔴 CONTRO: Non sarà disponibile al fantacalcio 2026-27 — andrà in prestito in Spagna.
-✏️ CONSIGLIO: Completamente da ignorare per questa stagione. Rimandalo tra 2-3 anni.</div></div>
+<div class="mv-notes">Andrés Cuenca, difensore centrale/terzino sinistro classe 2007 (18 anni), arriva dal Barcellona Atlètic per ~500K. Ha collezionato 26 presenze con il Barça B più 1 con il primo team. Como mantiene la clausola di recompra del Barcellona.&nbsp;&nbsp;🟢 PRO: Potenziale importante, erede di una delle migliori scuole calcistiche al mondo. Col doppio impegno potrebbe trovare minutaggio in campionato🔴 CONTRO: Percorso di maturazione da fare, non sarà probabilmente un titolare da subito✏️ CONSIGLIO: Da prendere come 8 slot scommessa, 1 credito. Soprattutto se fai fanta con riconferme o manageriale</div></div>
 </div>
 
 <!-- ══════════════════════════════════════════════
      SLIDE 1
 ══════════════════════════════════════════════ -->
-<div id="s1" class="card" style="transform: scale(1); transform-origin: center top; margin-bottom: 0px;">
+<div id="s1" class="card active" style="transform: scale(1); transform-origin: center top; margin-bottom: 0px;">
 
   <!-- Foto cliccabile -->
   <div class="photo-col" onclick="triggerPhotoUpload('all')">
@@ -753,12 +749,12 @@ table.inj-tbl thead th {
       <div class="srow">
         <span class="sic">💰</span>
         <span class="slbl">Valore mercato</span>
-        <span class="sval" contenteditable="true">500 mila €</span>
+        <span class="sval" contenteditable="true">700 mila €</span>
       </div>
       <div class="srow">
         <span class="sic">🔄</span>
         <span class="slbl">Transfer</span>
-        <span class="sval" contenteditable="true">Acquisto definitivo</span>
+        <span class="sval" contenteditable="true">Acquisto definitivo con recompra barcellona</span>
       </div>
       <div class="srow">
         <span class="sic"><img src="https://tmssl.akamaized.net//images/flagge/tiny/157.png" style="height:16px;vertical-align:middle;margin-right:5px;border:1px solid #555"></span>
@@ -1045,7 +1041,7 @@ table.inj-tbl thead th {
 <!-- ══════════════════════════════════════════════
      SLIDE 3 – Consigli Fantacalcio
 ══════════════════════════════════════════════ -->
-<div id="s3" class="card active" style="transform: scale(1); transform-origin: center top; margin-bottom: 0px;">
+<div id="s3" class="card" style="transform: scale(1); transform-origin: center top; margin-bottom: 0px;">
 
   <div class="s3-photo" onclick="triggerPhotoUpload('all')">
     <img class="photo-all" src="https://img.a.transfermarkt.technology/portrait/big/962111-1745401649.jpg?lm=1" alt="Andrés Cuenca" onerror="this.src='https://img.a.transfermarkt.technology/portrait/big/default.jpg'">
@@ -1062,10 +1058,10 @@ table.inj-tbl thead th {
     <!-- Appetibilità -->
     <div class="s3-section">
       <div class="s3-label">APPETIBILITÀ AL FANTACALCIO</div>
-      <div class="stars-widget" id="stars-widget" data-value="1">
+      <div class="stars-widget" id="stars-widget" data-value="2.5">
         <span class="star-wrap" data-v="1"><span class="star-bg">★</span><span class="star-fg" style="width: 100%;">★</span></span>
-        <span class="star-wrap" data-v="2"><span class="star-bg">★</span><span class="star-fg" style="width: 0%;">★</span></span>
-        <span class="star-wrap" data-v="3"><span class="star-bg">★</span><span class="star-fg" style="width: 0%;">★</span></span>
+        <span class="star-wrap" data-v="2"><span class="star-bg">★</span><span class="star-fg" style="width: 100%;">★</span></span>
+        <span class="star-wrap" data-v="3"><span class="star-bg">★</span><span class="star-fg" style="width: 50%;">★</span></span>
         <span class="star-wrap" data-v="4"><span class="star-bg">★</span><span class="star-fg" style="width: 0%;">★</span></span>
         <span class="star-wrap" data-v="5"><span class="star-bg">★</span><span class="star-fg" style="width: 0%;">★</span></span>
       </div>
@@ -1074,17 +1070,13 @@ table.inj-tbl thead th {
     <!-- Consiglio di spesa -->
     <div class="s3-section">
       <div class="s3-label">CONSIGLIO DI SPESA DEL MISTER</div>
-      <div class="s3-spesa" contenteditable="true">Da evitare: andrà in prestito in Spagna, non gioca in A</div>
+      <div class="s3-spesa" contenteditable="true">Giovane di grande prospettiva. Non sarà un titolare nell'immediato, potrebbe esserlo nel futuro</div>
     </div>
 
     <!-- Appunti -->
     <div class="s3-section s3-grow">
       <div class="s3-label">APPUNTI DEL MISTER</div>
-      <div class="s3-notes" contenteditable="true">Andrés Cuenca, difensore centrale/terzino sinistro classe 2007 (18 anni), arriva dal Barcellona Atlètic per ~500K. Ha collezionato 26 presenze con il Barça B più 1 con il primo team. Como mantiene la clausola di recompra del Barcellona. Il piano è un prestito allo Sporting Gijón per 6-18 mesi per la maturazione.
-
-🟢 PRO: Potenziale enorme, erede di una delle migliori scuole calcistiche al mondo.
-🔴 CONTRO: Non sarà disponibile al fantacalcio 2026-27 — andrà in prestito in Spagna.
-✏️ CONSIGLIO: Completamente da ignorare per questa stagione. Rimandalo tra 2-3 anni.</div>
+      <div class="s3-notes" contenteditable="true">Andrés Cuenca, difensore centrale/terzino sinistro classe 2007 (18 anni), arriva dal Barcellona Atlètic per ~500K. Ha collezionato 26 presenze con il Barça B più 1 con il primo team. Como mantiene la clausola di recompra del Barcellona.&nbsp;&nbsp;<div>🟢 PRO: Potenziale importante, erede di una delle migliori scuole calcistiche al mondo. Col doppio impegno potrebbe trovare minutaggio in campionato</div><div>🔴 CONTRO: Percorso di maturazione da fare, non sarà probabilmente un titolare da subito</div><div>✏️ CONSIGLIO: Da prendere come 8 slot scommessa, 1 credito. Soprattutto se fai fanta con riconferme o manageriale</div></div>
     </div>
 
   </div>
@@ -1581,7 +1573,7 @@ async function salvaInLocale() {
 }
 </script>
 
-<div id="_pwa_nav" style="position:fixed;bottom:20px;right:16px;z-index:99999;display:flex;flex-direction:column;gap:8px"><button onclick="history.back()" aria-label="Indietro" title="Indietro" style="width:46px;height:46px;border-radius:50%;background:rgba(17,17,17,.92);border:1px solid #2a2a2a;color:#fff;font-size:22px;cursor:pointer;backdrop-filter:blur(8px);box-shadow:0 2px 12px rgba(0,0,0,.5)">&#x2190;</button><button onclick="history.forward()" aria-label="Avanti" title="Avanti" style="width:46px;height:46px;border-radius:50%;background:rgba(17,17,17,.92);border:1px solid #2a2a2a;color:#fff;font-size:22px;cursor:pointer;backdrop-filter:blur(8px);box-shadow:0 2px 12px rgba(0,0,0,.5)">&#x2192;</button></div>
+<div id="_pwa_nav" style="position:fixed;bottom:20px;right:16px;z-index:99999;display:flex;flex-direction:column;gap:8px"><button onclick="history.back()" aria-label="Indietro" title="Indietro" style="width:46px;height:46px;border-radius:50%;background:rgba(17,17,17,.92);border:1px solid #2a2a2a;color:#fff;font-size:22px;cursor:pointer;backdrop-filter:blur(8px);box-shadow:0 2px 12px rgba(0,0,0,.5)">←</button><button onclick="history.forward()" aria-label="Avanti" title="Avanti" style="width:46px;height:46px;border-radius:50%;background:rgba(17,17,17,.92);border:1px solid #2a2a2a;color:#fff;font-size:22px;cursor:pointer;backdrop-filter:blur(8px);box-shadow:0 2px 12px rgba(0,0,0,.5)">→</button></div>
 
 <script>document.addEventListener("DOMContentLoaded",function(){go(1);});</script>
 </body></html>
