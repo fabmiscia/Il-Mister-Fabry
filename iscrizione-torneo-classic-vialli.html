@@ -200,7 +200,7 @@ body.edit-mode .add-row { display:flex; }
     <div>
       <div class="section-title">
         Iscritti confermati
-        <span class="cnt" id="cnt-vialli">3</span>
+        <span class="cnt" id="cnt-vialli">4</span>
       </div>
       <table class="iscritti-table">
         <thead>
@@ -214,7 +214,7 @@ body.edit-mode .add-row { display:flex; }
           </tr>
         </thead>
         <tbody id="tbody-vialli">
-          <tr class="data-row"><td><span class="num-circle">1</span></td><td>Giacomo</td><td>Piticchiani</td><td>14 Luglio</td><td><span class="badge-pagato">✅ Pagato</span></td><td class="edit-only"><button class="btn-del" onclick="delIscritto('vialli',0)">✕</button></td></tr><tr class="data-row"><td><span class="num-circle">2</span></td><td>Fabrizio</td><td>Miscia</td><td>14 liuglio</td><td><span class="badge-pagato">✅ Pagato</span></td><td class="edit-only"><button class="btn-del" onclick="delIscritto('vialli',1)">✕</button></td></tr><tr class="data-row"><td><span class="num-circle">3</span></td><td>Oreste</td><td>Iacopino</td><td>14 luglio</td><td><span class="badge-pagato">✅ Pagato</span></td><td class="edit-only"><button class="btn-del" onclick="delIscritto('vialli',2)">✕</button></td></tr><tr id="empty-vialli" style="display: none;">
+          <tr class="data-row"><td><span class="num-circle">1</span></td><td>Giacomo</td><td>Piticchiani</td><td>14 Luglio</td><td><span class="badge-pagato">✅ Pagato</span></td><td class="edit-only"><button class="btn-del" onclick="delIscritto('vialli',0)">✕</button></td></tr><tr class="data-row"><td><span class="num-circle">2</span></td><td>Fabrizio</td><td>Miscia</td><td>14 liuglio</td><td><span class="badge-pagato">✅ Pagato</span></td><td class="edit-only"><button class="btn-del" onclick="delIscritto('vialli',1)">✕</button></td></tr><tr class="data-row"><td><span class="num-circle">3</span></td><td>Oreste</td><td>Iacopino</td><td>14 luglio</td><td><span class="badge-pagato">✅ Pagato</span></td><td class="edit-only"><button class="btn-del" onclick="delIscritto('vialli',2)">✕</button></td></tr><tr class="data-row"><td><span class="num-circle">4</span></td><td>Matteo</td><td>Iuri</td><td>22 Luglio</td><td><span class="badge-pagato">✅ Pagato</span></td><td class="edit-only"><button class="btn-del" onclick="delIscritto('vialli',3)">✕</button></td></tr><tr id="empty-vialli" style="display: none;">
             <td colspan="6" style="text-align:center;color:#333;font-size:12px;letter-spacing:2px;padding:32px">
               Nessun iscritto ancora
             </td>
@@ -243,7 +243,7 @@ const GH_REPO = 'fabmiscia/Il-Mister-Fabry';
 const GH_FILE = 'iscrizione-torneo-classic-vialli.html';
 const STORE_KEY = 'iscritti-vialli';
 
-let data = {"vialli":[{"nome":"Giacomo","cogn":"Piticchiani","data":"14 Luglio","stato":"pagato"},{"nome":"Fabrizio","cogn":"Miscia","data":"14 liuglio","stato":"pagato"},{"nome":"Oreste","cogn":"Iacopino","data":"14 luglio","stato":"pagato"}]}; // __DATA_EMBED__
+let data = {"vialli":[{"nome":"Giacomo","cogn":"Piticchiani","data":"14 Luglio","stato":"pagato"},{"nome":"Fabrizio","cogn":"Miscia","data":"14 liuglio","stato":"pagato"},{"nome":"Oreste","cogn":"Iacopino","data":"14 luglio","stato":"pagato"},{"nome":"Matteo","cogn":"Iuri","data":"22 Luglio","stato":"pagato"}]}; // __DATA_EMBED__
 function saveData(){localStorage.setItem(STORE_KEY, JSON.stringify(data));}
 function loadData(){
   try{ const d=JSON.parse(localStorage.getItem(STORE_KEY)||'null'); if(d)data=d; }catch(e){}
