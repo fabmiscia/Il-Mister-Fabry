@@ -643,9 +643,9 @@ table.inj-tbl thead th {
 <body style="overflow-x: hidden;">
 
 <div class="nav">
-  <button class="active" onclick="go(1)">📋 Info</button>
+  <button class="" onclick="go(1)">📋 Info</button>
   <button onclick="go(2)">📊 Statistiche</button>
-  <button onclick="go(3)" class="">⭐ Consigli Fantacalcio</button>
+  <button onclick="go(3)" class="active">⭐ Consigli Fantacalcio</button>
 </div>
 
 <!-- Toolbar -->
@@ -653,7 +653,7 @@ table.inj-tbl thead th {
   <button onclick="exportPNG(1)">💾 Slide 1</button>
   <button onclick="exportPNG(2)">💾 Slide 2</button>
   <button onclick="exportPNG(3)">💾 Slide 3</button>
-  <button style="background: rgb(255, 215, 0); color: rgb(0, 0, 0); border-width: medium; border-style: none; border-color: currentcolor; border-image: initial; padding: 7px 18px; border-radius: 6px; cursor: pointer; font-size: 12px; font-weight: 800; letter-spacing: 0.5px; transition: 0.15s;" onmouseover="this.style.background='#ffe55c'" onmouseout="this.style.background='#FFD700'" onclick="salvaEPubblica()">💾🚀 Salva + Pubblica</button>
+  <button style="background: rgb(255, 215, 0); color: rgb(0, 0, 0); border-width: medium; border-style: none; border-color: currentcolor; border-image: none; padding: 7px 18px; border-radius: 6px; cursor: pointer; font-size: 12px; font-weight: 800; letter-spacing: 0.5px; transition: 0.15s;" onmouseover="this.style.background='#ffe55c'" onmouseout="this.style.background='#FFD700'" onclick="salvaEPubblica()">💾🚀 Salva + Pubblica</button>
   <button class="gh-btn" onclick="pubblicaGitHub()">🚀 Solo GitHub</button>
   <button id="btn-salva-locale" onclick="salvaInLocale()" style="background: rgb(26, 26, 26); color: rgb(255, 255, 255); border: 1px solid rgb(51, 51, 51); padding: 7px 14px; border-radius: 6px; cursor: pointer; font-size: 12px; font-weight: 700; letter-spacing: 0.5px; transition: 0.15s;" onmouseover="this.style.borderColor='#b0ff00';this.style.color='#b0ff00'" onmouseout="this.style.borderColor='#333';this.style.color='#fff'">💾 Salva in locale</button>
   <span class="tip">← → per navigare | Click sulla foto per cambiarla</span>
@@ -678,7 +678,7 @@ table.inj-tbl thead th {
     <button class="mv-tab" onclick="mvGo(2)">📊 Stats</button>
     <button class="mv-tab" onclick="mvGo(3)">⭐ Consigli</button>
   </div>
-  <div class="mv-slide active" id="mv-s1"><div><div class="mv-stat-row"><span class="mv-stat-icon">💰</span><span class="mv-stat-label">Valore mercato</span><span class="mv-stat-val">3,00 mln €</span></div><div class="mv-stat-row"><span class="mv-stat-icon">🔄</span><span class="mv-stat-label">Transfer</span><span class="mv-stat-val">Acquisto definitivo</span></div><div class="mv-stat-row"><span class="mv-stat-icon"><img src="https://tmssl.akamaized.net//images/flagge/tiny/75.png" style="height:16px;vertical-align:middle;margin-right:5px;border:1px solid #555"></span><span class="mv-stat-label">Nazionalità</span><span class="mv-stat-val hl">ITALIA</span></div><div class="mv-stat-row"><span class="mv-stat-icon">👟</span><span class="mv-stat-label">Piede</span><span class="mv-stat-val">DESTRO</span></div><div class="mv-stat-row"><span class="mv-stat-icon">📏</span><span class="mv-stat-label">Altezza</span><span class="mv-stat-val hl">1,94&nbsp;m</span></div><div class="mv-stat-row"><span class="mv-stat-icon"><img src="https://tmssl.akamaized.net//images/wappen/profil/3522_1688719361.png?lm=1688719361" style="height:20px;vertical-align:middle;margin-right:5px"></span><span class="mv-stat-label">Ultimo club</span><span class="mv-stat-val">LAZIO</span></div><div class="mv-stat-row"><span class="mv-stat-icon">✅</span><span class="mv-stat-label">Presenze</span><span class="mv-stat-val">0</span></div><div class="mv-stat-row"><span class="mv-stat-icon">⚽</span><span class="mv-stat-label">Gol</span><span class="mv-stat-val">0</span></div><div class="mv-stat-row"><span class="mv-stat-icon">🎯</span><span class="mv-stat-label">Assist</span><span class="mv-stat-val">0</span></div><div class="mv-stat-row"><span class="mv-stat-icon">📝</span><span class="mv-stat-label">Scadenza</span><span class="mv-stat-val">30/06/2029</span></div><div class="mv-stat-row"><span class="mv-stat-icon">🚑</span><span class="mv-stat-label">Infortuni</span><span class="mv-stat-val">8 infortuni registrati</span></div></div><div style="margin-top: 10px; border-radius: 8px; overflow: hidden; background: rgb(242, 242, 242); max-width: 220px; align-self: center; width: 100%;"><div class="role-col" style="width: 100%; margin: 0px; border-radius: 0px; display: flex; flex-direction: column; color: rgb(34, 34, 34);">
+  <div class="mv-slide active" id="mv-s1"><div><div class="mv-stat-row"><span class="mv-stat-icon">💰</span><span class="mv-stat-label">Valore mercato</span><span class="mv-stat-val">3,00 mln €</span></div><div class="mv-stat-row"><span class="mv-stat-icon">🔄</span><span class="mv-stat-label">Transfer</span><span class="mv-stat-val">Acquisto definitivo</span></div><div class="mv-stat-row"><span class="mv-stat-icon"><img src="https://tmssl.akamaized.net//images/flagge/tiny/75.png" style="height:16px;vertical-align:middle;margin-right:5px;border:1px solid #555"></span><span class="mv-stat-label">Nazionalità</span><span class="mv-stat-val hl">ITALIA</span></div><div class="mv-stat-row"><span class="mv-stat-icon">👟</span><span class="mv-stat-label">Piede</span><span class="mv-stat-val">DESTRO</span></div><div class="mv-stat-row"><span class="mv-stat-icon">📏</span><span class="mv-stat-label">Altezza</span><span class="mv-stat-val hl">1,94&nbsp;m</span></div><div class="mv-stat-row"><span class="mv-stat-icon"><img src="https://tmssl.akamaized.net/images/wappen/profil/398.png" style="height:20px;vertical-align:middle;margin-right:5px"></span><span class="mv-stat-label">Ultimo club</span><span class="mv-stat-val">SS LAZIO</span></div><div class="mv-stat-row"><span class="mv-stat-icon">✅</span><span class="mv-stat-label">Presenze 25/26</span><span class="mv-stat-val">27</span></div><div class="mv-stat-row"><span class="mv-stat-icon">⚽</span><span class="mv-stat-label">Gol</span><span class="mv-stat-val">0</span></div><div class="mv-stat-row"><span class="mv-stat-icon">🎯</span><span class="mv-stat-label">Assist</span><span class="mv-stat-val">0</span></div><div class="mv-stat-row"><span class="mv-stat-icon">📝</span><span class="mv-stat-label">Scadenza</span><span class="mv-stat-val">30/06/2029</span></div><div class="mv-stat-row"><span class="mv-stat-icon">🚑</span><span class="mv-stat-label">Infortuni</span><span class="mv-stat-val">8 infortuni registrati</span></div></div><div style="margin-top: 10px; border-radius: 8px; overflow: hidden; background: rgb(242, 242, 242); max-width: 220px; align-self: center; width: 100%;"><div class="role-col" style="width: 100%; margin: 0px; border-radius: 0px; display: flex; flex-direction: column; color: rgb(34, 34, 34);">
     <div class="role-hdr">Ruolo</div>
     <div class="role-field" style="min-height: 160px;">
       <svg viewBox="0 0 100 150" preserveAspectRatio="xMidYMid meet">
@@ -709,25 +709,34 @@ table.inj-tbl thead th {
   </div></div></div>
   <div class="mv-slide" id="mv-s2"><div class="mv-section-title">Rendimento per stagione</div>
 <div class="mv-tbl-wrap"><table class="mv-tbl">
-<thead><tr><th>Anno</th><th>Squadra</th><th class="c">G</th><th class="c">⚽</th><th class="c">🎯</th></tr></thead><tbody><tr><td class="hl">25/26</td><td>SS Lazio</td><td class="c">43</td><td class="c hl">—</td><td class="c hl">—</td></tr><tr><td class="hl">24/25</td><td>SS Lazio</td><td class="c">52</td><td class="c hl">—</td><td class="c hl">—</td></tr><tr><td class="hl">23/24</td><td>SS Lazio</td><td class="c">51</td><td class="c hl">—</td><td class="c hl">—</td></tr></tbody></table></div><div class="mv-section-title">Storico infortuni</div>
+<thead><tr><th>Anno</th><th>Squadra</th><th class="c">G</th><th class="c">⚽</th><th class="c">🎯</th></tr></thead><tbody><tr><td class="hl">25/26</td><td>SS Lazio</td><td class="c">43</td><td class="c hl">—</td><td class="c hl">—</td></tr><tr><td class="hl">24/25</td><td>SS Lazio</td><td class="c">52</td><td class="c hl">—</td><td class="c hl">—</td></tr><tr><td class="hl">23/24</td><td>SS Lazio</td><td class="c">51</td><td class="c hl">1</td><td class="c hl">—</td></tr></tbody></table></div><div class="mv-section-title">Storico infortuni</div>
 <div class="mv-tbl-wrap"><table class="mv-tbl">
 <thead><tr><th>Stagione</th><th>Infortunio</th><th class="c">Gg</th></tr></thead><tbody><tr><td class="hl">25/26</td><td class="hl2">Infortunio alla spalla</td><td class="c">116 giorni</td></tr><tr><td class="hl">24/25</td><td class="hl2">Febbre</td><td class="c">2 giorni</td></tr><tr><td class="hl">23/24</td><td class="hl2">Infortunio alla caviglia</td><td class="c">52 giorni</td></tr><tr><td class="hl">23/24</td><td class="hl2">Infezione influenzale</td><td class="c">5 giorni</td></tr><tr><td class="hl">23/24</td><td class="hl2">Problema all'anca</td><td class="c">11 giorni</td></tr><tr><td class="hl">22/23</td><td class="hl2">Febbre</td><td class="c">4 giorni</td></tr><tr><td class="hl">20/21</td><td class="hl2">Coronavirus</td><td class="c">30 giorni</td></tr><tr><td class="hl">17/18</td><td class="hl2">Frattura della tibia</td><td class="c">123 giorni</td></tr></tbody></table></div></div>
   <div class="mv-slide" id="mv-s3">
-<div class="mv-section-title">Appetibilità al Fantacalcio</div><div class="mv-stars"><span class="mv-star-f">★</span><span class="mv-star-f">★</span><span class="mv-star-f">★</span><span class="mv-star-e">★</span><span class="mv-star-e">★</span></div>
+<div class="mv-section-title">Appetibilità al Fantacalcio</div><div class="mv-stars"><span class="mv-star-f">★</span><span class="mv-star-f">★</span><span style="background:linear-gradient(90deg,#FFD700 50%,#333 50%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;font-size:28px">★</span><span class="mv-star-e">★</span><span class="mv-star-e">★</span></div>
 <div class="mv-section-title">Consiglio di spesa del Mister</div>
-<div class="mv-card-text">Solo se hai già Martinez: coppia portieri Inter garantita per tutta la stagione</div>
+<div class="mv-card-text">Va preso assolutamente in coppia con Martnez dell'Inter. Parte leggermente dietro ma spesso si giocherà il posto con lui</div>
 <div class="mv-section-title">Appunti del Mister</div>
-<div class="mv-notes">Portiere, 32 anni. Arriva dalla Lazio per 3M, contratto triennale. Nell'ultima stagione con la Lazio: 27 presenze. All'Inter farà il vice Martinez, ma potrebbe giocare molte partite di Coppa Italia e qualche turno in campionato.
+<div class="mv-notes">Portiere classe 1994 (32 anni), 194 cm. Alla Lazio dal 2022, è cresciuto fino a diventare uno dei portieri più affidabili della Serie A: nella stagione 25/26 ha collezionato 27 presenze con 12 clean sheet. A marzo si è fermato per infortunio alla spalla. All'Inter arriva come vice di Josep Martinez per 3M dalla Lazio, contratto fino al 2029.
 
-🟢 PRO: Qualità alta, Inter con una delle difese migliori d'Italia. Affidabile quando chiamato in causa. Può giocare 10-12 partite in campionato.
-🔴 CONTRO: Vice portiere: non garantisce presenze continue. In leghe dove conta solo il campionato, è quasi ingiocabile.
-✏️ CONSIGLIO: Prendilo Obbligatoriamente se hai già Martinez come primo portiere e vuoi coprire le sue assenze in coppa.</div></div>
+🟢 PRO:
+• Portiere di alto livello: 12 clean sheet in 27 presenze alla Lazio 25/26
+• Affidabile e con ottimo rendimento quando gioca
+• Se Martinez si infortuna, subentra con garanzie
+
+🔴 CONTRO:
+• In campionato avrà pochissime presenze → inutile in Classic
+• 32 anni: compreresti un vice quasi trentenne
+• Infortuni: 8 in carriera, l'ultimo alla spalla (marzo 2026)
+
+✏️ CONSIGLIO:
+• Prendilo come "assicurazione" su Martinez in ogni lega. Il rischio è che te lo alzino in asta o che la coppia inter ti venga a costare troppo. Attento alle esche</div></div>
 </div>
 
 <!-- ══════════════════════════════════════════════
      SLIDE 1
 ══════════════════════════════════════════════ -->
-<div id="s1" class="card active" style="transform: scale(1); transform-origin: center top; margin-bottom: 0px;">
+<div id="s1" class="card" style="transform: scale(1); transform-origin: center top; margin-bottom: 0px;">
 
   <!-- Foto cliccabile -->
   <div class="photo-col" onclick="triggerPhotoUpload('all')">
@@ -775,13 +784,13 @@ table.inj-tbl thead th {
         <span class="sval bold-xl" contenteditable="true">1,94&nbsp;m</span>
       </div>
       <div class="srow">
-        <span class="sic"><img src="https://tmssl.akamaized.net//images/wappen/profil/3522_1688719361.png?lm=1688719361" style="height:20px;vertical-align:middle;margin-right:5px"></span>
+        <span class="sic"><img src="https://tmssl.akamaized.net/images/wappen/profil/398.png" style="height:20px;vertical-align:middle;margin-right:5px"></span>
         <span class="slbl">Ultimo club</span>
-        <span class="sval" contenteditable="true">LAZIO</span>
+        <span class="sval" contenteditable="true">SS LAZIO</span>
       </div>
       <div class="srow">
         <span class="sic">✅</span>
-        <span class="slbl">Presenze <em></em></span>
+        <span class="slbl">Presenze <em>25/26</em></span>
         <span class="sval" contenteditable="true">27</span>
       </div>
       <div class="srow">
@@ -887,7 +896,7 @@ table.inj-tbl thead th {
               <td class="career-club" style="min-width:130px"><img src="https://tmssl.akamaized.net/images/wappen/big/398.png" style="height:18px;vertical-align:middle;margin-right:6px;border-radius:2px"><span contenteditable="true">SS Lazio</span></td>
               <td class="career-comp" contenteditable="true">Coppa Italia / UEFA Champions League / Serie A / Supercoppa Italiana</td>
               <td class="career-num" contenteditable="true">51</td>
-              <td class="career-num hi" contenteditable="true">—</td>
+              <td class="career-num hi" contenteditable="true">1</td>
               <td class="career-num hi" contenteditable="true">—</td>
               <td class="career-min" contenteditable="true">—</td>
             </tr></tbody>
@@ -909,7 +918,7 @@ table.inj-tbl thead th {
             <tr class="career-row">
               <td class="career-club" contenteditable="true"><img src="https://tmssl.akamaized.net/images/wappen/big/398.png" style="height:18px;vertical-align:middle;margin-right:6px;border-radius:2px"><span contenteditable="true">SS Lazio</span></td>
               <td class="career-num" contenteditable="true">196</td>
-              <td class="career-num hi" contenteditable="true">—</td>
+              <td class="career-num hi" contenteditable="true">1</td>
               <td class="career-num hi" contenteditable="true">—</td>
               <td class="career-min" contenteditable="true">—</td>
             </tr>
@@ -972,7 +981,7 @@ table.inj-tbl thead th {
             <tr class="career-row">
               <td class="career-club" contenteditable="true"><img src="https://tmssl.akamaized.net/images/wappen/big/5587.png" style="height:18px;vertical-align:middle;margin-right:6px;border-radius:2px"><span contenteditable="true">SS Juve Stabia</span></td>
               <td class="career-num" contenteditable="true">18</td>
-              <td class="career-num hi" contenteditable="true">—</td>
+              <td class="career-num hi" contenteditable="true">1</td>
               <td class="career-num hi" contenteditable="true">—</td>
               <td class="career-min" contenteditable="true">—</td>
             </tr>
@@ -1133,7 +1142,7 @@ table.inj-tbl thead th {
 <!-- ══════════════════════════════════════════════
      SLIDE 3 – Consigli Fantacalcio
 ══════════════════════════════════════════════ -->
-<div id="s3" class="card" style="transform: scale(1); transform-origin: center top; margin-bottom: 0px;">
+<div id="s3" class="card active" style="transform: scale(1); transform-origin: center top; margin-bottom: 0px;">
 
   <div class="s3-photo" onclick="triggerPhotoUpload('all')">
     <img class="photo-all" src="https://img.a.transfermarkt.technology/portrait/big/197929-1695160944.jpg?lm=1" alt="Ivan Provedel" onerror="this.src='https://img.a.transfermarkt.technology/portrait/big/default.jpg'">
@@ -1150,10 +1159,10 @@ table.inj-tbl thead th {
     <!-- Appetibilità -->
     <div class="s3-section">
       <div class="s3-label">APPETIBILITÀ AL FANTACALCIO</div>
-      <div class="stars-widget" id="stars-widget" data-value="3">
-        <span class="star-wrap" data-v="1"><span class="star-bg">★</span><span class="star-fg" style="width: 100%;">★</span></span>
+      <div class="stars-widget" id="stars-widget" data-value="2.5">
+        <span class="star-wrap" data-v="1"><span class="star-bg">★</span><span class="star-fg" style="width:100%">★</span></span>
         <span class="star-wrap" data-v="2"><span class="star-bg">★</span><span class="star-fg" style="width: 100%;">★</span></span>
-        <span class="star-wrap" data-v="3"><span class="star-bg">★</span><span class="star-fg" style="width: 100%;">★</span></span>
+        <span class="star-wrap" data-v="3"><span class="star-bg">★</span><span class="star-fg" style="width: 50%;">★</span></span>
         <span class="star-wrap" data-v="4"><span class="star-bg">★</span><span class="star-fg" style="width: 0%;">★</span></span>
         <span class="star-wrap" data-v="5"><span class="star-bg">★</span><span class="star-fg" style="width: 0%;">★</span></span>
       </div>
@@ -1161,18 +1170,27 @@ table.inj-tbl thead th {
 
     <!-- Consiglio di spesa -->
     <div class="s3-section">
-      <div class="s3-label">CONSIGLIO DI SPESA DEL MISTER</div>
-      <div class="s3-spesa" contenteditable="true">Solo se hai già Martinez: coppia portieri Inter garantita per tutta la stagione</div>
+      <div class="s3-label">COLLOCAZIONE SLOT</div>
+      <div class="s3-spesa" contenteditable="true">Va preso assolutamente in coppia con Martnez dell'Inter. Parte leggermente dietro ma spesso si giocherà il posto con lui</div>
     </div>
 
     <!-- Appunti -->
     <div class="s3-section s3-grow">
       <div class="s3-label">APPUNTI DEL MISTER</div>
-      <div class="s3-notes" contenteditable="true">Portiere, 32 anni. Arriva dalla Lazio per 3M, contratto triennale. Nell'ultima stagione con la Lazio: 27 presenze. All'Inter farà il vice Martinez, ma potrebbe giocare molte partite di Coppa Italia e qualche turno in campionato.
+      <div class="s3-notes" contenteditable="true">Portiere classe 1994 (32 anni), 194 cm. Alla Lazio dal 2022, è cresciuto fino a diventare uno dei portieri più affidabili della Serie A: nella stagione 25/26 ha collezionato 27 presenze con 12 clean sheet. A marzo si è fermato per infortunio alla spalla. All'Inter arriva come vice di Josep Martinez per 3M dalla Lazio, contratto fino al 2029.<br><br>
 
-🟢 PRO: Qualità alta, Inter con una delle difese migliori d'Italia. Affidabile quando chiamato in causa. Può giocare 10-12 partite in campionato.
-🔴 CONTRO: Vice portiere: non garantisce presenze continue. In leghe dove conta solo il campionato, è quasi ingiocabile.
-✏️ CONSIGLIO: Prendilo Obbligatoriamente se hai già Martinez come primo portiere e vuoi coprire le sue assenze in coppa.&nbsp;</div>
+🟢 <b>PRO:</b><br>
+• Portiere di alto livello: 12 clean sheet in 27 presenze alla Lazio 25/26<br>
+• Affidabile e con ottimo rendimento quando gioca<br>
+• Se Martinez si infortuna, subentra con garanzie<br><br>
+
+🔴 <b>CONTRO:</b><br>
+• In campionato avrà pochissime presenze → inutile in Classic<br>
+• 32 anni: compreresti un vice quasi trentenne<br>
+• Infortuni: 8 in carriera, l'ultimo alla spalla (marzo 2026)<br><br>
+
+✏️ <b>CONSIGLIO:</b><br>
+• Prendilo come "assicurazione" su Martinez in ogni lega. Il rischio è che te lo alzino in asta o che la coppia inter ti venga a costare troppo. Attento alle esche</div>
     </div>
 
   </div>
@@ -1207,7 +1225,7 @@ table.inj-tbl thead th {
           🌐 Apri su GitHub Pages
         </a>
       </div>
-      <button onclick="chiudiOverlay()" id="gh-close-btn" style="display: none; background: rgb(34, 34, 34); color: rgb(170, 170, 170); border: 1px solid rgb(51, 51, 51); padding: 8px 22px; border-radius: 20px; cursor: pointer; font-size: 12px;">Chiudi</button>
+      <button onclick="chiudiOverlay()" id="gh-close-btn" style="display:none;background:#222;color:#aaa;border:1px solid #333;padding:8px 22px;border-radius:20px;cursor:pointer;font-size:12px">Chiudi</button>
     </div>
   </div>
 </div>
@@ -1312,7 +1330,11 @@ document.getElementById('gh-overlay').addEventListener('click', e => {
   if (e.target === document.getElementById('gh-overlay')) chiudiOverlay();
 });
 
-function pubblicaGitHub() {
+function resetToken() {
+    localStorage.removeItem('gh_token');
+    alert('Token rimosso. Al prossimo click su Pubblica ti verrà richiesto.');
+  }
+  function pubblicaGitHub() {
   const token = localStorage.getItem('gh_token');
   const overlay = document.getElementById('gh-overlay');
   overlay.style.display = 'flex';
@@ -1671,6 +1693,4 @@ async function salvaInLocale() {
 }
 </script>
 
-
-<script>document.addEventListener("DOMContentLoaded",function(){go(1);});</script>
 </body></html>
