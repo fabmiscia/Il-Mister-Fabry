@@ -220,5 +220,17 @@
     "giocatore": "Rahim Alhassane",
     "squadra": "Bologna",
     "ruolo": "D"
+  },
+  {
+    "file": "nuovo_arrivo_Sebastiano_Desplanches__Frosinone.html",
+    "giocatore": "Sebastiano Desplanches",
+    "squadra": "Frosinone",
+    "ruolo": "P"
+  },
+  {
+    "file": "nuovo_arrivo_Diego_Mascardi__Torino.html",
+    "giocatore": "Diego Mascardi",
+    "squadra": "Torino",
+    "ruolo": "P"
   }
 ]
