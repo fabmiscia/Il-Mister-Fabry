@@ -126,7 +126,7 @@ body.edit-mode .add-row { display:flex; }
   <div class="spacer"></div>
   <button class="btn btn-edit active" id="btn-edit" onclick="toggleEdit()">✓ Fine modifica</button>
   <button class="btn btn-github" id="btn-github" disabled="">⏳ Caricando...</button>
-  <button id="btn-salva-locale" onclick="salvaInLocale()" style="background: rgb(26, 26, 26); color: rgb(255, 255, 255); border: 1px solid rgb(51, 51, 51); padding: 7px 14px; border-radius: 6px; cursor: pointer; font-size: 12px; font-weight: 700; letter-spacing: 0.5px; transition: 0.15s;" onmouseover="this.style.borderColor='#b0ff00';this.style.color='#b0ff00'" onmouseout="this.style.borderColor='#333';this.style.color='#fff'">💾 Salva in locale</button>
+  <button id="btn-salva-locale" onclick="salvaInLocale()" style="background: rgb(26, 26, 26); color: rgb(176, 255, 0); border: 1px solid rgb(176, 255, 0); padding: 7px 14px; border-radius: 6px; cursor: pointer; font-size: 12px; font-weight: 700; letter-spacing: 0.5px; transition: 0.15s;" onmouseover="this.style.borderColor='#b0ff00';this.style.color='#b0ff00'" onmouseout="this.style.borderColor='#333';this.style.color='#fff'">💾 Salva in locale</button>
 </div>
 
 <div class="page">
@@ -206,7 +206,7 @@ body.edit-mode .add-row { display:flex; }
     <div>
       <div class="section-title">
         Iscritti confermati
-        <span class="cnt" id="cnt-classico">6</span>
+        <span class="cnt" id="cnt-classico">7</span>
       </div>
       <table class="iscritti-table">
         <thead>
@@ -220,7 +220,7 @@ body.edit-mode .add-row { display:flex; }
           </tr>
         </thead>
         <tbody id="tbody-classico">
-          <tr class="data-row"><td><span class="num-circle">1</span></td><td>Oreste</td><td>Iacopino</td><td>14 luglio</td><td><span class="badge-pagato">✅ Pagato</span></td><td class="edit-only"><button class="btn-del" onclick="delIscritto('classico',0)">✕</button></td></tr><tr class="data-row"><td><span class="num-circle">2</span></td><td>Giuseppe</td><td>Castiglia</td><td>13 luglio</td><td><span class="badge-pagato">✅ Pagato</span></td><td class="edit-only"><button class="btn-del" onclick="delIscritto('classico',1)">✕</button></td></tr><tr class="data-row"><td><span class="num-circle">3</span></td><td>Fabrizio</td><td>Miscia</td><td>13 liglio</td><td><span class="badge-pagato">✅ Pagato</span></td><td class="edit-only"><button class="btn-del" onclick="delIscritto('classico',2)">✕</button></td></tr><tr class="data-row"><td><span class="num-circle">4</span></td><td>Marco</td><td>Loda</td><td>17 luglio</td><td><span class="badge-pagato">✅ Pagato</span></td><td class="edit-only"><button class="btn-del" onclick="delIscritto('classico',3)">✕</button></td></tr><tr class="data-row"><td><span class="num-circle">5</span></td><td>Salvatore</td><td>Martelli</td><td>20 Luglio</td><td><span class="badge-pagato">✅ Pagato</span></td><td class="edit-only"><button class="btn-del" onclick="delIscritto('classico',4)">✕</button></td></tr><tr class="data-row"><td><span class="num-circle">6</span></td><td>Antonio</td><td>Iacovelli</td><td>25 Luglio</td><td><span class="badge-pagato">✅ Pagato</span></td><td class="edit-only"><button class="btn-del" onclick="delIscritto('classico',5)">✕</button></td></tr><tr id="empty-classico" style="display: none;">
+          <tr class="data-row"><td><span class="num-circle">1</span></td><td>Oreste</td><td>Iacopino</td><td>14 luglio</td><td><span class="badge-pagato">✅ Pagato</span></td><td class="edit-only"><button class="btn-del" onclick="delIscritto('classico',0)">✕</button></td></tr><tr class="data-row"><td><span class="num-circle">2</span></td><td>Giuseppe</td><td>Castiglia</td><td>13 luglio</td><td><span class="badge-pagato">✅ Pagato</span></td><td class="edit-only"><button class="btn-del" onclick="delIscritto('classico',1)">✕</button></td></tr><tr class="data-row"><td><span class="num-circle">3</span></td><td>Fabrizio</td><td>Miscia</td><td>13 liglio</td><td><span class="badge-pagato">✅ Pagato</span></td><td class="edit-only"><button class="btn-del" onclick="delIscritto('classico',2)">✕</button></td></tr><tr class="data-row"><td><span class="num-circle">4</span></td><td>Marco</td><td>Loda</td><td>17 luglio</td><td><span class="badge-pagato">✅ Pagato</span></td><td class="edit-only"><button class="btn-del" onclick="delIscritto('classico',3)">✕</button></td></tr><tr class="data-row"><td><span class="num-circle">5</span></td><td>Salvatore</td><td>Martelli</td><td>20 Luglio</td><td><span class="badge-pagato">✅ Pagato</span></td><td class="edit-only"><button class="btn-del" onclick="delIscritto('classico',4)">✕</button></td></tr><tr class="data-row"><td><span class="num-circle">6</span></td><td>Antonio</td><td>Iacovelli</td><td>25 Luglio</td><td><span class="badge-pagato">✅ Pagato</span></td><td class="edit-only"><button class="btn-del" onclick="delIscritto('classico',5)">✕</button></td></tr><tr class="data-row"><td><span class="num-circle">7</span></td><td>Samuele</td><td>Torino</td><td>24 luglio</td><td><span class="badge-pagato">✅ Pagato</span></td><td class="edit-only"><button class="btn-del" onclick="delIscritto('classico',6)">✕</button></td></tr><tr id="empty-classico" style="display: none;">
             <td colspan="6" style="text-align:center;color:#333;font-size:12px;letter-spacing:2px;padding:32px">
               Nessun iscritto ancora
             </td>
@@ -251,7 +251,7 @@ const GH_FILE = 'iscrizione-torneo-classic-mihajlovic.html';
 const STORE_KEY = 'iscritti-mihajlovic';
 
 // ── DATI ──
-let data = {"classico":[{"nome":"Oreste","cogn":"Iacopino","data":"14 luglio","stato":"pagato"},{"nome":"Giuseppe","cogn":"Castiglia","data":"13 luglio","stato":"pagato"},{"nome":"Fabrizio","cogn":"Miscia","data":"13 liglio","stato":"pagato"},{"nome":"Marco","cogn":"Loda","data":"17 luglio","stato":"pagato"},{"nome":"Salvatore","cogn":"Martelli","data":"20 Luglio","stato":"pagato"},{"nome":"Antonio","cogn":"Iacovelli","data":"25 Luglio","stato":"pagato"}]}; // __DATA_EMBED__
+let data = {"classico":[{"nome":"Oreste","cogn":"Iacopino","data":"14 luglio","stato":"pagato"},{"nome":"Giuseppe","cogn":"Castiglia","data":"13 luglio","stato":"pagato"},{"nome":"Fabrizio","cogn":"Miscia","data":"13 liglio","stato":"pagato"},{"nome":"Marco","cogn":"Loda","data":"17 luglio","stato":"pagato"},{"nome":"Salvatore","cogn":"Martelli","data":"20 Luglio","stato":"pagato"},{"nome":"Antonio","cogn":"Iacovelli","data":"25 Luglio","stato":"pagato"},{"nome":"Samuele","cogn":"Torino","data":"24 luglio","stato":"pagato"}]}; // __DATA_EMBED__
 function saveData(){localStorage.setItem(STORE_KEY, JSON.stringify(data));}
 function loadData(){
   try{ const d=JSON.parse(localStorage.getItem(STORE_KEY)||'null'); if(d)data=d; }catch(e){}
