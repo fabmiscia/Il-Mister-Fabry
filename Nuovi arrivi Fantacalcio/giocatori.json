@@ -232,5 +232,17 @@
     "giocatore": "Diego Mascardi",
     "squadra": "Torino",
     "ruolo": "P"
+  },
+  {
+    "file": "nuovo_arrivo_Alessio_Zerbin__Frosinone.html",
+    "giocatore": "Alessio Zerbin",
+    "squadra": "Frosinone",
+    "ruolo": "C"
+  },
+  {
+    "file": "nuovo_arrivo_Ricardo_Mangas__Monza.html",
+    "giocatore": "Ricardo Mangas",
+    "squadra": "Monza",
+    "ruolo": "D"
   }
 ]
