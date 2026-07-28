@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Simulazioni Asta — MisterFabry</title>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@600;700&display=swap" rel="stylesheet">
+<style>
+* { margin:0; padding:0; box-sizing:border-box; }
+body { background:#0a0a0a; font-family:'Oswald',sans-serif; min-height:100vh; color:#fff; }
+
+.toolbar { background:#0a0a0a; border-bottom:1px solid #1a1a1a; padding:10px 24px; display:flex; align-items:center; gap:12px; position:sticky; top:0; z-index:100; }
+.back-btn { color:#2DB84A; font-size:12px; letter-spacing:2px; text-transform:uppercase; text-decoration:none; display:flex; align-items:center; gap:6px; }
+.back-btn:hover { color:#fff; }
+.back-btn svg { width:14px; height:14px; }
+.toolbar-title { color:rgba(255,255,255,.4); font-size:11px; letter-spacing:2px; text-transform:uppercase; }
+
+.hero { padding:36px 24px 24px; background:linear-gradient(180deg,#111 0%,#0a0a0a 100%); border-bottom:1px solid #1a1a1a; text-align:center; }
+.hero-label { font-size:10px; letter-spacing:4px; color:#2DB84A; text-transform:uppercase; margin-bottom:10px; }
+.hero-title { font-size:28px; letter-spacing:3px; text-transform:uppercase; color:#fff; margin-bottom:6px; }
+.hero-divider { width:60px; height:2px; background:linear-gradient(90deg,transparent,#2DB84A,transparent); margin:10px auto 0; }
+
+.content { max-width:900px; margin:0 auto; padding:28px 20px; }
+.section-label { font-size:10px; letter-spacing:4px; color:#2DB84A; text-transform:uppercase; margin-bottom:16px; border-left:2px solid #2DB84A; padding-left:10px; }
+
+.cards { display:grid; grid-template-columns:repeat(auto-fill,minmax(240px,1fr)); gap:16px; }
+.card-wrap { display:flex; flex-direction:column; gap:4px; }
+.card {
+  display:flex; flex-direction:column; gap:6px; padding:18px 16px;
+  background:#111; border:1px solid #222; border-radius:10px;
+  text-decoration:none; color:#fff; transition:border-color .2s, background .2s;
+  min-height:110px;
+}
+.card:hover { border-color:#2DB84A; background:#141414; }
+.card .icon { font-size:24px; }
+.card .name { font-size:15px; letter-spacing:1px; }
+.card .sub { font-size:10px; color:rgba(255,255,255,.45); letter-spacing:1px; text-transform:uppercase; }
+.card-date { font-size:9px; color:rgba(255,255,255,.25); letter-spacing:1.5px; text-transform:uppercase; padding-left:2px; }
+
+.badge-new { display:inline-block; background:#2DB84A; color:#000; font-size:8px; letter-spacing:2px; padding:2px 6px; border-radius:3px; text-transform:uppercase; margin-left:6px; vertical-align:middle; font-weight:700; }
+
+.empty-state { text-align:center; padding:48px 24px; color:rgba(255,255,255,.25); font-size:13px; letter-spacing:2px; text-transform:uppercase; }
+
+footer { border-top:1px solid #1a1a1a; padding:20px 24px; text-align:center; font-size:9px; letter-spacing:2px; color:rgba(255,255,255,.2); text-transform:uppercase; margin-top:40px; }
+</style>
+</head>
+<body>
+
+<div class="toolbar">
+  <a class="back-btn" href="../../index.html">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+      <polyline points="15 18 9 12 15 6"/>
+    </svg>
+    Home
+  </a>
+  <span class="toolbar-title">/ Simulazioni Asta</span>
+</div>
+
+<div class="hero">
+  <div class="hero-label">Fantacalcio 2026-27</div>
+  <div class="hero-title">Simulazioni Asta</div>
+  <div class="hero-divider"></div>
+</div>
+
+<div class="content">
+  <div class="section-label">Strategie disponibili</div>
+  <div class="cards">
+
+    <div class="card-wrap">
+      <a class="card" href="simulazione-classic-433.html">
+        <span class="icon">🎯</span>
+        <span class="name">Strategia Equilibrata Classic A10 <span class="badge-new">NEW</span></span>
+        <span class="sub">Classic · 4-3-3 · 10 squadre · 500 crediti</span>
+      </a>
+      <div class="card-date">aggiornato il 28 luglio 2026</div>
+    </div>
+
+  </div>
+</div>
+
+<footer>MisterFabry · Fantacalcio 2026-27</footer>
+
+</body>
+</html>
