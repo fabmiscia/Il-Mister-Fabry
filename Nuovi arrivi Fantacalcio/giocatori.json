@@ -244,5 +244,17 @@
     "giocatore": "Ricardo Mangas",
     "squadra": "Monza",
     "ruolo": "D"
+  },
+  {
+    "file": "nuovo_arrivo_Sankhoun_Diawara__Milan.html",
+    "giocatore": "Sankhoun Diawara",
+    "squadra": "Milan",
+    "ruolo": "D"
+  },
+  {
+    "file": "nuovo_arrivo_Luis_Hasa__Frosinone.html",
+    "giocatore": "Luis Hasa",
+    "squadra": "Frosinone",
+    "ruolo": "C"
   }
 ]
