@@ -247,7 +247,7 @@ body{
   <button class="back-btn" onclick="window.location.href='index.html'">← Spogliatoio</button>
   <span class="toolbar-title">🎓 CORSO FANTACALCIO</span>
   <button id="btn-salva-locale" class="tb-btn" onclick="salvaInLocale()">💾 Salva</button>
-  
+  <button id="btn-gh" class="tb-btn gh" onclick="pubblicaGitHub()">🚀 Pubblica</button>
 </div>
 
 <div class="page">
@@ -391,16 +391,16 @@ body{
     <h1 class="lesson-title" contenteditable="true">Il Portiere e l'Imbattibilità: bonus nascosti che cambiano la stagione</h1>
 
     <div class="intro-box" contenteditable="true">
-      Il portiere non fa solo parate. È una macchina da bonus silenziosa. Ogni volta che la sua squadra non subisce gol, vale +3 punti. In una stagione intera, questo può valere quanto un attaccante da 10 gol. Ecco perché scegliere il portiere giusto è molto più importante di quanto sembra.
+      Il portiere non fa solo parate. È una macchina da bonus silenziosa. Ogni volta che la sua squadra non subisce gol, prende +1 punto bonus in aggiunta al voto di giornata. In una stagione intera, sommato ai malus dei gol subiti, questo può fare la differenza tra un portiere che vale e uno che affossa la rosa. Ecco perché scegliere il portiere giusto è molto più importante di quanto sembra.
     </div>
 
     <div class="lesson-section">
       <div class="section-label">Il valore dell'imbattibilità (porta inviolata)</div>
       <ul class="key-points">
-        <li><span contenteditable="true"><strong>+3 punti per ogni clean sheet</strong> — se il portiere non subisce gol, prende +3 punti bonus in aggiunta al suo voto di giornata</span></li>
-        <li><span contenteditable="true"><strong>12 clean sheet in stagione = +36 punti</strong> — un portiere di una difesa solida può fare 10-15 porte inviolate. Sono 30-45 punti bonus solo da questo</span></li>
+        <li><span contenteditable="true"><strong>+1 punto per ogni clean sheet</strong> — se il portiere non subisce gol, prende +1 punto bonus in aggiunta al suo voto di giornata</span></li>
+        <li><span contenteditable="true"><strong>12 clean sheet in stagione = +12 punti</strong> — un portiere di una difesa solida può fare 10-15 porte inviolate. Sono 10-15 punti bonus solo da questo</span></li>
         <li><span contenteditable="true"><strong>Gol subiti = malus</strong> — ogni gol che il portiere subisce vale -1 punto. Un portiere di una squadra che ne prende 50 in stagione parte con -50 punti da recuperare</span></li>
-        <li><span contenteditable="true"><strong>La differenza reale</strong> — portiere di difesa solida (12 clean sheet, 25 gol subiti) = +36 -25 = +11 punti netti dal solo fattore difensivo. Portiere di squadra scarsa (2 clean sheet, 55 gol) = +6 -55 = -49 punti. La differenza è 60 punti in una stagione</span></li>
+        <li><span contenteditable="true"><strong>La differenza reale</strong> — portiere di difesa solida (12 clean sheet, 25 gol subiti) = +12 -25 = -13 punti netti dal solo fattore difensivo. Portiere di squadra scarsa (2 clean sheet, 55 gol) = +2 -55 = -53 punti. La differenza è 40 punti in una stagione</span></li>
       </ul>
     </div>
 
@@ -435,16 +435,17 @@ body{
     <h1 class="lesson-title" contenteditable="true">I Difensori e il Modificatore Difesa: il bonus che nessuno calcola</h1>
 
     <div class="intro-box" contenteditable="true">
-      I difensori sono la categoria più bistrattata all'asta — e questo è il tuo vantaggio. Ma c'è qualcosa di ancora più importante che devi capire: il modificatore difesa. Ogni clean sheet della tua difesa vale punti per tutti i difensori in campo. In leghe numerose, questo sistema può darti più bonus di un attaccante di fascia media.
+      I difensori sono la categoria più bistrattata all'asta — e questo è il tuo vantaggio. Ma c'è qualcosa di ancora più importante che devi capire: il modificatore difesa. È un sistema che premia le squadre con un reparto difensivo di alto livello, calcolato sulla media dei voti del portiere e dei tuoi migliori difensori. In leghe numerose, capire come funziona ti dà un vantaggio enorme su chi lo sottovaluta.
     </div>
 
     <div class="lesson-section">
       <div class="section-label">Il Modificatore Difesa: come funziona</div>
       <ul class="key-points">
-        <li><span contenteditable="true"><strong>+1 punto per ogni difensore titolare</strong> — quando la tua squadra reale non subisce gol, ogni difensore schierato prende +1 punto bonus in aggiunta al voto</span></li>
-        <li><span contenteditable="true"><strong>4 difensori in campo = +4 punti per clean sheet</strong> — se giochi con 4 difensori e la squadra non subisce gol, fai +4 bonus in un colpo solo</span></li>
-        <li><span contenteditable="true"><strong>In stagione: conti i numeri</strong> — 4 difensori × 12 clean sheet = +48 punti bonus totali solo dall'imbattibilità. Più i +36 del portiere. Sono 84 punti bonus difensivi in una stagione</span></li>
-        <li><span contenteditable="true"><strong>Confronto con un attaccante</strong> — un attaccante da 10 gol ti dà +30 punti bonus. Una difesa solida con portiere e 4 difensori titolari può darne più del doppio in clean sheet. In leghe numerose dove i top attaccanti sono scarsi, investire in difesa è spesso la scelta vincente</span></li>
+        <li><span contenteditable="true"><strong>Requisiti minimi</strong> — servono un portiere e almeno 4 difensori con voto valido in campo per attivare il calcolo</span></li>
+        <li><span contenteditable="true"><strong>I voti scelti</strong> — si prende il voto del portiere e i voti dei 3 migliori difensori, senza considerare bonus e malus come gol o ammonizioni</span></li>
+        <li><span contenteditable="true"><strong>La media</strong> — si fa la media di questi quattro voti per trovare il valore della difesa di giornata</span></li>
+        <li><span contenteditable="true"><strong>Soglie di punti</strong> — se la media supera il 6,0 si ottiene un bonus. Più alta è la media, maggiore è il bonus assegnato (o il malus se bassa). I punti vengono aggiunti alla propria squadra o sottratti all'avversario in base alle regole di lega</span></li>
+        <li><span contenteditable="true"><strong>Regole di lega</strong> — i valori esatti delle soglie dipendono dalle scelte decise dal Presidente della vostra lega prima di iniziare il gioco: ogni lega può avere fasce diverse</span></li>
       </ul>
     </div>
 
@@ -790,7 +791,5 @@ if (location.protocol !== 'file:') {
   });
 }
 </script>
-
-<div id="_pwa_nav" style="position:fixed;bottom:20px;right:16px;z-index:99999;display:flex;flex-direction:column;gap:8px"><button onclick="history.back()" aria-label="Indietro" title="Indietro" style="width:46px;height:46px;border-radius:50%;background:rgba(17,17,17,.92);border:1px solid #2a2a2a;color:#fff;font-size:22px;cursor:pointer;backdrop-filter:blur(8px);box-shadow:0 2px 12px rgba(0,0,0,.5)">&#x2190;</button><button onclick="history.forward()" aria-label="Avanti" title="Avanti" style="width:46px;height:46px;border-radius:50%;background:rgba(17,17,17,.92);border:1px solid #2a2a2a;color:#fff;font-size:22px;cursor:pointer;backdrop-filter:blur(8px);box-shadow:0 2px 12px rgba(0,0,0,.5)">&#x2192;</button></div>
 </body>
 </html>
