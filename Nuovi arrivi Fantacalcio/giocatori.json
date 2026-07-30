@@ -256,5 +256,35 @@
     "giocatore": "Luis Hasa",
     "squadra": "Frosinone",
     "ruolo": "C"
+  },
+  {
+    "file": "nuovo_arrivo_Artem_Dovbyk__Bologna.html",
+    "giocatore": "Artem Dovbyk",
+    "squadra": "Bologna",
+    "ruolo": "A"
+  },
+  {
+    "file": "nuovo_arrivo_Santiago_Castro__Roma.html",
+    "giocatore": "Santiago Castro",
+    "squadra": "Roma",
+    "ruolo": "A"
+  },
+  {
+    "file": "nuovo_arrivo_Mikel_Amondarain__Bologna.html",
+    "giocatore": "Mikel Amondarain",
+    "squadra": "Bologna",
+    "ruolo": "C"
+  },
+  {
+    "file": "nuovo_arrivo_Eray_Comert__Torino.html",
+    "giocatore": "Eray Cömert",
+    "squadra": "Torino",
+    "ruolo": "D"
+  },
+  {
+    "file": "nuovo_arrivo_Pietro_Comuzzo__Torino.html",
+    "giocatore": "Pietro Comuzzo",
+    "squadra": "Torino",
+    "ruolo": "D"
   }
 ]
