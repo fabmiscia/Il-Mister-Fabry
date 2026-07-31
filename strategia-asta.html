@@ -216,7 +216,7 @@ body {
 <body>
 
 <div class="toolbar">
-  <span class="toolbar-title">⚽ STRATEGIA ASTA FANTACALCIO</span>
+  <span class="toolbar-title">⚽ CLASSIC A10 – SENZA TOP</span>
   <button class="tb-btn" onclick="exportPNG()">📸 Esporta PNG</button>
   <button id="btn-salva-locale" class="tb-btn" onclick="salvaInLocale()">💾 Salva in locale</button>
   
@@ -247,33 +247,33 @@ body {
           <!-- POR -->
           <div class="role-row" data-role="POR">
             <div class="role-dot" style="background:#9333ea">P</div>
-            <div class="role-bar-wrap"><div class="role-bar" id="bar-POR" style="background:#9333ea;width:8%"></div></div>
+            <div class="role-bar-wrap"><div class="role-bar" id="bar-POR" style="background:#9333ea;width:10%"></div></div>
             <button class="role-btn" style="background:#9333ea" onclick="adjustRole('POR',-1)">−</button>
-            <span class="role-pct" id="pct-POR" style="color:#c084fc">8%</span>
+            <span class="role-pct" id="pct-POR" style="color:#c084fc">10%</span>
             <button class="role-btn" style="background:#9333ea" onclick="adjustRole('POR',1)">+</button>
           </div>
           <!-- DIF -->
           <div class="role-row" data-role="DIF">
             <div class="role-dot" style="background:#22c55e">D</div>
-            <div class="role-bar-wrap"><div class="role-bar" id="bar-DIF" style="background:#22c55e;width:24%"></div></div>
+            <div class="role-bar-wrap"><div class="role-bar" id="bar-DIF" style="background:#22c55e;width:21%"></div></div>
             <button class="role-btn" style="background:#22c55e" onclick="adjustRole('DIF',-1)">−</button>
-            <span class="role-pct" id="pct-DIF" style="color:#4ade80">24%</span>
+            <span class="role-pct" id="pct-DIF" style="color:#4ade80">21%</span>
             <button class="role-btn" style="background:#22c55e" onclick="adjustRole('DIF',1)">+</button>
           </div>
           <!-- CEN -->
           <div class="role-row" data-role="CEN">
             <div class="role-dot" style="background:#f59e0b">C</div>
-            <div class="role-bar-wrap"><div class="role-bar" id="bar-CEN" style="background:#f59e0b;width:23%"></div></div>
+            <div class="role-bar-wrap"><div class="role-bar" id="bar-CEN" style="background:#f59e0b;width:25%"></div></div>
             <button class="role-btn" style="background:#f59e0b" onclick="adjustRole('CEN',-1)">−</button>
-            <span class="role-pct" id="pct-CEN" style="color:#fbbf24">23%</span>
+            <span class="role-pct" id="pct-CEN" style="color:#fbbf24">25%</span>
             <button class="role-btn" style="background:#f59e0b" onclick="adjustRole('CEN',1)">+</button>
           </div>
           <!-- ATT -->
           <div class="role-row" data-role="ATT">
             <div class="role-dot" style="background:#ef4444">A</div>
-            <div class="role-bar-wrap"><div class="role-bar" id="bar-ATT" style="background:#ef4444;width:45%"></div></div>
+            <div class="role-bar-wrap"><div class="role-bar" id="bar-ATT" style="background:#ef4444;width:44%"></div></div>
             <button class="role-btn" style="background:#ef4444" onclick="adjustRole('ATT',-1)">−</button>
-            <span class="role-pct" id="pct-ATT" style="color:#f87171">45%</span>
+            <span class="role-pct" id="pct-ATT" style="color:#f87171">44%</span>
             <button class="role-btn" style="background:#ef4444" onclick="adjustRole('ATT',1)">+</button>
           </div>
           <!-- TOTALE -->
@@ -336,303 +336,28 @@ body {
           <span>PORTIERI</span>
           <span class="pos-count" id="cnt-POR">3 slot</span>
         </div>
-      <div class="slot" data-role="POR" data-id="1">
-    <img class="slot-photo" src="img/asta/skorupski.png" onerror="this.style.opacity='.3'" onclick="changePhoto(this)" style="opacity: 0.3;">
-    <div class="slot-info">
-      <div class="slot-name" contenteditable="true" oninput="updateSlotPcts()">Skorupski</div>
-      <span class="slot-tier tier-semi" onclick="openTierPicker(this,1)">Semitop</span>
-    </div>
-    <div class="slot-right">
-      <div class="slot-credits" contenteditable="true" oninput="updateSlotPcts()">30</div>
-      <div class="slot-pct" id="spct-1">Budget 6.0%</div>
-    </div>
-    <button class="slot-del" onclick="removeSlot(this)" title="Rimuovi">×</button>
-  </div><div class="slot" data-role="POR" data-id="2">
-    <img class="slot-photo" src="img/asta/semper.png" onerror="this.style.opacity='.3'" onclick="changePhoto(this)" style="opacity: 0.3;">
-    <div class="slot-info">
-      <div class="slot-name" contenteditable="true" oninput="updateSlotPcts()">Semper</div>
-      <span class="slot-tier tier-low" onclick="openTierPicker(this,2)">Titolari Low Cost</span>
-    </div>
-    <div class="slot-right">
-      <div class="slot-credits" contenteditable="true" oninput="updateSlotPcts()">5</div>
-      <div class="slot-pct" id="spct-2">Budget 1.0%</div>
-    </div>
-    <button class="slot-del" onclick="removeSlot(this)" title="Rimuovi">×</button>
-  </div><div class="slot" data-role="POR" data-id="3">
-    <img class="slot-photo" src="img/asta/ravaglia_f.png" onerror="this.style.opacity='.3'" onclick="changePhoto(this)" style="opacity: 0.3;">
-    <div class="slot-info">
-      <div class="slot-name" contenteditable="true" oninput="updateSlotPcts()">Ravaglia F.</div>
-      <span class="slot-tier tier-low" onclick="openTierPicker(this,3)">Titolari Low Cost</span>
-    </div>
-    <div class="slot-right">
-      <div class="slot-credits" contenteditable="true" oninput="updateSlotPcts()">5</div>
-      <div class="slot-pct" id="spct-3">Budget 1.0%</div>
-    </div>
-    <button class="slot-del" onclick="removeSlot(this)" title="Rimuovi">×</button>
-  </div><button class="add-slot-btn">+ Aggiungi slot</button><button class="add-slot-btn">+ Aggiungi slot</button></div>
+      <button class="add-slot-btn">+ Aggiungi slot</button></div>
       <div class="pos-col dif-col" id="col-DIF">
         <div class="pos-header">
           <div class="pos-icon">D</div>
           <span>DIFENSORI</span>
           <span class="pos-count" id="cnt-DIF">8 slot</span>
         </div>
-      <div class="slot" data-role="DIF" data-id="4">
-    <img class="slot-photo" src="img/asta/kalulu.png" onerror="this.style.opacity='.3'" onclick="changePhoto(this)" style="opacity: 0.3;">
-    <div class="slot-info">
-      <div class="slot-name" contenteditable="true" oninput="updateSlotPcts()">Kalulu</div>
-      <span class="slot-tier tier-top" onclick="openTierPicker(this,4)">Top</span>
-    </div>
-    <div class="slot-right">
-      <div class="slot-credits" contenteditable="true" oninput="updateSlotPcts()">25</div>
-      <div class="slot-pct" id="spct-4">Budget 5.0%</div>
-    </div>
-    <button class="slot-del" onclick="removeSlot(this)" title="Rimuovi">×</button>
-  </div><div class="slot" data-role="DIF" data-id="5">
-    <img class="slot-photo" src="img/asta/baschirotto.png" onerror="this.style.opacity='.3'" onclick="changePhoto(this)" style="opacity: 0.3;">
-    <div class="slot-info">
-      <div class="slot-name" contenteditable="true" oninput="updateSlotPcts()">Baschirotto</div>
-      <span class="slot-tier tier-ott" onclick="openTierPicker(this,5)">Ottimi titolari</span>
-    </div>
-    <div class="slot-right">
-      <div class="slot-credits" contenteditable="true" oninput="updateSlotPcts()">15</div>
-      <div class="slot-pct" id="spct-5">Budget 3.0%</div>
-    </div>
-    <button class="slot-del" onclick="removeSlot(this)" title="Rimuovi">×</button>
-  </div><div class="slot" data-role="DIF" data-id="6">
-    <img class="slot-photo" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='38' height='38' viewBox='0 0 38 38'%3E%3Crect width='38' height='38' rx='19' fill='%231a1a3e'/%3E%3Ccircle cx='19' cy='15' r='7' fill='%23555'/%3E%3Cellipse cx='19' cy='30' rx='12' ry='8' fill='%23555'/%3E%3C/svg%3E" onerror="this.style.opacity='.3'" onclick="changePhoto(this)">
-    <div class="slot-info">
-      <div class="slot-name" contenteditable="true" oninput="updateSlotPcts()">Dodò</div>
-      <span class="slot-tier tier-ott" onclick="openTierPicker(this,6)">Ottimi titolari</span>
-    </div>
-    <div class="slot-right">
-      <div class="slot-credits" contenteditable="true" oninput="updateSlotPcts()">17</div>
-      <div class="slot-pct" id="spct-6">Budget 3.4%</div>
-    </div>
-    <button class="slot-del" onclick="removeSlot(this)" title="Rimuovi">×</button>
-  </div><div class="slot" data-role="DIF" data-id="7">
-    <img class="slot-photo" src="img/asta/miranda_j.png" onerror="this.style.opacity='.3'" onclick="changePhoto(this)" style="opacity: 0.3;">
-    <div class="slot-info">
-      <div class="slot-name" contenteditable="true" oninput="updateSlotPcts()">Miranda J.</div>
-      <span class="slot-tier tier-jolly" onclick="openTierPicker(this,7)">Jolly / Big Buoni</span>
-    </div>
-    <div class="slot-right">
-      <div class="slot-credits" contenteditable="true" oninput="updateSlotPcts()">9</div>
-      <div class="slot-pct" id="spct-7">Budget 1.8%</div>
-    </div>
-    <button class="slot-del" onclick="removeSlot(this)" title="Rimuovi">×</button>
-  </div><div class="slot" data-role="DIF" data-id="8">
-    <img class="slot-photo" src="img/asta/kristensen_t.png" onerror="this.style.opacity='.3'" onclick="changePhoto(this)" style="opacity: 0.3;">
-    <div class="slot-info">
-      <div class="slot-name" contenteditable="true" oninput="updateSlotPcts()">Kristensen T.</div>
-      <span class="slot-tier tier-low" onclick="openTierPicker(this,8)">Titolari Low Cost</span>
-    </div>
-    <div class="slot-right">
-      <div class="slot-credits" contenteditable="true" oninput="updateSlotPcts()">2</div>
-      <div class="slot-pct" id="spct-8">Budget 0.4%</div>
-    </div>
-    <button class="slot-del" onclick="removeSlot(this)" title="Rimuovi">×</button>
-  </div><div class="slot" data-role="DIF" data-id="9">
-    <img class="slot-photo" src="img/asta/pellegrini_lu.png" onerror="this.style.opacity='.3'" onclick="changePhoto(this)" style="opacity: 0.3;">
-    <div class="slot-info">
-      <div class="slot-name" contenteditable="true" oninput="updateSlotPcts()">Pellegrini Lu.</div>
-      <span class="slot-tier tier-low" onclick="openTierPicker(this,9)">Titolari Low Cost</span>
-    </div>
-    <div class="slot-right">
-      <div class="slot-credits" contenteditable="true" oninput="updateSlotPcts()">2</div>
-      <div class="slot-pct" id="spct-9">Budget 0.4%</div>
-    </div>
-    <button class="slot-del" onclick="removeSlot(this)" title="Rimuovi">×</button>
-  </div><div class="slot" data-role="DIF" data-id="10">
-    <img class="slot-photo" src="img/asta/ismajli.png" onerror="this.style.opacity='.3'" onclick="changePhoto(this)" style="opacity: 0.3;">
-    <div class="slot-info">
-      <div class="slot-name" contenteditable="true" oninput="updateSlotPcts()">Ismajli</div>
-      <span class="slot-tier tier-low" onclick="openTierPicker(this,10)">Titolari Low Cost</span>
-    </div>
-    <div class="slot-right">
-      <div class="slot-credits" contenteditable="true" oninput="updateSlotPcts()">2</div>
-      <div class="slot-pct" id="spct-10">Budget 0.4%</div>
-    </div>
-    <button class="slot-del" onclick="removeSlot(this)" title="Rimuovi">×</button>
-  </div><div class="slot" data-role="DIF" data-id="11">
-    <img class="slot-photo" src="img/asta/terracciano_f.png" onerror="this.style.opacity='.3'" onclick="changePhoto(this)" style="opacity: 0.3;">
-    <div class="slot-info">
-      <div class="slot-name" contenteditable="true" oninput="updateSlotPcts()">Terracciano F.</div>
-      <span class="slot-tier tier-low" onclick="openTierPicker(this,11)">Titolari Low Cost</span>
-    </div>
-    <div class="slot-right">
-      <div class="slot-credits" contenteditable="true" oninput="updateSlotPcts()">2</div>
-      <div class="slot-pct" id="spct-11">Budget 0.4%</div>
-    </div>
-    <button class="slot-del" onclick="removeSlot(this)" title="Rimuovi">×</button>
-  </div><button class="add-slot-btn">+ Aggiungi slot</button><button class="add-slot-btn">+ Aggiungi slot</button></div>
+      <button class="add-slot-btn">+ Aggiungi slot</button></div>
       <div class="pos-col cen-col" id="col-CEN">
         <div class="pos-header">
           <div class="pos-icon">C</div>
           <span>CENTROCAMPISTI</span>
           <span class="pos-count" id="cnt-CEN">8 slot</span>
         </div>
-      <div class="slot" data-role="CEN" data-id="12">
-    <img class="slot-photo" src="img/asta/rabiot.png" onerror="this.style.opacity='.3'" onclick="changePhoto(this)" style="opacity: 0.3;">
-    <div class="slot-info">
-      <div class="slot-name" contenteditable="true" oninput="updateSlotPcts()">Rabiot</div>
-      <span class="slot-tier tier-top" onclick="openTierPicker(this,12)">Top</span>
-    </div>
-    <div class="slot-right">
-      <div class="slot-credits" contenteditable="true" oninput="updateSlotPcts()">50</div>
-      <div class="slot-pct" id="spct-12">Budget 10.0%</div>
-    </div>
-    <button class="slot-del" onclick="removeSlot(this)" title="Rimuovi">×</button>
-  </div><div class="slot" data-role="CEN" data-id="13">
-    <img class="slot-photo" src="img/asta/thuram_k.png" onerror="this.style.opacity='.3'" onclick="changePhoto(this)" style="opacity: 0.3;">
-    <div class="slot-info">
-      <div class="slot-name" contenteditable="true" oninput="updateSlotPcts()">Thuram K.</div>
-      <span class="slot-tier tier-ott" onclick="openTierPicker(this,13)">Ottimi titolari</span>
-    </div>
-    <div class="slot-right">
-      <div class="slot-credits" contenteditable="true" oninput="updateSlotPcts()">20</div>
-      <div class="slot-pct" id="spct-13">Budget 4.0%</div>
-    </div>
-    <button class="slot-del" onclick="removeSlot(this)" title="Rimuovi">×</button>
-  </div><div class="slot" data-role="CEN" data-id="14">
-    <img class="slot-photo" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='38' height='38' viewBox='0 0 38 38'%3E%3Crect width='38' height='38' rx='19' fill='%231a1a3e'/%3E%3Ccircle cx='19' cy='15' r='7' fill='%23555'/%3E%3Cellipse cx='19' cy='30' rx='12' ry='8' fill='%23555'/%3E%3C/svg%3E" onerror="this.style.opacity='.3'" onclick="changePhoto(this)">
-    <div class="slot-info">
-      <div class="slot-name" contenteditable="true" oninput="updateSlotPcts()">Taylor K.</div>
-      <span class="slot-tier tier-ott" onclick="openTierPicker(this,14)">Ottimi titolari</span>
-    </div>
-    <div class="slot-right">
-      <div class="slot-credits" contenteditable="true" oninput="updateSlotPcts()">26</div>
-      <div class="slot-pct" id="spct-14">Budget 5.2%</div>
-    </div>
-    <button class="slot-del" onclick="removeSlot(this)" title="Rimuovi">×</button>
-  </div><div class="slot" data-role="CEN" data-id="15">
-    <img class="slot-photo" src="img/asta/fofana_y.png" onerror="this.style.opacity='.3'" onclick="changePhoto(this)" style="opacity: 0.3;">
-    <div class="slot-info">
-      <div class="slot-name" contenteditable="true" oninput="updateSlotPcts()">Fofana Y.</div>
-      <span class="slot-tier tier-jolly" onclick="openTierPicker(this,15)">Jolly / Big Buoni</span>
-    </div>
-    <div class="slot-right">
-      <div class="slot-credits" contenteditable="true" oninput="updateSlotPcts()">4</div>
-      <div class="slot-pct" id="spct-15">Budget 0.8%</div>
-    </div>
-    <button class="slot-del" onclick="removeSlot(this)" title="Rimuovi">×</button>
-  </div><div class="slot" data-role="CEN" data-id="16">
-    <img class="slot-photo" src="img/asta/bernardeschi.png" onerror="this.style.opacity='.3'" onclick="changePhoto(this)" style="opacity: 0.3;">
-    <div class="slot-info">
-      <div class="slot-name" contenteditable="true" oninput="updateSlotPcts()">Bernardeschi</div>
-      <span class="slot-tier tier-jolly" onclick="openTierPicker(this,16)">Jolly / Big Buoni</span>
-    </div>
-    <div class="slot-right">
-      <div class="slot-credits" contenteditable="true" oninput="updateSlotPcts()">5</div>
-      <div class="slot-pct" id="spct-16">Budget 1.0%</div>
-    </div>
-    <button class="slot-del" onclick="removeSlot(this)" title="Rimuovi">×</button>
-  </div><div class="slot" data-role="CEN" data-id="17">
-    <img class="slot-photo" src="img/asta/koopmeiners.png" onerror="this.style.opacity='.3'" onclick="changePhoto(this)" style="opacity: 0.3;">
-    <div class="slot-info">
-      <div class="slot-name" contenteditable="true" oninput="updateSlotPcts()">Koopmeiners</div>
-      <span class="slot-tier tier-jolly" onclick="openTierPicker(this,17)">Jolly / Big Buoni</span>
-    </div>
-    <div class="slot-right">
-      <div class="slot-credits" contenteditable="true" oninput="updateSlotPcts()">4</div>
-      <div class="slot-pct" id="spct-17">Budget 0.8%</div>
-    </div>
-    <button class="slot-del" onclick="removeSlot(this)" title="Rimuovi">×</button>
-  </div><div class="slot" data-role="CEN" data-id="18">
-    <img class="slot-photo" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='38' height='38' viewBox='0 0 38 38'%3E%3Crect width='38' height='38' rx='19' fill='%231a1a3e'/%3E%3Ccircle cx='19' cy='15' r='7' fill='%23555'/%3E%3Cellipse cx='19' cy='30' rx='12' ry='8' fill='%23555'/%3E%3C/svg%3E" onerror="this.style.opacity='.3'" onclick="changePhoto(this)">
-    <div class="slot-info">
-      <div class="slot-name" contenteditable="true" oninput="updateSlotPcts()">Basic</div>
-      <span class="slot-tier tier-low" onclick="openTierPicker(this,18)">Titolari Low Cost</span>
-    </div>
-    <div class="slot-right">
-      <div class="slot-credits" contenteditable="true" oninput="updateSlotPcts()">2</div>
-      <div class="slot-pct" id="spct-18">Budget 0.4%</div>
-    </div>
-    <button class="slot-del" onclick="removeSlot(this)" title="Rimuovi">×</button>
-  </div><div class="slot" data-role="CEN" data-id="19">
-    <img class="slot-photo" src="img/asta/matic.png" onerror="this.style.opacity='.3'" onclick="changePhoto(this)" style="opacity: 0.3;">
-    <div class="slot-info">
-      <div class="slot-name" contenteditable="true" oninput="updateSlotPcts()">Matic</div>
-      <span class="slot-tier tier-low" onclick="openTierPicker(this,19)">Titolari Low Cost</span>
-    </div>
-    <div class="slot-right">
-      <div class="slot-credits" contenteditable="true" oninput="updateSlotPcts()">2</div>
-      <div class="slot-pct" id="spct-19">Budget 0.4%</div>
-    </div>
-    <button class="slot-del" onclick="removeSlot(this)" title="Rimuovi">×</button>
-  </div><button class="add-slot-btn">+ Aggiungi slot</button><button class="add-slot-btn">+ Aggiungi slot</button></div>
+      <button class="add-slot-btn">+ Aggiungi slot</button></div>
       <div class="pos-col att-col" id="col-ATT">
         <div class="pos-header">
           <div class="pos-icon">A</div>
           <span>ATTACCANTI</span>
           <span class="pos-count" id="cnt-ATT">6 slot</span>
         </div>
-      <div class="slot" data-role="ATT" data-id="20">
-    <img class="slot-photo" src="img/asta/malen.png" onerror="this.style.opacity='.3'" onclick="changePhoto(this)" style="opacity: 0.3;">
-    <div class="slot-info">
-      <div class="slot-name" contenteditable="true" oninput="updateSlotPcts()">Malen</div>
-      <span class="slot-tier tier-top" onclick="openTierPicker(this,20)">Top</span>
-    </div>
-    <div class="slot-right">
-      <div class="slot-credits" contenteditable="true" oninput="updateSlotPcts()">150</div>
-      <div class="slot-pct" id="spct-20">Budget 30.0%</div>
-    </div>
-    <button class="slot-del" onclick="removeSlot(this)" title="Rimuovi">×</button>
-  </div><div class="slot" data-role="ATT" data-id="21">
-    <img class="slot-photo" src="img/asta/scamacca.png" onerror="this.style.opacity='.3'" onclick="changePhoto(this)" style="opacity: 0.3;">
-    <div class="slot-info">
-      <div class="slot-name" contenteditable="true" oninput="updateSlotPcts()">Scamacca</div>
-      <span class="slot-tier tier-semi" onclick="openTierPicker(this,21)">Semitop</span>
-    </div>
-    <div class="slot-right">
-      <div class="slot-credits" contenteditable="true" oninput="updateSlotPcts()">90</div>
-      <div class="slot-pct" id="spct-21">Budget 18.0%</div>
-    </div>
-    <button class="slot-del" onclick="removeSlot(this)" title="Rimuovi">×</button>
-  </div><div class="slot" data-role="ATT" data-id="22">
-    <img class="slot-photo" src="img/asta/esposito_se.png" onerror="this.style.opacity='.3'" onclick="changePhoto(this)" style="opacity: 0.3;">
-    <div class="slot-info">
-      <div class="slot-name" contenteditable="true" oninput="updateSlotPcts()">Esposito Se.</div>
-      <span class="slot-tier tier-jolly" onclick="openTierPicker(this,22)">Jolly / Big Buoni</span>
-    </div>
-    <div class="slot-right">
-      <div class="slot-credits" contenteditable="true" oninput="updateSlotPcts()">27</div>
-      <div class="slot-pct" id="spct-22">Budget 5.4%</div>
-    </div>
-    <button class="slot-del" onclick="removeSlot(this)" title="Rimuovi">×</button>
-  </div><div class="slot" data-role="ATT" data-id="23">
-    <img class="slot-photo" src="img/asta/ekuban.png" onerror="this.style.opacity='.3'" onclick="changePhoto(this)" style="opacity: 0.3;">
-    <div class="slot-info">
-      <div class="slot-name" contenteditable="true" oninput="updateSlotPcts()">Ekuban</div>
-      <span class="slot-tier tier-jolly" onclick="openTierPicker(this,23)">Jolly / Big Buoni</span>
-    </div>
-    <div class="slot-right">
-      <div class="slot-credits" contenteditable="true" oninput="updateSlotPcts()">2</div>
-      <div class="slot-pct" id="spct-23">Budget 0.4%</div>
-    </div>
-    <button class="slot-del" onclick="removeSlot(this)" title="Rimuovi">×</button>
-  </div><div class="slot" data-role="ATT" data-id="24">
-    <img class="slot-photo" src="img/asta/borrelli.png" onerror="this.style.opacity='.3'" onclick="changePhoto(this)" style="opacity: 0.3;">
-    <div class="slot-info">
-      <div class="slot-name" contenteditable="true" oninput="updateSlotPcts()">Borrelli</div>
-      <span class="slot-tier tier-low" onclick="openTierPicker(this,24)">Titolari Low Cost</span>
-    </div>
-    <div class="slot-right">
-      <div class="slot-credits" contenteditable="true" oninput="updateSlotPcts()">3</div>
-      <div class="slot-pct" id="spct-24">Budget 0.6%</div>
-    </div>
-    <button class="slot-del" onclick="removeSlot(this)" title="Rimuovi">×</button>
-  </div><div class="slot" data-role="ATT" data-id="25">
-    <img class="slot-photo" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='38' height='38' viewBox='0 0 38 38'%3E%3Crect width='38' height='38' rx='19' fill='%231a1a3e'/%3E%3Ccircle cx='19' cy='15' r='7' fill='%23555'/%3E%3Cellipse cx='19' cy='30' rx='12' ry='8' fill='%23555'/%3E%3C/svg%3E" onerror="this.style.opacity='.3'" onclick="changePhoto(this)">
-    <div class="slot-info">
-      <div class="slot-name" contenteditable="true" oninput="updateSlotPcts()">Nzola</div>
-      <span class="slot-tier tier-low" onclick="openTierPicker(this,25)">Titolari Low Cost</span>
-    </div>
-    <div class="slot-right">
-      <div class="slot-credits" contenteditable="true" oninput="updateSlotPcts()">2</div>
-      <div class="slot-pct" id="spct-25">Budget 0.4%</div>
-    </div>
-    <button class="slot-del" onclick="removeSlot(this)" title="Rimuovi">×</button>
-  </div><button class="add-slot-btn">+ Aggiungi slot</button><button class="add-slot-btn">+ Aggiungi slot</button></div>
+      <button class="add-slot-btn">+ Aggiungi slot</button></div>
     </div>
   </div>
 
@@ -927,32 +652,32 @@ updateAll();
 
 // Dati di esempio — solo al primo caricamento
 if(!document.querySelector('.slot')){
-  addSlot('POR',{name:'Skorupski',tier:'semi',credits:30,photo:'img/asta/skorupski.png'});
-  addSlot('POR',{name:'Semper',tier:'low',credits:5,photo:'img/asta/semper.png'});
-  addSlot('POR',{name:'Ravaglia F.',tier:'low',credits:5,photo:'img/asta/ravaglia_f.png'});
-  addSlot('DIF',{name:'Kalulu',tier:'top',credits:25,photo:'img/asta/kalulu.png'});
-  addSlot('DIF',{name:'Baschirotto',tier:'ott',credits:15,photo:'img/asta/baschirotto.png'});
-  addSlot('DIF',{name:'Dodò',tier:'ott',credits:17});
-  addSlot('DIF',{name:'Miranda J.',tier:'jolly',credits:9,photo:'img/asta/miranda_j.png'});
-  addSlot('DIF',{name:'Kristensen T.',tier:'low',credits:2,photo:'img/asta/kristensen_t.png'});
-  addSlot('DIF',{name:'Pellegrini Lu.',tier:'low',credits:2,photo:'img/asta/pellegrini_lu.png'});
-  addSlot('DIF',{name:'Ismajli',tier:'low',credits:2,photo:'img/asta/ismajli.png'});
-  addSlot('DIF',{name:'Terracciano F.',tier:'low',credits:2,photo:'img/asta/terracciano_f.png'});
-  addSlot('CEN',{name:'Rabiot',tier:'top',credits:50,photo:'img/asta/rabiot.png'});
-  addSlot('CEN',{name:'Thuram K.',tier:'ott',credits:20,photo:'img/asta/thuram_k.png'});
-  addSlot('CEN',{name:'Taylor K.',tier:'ott',credits:26});
-  addSlot('CEN',{name:'Fofana Y.',tier:'jolly',credits:4,photo:'img/asta/fofana_y.png'});
-  addSlot('CEN',{name:'Bernardeschi',tier:'jolly',credits:5,photo:'img/asta/bernardeschi.png'});
-  addSlot('CEN',{name:'Koopmeiners',tier:'jolly',credits:4,photo:'img/asta/koopmeiners.png'});
-  addSlot('CEN',{name:'Basic',tier:'low',credits:2});
-  addSlot('CEN',{name:'Matic',tier:'low',credits:2,photo:'img/asta/matic.png'});
-  addSlot('ATT',{name:'Malen',tier:'top',credits:150,photo:'img/asta/malen.png'});
-  addSlot('ATT',{name:'Scamacca',tier:'semi',credits:90,photo:'img/asta/scamacca.png'});
-  addSlot('ATT',{name:'Esposito Se.',tier:'jolly',credits:27,photo:'img/asta/esposito_se.png'});
-  addSlot('ATT',{name:'Ekuban',tier:'jolly',credits:2,photo:'img/asta/ekuban.png'});
-  addSlot('ATT',{name:'Borrelli',tier:'low',credits:3,photo:'img/asta/borrelli.png'});
-  addSlot('ATT',{name:'Nzola',tier:'low',credits:2});
-}
+      addSlot('POR',{name:'Carnesecchi',tier:'semi',credits:42,photo:'img/asta/carnesecchi.png'});
+    addSlot('POR',{name:'Sportiello',tier:'low',credits:1,photo:'img/asta/sportiello.png'});
+    addSlot('POR',{name:'Muric',tier:'low',credits:7,photo:'img/asta/muric.png'});
+    addSlot('DIF',{name:'Bastoni',tier:'semi',credits:26,photo:'img/asta/bastoni.png'});
+    addSlot('DIF',{name:'Mancini',tier:'ott',credits:25,photo:'img/asta/mancini.png'});
+    addSlot('DIF',{name:'Di Lorenzo',tier:'ott',credits:25,photo:'img/asta/di_lorenzo.png'});
+    addSlot('DIF',{name:'Carlos Augusto',tier:'jolly',credits:10,photo:'img/asta/carlos_augusto.png'});
+    addSlot('DIF',{name:'Doekhi D.',tier:'jolly',credits:10,photo:'img/asta/doekhi_d.png'});
+    addSlot('DIF',{name:'Mercandalli',tier:'low',credits:6,photo:'img/asta/mercandalli.png'});
+    addSlot('DIF',{name:'Troilo',tier:'low',credits:2,photo:'img/asta/troilo.png'});
+    addSlot('DIF',{name:'Obert',tier:'low',credits:1,photo:'img/asta/obert.png'});
+    addSlot('CEN',{name:'Atta',tier:'semi',credits:40,photo:'img/asta/atta.png'});
+    addSlot('CEN',{name:'Da Cunha',tier:'semi',credits:40,photo:'img/asta/da_cunha.png'});
+    addSlot('CEN',{name:'Rowe',tier:'ott',credits:25,photo:'img/asta/rowe.png'});
+    addSlot('CEN',{name:'Samardzic',tier:'jolly',credits:10,photo:'img/asta/samardzic.png'});
+    addSlot('CEN',{name:'Baldanzi',tier:'jolly',credits:5,photo:'img/asta/baldanzi.png'});
+    addSlot('CEN',{name:'Coqueret',tier:'low',credits:2,photo:'img/asta/coqueret.png'});
+    addSlot('CEN',{name:'Frendrup',tier:'low',credits:2,photo:'img/asta/frendrup.png'});
+    addSlot('CEN',{name:'Koutsoupias L.',tier:'low',credits:1,photo:'img/asta/koutsoupias_l.png'});
+    addSlot('ATT',{name:'Davis K.',tier:'semi',credits:75,photo:'img/asta/davis_k.png'});
+    addSlot('ATT',{name:'Simeone',tier:'semi',credits:70,photo:'img/asta/simeone.png'});
+    addSlot('ATT',{name:'Laurienté',tier:'ott',credits:40,photo:'img/asta/lauriente.png'});
+    addSlot('ATT',{name:'Castro S.',tier:'ott',credits:30,photo:'img/asta/castro_s.png'});
+    addSlot('ATT',{name:'Zapata B.',tier:'low',credits:5,photo:'img/asta/zapata_b.png'});
+    addSlot('ATT',{name:'Ekhotr',tier:'low',credits:2,photo:'img/asta/ekhotr.png'});
+  }
 
 // Nascondi bottoni locali su GitHub Pages
 </script>
