@@ -731,7 +731,7 @@ table.inj-tbl thead th {
 <!-- ══════════════════════════════════════════════
      SLIDE 1
 ══════════════════════════════════════════════ -->
-<div id="s1" class="card" style="transform: scale(1); transform-origin: center top; margin-bottom: 0px;">
+<div id="s1" class="card active" style="transform: scale(1); transform-origin: center top; margin-bottom: 0px;">
 
   <!-- Foto cliccabile -->
   <div class="photo-col" onclick="triggerPhotoUpload('all')">
@@ -1026,7 +1026,7 @@ table.inj-tbl thead th {
 <!-- ══════════════════════════════════════════════
      SLIDE 3 – Consigli Fantacalcio
 ══════════════════════════════════════════════ -->
-<div id="s3" class="card active" style="transform: scale(1); transform-origin: center top; margin-bottom: 0px;">
+<div id="s3" class="card" style="transform: scale(1); transform-origin: center top; margin-bottom: 0px;">
 
   <div class="s3-photo" onclick="triggerPhotoUpload('all')">
     <img class="photo-all" src="https://img.a.transfermarkt.technology/portrait/big/988964-1733226137.jpg?lm=1" alt="Mattia Liberali" onerror="this.src='https://img.a.transfermarkt.technology/portrait/big/default.jpg'">
@@ -1122,6 +1122,8 @@ table.inj-tbl thead th {
 })();
 
 // ── Nav ─────────────────────────────────────
+document.addEventListener("DOMContentLoaded", function(){ go(1); });
+
 function go(n) {
   document.querySelectorAll('.card').forEach(c => c.classList.remove('active'));
   document.querySelectorAll('.nav button').forEach(b => b.classList.remove('active'));
