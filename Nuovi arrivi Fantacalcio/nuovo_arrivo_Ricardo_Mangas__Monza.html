@@ -1361,7 +1361,8 @@ async function eseguiPubblicazione(token) {
     ghStatus.style.color       = '';
     ghDetail.textContent       = '';
 
-    const htmlContent = '<!DOCTYPE html>\n' + document.documentElement.outerHTML;
+    go(1);
+      const htmlContent = '<!DOCTYPE html>\n' + document.documentElement.outerHTML;
 
     // Ripristina stato
     overlay.style.display      = _od;
@@ -1629,7 +1630,8 @@ scaleCards();
 
 // ── Salva in locale ──────────────────────────
 async function salvaInLocale() {
-  const html = '<!DOCTYPE html>\n' + document.documentElement.outerHTML;
+  go(1);
+      const html = '<!DOCTYPE html>\n' + document.documentElement.outerHTML;
   const blob = new Blob([html], {type:'text/html'});
   const fname = location.pathname.split('/').pop() || 'card.html';
   try {
