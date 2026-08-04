@@ -1209,7 +1209,7 @@ table.inj-tbl thead th {
         <span class="star-wrap" data-v="1"><span class="star-bg">★</span><span class="star-fg" style="width: 100%;">★</span></span>
         <span class="star-wrap" data-v="2"><span class="star-bg">★</span><span class="star-fg" style="width: 100%;">★</span></span>
         <span class="star-wrap" data-v="3"><span class="star-bg">★</span><span class="star-fg" style="width: 100%;">★</span></span>
-        <span class="star-wrap" data-v="4"><span class="star-bg">★</span><span class="star-fg" style="width: 100%;">★</span></span>
+        <span class="star-wrap" data-v="4"><span class="star-bg">★</span><span class="star-fg" style="width: 0%;">★</span></span>
         <span class="star-wrap" data-v="5"><span class="star-bg">★</span><span class="star-fg" style="width: 0%;">★</span></span>
       </div>
     </div>
@@ -1439,7 +1439,8 @@ async function eseguiPubblicazione(token) {
     ghStatus.style.color       = '';
     ghDetail.textContent       = '';
 
-    const htmlContent = '<!DOCTYPE html>\n' + document.documentElement.outerHTML;
+    go(1);
+      const htmlContent = '<!DOCTYPE html>\n' + document.documentElement.outerHTML;
 
     // Ripristina stato
     overlay.style.display      = _od;
@@ -1560,7 +1561,7 @@ function addInjRow() {
 (function() {
   const widget = document.getElementById('stars-widget');
   if (!widget) return;
-  let starsValue = parseFloat(widget.dataset.value) || 2.0;
+  let starsValue = 3;
   const wraps = widget.querySelectorAll('.star-wrap');
   function render(v) {
     wraps.forEach(w => {
@@ -1707,7 +1708,8 @@ scaleCards();
 
 // ── Salva in locale ──────────────────────────
 async function salvaInLocale() {
-  const html = '<!DOCTYPE html>\n' + document.documentElement.outerHTML;
+  go(1);
+      const html = '<!DOCTYPE html>\n' + document.documentElement.outerHTML;
   const blob = new Blob([html], {type:'text/html'});
   const fname = location.pathname.split('/').pop() || 'card.html';
   try {
