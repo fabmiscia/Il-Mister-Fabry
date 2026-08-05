@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Fasce Mantra · Il Mister Fabry</title>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{background:#0d0d0d;color:#fff;font-family:system-ui,-apple-system,sans-serif;min-height:100vh}
+.toolbar{background:#111;border-bottom:1px solid #222;display:flex;align-items:center;gap:10px;padding:10px 16px}
+.back-btn{background:none;border:1px solid #333;color:#aaa;padding:5px 12px;border-radius:4px;cursor:pointer;font-size:12px;text-decoration:none;display:inline-flex;align-items:center;gap:6px}
+.back-btn:hover{color:#fff;border-color:#555}
+.toolbar-title{font-size:12px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#ff9900}
+.header{padding:32px 20px 20px;border-bottom:1px solid #1a1a1a}
+.header h1{font-size:28px;font-weight:700;letter-spacing:1px}
+.header h1 span{color:#ff9900}
+.header p{color:#aaa;font-size:13px;margin-top:6px}
+.cards-grid{padding:24px 20px;display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:16px}
+.card{display:block;background:#111;border:1px solid #1e1e1e;border-radius:8px;padding:20px;text-decoration:none;color:#fff;transition:all .2s;position:relative;overflow:hidden}
+.card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:#ff9900;opacity:0;transition:opacity .2s}
+.card:hover{background:#161616;border-color:#333;transform:translateY(-2px)}
+.card:hover::before{opacity:1}
+.card-icon{font-size:28px;margin-bottom:12px}
+.card-title{font-size:16px;font-weight:700;margin-bottom:4px}
+.card-sub{font-size:12px;color:#aaa}
+.card-date{font-size:11px;color:#555;margin-top:10px;padding-top:10px;border-top:1px solid #1e1e1e}
+@media(max-width:480px){.cards-grid{padding:16px;grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="toolbar">
+  <a class="back-btn" href="../index.html">← Lo Spogliatoio</a>
+  <span class="toolbar-title">⚽ Fasce Mantra</span>
+</div>
+<div class="header">
+  <h1>Fasce <span>Mantra</span></h1>
+  <p>Quotazioni Mantra Fantacalcio 2026-27 · aggiornate nel tempo</p>
+</div>
+<div class="cards-grid">
+  <a class="card" href="fasce-mantra-10-agosto.html">
+    <div class="card-icon">⚽</div>
+    <div class="card-title">Fasce Mantra a 10</div>
+    <div class="card-sub">10 agosto · Fantacalcio 2026-27</div>
+    <div class="card-date">aggiornato il 5 agosto 2026</div>
+  </a>
+</div>
+</body>
+</html>
