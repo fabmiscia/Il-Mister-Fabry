@@ -20,11 +20,10 @@ body { background:#0a0a0a; font-family:'Oswald',sans-serif; min-height:100vh; co
 .hero-title { font-size:28px; letter-spacing:3px; text-transform:uppercase; color:#fff; margin-bottom:6px; }
 .hero-divider { width:60px; height:2px; background:linear-gradient(90deg,transparent,#2DB84A,transparent); margin:10px auto 0; }
 
-.content { max-width:900px; margin:0 auto; padding:28px 20px; }
+.content { max-width:900px; margin:0 auto; padding:28px 20px; display:flex; flex-direction:column; gap:36px; }
 .section-label { font-size:10px; letter-spacing:4px; color:#2DB84A; text-transform:uppercase; margin-bottom:16px; border-left:2px solid #2DB84A; padding-left:10px; }
 
 .cards { display:grid; grid-template-columns:repeat(auto-fill,minmax(240px,1fr)); gap:16px; }
-.card-wrap { display:flex; flex-direction:column; gap:4px; }
 .card {
   display:flex; flex-direction:column; gap:6px; padding:18px 16px;
   background:#111; border:1px solid #222; border-radius:10px;
@@ -32,14 +31,13 @@ body { background:#0a0a0a; font-family:'Oswald',sans-serif; min-height:100vh; co
   min-height:110px;
 }
 .card:hover { border-color:#2DB84A; background:#141414; }
+.card.mantra:hover { border-color:#a855f7; }
 .card .icon { font-size:24px; }
 .card .name { font-size:15px; letter-spacing:1px; }
 .card .sub { font-size:10px; color:rgba(255,255,255,.45); letter-spacing:1px; text-transform:uppercase; }
-.card-date { font-size:9px; color:rgba(255,255,255,.25); letter-spacing:1.5px; text-transform:uppercase; padding-left:2px; }
 
 .badge-new { display:inline-block; background:#2DB84A; color:#000; font-size:8px; letter-spacing:2px; padding:2px 6px; border-radius:3px; text-transform:uppercase; margin-left:6px; vertical-align:middle; font-weight:700; }
-
-.empty-state { text-align:center; padding:48px 24px; color:rgba(255,255,255,.25); font-size:13px; letter-spacing:2px; text-transform:uppercase; }
+.badge-new.mantra { background:#a855f7; color:#fff; }
 
 footer { border-top:1px solid #1a1a1a; padding:20px 24px; text-align:center; font-size:9px; letter-spacing:2px; color:rgba(255,255,255,.2); text-transform:uppercase; margin-top:40px; }
 </style>
@@ -63,18 +61,18 @@ footer { border-top:1px solid #1a1a1a; padding:20px 24px; text-align:center; fon
 </div>
 
 <div class="content">
-  <div class="section-label">Strategie disponibili</div>
-  <div class="cards">
 
-    <div class="card-wrap">
+  <div>
+    <div class="section-label">Simulazioni Classic</div>
+    <div class="cards">
       <a class="card" href="simulazione-classic-a10-attacco-totale.html">
         <span class="icon">⚔️</span>
-        <span class="name">Strategia Attacco Totale Classic A 10 <span class="badge-new">NEW</span></span>
+        <span class="name">Strategia Attacco Totale Classic A10</span>
         <span class="sub">Classic · 4-3-3 · 10 squadre · 500 crediti</span>
       </a>
       <a class="card" href="simulazione-classic-a12-attacco-totale.html">
         <span class="icon">⚔️</span>
-        <span class="name">Strategia Attacco Totale Classic A 12 <span class="badge-new">NEW</span></span>
+        <span class="name">Strategia Attacco Totale Classic A12</span>
         <span class="sub">Classic · 4-3-3 · 12 squadre · 500 crediti</span>
       </a>
       <a class="card" href="simulazione-classic-433.html">
@@ -82,39 +80,35 @@ footer { border-top:1px solid #1a1a1a; padding:20px 24px; text-align:center; fon
         <span class="name">Strategia Equilibrata Classic A10</span>
         <span class="sub">Classic · 4-3-3 · 10 squadre · 500 crediti</span>
       </a>
-      <div class="card-date">aggiornato il 28 luglio 2026</div>
-    </div>
-
-    <div class="card-wrap">
       <a class="card" href="simulazione-classic-a12.html">
         <span class="icon">🎯</span>
-        <span class="name">Strategia Equilibrata Classic A12 <span class="badge-new">NEW</span></span>
+        <span class="name">Strategia Equilibrata Classic A12</span>
         <span class="sub">Classic · 4-3-3 · 12 squadre · 500 crediti</span>
       </a>
-      <div class="card-date">aggiornato il 28 luglio 2026</div>
-    </div>
-
-
-    <div class="card-wrap">
       <a class="card" href="simulazione-classic-a10-senza-top.html">
         <span class="icon">🎯</span>
-        <span class="name">Strategia Classic A10 Senza Top <span class="badge-new">NEW</span></span>
+        <span class="name">Strategia Classic A10 Senza Top</span>
         <span class="sub">Classic · 4-3-3 · 10 squadre · 500 crediti</span>
       </a>
-      <div class="card-date">aggiornato il 31 luglio 2026</div>
-    </div>
-
-  
-    <div class="card-wrap">
       <a class="card" href="simulazione-classic-a12-senza-top.html">
         <span class="icon">🎯</span>
-        <span class="name">Strategia Classic A12 Senza Top <span class="badge-new">NEW</span></span>
+        <span class="name">Strategia Classic A12 Senza Top</span>
         <span class="sub">Classic · 4-3-3 · 12 squadre · 500 crediti</span>
       </a>
-      <div class="card-date">aggiornato il 31 luglio 2026</div>
     </div>
+  </div>
 
+  <div>
+    <div class="section-label" style="border-color:#a855f7;color:#a855f7;">Simulazioni Mantra</div>
+    <div class="cards">
+      <a class="card mantra" href="simulazione-mantra-3421-gasperini.html">
+        <span class="icon">🟣</span>
+        <span class="name">Strategia Mantra Gasperini <span class="badge-new mantra">NEW</span></span>
+        <span class="sub">Mantra · 3-4-2-1 · 12 squadre · 500 crediti</span>
+      </a>
     </div>
+  </div>
+
 </div>
 
 <footer>MisterFabry · Fantacalcio 2026-27</footer>
