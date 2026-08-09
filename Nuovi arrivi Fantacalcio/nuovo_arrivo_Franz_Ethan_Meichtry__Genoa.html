@@ -1264,7 +1264,13 @@ async function eseguiPubblicazione(token) {
     ghStatus.style.color       = _sc;
     ghDetail.textContent       = 'Preparo il contenuto…';
 
-    const b64 = btoa(unescape(encodeURIComponent(htmlContent)));
+    const b64 = await new Promise((resolve, reject) => {
+      const blob = new Blob([htmlContent], {type:'text/plain'});
+      const reader = new FileReader();
+      reader.onloadend = () => resolve(reader.result.split(',')[1]);
+      reader.onerror = reject;
+      reader.readAsDataURL(blob);
+    });
 
     // Controlla se il file esiste già (serve lo SHA per aggiornarlo)
     document.getElementById('gh-detail').textContent = 'Verifico se il file esiste già…';
