@@ -384,18 +384,22 @@
   },
   {
     "file": "nuovo_arrivo_El_Bilal_Toure__Parma.html",
-    "squadra": "Parma"
+    "squadra": "Parma",
+    "giocatore": "El Bilal Touré"
   },
   {
     "file": "nuovo_arrivo_Djibril_Sow__Genoa.html",
-    "squadra": "Genoa"
+    "squadra": "Genoa",
+    "giocatore": "Djibril Sow"
   },
   {
     "file": "nuovo_arrivo_Yan_Couto__Como.html",
-    "squadra": "Como"
+    "squadra": "Como",
+    "giocatore": "Yan Couto"
   },
   {
     "file": "nuovo_arrivo_Franco_Mastantuono__Fiorentina.html",
-    "squadra": "Fiorentina"
+    "squadra": "Fiorentina",
+    "giocatore": "Franco Mastantuono"
   }
 ]
