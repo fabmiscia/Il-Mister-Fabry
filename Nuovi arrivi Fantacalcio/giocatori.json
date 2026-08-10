@@ -401,5 +401,15 @@
     "file": "nuovo_arrivo_Franco_Mastantuono__Fiorentina.html",
     "squadra": "Fiorentina",
     "giocatore": "Franco Mastantuono"
+  },
+  {
+    "file": "nuovo_arrivo_Daniel_Maldini__Cagliari.html",
+    "giocatore": "Daniel Maldini",
+    "squadra": "Cagliari"
+  },
+  {
+    "file": "nuovo_arrivo_Jay_Robinson__Monza.html",
+    "giocatore": "Jay Robinson",
+    "squadra": "Monza"
   }
 ]
