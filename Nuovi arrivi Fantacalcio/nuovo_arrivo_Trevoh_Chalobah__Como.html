@@ -643,9 +643,9 @@ table.inj-tbl thead th {
 <body style="overflow-x: hidden;">
 
 <div class="nav">
-  <button class="active" onclick="go(1)">📋 Info</button>
-  <button onclick="go(2)">📊 Statistiche</button>
-  <button onclick="go(3)">⭐ Consigli Fantacalcio</button>
+  <button class="" onclick="go(1)">📋 Info</button>
+  <button onclick="go(2)" class="">📊 Statistiche</button>
+  <button onclick="go(3)" class="active">⭐ Consigli Fantacalcio</button>
 </div>
 
 <!-- Toolbar -->
@@ -655,7 +655,7 @@ table.inj-tbl thead th {
   <button onclick="exportPNG(3)">💾 Slide 3</button>
   <button style="background: rgb(255, 215, 0); color: rgb(0, 0, 0); border-width: medium; border-style: none; border-color: currentcolor; border-image: none; padding: 7px 18px; border-radius: 6px; cursor: pointer; font-size: 12px; font-weight: 800; letter-spacing: 0.5px; transition: 0.15s;" onmouseover="this.style.background='#ffe55c'" onmouseout="this.style.background='#FFD700'" onclick="salvaEPubblica()">💾🚀 Salva + Pubblica</button>
   <button class="gh-btn" onclick="pubblicaGitHub()">🚀 Solo GitHub</button>
-  <button id="btn-salva-locale" onclick="salvaInLocale()" style="background: rgb(26, 26, 26); color: rgb(255, 255, 255); border: 1px solid rgb(51, 51, 51); padding: 7px 14px; border-radius: 6px; cursor: pointer; font-size: 12px; font-weight: 700; letter-spacing: 0.5px; transition: 0.15s;" onmouseover="this.style.borderColor='#b0ff00';this.style.color='#b0ff00'" onmouseout="this.style.borderColor='#333';this.style.color='#fff'">💾 Salva in locale</button>
+  <button id="btn-salva-locale" onclick="salvaInLocale()" style="background: rgb(26, 26, 26); color: rgb(176, 255, 0); border: 1px solid rgb(176, 255, 0); padding: 7px 14px; border-radius: 6px; cursor: pointer; font-size: 12px; font-weight: 700; letter-spacing: 0.5px; transition: 0.15s;" onmouseover="this.style.borderColor='#b0ff00';this.style.color='#b0ff00'" onmouseout="this.style.borderColor='#333';this.style.color='#fff'">💾 Salva in locale</button>
   <span class="tip">← → per navigare | Click sulla foto per cambiarla</span>
 </div>
 
@@ -678,7 +678,7 @@ table.inj-tbl thead th {
     <button class="mv-tab" onclick="mvGo(2)">📊 Stats</button>
     <button class="mv-tab" onclick="mvGo(3)">⭐ Consigli</button>
   </div>
-  <div class="mv-slide active" id="mv-s1"><div><div class="mv-stat-row"><span class="mv-stat-icon">💰</span><span class="mv-stat-label">Valore mercato</span><span class="mv-stat-val">40,00 mln €</span></div><div class="mv-stat-row"><span class="mv-stat-icon">🔄</span><span class="mv-stat-label">Transfer</span><span class="mv-stat-val">Acquisto definitivo (€30M + €3M bonus)</span></div><div class="mv-stat-row"><span class="mv-stat-icon"><img src="https://tmssl.akamaized.net//images/flagge/tiny/152.png" style="height:16px;vertical-align:middle;margin-right:5px;border:1px solid #555"></span><span class="mv-stat-label">Nazionalità</span><span class="mv-stat-val hl">INGHILTERRA&nbsp;&nbsp;SIERRA LEONE</span></div><div class="mv-stat-row"><span class="mv-stat-icon">👟</span><span class="mv-stat-label">Piede</span><span class="mv-stat-val">DESTRO</span></div><div class="mv-stat-row"><span class="mv-stat-icon">📏</span><span class="mv-stat-label">Altezza</span><span class="mv-stat-val hl">1,92&nbsp;m</span></div><div class="mv-stat-row"><span class="mv-stat-icon"><img src="https://tmssl.akamaized.net//images/wappen/profil/631_1782931436.png?lm=1782931436" style="height:20px;vertical-align:middle;margin-right:5px"></span><span class="mv-stat-label">Ultimo club</span><span class="mv-stat-val">CHELSEA FC</span></div><div class="mv-stat-row"><span class="mv-stat-icon">✅</span><span class="mv-stat-label">Presenze</span><span class="mv-stat-val">34</span></div><div class="mv-stat-row"><span class="mv-stat-icon">⚽</span><span class="mv-stat-label">Gol</span><span class="mv-stat-val">3</span></div><div class="mv-stat-row"><span class="mv-stat-icon">🎯</span><span class="mv-stat-label">Assist</span><span class="mv-stat-val">0</span></div><div class="mv-stat-row"><span class="mv-stat-icon">📝</span><span class="mv-stat-label">Scadenza</span><span class="mv-stat-val">30/06/2028</span></div><div class="mv-stat-row"><span class="mv-stat-icon">🚑</span><span class="mv-stat-label">Infortuni</span><span class="mv-stat-val">13 infortuni registrati</span></div></div><div style="margin-top: 10px; border-radius: 8px; overflow: hidden; background: rgb(242, 242, 242); max-width: 220px; align-self: center; width: 100%;"><div class="role-col" style="width: 100%; margin: 0px; border-radius: 0px; display: flex; flex-direction: column; color: rgb(34, 34, 34);">
+  <div class="mv-slide active" id="mv-s1"><div><div class="mv-stat-row"><span class="mv-stat-icon">💰</span><span class="mv-stat-label">Valore mercato</span><span class="mv-stat-val">40,00 mln €</span></div><div class="mv-stat-row"><span class="mv-stat-icon">🔄</span><span class="mv-stat-label">Transfer</span><span class="mv-stat-val">Trasferimento definitivo (€30M + €6M bonus)</span></div><div class="mv-stat-row"><span class="mv-stat-icon"><img src="https://tmssl.akamaized.net//images/flagge/tiny/152.png" style="height:16px;vertical-align:middle;margin-right:5px;border:1px solid #555"></span><span class="mv-stat-label">Nazionalità</span><span class="mv-stat-val hl">INGHILTERRA&nbsp;&nbsp;SIERRA LEONE</span></div><div class="mv-stat-row"><span class="mv-stat-icon">👟</span><span class="mv-stat-label">Piede</span><span class="mv-stat-val">DESTRO</span></div><div class="mv-stat-row"><span class="mv-stat-icon">📏</span><span class="mv-stat-label">Altezza</span><span class="mv-stat-val hl">1,92&nbsp;m</span></div><div class="mv-stat-row"><span class="mv-stat-icon"><img src="https://tmssl.akamaized.net//images/wappen/profil/631_1782931436.png?lm=1782931436" style="height:20px;vertical-align:middle;margin-right:5px"></span><span class="mv-stat-label">Ultimo club</span><span class="mv-stat-val">CHELSEA FC</span></div><div class="mv-stat-row"><span class="mv-stat-icon">✅</span><span class="mv-stat-label">Presenze</span><span class="mv-stat-val">34</span></div><div class="mv-stat-row"><span class="mv-stat-icon">⚽</span><span class="mv-stat-label">Gol</span><span class="mv-stat-val">3</span></div><div class="mv-stat-row"><span class="mv-stat-icon">🎯</span><span class="mv-stat-label">Assist</span><span class="mv-stat-val">0</span></div><div class="mv-stat-row"><span class="mv-stat-icon">📝</span><span class="mv-stat-label">Scadenza</span><span class="mv-stat-val">30/06/2028</span></div><div class="mv-stat-row"><span class="mv-stat-icon">🚑</span><span class="mv-stat-label">Infortuni</span><span class="mv-stat-val">13 infortuni registrati</span></div></div><div style="margin-top: 10px; border-radius: 8px; overflow: hidden; background: rgb(242, 242, 242); max-width: 220px; align-self: center; width: 100%;"><div class="role-col" style="width: 100%; margin: 0px; border-radius: 0px; display: flex; flex-direction: column; color: rgb(34, 34, 34);">
     <div class="role-hdr">Ruolo</div>
     <div class="role-field" style="min-height: 160px;">
       <svg viewBox="0 0 100 150" preserveAspectRatio="xMidYMid meet">
@@ -711,13 +711,13 @@ table.inj-tbl thead th {
   </div></div></div>
   <div class="mv-slide" id="mv-s2"><div class="mv-section-title">Rendimento per stagione</div>
 <div class="mv-tbl-wrap"><table class="mv-tbl">
-<thead><tr><th>Anno</th><th>Squadra</th><th class="c">G</th><th class="c">⚽</th><th class="c">🎯</th></tr></thead><tbody><tr><td class="hl">25/26</td><td>Chelsea FC</td><td class="c">59</td><td class="c hl">3</td><td class="c hl">—</td></tr><tr><td class="hl">24/25</td><td>Chelsea FC</td><td class="c">29</td><td class="c hl">—</td><td class="c hl">1</td></tr><tr><td class="hl">24/25</td><td>Crystal Palace</td><td class="c">22</td><td class="c hl">3</td><td class="c hl">—</td></tr><tr><td class="hl">23/24</td><td>Chelsea FC</td><td class="c">51</td><td class="c hl">1</td><td class="c hl">—</td></tr></tbody></table></div><div class="mv-section-title">Storico infortuni</div>
+<thead><tr><th>Anno</th><th>Squadra</th><th class="c">G</th><th class="c">⚽</th><th class="c">🎯</th></tr></thead><tbody></tbody></table></div><div class="mv-section-title">Storico infortuni</div>
 <div class="mv-tbl-wrap"><table class="mv-tbl">
 <thead><tr><th>Stagione</th><th>Infortunio</th><th class="c">Gg</th></tr></thead><tbody><tr><td class="hl">25/26</td><td class="hl2">Infortunio all'articolazione della caviglia</td><td class="c">32 giorni</td></tr><tr><td class="hl">24/25</td><td class="hl2">Problema fisico</td><td class="c">10 giorni</td></tr><tr><td class="hl">24/25</td><td class="hl2">Infortunio alla schiena</td><td class="c">13 giorni</td></tr><tr><td class="hl">24/25</td><td class="hl2">Stiramento del muscolo addominale</td><td class="c">49 giorni</td></tr><tr><td class="hl">23/24</td><td class="hl2">Ritardo di condizione</td><td class="c">29 giorni</td></tr><tr><td class="hl">23/24</td><td class="hl2">Problemi alla coscia</td><td class="c">163 giorni</td></tr><tr><td class="hl">22/23</td><td class="hl2">Ritardo di condizione</td><td class="c">4 giorni</td></tr><tr><td class="hl">23/24</td><td class="hl2">Ritardo di condizione</td><td class="c">3 giorni</td></tr><tr><td class="hl">22/23</td><td class="hl2">Ritardo di condizione</td><td class="c">3 giorni</td></tr><tr><td class="hl">21/22</td><td class="hl2">Operazione</td><td class="c">5 giorni</td></tr><tr><td class="hl">21/22</td><td class="hl2">Infortunio alla coscia</td><td class="c">19 giorni</td></tr><tr><td class="hl">21/22</td><td class="hl2">Infortunio alla coscia</td><td class="c">11 giorni</td></tr><tr><td class="hl">17/18</td><td class="hl2">Infortunio alla caviglia</td><td class="c">58 giorni</td></tr></tbody></table></div></div>
   <div class="mv-slide" id="mv-s3">
 <div class="mv-section-title">Appetibilità al Fantacalcio</div><div class="mv-stars"><span class="mv-star-f">★</span><span class="mv-star-f">★</span><span class="mv-star-f">★</span><span style="background:linear-gradient(90deg,#FFD700 50%,#333 50%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;font-size:28px">★</span><span class="mv-star-e">★</span></div>
 <div class="mv-section-title">Consiglio di spesa del Mister</div>
-<div class="mv-card-text">3° DIF — difensore centrale di qualità, attenzione agli infortuni</div>
+<div class="mv-card-text">3°/4° slot difensivo — titolare in UCL, bonus a palla ferma. Occhio alle trappole</div>
 <div class="mv-section-title">Appunti del Mister</div>
 <div class="mv-notes">Trevoh Chalobah, 27 anni, difensore centrale inglese-sierraleonese (1,92m, piede destro). Cresce nel Chelsea a 8 anni e vi resta fino al 2026, totalizzando 151 presenze ufficiali. Nella stagione 25/26 ha giocato 59 partite tra PL, CL, FA Cup ed EFL Cup segnando 3 gol. Il Como lo acquista a titolo definitivo per €30M + €3M bonus. Contratto fino al 30/06/2028. Allenatore Como: Cesc Fàbregas.Chalobah è un difensore fisico (1,92m), bravo nel gioco aereo e capace anche di giocare come mediano difensivo o terzino destro. Con Fàbregas al Como avrà un ruolo centrale nella difesa di un club ambizioso.🟢 PRO:- Esperienza internazionale altissima (PL, CL, FA Cup)- Como è un club ambizioso: potrebbe giocare in un sistema offensivo- Fisicamente imponente: domina i contrasti e le palle alte- Fàbregas esalta i difensori tecnici🔴 CONTRO:- 13 infortuni in carriera — il rischio principale- Turnover con la Champions potrebbe fare qualche panchina di gestione- Primo anno in Serie A: deve adattarsi al ritmo italiano- Non è un difensore da molti bonus (tiri, corner, ecc.)✏️ CONSIGLIO:Acquisto per chi cerca un difensore da modificatore Se resta sano, garantisce presenze e qualche bonus inaspettato. Prendilo come seconda/terza scelta difensiva. Se pagato tanto può diventare una trappola</div></div>
 </div>
@@ -725,7 +725,7 @@ table.inj-tbl thead th {
 <!-- ══════════════════════════════════════════════
      SLIDE 1
 ══════════════════════════════════════════════ -->
-<div id="s1" class="card active" style="transform: scale(1); transform-origin: center top; margin-bottom: 0px;">
+<div id="s1" class="card" style="transform: scale(1); transform-origin: center top; margin-bottom: 0px;">
 
   <!-- Foto cliccabile -->
   <div class="photo-col" onclick="triggerPhotoUpload('all')">
@@ -755,7 +755,7 @@ table.inj-tbl thead th {
       <div class="srow">
         <span class="sic">🔄</span>
         <span class="slbl">Transfer</span>
-        <span class="sval" contenteditable="true">Acquisto definitivo (€30M + €3M bonus)</span>
+        <span class="sval" contenteditable="true">Trasferimento definitivo (€30M + €6M bonus)</span>
       </div>
       <div class="srow">
         <span class="sic"><img src="https://tmssl.akamaized.net//images/flagge/tiny/152.png" style="height:16px;vertical-align:middle;margin-right:5px;border:1px solid #555"></span>
@@ -863,51 +863,7 @@ table.inj-tbl thead th {
               <th>Anno</th><th>Squadra</th><th>Competizione</th>
               <th class="c">G</th><th class="c">⚽</th><th class="c">🎯</th><th class="c">🟨</th><th class="c">🟥</th><th class="c">Min</th>
             </tr></thead>
-            <tbody id="last2-body">
-            <tr class="career-row">
-              <td class="career-year" contenteditable="true">25/26</td>
-              <td class="career-club" style="min-width:130px"><img src="https://tmssl.akamaized.net/images/wappen/big/631.png" style="height:18px;vertical-align:middle;margin-right:6px;border-radius:2px"><span contenteditable="true">Chelsea FC</span></td>
-              <td class="career-comp" contenteditable="true">EFL Cup / UEFA Champions League / FA Cup / Premier League</td>
-              <td class="career-num" contenteditable="true">34</td>
-              <td class="career-num hi" contenteditable="true">3</td>
-              <td class="career-num hi" contenteditable="true">0</td>
-              <td class="career-num" contenteditable="true">—</td>
-              <td class="career-num" contenteditable="true">—</td>
-              <td class="career-min" contenteditable="true">—</td>
-            </tr>
-            <tr class="career-row">
-              <td class="career-year" contenteditable="true">24/25</td>
-              <td class="career-club" style="min-width:130px"><img src="https://tmssl.akamaized.net/images/wappen/big/631.png" style="height:18px;vertical-align:middle;margin-right:6px;border-radius:2px"><span contenteditable="true">Chelsea FC</span></td>
-              <td class="career-comp" contenteditable="true">Qualificazione Conference League / FA Cup / Premier League / UEFA Conference League</td>
-              <td class="career-num" contenteditable="true">29</td>
-              <td class="career-num hi" contenteditable="true">—</td>
-              <td class="career-num hi" contenteditable="true">1</td>
-              <td class="career-num" contenteditable="true">—</td>
-              <td class="career-num" contenteditable="true">—</td>
-              <td class="career-min" contenteditable="true">—</td>
-            </tr>
-            <tr class="career-row">
-              <td class="career-year" contenteditable="true">24/25</td>
-              <td class="career-club" style="min-width:130px"><img src="https://tmssl.akamaized.net/images/wappen/big/873.png" style="height:18px;vertical-align:middle;margin-right:6px;border-radius:2px"><span contenteditable="true">Crystal Palace</span></td>
-              <td class="career-comp" contenteditable="true">EFL Cup / FA Cup / Premier League</td>
-              <td class="career-num" contenteditable="true">22</td>
-              <td class="career-num hi" contenteditable="true">3</td>
-              <td class="career-num hi" contenteditable="true">—</td>
-              <td class="career-num" contenteditable="true">—</td>
-              <td class="career-num" contenteditable="true">—</td>
-              <td class="career-min" contenteditable="true">—</td>
-            </tr>
-            <tr class="career-row">
-              <td class="career-year" contenteditable="true">23/24</td>
-              <td class="career-club" style="min-width:130px"><img src="https://tmssl.akamaized.net/images/wappen/big/631.png" style="height:18px;vertical-align:middle;margin-right:6px;border-radius:2px"><span contenteditable="true">Chelsea FC</span></td>
-              <td class="career-comp" contenteditable="true">EFL Cup / FA Cup / Premier League</td>
-              <td class="career-num" contenteditable="true">51</td>
-              <td class="career-num hi" contenteditable="true">1</td>
-              <td class="career-num hi" contenteditable="true">—</td>
-              <td class="career-num" contenteditable="true">—</td>
-              <td class="career-num" contenteditable="true">—</td>
-              <td class="career-min" contenteditable="true">—</td>
-            </tr></tbody>
+            <tbody id="last2-body"><tr><td contenteditable="true">25/26</td><td contenteditable="true">Chelsea</td><td contenteditable="true">Premier League</td><td class="c" contenteditable="true">34</td><td class="c" contenteditable="true">3</td><td class="c" contenteditable="true">0</td><td class="c" contenteditable="true">3</td><td class="c" contenteditable="true">1</td><td class="c" contenteditable="true">2782'</td></tr><tr><td contenteditable="true">24/25</td><td contenteditable="true">Chelsea / C.Palace</td><td contenteditable="true">Premier League</td><td class="c" contenteditable="true">25</td><td class="c" contenteditable="true">3</td><td class="c" contenteditable="true">1</td><td class="c" contenteditable="true">3</td><td class="c" contenteditable="true">0</td><td class="c" contenteditable="true">2050'</td></tr><tr><td contenteditable="true">23/24</td><td contenteditable="true">Chelsea</td><td contenteditable="true">Premier League</td><td class="c" contenteditable="true">19</td><td class="c" contenteditable="true">1</td><td class="c" contenteditable="true">0</td><td class="c" contenteditable="true">3</td><td class="c" contenteditable="true">0</td><td class="c" contenteditable="true">1520'</td></tr></tbody>
           </table>
         </div>
         <button class="add-row-btn" onclick="addLast2Row()">+ Aggiungi riga</button>
@@ -922,42 +878,7 @@ table.inj-tbl thead th {
               <th>Squadra</th>
               <th class="c">G</th><th class="c">⚽</th><th class="c">🎯</th><th class="c">Min</th>
             </tr></thead>
-            <tbody id="perclub-body">
-            <tr class="career-row">
-              <td class="career-club" contenteditable="true"><img src="https://tmssl.akamaized.net/images/wappen/big/631.png" style="height:18px;vertical-align:middle;margin-right:6px;border-radius:2px"><span contenteditable="true">Chelsea FC</span></td>
-              <td class="career-num" contenteditable="true">374</td>
-              <td class="career-num hi" contenteditable="true">8</td>
-              <td class="career-num hi" contenteditable="true">3</td>
-              <td class="career-min" contenteditable="true">—</td>
-            </tr>
-            <tr class="career-row">
-              <td class="career-club" contenteditable="true"><img src="https://tmssl.akamaized.net/images/wappen/big/677.png" style="height:18px;vertical-align:middle;margin-right:6px;border-radius:2px"><span contenteditable="true">Ipswich Town</span></td>
-              <td class="career-num" contenteditable="true">48</td>
-              <td class="career-num hi" contenteditable="true">2</td>
-              <td class="career-num hi" contenteditable="true">1</td>
-              <td class="career-min" contenteditable="true">—</td>
-            </tr>
-            <tr class="career-row">
-              <td class="career-club" contenteditable="true"><img src="https://tmssl.akamaized.net/images/wappen/big/1110.png" style="height:18px;vertical-align:middle;margin-right:6px;border-radius:2px"><span contenteditable="true">Huddersfield Town</span></td>
-              <td class="career-num" contenteditable="true">47</td>
-              <td class="career-num hi" contenteditable="true">—</td>
-              <td class="career-num hi" contenteditable="true">—</td>
-              <td class="career-min" contenteditable="true">—</td>
-            </tr>
-            <tr class="career-row">
-              <td class="career-club" contenteditable="true"><img src="https://tmssl.akamaized.net/images/wappen/big/1158.png" style="height:18px;vertical-align:middle;margin-right:6px;border-radius:2px"><span contenteditable="true">FC Lorient</span></td>
-              <td class="career-num" contenteditable="true">40</td>
-              <td class="career-num hi" contenteditable="true">2</td>
-              <td class="career-num hi" contenteditable="true">2</td>
-              <td class="career-min" contenteditable="true">—</td>
-            </tr>
-            <tr class="career-row">
-              <td class="career-club" contenteditable="true"><img src="https://tmssl.akamaized.net/images/wappen/big/873.png" style="height:18px;vertical-align:middle;margin-right:6px;border-radius:2px"><span contenteditable="true">Crystal Palace</span></td>
-              <td class="career-num" contenteditable="true">22</td>
-              <td class="career-num hi" contenteditable="true">3</td>
-              <td class="career-num hi" contenteditable="true">—</td>
-              <td class="career-min" contenteditable="true">—</td>
-            </tr></tbody>
+            <tbody id="perclub-body"><tr><td contenteditable="true">Cheltenham Town (p)</td><td class="c" contenteditable="true">35</td><td class="c" contenteditable="true">1</td><td class="c" contenteditable="true">0</td><td class="c" contenteditable="true">2890'</td></tr><tr><td contenteditable="true">Ipswich Town (p)</td><td class="c" contenteditable="true">34</td><td class="c" contenteditable="true">0</td><td class="c" contenteditable="true">0</td><td class="c" contenteditable="true">2730'</td></tr><tr><td contenteditable="true">Lorient (p)</td><td class="c" contenteditable="true">29</td><td class="c" contenteditable="true">2</td><td class="c" contenteditable="true">2</td><td class="c" contenteditable="true">2610'</td></tr><tr><td contenteditable="true">Chelsea</td><td class="c" contenteditable="true">110</td><td class="c" contenteditable="true">9</td><td class="c" contenteditable="true">2</td><td class="c" contenteditable="true">8700'</td></tr><tr><td contenteditable="true">Crystal Palace (p)</td><td class="c" contenteditable="true">14</td><td class="c" contenteditable="true">0</td><td class="c" contenteditable="true">1</td><td class="c" contenteditable="true">950'</td></tr></tbody>
           </table>
         </div>
         <button class="add-row-btn" onclick="addPerClubRow()">+ Aggiungi riga</button>
@@ -975,84 +896,7 @@ table.inj-tbl thead th {
               <th>Competizione</th>
               <th class="c">G</th><th class="c">⚽</th><th class="c">🎯</th><th class="c">Min</th>
             </tr></thead>
-            <tbody id="naz-body">
-            <tr class="career-row">
-              <td class="career-comp" contenteditable="true">Amichevoli Nazionale</td>
-              <td class="career-num" contenteditable="true">33</td>
-              <td class="career-num hi" contenteditable="true">—</td>
-              <td class="career-num hi" contenteditable="true">—</td>
-              <td class="career-min" contenteditable="true">—</td>
-            </tr>
-            <tr class="career-row">
-              <td class="career-comp" contenteditable="true">Qualificazioni Europei U19</td>
-              <td class="career-num" contenteditable="true">12</td>
-              <td class="career-num hi" contenteditable="true">—</td>
-              <td class="career-num hi" contenteditable="true">—</td>
-              <td class="career-min" contenteditable="true">—</td>
-            </tr>
-            <tr class="career-row">
-              <td class="career-comp" contenteditable="true">Europei U19</td>
-              <td class="career-num" contenteditable="true">9</td>
-              <td class="career-num hi" contenteditable="true">—</td>
-              <td class="career-num hi" contenteditable="true">—</td>
-              <td class="career-min" contenteditable="true">—</td>
-            </tr>
-            <tr class="career-row">
-              <td class="career-comp" contenteditable="true">Mondiali</td>
-              <td class="career-num" contenteditable="true">8</td>
-              <td class="career-num hi" contenteditable="true">—</td>
-              <td class="career-num hi" contenteditable="true">—</td>
-              <td class="career-min" contenteditable="true">—</td>
-            </tr>
-            <tr class="career-row">
-              <td class="career-comp" contenteditable="true">U20 Elite League</td>
-              <td class="career-num" contenteditable="true">7</td>
-              <td class="career-num hi" contenteditable="true">—</td>
-              <td class="career-num hi" contenteditable="true">—</td>
-              <td class="career-min" contenteditable="true">—</td>
-            </tr>
-            <tr class="career-row">
-              <td class="career-comp" contenteditable="true">Qualificazioni Mondiali (Europa)</td>
-              <td class="career-num" contenteditable="true">6</td>
-              <td class="career-num hi" contenteditable="true">—</td>
-              <td class="career-num hi" contenteditable="true">—</td>
-              <td class="career-min" contenteditable="true">—</td>
-            </tr>
-            <tr class="career-row">
-              <td class="career-comp" contenteditable="true">Qualificazioni Europei U17</td>
-              <td class="career-num" contenteditable="true">6</td>
-              <td class="career-num hi" contenteditable="true">—</td>
-              <td class="career-num hi" contenteditable="true">—</td>
-              <td class="career-min" contenteditable="true">—</td>
-            </tr>
-            <tr class="career-row">
-              <td class="career-comp" contenteditable="true">Qualificazioni Europei U21</td>
-              <td class="career-num" contenteditable="true">4</td>
-              <td class="career-num hi" contenteditable="true">—</td>
-              <td class="career-num hi" contenteditable="true">—</td>
-              <td class="career-min" contenteditable="true">—</td>
-            </tr>
-            <tr class="career-row">
-              <td class="career-comp" contenteditable="true">Europei U17</td>
-              <td class="career-num" contenteditable="true">4</td>
-              <td class="career-num hi" contenteditable="true">—</td>
-              <td class="career-num hi" contenteditable="true">—</td>
-              <td class="career-min" contenteditable="true">—</td>
-            </tr>
-            <tr class="career-row">
-              <td class="career-comp" contenteditable="true">Torneio Internacional Algarve U17</td>
-              <td class="career-num" contenteditable="true">3</td>
-              <td class="career-num hi" contenteditable="true">—</td>
-              <td class="career-num hi" contenteditable="true">—</td>
-              <td class="career-min" contenteditable="true">—</td>
-            </tr>
-            <tr class="career-row">
-              <td class="career-comp" contenteditable="true">Mondiali U17</td>
-              <td class="career-num" contenteditable="true">3</td>
-              <td class="career-num hi" contenteditable="true">—</td>
-              <td class="career-num hi" contenteditable="true">—</td>
-              <td class="career-min" contenteditable="true">—</td>
-            </tr></tbody>
+            <tbody id="naz-body"><tr><td contenteditable="true">Inghilterra U21</td><td class="c" contenteditable="true">6</td><td class="c" contenteditable="true">0</td><td class="c" contenteditable="true">1</td><td class="c" contenteditable="true">450'</td></tr><tr><td contenteditable="true">Inghilterra</td><td class="c" contenteditable="true">3</td><td class="c" contenteditable="true">0</td><td class="c" contenteditable="true">0</td><td class="c" contenteditable="true">210'</td></tr></tbody>
           </table>
         </div>
         <button class="add-row-btn" onclick="addNazRow()">+ Aggiungi riga</button>
@@ -1190,7 +1034,7 @@ table.inj-tbl thead th {
 <!-- ══════════════════════════════════════════════
      SLIDE 3 – Consigli Fantacalcio
 ══════════════════════════════════════════════ -->
-<div id="s3" class="card" style="transform: scale(1); transform-origin: center top; margin-bottom: 0px;">
+<div id="s3" class="card active" style="transform: scale(1); transform-origin: center top; margin-bottom: 0px;">
 
   <div class="s3-photo" onclick="triggerPhotoUpload('all')">
     <img class="photo-all" src="https://img.a.transfermarkt.technology/portrait/big/346314-1773301391.jpg?lm=1" alt="Trevoh Chalobah" onerror="this.src='https://img.a.transfermarkt.technology/portrait/big/default.jpg'">
@@ -1207,19 +1051,13 @@ table.inj-tbl thead th {
     <!-- Appetibilità -->
     <div class="s3-section">
       <div class="s3-label">APPETIBILITÀ AL FANTACALCIO</div>
-      <div class="stars-widget" id="stars-widget" data-value="3.5">
-        <span class="star-wrap" data-v="1"><span class="star-bg">★</span><span class="star-fg" style="width: 100%;">★</span></span>
-        <span class="star-wrap" data-v="2"><span class="star-bg">★</span><span class="star-fg" style="width: 100%;">★</span></span>
-        <span class="star-wrap" data-v="3"><span class="star-bg">★</span><span class="star-fg" style="width: 100%;">★</span></span>
-        <span class="star-wrap" data-v="4"><span class="star-bg">★</span><span class="star-fg" style="width: 50%;">★</span></span>
-        <span class="star-wrap" data-v="5"><span class="star-bg">★</span><span class="star-fg" style="width: 0%;">★</span></span>
-      </div>
+      <div class="stars-widget" id="stars-widget" data-value="3.5"><span class="star-wrap" data-v="1"><span class="star-bg">★</span><span class="star-fg" style="width:100%">★</span></span><span class="star-wrap" data-v="2"><span class="star-bg">★</span><span class="star-fg" style="width:100%">★</span></span><span class="star-wrap" data-v="3"><span class="star-bg">★</span><span class="star-fg" style="width:100%">★</span></span><span class="star-wrap" data-v="4"><span class="star-bg">★</span><span class="star-fg" style="width:50%">★</span></span><span class="star-wrap" data-v="5"><span class="star-bg">★</span><span class="star-fg" style="width:0%">★</span></span></div>
     </div>
 
     <!-- Consiglio di spesa -->
     <div class="s3-section">
       <div class="s3-label">COLLOCAZIONE SLOT</div>
-      <div class="s3-spesa" contenteditable="true">3° DIF — difensore centrale di qualità, attenzione agli infortuni</div>
+      <div class="s3-spesa" contenteditable="true">3°/4° slot difensivo — titolare in UCL, bonus a palla ferma. Occhio alle trappole</div>
     </div>
 
     <!-- Appunti -->
@@ -1255,12 +1093,12 @@ table.inj-tbl thead th {
       <div style="font-size:32px;margin-bottom:12px" id="gh-icon">🚀</div>
       <div id="gh-status" style="font-size: 14px; margin-bottom: 6px;">Pubblica su GitHub Pages</div>
       <div id="gh-detail" style="font-size:11px;color:#555;margin-bottom:18px"></div>
-      <div id="gh-link-wrap" style="display:none;margin-bottom:14px">
-        <a id="gh-link" href="#" target="_blank" style="color:#b0ff00;font-size:12px;text-decoration:none;border:1px solid #b0ff00;padding:6px 16px;border-radius:16px">
+      <div id="gh-link-wrap" style="display: none; margin-bottom: 14px;">
+        <a id="gh-link" href="https://fabmiscia.github.io/Il-Mister-Fabry/Nuovi%20arrivi%20Fantacalcio/nuovo_arrivo_Trevoh_Chalobah__Como.html" target="_blank" style="color:#b0ff00;font-size:12px;text-decoration:none;border:1px solid #b0ff00;padding:6px 16px;border-radius:16px">
           🌐 Apri su GitHub Pages
         </a>
       </div>
-      <button onclick="chiudiOverlay()" id="gh-close-btn" style="display:none;background:#222;color:#aaa;border:1px solid #333;padding:8px 22px;border-radius:20px;cursor:pointer;font-size:12px">Chiudi</button>
+      <button onclick="chiudiOverlay()" id="gh-close-btn" style="display: none; background: rgb(34, 34, 34); color: rgb(170, 170, 170); border: 1px solid rgb(51, 51, 51); padding: 8px 22px; border-radius: 20px; cursor: pointer; font-size: 12px;">Chiudi</button>
     </div>
   </div>
 </div>
@@ -1441,8 +1279,7 @@ async function eseguiPubblicazione(token) {
     ghStatus.style.color       = '';
     ghDetail.textContent       = '';
 
-    go(1);
-      const htmlContent = '<!DOCTYPE html>\n' + document.documentElement.outerHTML;
+    const htmlContent = '<!DOCTYPE html>\n' + document.documentElement.outerHTML;
 
     // Ripristina stato
     overlay.style.display      = _od;
@@ -1455,13 +1292,7 @@ async function eseguiPubblicazione(token) {
     ghStatus.style.color       = _sc;
     ghDetail.textContent       = 'Preparo il contenuto…';
 
-    const b64 = await new Promise((resolve, reject) => {
-      const blob = new Blob([htmlContent], {type:'text/plain'});
-      const reader = new FileReader();
-      reader.onloadend = () => resolve(reader.result.split(',')[1]);
-      reader.onerror = reject;
-      reader.readAsDataURL(blob);
-    });
+    const b64 = btoa(unescape(encodeURIComponent(htmlContent)));
 
     // Controlla se il file esiste già (serve lo SHA per aggiornarlo)
     document.getElementById('gh-detail').textContent = 'Verifico se il file esiste già…';
@@ -1716,8 +1547,7 @@ scaleCards();
 
 // ── Salva in locale ──────────────────────────
 async function salvaInLocale() {
-  go(1);
-      const html = '<!DOCTYPE html>\n' + document.documentElement.outerHTML;
+  const html = '<!DOCTYPE html>\n' + document.documentElement.outerHTML;
   const blob = new Blob([html], {type:'text/html'});
   const fname = location.pathname.split('/').pop() || 'card.html';
   try {
