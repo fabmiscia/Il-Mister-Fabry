@@ -860,20 +860,29 @@ async function exportPNG(){
     });
     ry+=8;
   });
-  // Draw pitch SVG
-  const svgEl=document.getElementById('big-pitch-svg');
-  const svgData=new XMLSerializer().serializeToString(svgEl);
-  const blob=new Blob([svgData],{type:'image/svg+xml'});
-  const url=URL.createObjectURL(blob);
-  await new Promise(res=>{
-    const img=new Image();
-    img.onload=()=>{
-      const scale=690/310,w=220*scale,offx=(440-w)/2;
-      ctx.drawImage(img,offx,15,w,690);
-      URL.revokeObjectURL(url); res();
-    };
-    img.src=url;
-  });
+  // Draw pitch — usa preview image se disponibile, altrimenti SVG
+  const scale=690/310,w=220*scale,offx=(440-w)/2;
+  const f=FORMATIONS[selectedFormation];
+  if(f && f.preview){
+    await new Promise(res=>{
+      const img=new Image();
+      img.crossOrigin='anonymous';
+      img.onload=()=>{ ctx.drawImage(img,offx,15,w,690); res(); };
+      img.onerror=()=>res();
+      img.src=f.preview;
+    });
+  } else {
+    const svgEl=document.getElementById('big-pitch-svg');
+    const svgData=new XMLSerializer().serializeToString(svgEl);
+    const blob=new Blob([svgData],{type:'image/svg+xml'});
+    const url=URL.createObjectURL(blob);
+    await new Promise(res=>{
+      const img=new Image();
+      img.onload=()=>{ ctx.drawImage(img,offx,15,w,690); URL.revokeObjectURL(url); res(); };
+      img.onerror=()=>{ URL.revokeObjectURL(url); res(); };
+      img.src=url;
+    });
+  }
   const a=document.createElement('a');
   a.download='rosa-ideale-mantra-'+selectedFormation+'.png';
   a.href=canvas.toDataURL('image/png'); a.click();
@@ -882,13 +891,25 @@ async function exportPNG(){
 /* ═══════════════════════════════════════════
    EXPORT GITHUB (solo locale)
 ═══════════════════════════════════════════ */
+
+function getBakedHtml(){
+  const seed='<scr'+'ipt>(function(){try{localStorage.setItem(\'mister-mantra-rosa\','+
+    JSON.stringify(JSON.stringify(allRosterData))+'+'\');'+
+    'localStorage.setItem(\'mister-mantra-reparto\','+
+    JSON.stringify(JSON.stringify(repartoBudget))+'+'\');}catch(e){}})();<\/scr'+'ipt>';
+  let h='<!DOCTYPE html>\n'+document.documentElement.outerHTML;
+  h=h.replace('</head>',seed+'</head>');
+  const curF=selectedFormation||'4-3-3';
+  h=h.replace(/selectFormation\('4-3-3'\)/g,"selectFormation('"+curF+"')");
+  return h;
+}
 document.getElementById('btn-gh').addEventListener('click',async()=>{
   const T=['ghp_D7dlwfW4XLga1Kb2w','mr8t4Np3x48XV2617Fe'].join('');
   const REPO='fabmiscia/Il-Mister-Fabry',FILE='rosa-ideale-mantra.html';
   const btn=document.getElementById('btn-gh');
   btn.textContent='⏳ Caricamento...'; btn.disabled=true;
   try{
-    const html='<!DOCTYPE html>\n'+document.documentElement.outerHTML;
+    const html=getBakedHtml();
     const enc=btoa(unescape(encodeURIComponent(html)));
     const hdrs={'Authorization':'token '+T,'Content-Type':'application/json'};
     const getR=await fetch(`https://api.github.com/repos/${REPO}/contents/${FILE}`,{headers:hdrs});
@@ -904,7 +925,7 @@ document.getElementById('btn-gh').addEventListener('click',async()=>{
 document.getElementById('btn-png').addEventListener('click',exportPNG);
 
 document.getElementById('btn-locale').addEventListener('click',async()=>{
-  const html='<!DOCTYPE html>\n'+document.documentElement.outerHTML;
+  const html=getBakedHtml();
   const blob=new Blob([html],{type:'text/html'});
   try{
     if(window.showSaveFilePicker){
