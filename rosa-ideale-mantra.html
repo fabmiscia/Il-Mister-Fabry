@@ -894,14 +894,16 @@ async function exportPNG(){
 ═══════════════════════════════════════════ */
 
 function getBakedHtml(){
-  const seed='<scr'+'ipt>(function(){try{localStorage.setItem(\'mister-mantra-rosa\','+
-    JSON.stringify(JSON.stringify(allRosterData))+'+'\');'+
-    'localStorage.setItem(\'mister-mantra-reparto\','+
-    JSON.stringify(JSON.stringify(repartoBudget))+'+'\');}catch(e){}})();<\/scr'+'ipt>';
-  let h='<!DOCTYPE html>\n'+document.documentElement.outerHTML;
+  var rosaStr=JSON.stringify(allRosterData);
+  var repartStr=JSON.stringify(repartoBudget);
+  var curF=selectedFormation||'4-3-3';
+  var seed='<scr'+'ipt>(function(){try{'
+    +'localStorage.setItem("mister-mantra-rosa",'+JSON.stringify(rosaStr)+');'
+    +'localStorage.setItem("mister-mantra-reparto",'+JSON.stringify(repartStr)+');'
+    +'localStorage.setItem("mister-mantra-modulo",'+JSON.stringify(curF)+');'
+    +'}catch(e){}})();<\/scr'+'ipt>';
+  var h='<!DOCTYPE html>\n'+document.documentElement.outerHTML;
   h=h.replace('</head>',seed+'</head>');
-  const curF=selectedFormation||'4-3-3';
-  h=h.replace(/selectFormation\('4-3-3'\)/g,"selectFormation('"+curF+"')");
   return h;
 }
 document.getElementById('btn-gh').addEventListener('click',async()=>{
