@@ -574,6 +574,7 @@ function saveToStorage(){
   try{
     localStorage.setItem('mister-mantra-rosa',JSON.stringify(allRosterData));
     localStorage.setItem('mister-mantra-reparto',JSON.stringify(repartoBudget));
+    if(selectedFormation) localStorage.setItem('mister-mantra-modulo',selectedFormation);
   }catch(e){}
 }
 function loadFromStorage(){
@@ -948,7 +949,8 @@ loadFromStorage();
 buildPickerContent();
 buildModuliGrid();
 buildCategories();
-selectFormation('4-3-3');
+const _savedModulo=localStorage.getItem('mister-mantra-modulo')||'4-3-3';
+selectFormation(_savedModulo);
 </script>
 
 
