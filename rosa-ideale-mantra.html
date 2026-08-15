@@ -842,7 +842,7 @@ async function exportPNG(){
   let ry=105,col=0;
   const colX=[460,880];
   CATEGORIES.forEach(cat=>{
-    const data=getRoster(cat.id).filter(s=>s.name.trim());
+    const data=getRoster(cat.id);
     if(!data.length) return;
     if(ry>680){col=1;ry=105;}
     ctx.fillStyle='#555'; ctx.font='9px Arial'; ctx.textAlign='left';
