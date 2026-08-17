@@ -1177,11 +1177,11 @@ table.inj-tbl thead th {
     <!-- Appetibilità -->
     <div class="s3-section">
       <div class="s3-label">APPETIBILITÀ AL FANTACALCIO</div>
-      <div class="stars-widget" id="stars-widget" data-value="3.5">
+      <div class="stars-widget" id="stars-widget" data-value="3">
         <span class="star-wrap" data-v="1"><span class="star-bg">★</span><span class="star-fg" style="width: 100%;">★</span></span>
         <span class="star-wrap" data-v="2"><span class="star-bg">★</span><span class="star-fg" style="width: 100%;">★</span></span>
         <span class="star-wrap" data-v="3"><span class="star-bg">★</span><span class="star-fg" style="width: 100%;">★</span></span>
-        <span class="star-wrap" data-v="4"><span class="star-bg">★</span><span class="star-fg" style="width: 50%;">★</span></span>
+        <span class="star-wrap" data-v="4"><span class="star-bg">★</span><span class="star-fg" style="width: 0%;">★</span></span>
         <span class="star-wrap" data-v="5"><span class="star-bg">★</span><span class="star-fg" style="width: 0%;">★</span></span>
       </div>
     </div>
@@ -1532,7 +1532,7 @@ function addInjRow() {
 (function() {
   const widget = document.getElementById('stars-widget');
   if (!widget) return;
-  let starsValue = parseFloat(widget.dataset.value) || 0;
+  let starsValue = parseFloat(widget.dataset.value) || 3;
   const wraps = widget.querySelectorAll('.star-wrap');
   function render(v) {
     wraps.forEach(w => {
