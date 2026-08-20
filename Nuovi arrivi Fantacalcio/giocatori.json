@@ -488,5 +488,35 @@
     "giocatore": "Jhon Lucumí",
     "squadra": "Juventus",
     "ruolo": "D"
+  },
+  {
+    "file": "nuovo_arrivo_Diego_Moreira__Milan.html",
+    "giocatore": "Diego Moreira",
+    "squadra": "Milan"
+  },
+  {
+    "file": "nuovo_arrivo_Omar_Fayed__Frosinone.html",
+    "giocatore": "Omar Fayed",
+    "squadra": "Frosinone"
+  },
+  {
+    "file": "nuovo_arrivo_Costantino_Favasuli__Napoli.html",
+    "giocatore": "Costantino Favasuli",
+    "squadra": "Napoli"
+  },
+  {
+    "file": "nuovo_arrivo_Rodrigo_Mora__Roma.html",
+    "giocatore": "Rodrigo Mora",
+    "squadra": "Roma"
+  },
+  {
+    "file": "nuovo_arrivo_Guglielmo_Vicario__Juventus.html",
+    "giocatore": "Guglielmo Vicario",
+    "squadra": "Juventus"
+  },
+  {
+    "file": "nuovo_arrivo_Lorenzo_Montipo__Venezia.html",
+    "giocatore": "Lorenzo Montipò",
+    "squadra": "Venezia"
   }
 ]
